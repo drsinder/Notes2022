@@ -243,6 +243,33 @@ namespace Notes2022.Client.Pages.User.Panels
 
                     return;
                 }
+                else if (args.ShiftKey && NavCurrentVal == "-")
+                {
+                    // back one base note
+                    string req = "api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + (model.header.NoteOrdinal - 1) + "/0";
+                    LongWrapper wrapper0 = await Http.GetFromJsonAsync<LongWrapper>(req);
+                    long headerId0 = wrapper0.mylong;
+                    if (headerId0 != 0)
+                        Navigation.NavigateTo("notedisplay/" + headerId0);
+                    else
+                        ShowMessage("Could not find note : " + req);
+
+                    return;
+                }
+                else if (NavCurrentVal == "-")
+                {
+                    // back one base note
+                    string req = "api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + model.header.NoteOrdinal + "/" + (model.header.ResponseOrdinal - 1);
+                    LongWrapper wrapper0 = await Http.GetFromJsonAsync<LongWrapper>(req);
+                    long headerId0 = wrapper0.mylong;
+                    if (headerId0 != 0)
+                        Navigation.NavigateTo("notedisplay/" + headerId0);
+                    else
+                        ShowMessage("Could not find note : " + req);
+
+                    return;
+                }
+
                 else if (string.IsNullOrEmpty(NavCurrentVal))
                 {
                     LongWrapper wrapper0 = await Http.GetFromJsonAsync<LongWrapper>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + model.header.NoteOrdinal + "/" + (model.header.ResponseOrdinal + 1));
