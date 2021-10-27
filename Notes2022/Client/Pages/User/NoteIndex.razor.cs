@@ -69,8 +69,7 @@ namespace Notes2022.Client.Pages.User
                     }
                     else
                     {
-                        LongWrapper wrapper = await Http.GetFromJsonAsync<LongWrapper>("api/GetNoteHeaderId/" + NotesfileId + "/" + noteNum + "/0");
-                        long headerId = wrapper.mylong;
+                        long headerId = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + NotesfileId + "/" + noteNum + "/0");
                         if (headerId != 0)
                             Navigation.NavigateTo("notedisplay/" + headerId);
                         else
@@ -91,8 +90,7 @@ namespace Notes2022.Client.Pages.User
                     }
                     if (noteNum != 0 && noteRespOrd != 0)
                     {
-                        LongWrapper wrapper = await Http.GetFromJsonAsync<LongWrapper>("api/GetNoteHeaderId/" + NotesfileId + "/" + noteNum + "/" + noteRespOrd);
-                        long headerId = wrapper.mylong;
+                        long headerId = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + NotesfileId + "/" + noteNum + "/" + noteRespOrd);
                         if (headerId != 0)
                             Navigation.NavigateTo("notedisplay/" + headerId);
                         else

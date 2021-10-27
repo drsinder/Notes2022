@@ -234,8 +234,8 @@ namespace Notes2022.Client.Pages.User.Panels
                 if (args.ShiftKey && string.IsNullOrEmpty(NavCurrentVal))
                 {
                     string req = "api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + (model.header.NoteOrdinal + 1) + "/0";
-                    LongWrapper wrapper0 = await Http.GetFromJsonAsync<LongWrapper>(req);
-                    long headerId0 = wrapper0.mylong;
+                    long headerId0 = await Http.GetFromJsonAsync<long>(req);
+                    
                     if (headerId0 != 0)
                         Navigation.NavigateTo("notedisplay/" + headerId0);
                     else
@@ -247,8 +247,7 @@ namespace Notes2022.Client.Pages.User.Panels
                 {
                     // back one base note
                     string req = "api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + (model.header.NoteOrdinal - 1) + "/0";
-                    LongWrapper wrapper0 = await Http.GetFromJsonAsync<LongWrapper>(req);
-                    long headerId0 = wrapper0.mylong;
+                    long headerId0 = await Http.GetFromJsonAsync<long>(req);
                     if (headerId0 != 0)
                         Navigation.NavigateTo("notedisplay/" + headerId0);
                     else
@@ -260,8 +259,7 @@ namespace Notes2022.Client.Pages.User.Panels
                 {
                     // back one base note
                     string req = "api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + model.header.NoteOrdinal + "/" + (model.header.ResponseOrdinal - 1);
-                    LongWrapper wrapper0 = await Http.GetFromJsonAsync<LongWrapper>(req);
-                    long headerId0 = wrapper0.mylong;
+                    long headerId0 = await Http.GetFromJsonAsync<long>(req);
                     if (headerId0 != 0)
                         Navigation.NavigateTo("notedisplay/" + headerId0);
                     else
@@ -272,8 +270,7 @@ namespace Notes2022.Client.Pages.User.Panels
 
                 else if (string.IsNullOrEmpty(NavCurrentVal))
                 {
-                    LongWrapper wrapper0 = await Http.GetFromJsonAsync<LongWrapper>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + model.header.NoteOrdinal + "/" + (model.header.ResponseOrdinal + 1));
-                    long headerId0 = wrapper0.mylong;
+                    long headerId0 = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + model.header.NoteOrdinal + "/" + (model.header.ResponseOrdinal + 1));
                     if (headerId0 != 0)
                         Navigation.NavigateTo("notedisplay/" + headerId0);
                     else
@@ -329,17 +326,15 @@ namespace Notes2022.Client.Pages.User.Panels
                                 noteNum = model.header.ResponseOrdinal + noteNum;
                             else if (IsMinus)
                                 noteNum = model.header.ResponseOrdinal - noteNum;
-                            
-                            LongWrapper wrapper2 = await Http.GetFromJsonAsync<LongWrapper>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + model.header.NoteOrdinal + "/" + noteNum);
-                            long headerId2 = wrapper2.mylong;
+
+                            long headerId2 = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + model.header.NoteOrdinal + "/" + noteNum);
                             if (headerId2 != 0)
                                 Navigation.NavigateTo("notedisplay/" + headerId2);
                             else
                                 ShowMessage("Could not find note : " + NavCurrentVal);
                             return;
                         }
-                        LongWrapper wrapper = await Http.GetFromJsonAsync<LongWrapper>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + noteNum + "/0");
-                        long headerId = wrapper.mylong;
+                        long headerId = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + noteNum + "/0");
                         if (headerId != 0)
                             Navigation.NavigateTo("notedisplay/" + headerId);
                         else
@@ -365,16 +360,14 @@ namespace Notes2022.Client.Pages.User.Panels
                                 noteNum = model.header.NoteOrdinal + noteNum;
                             else if (IsMinus)
                                 noteNum = model.header.NoteOrdinal - noteNum;
-                            LongWrapper wrapper2 = await Http.GetFromJsonAsync<LongWrapper>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + noteNum + "/0");
-                            long headerId2 = wrapper2.mylong;
+                            long headerId2 = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + noteNum + "/0");
                             if (headerId2 != 0)
                                 Navigation.NavigateTo("notedisplay/" + headerId2);
                             else
                                 ShowMessage("Could not find note : " + NavCurrentVal);
 
                         }
-                        LongWrapper wrapper = await Http.GetFromJsonAsync<LongWrapper>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + noteNum + "/" + noteRespOrd);
-                        long headerId = wrapper.mylong;
+                        long headerId = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + noteNum + "/" + noteRespOrd);
                         if (headerId != 0)
                             Navigation.NavigateTo("notedisplay/" + headerId);
                         else

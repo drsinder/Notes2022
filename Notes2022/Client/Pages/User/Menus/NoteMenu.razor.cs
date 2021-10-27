@@ -89,8 +89,7 @@ namespace Notes2022.Client.Pages.User.Menus
 
         public async Task ExecMenu(string id)
         {
-            LongWrapper lw = null;
-
+            long myId = 0;
             switch (id)
             {
                 case "ListNotes":
@@ -112,34 +111,34 @@ namespace Notes2022.Client.Pages.User.Menus
                     break;
 
                 case "NextBase":
-                    lw = await Http.GetFromJsonAsync<LongWrapper>("api/NextBaseNote/" + Model.header.Id);
-                    if (lw.mylong > 0)
+                    myId = await Http.GetFromJsonAsync<long>("api/NextBaseNote/" + Model.header.Id);
+                    if (myId > 0)
                     {
-                        Navigation.NavigateTo("notedisplay/" + lw.mylong);
+                        Navigation.NavigateTo("notedisplay/" + myId);
                     }
                     break;
 
                 case "PreviousBase":
-                    lw = await Http.GetFromJsonAsync<LongWrapper>("api/PreviousBaseNote/" + Model.header.Id);
-                    if (lw.mylong > 0)
+                    myId = await Http.GetFromJsonAsync<long>("api/PreviousBaseNote/" + Model.header.Id);
+                    if (myId > 0)
                     {
-                        Navigation.NavigateTo("notedisplay/" + lw.mylong);
+                        Navigation.NavigateTo("notedisplay/" + myId);
                     }
                     break;
 
                 case "NextNote":
-                    lw = await Http.GetFromJsonAsync<LongWrapper>("api/NextNote/" + Model.header.Id);
-                    if (lw.mylong > 0)
+                    myId = await Http.GetFromJsonAsync<long>("api/NextNote/" + Model.header.Id);
+                    if (myId > 0)
                     {
-                        Navigation.NavigateTo("notedisplay/" + lw.mylong);
+                        Navigation.NavigateTo("notedisplay/" + myId);
                     }
                     break;
 
                 case "PreviousNote":
-                    lw = await Http.GetFromJsonAsync<LongWrapper>("api/PreviousNote/" + Model.header.Id);
-                    if (lw.mylong > 0)
+                    myId = await Http.GetFromJsonAsync<long>("api/PreviousNote/" + Model.header.Id);
+                    if (myId > 0)
                     {
-                        Navigation.NavigateTo("notedisplay/" + lw.mylong);
+                        Navigation.NavigateTo("notedisplay/" + myId);
                     }
                     break;
 

@@ -27,14 +27,22 @@ namespace Notes2022.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<LongWrapper> Get(int notefileId, int noteOrd, int noteRespOrd)
+        public async Task<long> Get(int notefileId, int noteOrd, int noteRespOrd)
         {
             long newId = 0;
+
+
+            string userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ApplicationUser user = await _userManager.FindByIdAsync(userId);
+            bool test = await _userManager.IsInRoleAsync(user, "User");
+
+            if (!test)
+                return 0;
 
             NoteHeader nh = _db.NoteHeader.SingleOrDefault(p => p.NoteFileId == notefileId && p.NoteOrdinal == noteOrd && p.ResponseOrdinal == noteRespOrd);
             if (nh == null && noteRespOrd > -1) // try next base note -- special case if noteOrd == 0 and ResponseOrd == 0  ==> get first base note in file
             {
-                nh = _db.NoteHeader.SingleOrDefault(p => p.NoteFileId == notefileId && p.NoteOrdinal == noteOrd+1 && p.ResponseOrdinal == 0);
+                nh = _db.NoteHeader.SingleOrDefault(p => p.NoteFileId == notefileId && p.NoteOrdinal == noteOrd + 1 && p.ResponseOrdinal == 0);
             }
             else if (nh == null)    // try previous base note
             {
@@ -44,9 +52,7 @@ namespace Notes2022.Server.Controllers
             if (nh != null)
                 newId = nh.Id;
 
-            LongWrapper longWrapper = new LongWrapper();
-            longWrapper.mylong = newId;
-            return longWrapper;
+            return newId;
         }
     }
 }

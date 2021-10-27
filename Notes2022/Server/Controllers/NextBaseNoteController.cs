@@ -27,7 +27,7 @@ namespace Notes2022.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<LongWrapper> Get(long headerId)
+        public async Task<long> Get(long headerId)
         {
             long newId = 0;
 
@@ -37,9 +37,7 @@ namespace Notes2022.Server.Controllers
             if (nh != null)
                 newId = nh.Id;
 
-            LongWrapper longWrapper = new LongWrapper();
-            longWrapper.mylong = newId;
-            return longWrapper;
+            return newId;
         }
     }
 }
