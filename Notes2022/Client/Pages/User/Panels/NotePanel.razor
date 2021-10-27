@@ -1,4 +1,6 @@
-﻿@if (model == null)
+﻿
+<div>
+@if (model == null)
 {
     <p class="center"><em>Loading...</em></p>
 }
@@ -10,6 +12,7 @@ else
 {
     if (ShowChild && model.header.RefId != 0)
     {
+        <SfButton @onclick="OnClickRefHide" class="logbutton">Hide References</SfButton>
         <NotePanel NoteId="@model.header.RefId" ShowChild="true" IsRootNote="false"></NotePanel>
     }
     else if (model.header.RefId != 0)
@@ -23,6 +26,7 @@ else
             <NoteMenu Model="@model"></NoteMenu>
         </div>
     }
+    <div  class="note-display">
     <div class="noteheader">
         <p>
             <span class="keep-right">Note: @model.header.NoteOrdinal @respX&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -62,7 +66,9 @@ else
 
         }
     </div>
+    </div>
 }
+</div>
 
 <style>
     .donebutton{

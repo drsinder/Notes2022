@@ -58,6 +58,11 @@ namespace Notes2022.Client.Pages.User.Panels
             ShowChild = true;
         }
 
+        private void OnClickRefHide(MouseEventArgs args)
+        {
+            ShowChild = false;
+        }
+
         private void OnClickResp(MouseEventArgs args)
         {
             long bnId  = model.header.Id;           // if base note

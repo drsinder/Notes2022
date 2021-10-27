@@ -30,31 +30,36 @@
     padding: 16px;
     background-color: wheat;
     border-style: groove;
-    border-width: 6px;
+    border-width: 12px;
     border-color: darkgray;
     color: black;
-    border-radius: 8px;
+    border-radius: 10px;
 }
 
 /* dialog for note display */
-.dialognote {
+.note-display {
     background-color: white;
     border-style: groove;
-    border-width: 6px;
+    border-width: 8px;
     border-color: darkgray;
     color: black;
-    border-radius: 8px;
+    border-radius: 6px;
 }
 
-.dialogedit {
-    background-color: lightgray;
+.note-edit {
+    background-color: darkgray;
     border-style: groove;
-    border-width: 6px;
+    border-width: 8px;
     border-color: darkgray;
     color: black;
-    border-radius: 8px;
+    border-radius: 6px;
 }
 
+.modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;
+}
 
 /****************/
 
@@ -186,14 +191,7 @@ iframe.loginclock {
     border-radius: 6px;
 }
 
-/* dialogs */
-.dialogs {
-    margin: 16px;
-    padding: 16px;
-    background-color: wheat;
-    color: black;
-    border-radius: 3px;
-}
+
 
 /*main index input area */
 .roundedindex {
@@ -255,8 +253,7 @@ div.arrow2 {
 /*note display header area*/
 .noteheader {
     padding: 8px;
-    background-color: #eee;
-    border-radius: 6px;
+    background-color: gainsboro;
 }
 
 /*note display body/content area*/
@@ -264,8 +261,7 @@ div.arrow2 {
     padding: 8px;
     margin-top: 8px;
     margin-bottom: 8px;
-    background-color: #eee;
-    border-radius: 6px;
+    background-color: gainsboro;
 }
 
 /* File dropdown on home page */

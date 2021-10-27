@@ -9,6 +9,7 @@ else
 {
     if (ShowChild && Model.RefId != 0)
     {
+        <SfButton @onclick="OnClickRefHide" class="logbutton">Hide References</SfButton>
         <NotePanel NoteId="Model.RefId" ShowChild="true" IsRootNote="false" ShowButtons="false"></NotePanel>
     }
     else if (Model.RefId != 0)
@@ -17,7 +18,7 @@ else
     }
 
 
-    <div class="dialogedit">
+    <div class="note-edit">
     <h3>Note Editor - @noteFile.NoteFileName - @noteFile.NoteFileTitle</h3>
                 <EditForm id="createform" Model="@Model" OnValidSubmit="HandleValidSubmit">
                     <DataAnnotationsValidator />
@@ -44,18 +45,3 @@ else
     </div>
 
 }
-
-<style>
-    .dialogedit {
-        background-color: lightgray;
-        border-style: groove;
-        border-width: 6px;
-        border-color: darkgray;
-        color: black;
-        border-radius: 8px;
-    }
-.long-input {
-    width: 1000px;
-}
-
-</style>
