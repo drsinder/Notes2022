@@ -135,7 +135,7 @@ namespace Notes2022.Client.Shared
                     break;
 
                 default:
-                    ShowMessage(id);
+                    //ShowMessage(id);
                     break;
 
             }
