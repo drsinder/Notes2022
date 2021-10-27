@@ -1,0 +1,90 @@
+﻿@if (model == null)
+{
+    <p class="center"><em>Loading...</em></p>
+}
+else if ( !model.access.ReadAccess)
+{
+    <p class="center"><em>Permission denied...</em></p>
+}
+else 
+{
+    if (ShowChild && model.header.RefId != 0)
+    {
+        <NotePanel NoteId="@model.header.RefId" ShowChild="true" IsRootNote="false"></NotePanel>
+    }
+    else if (model.header.RefId != 0)
+    {
+        <SfButton @onclick="OnClickRef" class="logbutton">Show References</SfButton>
+    }
+
+    if (IsRootNote)
+    {
+        <div>
+            <NoteMenu Model="@model"></NoteMenu>
+        </div>
+    }
+    <div class="noteheader">
+        <p>
+            <span class="keep-right">Note: @model.header.NoteOrdinal @respX&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </p>
+
+        <h4>
+            Subject: @model.header.NoteSubject <br />
+            Author: @model.header.AuthorName &nbsp;&nbsp;&nbsp;
+            @(Globals.LocalTimeBlazor(model.header.LastEdited).ToLongDateString()) @Globals.LocalTimeBlazor(model.header.LastEdited).ToShortTimeString() @*@Model.tZone.Abbreviation*@
+            @if (!string.IsNullOrEmpty(model.content.DirectorMessage))
+            {
+                <br /><span>Director Message: @model.content.DirectorMessage</span>
+            }
+            @if (model.tags != null && model.tags.Count > 0)
+            {
+                string tl = "Tags: ";
+                foreach (Tags tag in model.tags)
+                    tl += tag.Tag + " ";
+                <br /><span>@tl</span>
+            }
+        </h4>
+    </div>
+    <div>
+        <div class="notebody">
+            @((MarkupString)model.content.NoteBody)
+        </div>
+
+        @if (ShowButtons)
+        {
+            <SfButton @onclick="OnDone" class="donebutton">Done</SfButton>
+            <SfButton @onclick="OnPrint" class="printbutton">Print</SfButton>
+
+            @if (model.header.ResponseOrdinal == 0)
+            {
+                <SfButton @onclick="OnPrintString" class="printbutton">Print String</SfButton>
+            }
+
+        }
+    </div>
+}
+
+<style>
+    .donebutton{
+        color: white;
+        background-color: darkcyan;
+        margin-right: 5px;
+        margin-left: 5px;
+        border-radius: 6px;
+    }
+    .donebutton:hover{
+        color: white;
+        background-color: blue;
+    }
+    .printbutton{
+        color: white;
+        background-color: green;
+        margin-right: 5px;
+        margin-left: 5px;
+        border-radius: 6px;
+    }
+    .printbutton:hover{
+        color: white;
+        background-color: darkgreen;
+    }
+</style>
