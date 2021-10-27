@@ -46,6 +46,15 @@
     border-radius: 6px;
 }
 
+.reference-display {
+    background-color: gray;
+    border-style: groove;
+    border-width: 8px;
+    border-color: darkgray;
+    color: black;
+    border-radius: 6px;
+}
+
 .note-edit {
     background-color: darkgray;
     border-style: groove;
@@ -253,15 +262,15 @@ div.arrow2 {
 /*note display header area*/
 .noteheader {
     padding: 8px;
-    background-color: gainsboro;
+    background-color: white;
 }
 
 /*note display body/content area*/
 .notebody {
     padding: 8px;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    background-color: gainsboro;
+/*    margin-top: 4px;
+    margin-bottom: 4px;
+*/    background-color: white;
 }
 
 /* File dropdown on home page */

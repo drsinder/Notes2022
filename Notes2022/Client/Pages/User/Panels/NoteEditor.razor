@@ -1,5 +1,4 @@
-﻿
-@using Syncfusion.Blazor.RichTextEditor
+﻿@using Syncfusion.Blazor.RichTextEditor
 
 @if (noteFile == null)
 {
@@ -10,7 +9,9 @@ else
     if (ShowChild && Model.RefId != 0)
     {
         <SfButton @onclick="OnClickRefHide" class="logbutton">Hide References</SfButton>
+
         <NotePanel NoteId="Model.RefId" ShowChild="true" IsRootNote="false" ShowButtons="false"></NotePanel>
+        <hr />
     }
     else if (Model.RefId != 0)
     {
@@ -19,28 +20,28 @@ else
 
 
     <div class="note-edit">
-    <h3>Note Editor - @noteFile.NoteFileName - @noteFile.NoteFileTitle</h3>
-                <EditForm id="createform" Model="@Model" OnValidSubmit="HandleValidSubmit">
-                    <DataAnnotationsValidator />
-                    <ValidationSummary />
-                    <strong>Subject</strong>
-                    <InputText id="name" @bind-Value="Model.MySubject" class="form-control long-input" />
+        <h3>Note Editor - @noteFile.NoteFileName - @noteFile.NoteFileTitle</h3>
+        <EditForm id="createform" Model="@Model" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <strong>Subject</strong>
+            <InputText id="name" @bind-Value="Model.MySubject" class="form-control long-input" />
 
-                    <strong>Tags</strong>
-                    <InputText id="title" @bind-Value="Model.TagLine" class="form-control long-input" />
-                    <strong>Director Message</strong>
-                    <InputText id="title" @bind-Value="Model.DirectorMessage" class="form-control long-input" />
+            <strong>Tags</strong>
+            <InputText id="title" @bind-Value="Model.TagLine" class="form-control long-input" />
+            <strong>Director Message</strong>
+            <InputText id="title" @bind-Value="Model.DirectorMessage" class="form-control long-input" />
 
-                    <strong>Note Body</strong>
+            <strong>Note Body</strong>
 
-                </EditForm>
-    <SfRichTextEditor @ref="EditObj" @bind-Value="@Model.MyNote" EditorMode="EditorMode.HTML" ShowCharCount="true" Height="500" Width="950" MaxLength="100000">
-        <RichTextEditorToolbarSettings @ref="ToolBarObj" Items="@Tools" Type="ToolbarType.Expand" />
-    </SfRichTextEditor>
+        </EditForm>
+        <SfRichTextEditor @ref="EditObj" @bind-Value="@Model.MyNote" EditorMode="EditorMode.HTML" ShowCharCount="true" Height="500" Width="950" MaxLength="100000">
+            <RichTextEditorToolbarSettings @ref="ToolBarObj" Items="@Tools" Type="ToolbarType.Expand" />
+        </SfRichTextEditor>
 
 
-                            <br /><button type="submit" @onclick="HandleValidSubmit" class="btn btn-success btn-sm">Save</button>
-                        <button type="button" @onclick="CancelEdit" class="btn btn-info btn-sm">Cancel</button>
+        <br /><button type="submit" @onclick="HandleValidSubmit" class="btn btn-success btn-sm">Save</button>
+        <button type="button" @onclick="CancelEdit" class="btn btn-info btn-sm">Cancel</button>
 
     </div>
 

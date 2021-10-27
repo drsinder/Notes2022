@@ -35,7 +35,7 @@ else
     <p>@Model.message</p>
     <h3 class="center">@Model.noteFile.NoteFileName - @Model.noteFile.NoteFileTitle</h3>
 
-    <div >
+    <div>
         <ListMenu Model=@Model @ref="@MyMenu"></ListMenu>
     </div>
     @if (@Model.myAccess.ReadAccess)
@@ -53,17 +53,23 @@ else
                             <GridColumn Field=@nameof(NoteHeader.CreateDate) HeaderText="Date/Time" TextAlign="TextAlign.Left" Width="60">
                                 <Template Context="inner">
                                     @{
-                                    var itemx = (inner as NoteHeader);
-                                    <span>@Globals.LocalTimeBlazor(itemx.CreateDate)</span>
-                                    }
-                                </Template>
-                            </GridColumn>
-                            <GridColumn Field=@nameof(NoteHeader.ResponseCount) HeaderText="Responses" TextAlign="TextAlign.Left" Width="40"></GridColumn>
-                        </GridColumns>
+                                var itemx = (inner as NoteHeader);
+                                <span>@Globals.LocalTimeBlazor(itemx.CreateDate)</span>
+                            }
+                        </Template>
+                    </GridColumn>
+                    <GridColumn Field=@nameof(NoteHeader.ResponseCount) HeaderText="Responses" TextAlign="TextAlign.Left" Width="40"></GridColumn>
+                </GridColumns>
 
-                    </SfGrid>
-                </div>
+            </SfGrid>
+        </div>
+    </div>
+</div>
+        <div class="arrow1">
+            <div>
+                Navigate: <SfTextBox @ref="@sfTextBox" ShowClearButton="true" Placeholder="b# | b#.r#*" @bind-Value="@NavString" Input="@NavInputHandler" @onkeypress="@KeyPressHandler"></SfTextBox>
             </div>
         </div>
     }
+
 }

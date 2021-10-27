@@ -29,6 +29,7 @@
     <PackageReference Include="Syncfusion.Blazor.Buttons" Version="19.3.0.47" />
     <PackageReference Include="Syncfusion.Blazor.Core" Version="19.3.0.47" />
     <PackageReference Include="Syncfusion.Blazor.Grid" Version="19.3.0.47" />
+    <PackageReference Include="Syncfusion.Blazor.Inputs" Version="19.3.0.47" />
     <PackageReference Include="Syncfusion.Blazor.LinearGauge" Version="19.3.0.47" />
     <PackageReference Include="Syncfusion.Blazor.Navigations" Version="19.3.0.47" />
     <PackageReference Include="Syncfusion.Blazor.RichTextEditor" Version="19.3.0.47" />

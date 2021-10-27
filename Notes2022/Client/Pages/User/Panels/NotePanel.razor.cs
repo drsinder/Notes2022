@@ -9,11 +9,12 @@ using Blazored.Modal.Services;
 using Blazored.Modal;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
-
 using Syncfusion.Blazor.SplitButtons;
 using System.Net.Http;
 using Microsoft.AspNetCore.Components.Web;
 using Notes2022.Client.Pages.User.Dialogs;
+using Syncfusion.Blazor.Inputs;
+using Notes2022.Client.Pages.User.Menus;
 
 namespace Notes2022.Client.Pages.User.Panels
 {
@@ -25,8 +26,16 @@ namespace Notes2022.Client.Pages.User.Panels
         [Parameter] public bool ShowChild { get; set; }
         [Parameter] public bool IsRootNote { get; set; }
         [Parameter] public bool ShowButtons { get; set; } = true;
+        [Parameter] public string MyStyle { get; set; }
 
         protected DisplayModel model { get; set; }
+
+        public NoteMenu MyMenu { get; set; }
+
+        SfTextBox sfTextBox { get; set; }
+        public string NavString { get; set; }
+        public string NavCurrentVal { get; set; }
+        protected string stuff { get; set; }
 
         public string respX { get; set; }
 
@@ -41,6 +50,12 @@ namespace Notes2022.Client.Pages.User.Panels
 
         protected override async Task OnParametersSetAsync()
         {
+            await GetData();
+        }
+
+        protected async Task GetData()
+        {
+            MyStyle = "note-display";
             model = await Http.GetFromJsonAsync<DisplayModel>("api/notecontent/" + NoteId);
 
             // set text to be displayed re responses
@@ -65,18 +80,18 @@ namespace Notes2022.Client.Pages.User.Panels
 
         private void OnClickResp(MouseEventArgs args)
         {
-            long bnId  = model.header.Id;           // if base note
+            long bnId = model.header.Id;           // if base note
             if (model.header.ResponseOrdinal > 0)   // if response
             {
                 bnId = model.header.BaseNoteId;
             }
 
-            Navigation.NavigateTo("/newnote/" + model.noteFile.Id + "/" + bnId + "/" + model.header.Id);
+            Navigation.NavigateTo("newnote/" + model.noteFile.Id + "/" + bnId + "/" + model.header.Id);
         }
 
         private void OnDone(MouseEventArgs args)
         {
-            Navigation.NavigateTo("/noteindex/" + model.noteFile.Id);
+            Navigation.NavigateTo("noteindex/" + model.noteFile.Id);
         }
 
         private async void OnPrint(MouseEventArgs args)
@@ -162,5 +177,190 @@ namespace Notes2022.Client.Pages.User.Panels
             Modal.Show<PrintDlg>("", parameters);   // invloke print dialog with our output
         }
 
+        private async void NavInputHandler(InputEventArgs args)
+        {
+            string IdString = args.Value;
+            NavCurrentVal = IdString;
+            stuff = IdString;
+
+            switch (stuff)
+            {
+                case "L":
+                    await MyMenu.ExecMenu("ListNotes");
+                    return;
+
+                case "N":
+                    await MyMenu.ExecMenu("NewResponse");
+                    return;
+
+                case "X":
+                    await MyMenu.ExecMenu("eXport");
+                    return;
+
+                case "J":
+                    await MyMenu.ExecMenu("JsonExport");
+                    return;
+
+                case "m":
+                    await MyMenu.ExecMenu("mailFromIndex");
+                    return;
+
+                case "P":
+                    await MyMenu.ExecMenu("PrintFile");
+                    return;
+
+                case "Z":
+                    Modal.Show<HelpDialog2>();
+                    return;
+
+                case "H":
+                    await MyMenu.ExecMenu("HtmlFromIndex");
+                    return;
+
+                case "h":
+                    await MyMenu.ExecMenu("htmlFromIndex");
+                    return;
+
+                default:
+                    break;
+            }
+        }
+
+        private async Task KeyPressHandler(KeyboardEventArgs args)
+        {
+            if (args.Key == "Enter")
+            {
+                bool IsPlus = false;
+                bool IsMinus = false;
+                bool IsRespOnly = false;
+
+                stuff = NavCurrentVal.Replace(";", "").Replace(" ", "");
+
+                if (stuff.StartsWith("+"))
+                    IsPlus = true;
+                if (stuff.StartsWith("-"))
+                    IsMinus = true;
+
+                stuff = stuff.Replace("+", "").Replace("-", "");
+
+                if (stuff.StartsWith('.'))
+                {
+                    IsRespOnly = true;
+                    stuff = stuff.Replace(".", "");
+                }
+                // parse string for # or #.#
+
+                string[] parts = stuff.Split('.');
+                if (parts.Length > 2)
+                {
+                    ShowMessage("Too many '.'s : " + parts.Length);
+                }
+                int noteNum;
+                if (parts.Length == 1)
+                {
+                    if (!int.TryParse(parts[0], out noteNum))
+                    {
+                        ShowMessage("Could not parse : " + parts[0]);
+                        //myTimer.Enabled = true;
+                    }
+                    else
+                    {
+                        if (!IsRespOnly)
+                        {
+                            if (IsPlus)
+                                noteNum = model.header.NoteOrdinal + noteNum;
+                            else if (IsMinus)
+                                noteNum = model.header.NoteOrdinal - noteNum;
+                        }
+                        else
+                        {
+                            if (IsPlus)
+                                noteNum = model.header.ResponseOrdinal + noteNum;
+                            else if (IsMinus)
+                                noteNum = model.header.ResponseOrdinal - noteNum;
+                            
+                            LongWrapper wrapper2 = await Http.GetFromJsonAsync<LongWrapper>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + model.header.NoteOrdinal + "/" + noteNum);
+                            long headerId2 = wrapper2.mylong;
+                            if (headerId2 != 0)
+                                Navigation.NavigateTo("notedisplay/" + headerId2);
+                            else
+                                ShowMessage("Could not find note : " + NavCurrentVal);
+                            return;
+                        }
+                        LongWrapper wrapper = await Http.GetFromJsonAsync<LongWrapper>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + noteNum + "/0");
+                        long headerId = wrapper.mylong;
+                        if (headerId != 0)
+                            Navigation.NavigateTo("notedisplay/" + headerId);
+                        else
+                            ShowMessage("Could not find note : " + NavCurrentVal);
+                        return;
+                    }
+                }
+                else if (parts.Length == 2)
+                {
+                    if (!int.TryParse(parts[0], out noteNum))
+                    {
+                        ShowMessage("Could not parse : " + parts[0]);
+                    }
+                    int noteRespOrd;
+                    if (!int.TryParse(parts[1], out noteRespOrd))
+                    {
+                        ShowMessage("Could not parse : " + parts[1]);
+                    }
+                    if (noteNum != 0 && noteRespOrd != 0)
+                    {
+                        {
+                            if (IsPlus)
+                                noteNum = model.header.NoteOrdinal + noteNum;
+                            else if (IsMinus)
+                                noteNum = model.header.NoteOrdinal - noteNum;
+                            LongWrapper wrapper2 = await Http.GetFromJsonAsync<LongWrapper>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + noteNum + "/0");
+                            long headerId2 = wrapper2.mylong;
+                            if (headerId2 != 0)
+                                Navigation.NavigateTo("notedisplay/" + headerId2);
+                            else
+                                ShowMessage("Could not find note : " + NavCurrentVal);
+
+                        }
+                        LongWrapper wrapper = await Http.GetFromJsonAsync<LongWrapper>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + noteNum + "/" + noteRespOrd);
+                        long headerId = wrapper.mylong;
+                        if (headerId != 0)
+                            Navigation.NavigateTo("notedisplay/" + headerId);
+                        else
+                            ShowMessage("Could not find note : " + NavCurrentVal);
+                    }
+                }
+            }
+        }
+
+        private void ShowMessage(string message)
+        {
+            var parameters = new ModalParameters();
+            parameters.Add("MessageInput", message);
+            Modal.Show<MessageBox>("", parameters);
+        }
+
+        System.Timers.Timer myTimer { get; set; }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            base.OnAfterRenderAsync(firstRender);
+
+            if (!firstRender)
+            {   // have to wait a bit before putting focus in textbox
+                myTimer = new System.Timers.Timer(300);
+                myTimer.Enabled = true;
+                myTimer.Elapsed += TimeUp;
+            }
+        }
+
+        protected void TimeUp(Object source, ElapsedEventArgs e)
+        {
+            myTimer.Enabled = false;
+            myTimer.Stop();
+            //myTimer.Elapsed -= TimeUp;
+            sfTextBox.Enabled = true;
+            sfTextBox.FocusAsync();
+        }
     }
 }

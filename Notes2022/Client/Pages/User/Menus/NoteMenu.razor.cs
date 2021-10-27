@@ -1,6 +1,4 @@
-﻿
-using System.Timers;
-using Notes2022.Shared;
+﻿using Notes2022.Shared;
 using Syncfusion.Blazor.Navigations;
 using Syncfusion.Blazor.Popups;
 using Microsoft.AspNetCore.Components;
@@ -30,7 +28,7 @@ namespace Notes2022.Client.Pages.User.Menus
         {
         }
 
-        protected override async Task OnParametersSetAsync()
+        protected override Task OnInitializedAsync()
         {
             menuItems = new List<MenuItem>();
 
@@ -81,7 +79,7 @@ namespace Notes2022.Client.Pages.User.Menus
                 menuItems.Add(new MenuItem() { Id = "NoteHelp", Text = "Z for HELP" });
             }
 
-            //Width = await jsRuntime.InvokeAsync<int>("getWidth", "x");
+            return Task.CompletedTask;
         }
 
         public async Task OnSelect(MenuEventArgs<MenuItem> e)
@@ -89,14 +87,14 @@ namespace Notes2022.Client.Pages.User.Menus
             await ExecMenu(e.Item.Id);
         }
 
-        private async Task ExecMenu(string id)
+        public async Task ExecMenu(string id)
         {
             LongWrapper lw = null;
 
             switch (id)
             {
                 case "ListNotes":
-                    Navigation.NavigateTo("/noteindex/" + Model.noteFile.Id);
+                    Navigation.NavigateTo("noteindex/" + Model.noteFile.Id);
                     break;
 
                 case "NewResponse":
@@ -105,36 +103,44 @@ namespace Notes2022.Client.Pages.User.Menus
                     {
                         bnId = Model.header.BaseNoteId;
                     }
-                    Navigation.NavigateTo("/newnote/" + Model.noteFile.Id + "/" + bnId + "/" + Model.header.Id);
+                    Navigation.NavigateTo("newnote/" + Model.noteFile.Id + "/" + bnId + "/" + Model.header.Id);
                     break;
 
                 case "Edit":
                     if (Model.CanEdit)
-                        Navigation.NavigateTo("/editnote/" + Model.header.Id, true);
+                        Navigation.NavigateTo("editnote/" + Model.header.Id, true);
                     break;
 
                 case "NextBase":
                     lw = await Http.GetFromJsonAsync<LongWrapper>("api/NextBaseNote/" + Model.header.Id);
                     if (lw.mylong > 0)
-                        Navigation.NavigateTo("/notedisplay/" + lw.mylong, true);
+                    {
+                        Navigation.NavigateTo("notedisplay/" + lw.mylong);
+                    }
                     break;
 
                 case "PreviousBase":
                     lw = await Http.GetFromJsonAsync<LongWrapper>("api/PreviousBaseNote/" + Model.header.Id);
                     if (lw.mylong > 0)
-                        Navigation.NavigateTo("/notedisplay/" + lw.mylong, true);
+                    {
+                        Navigation.NavigateTo("notedisplay/" + lw.mylong);
+                    }
                     break;
 
                 case "NextNote":
                     lw = await Http.GetFromJsonAsync<LongWrapper>("api/NextNote/" + Model.header.Id);
                     if (lw.mylong > 0)
-                        Navigation.NavigateTo("/notedisplay/" + lw.mylong, true);
+                    {
+                        Navigation.NavigateTo("notedisplay/" + lw.mylong);
+                    }
                     break;
 
                 case "PreviousNote":
                     lw = await Http.GetFromJsonAsync<LongWrapper>("api/PreviousNote/" + Model.header.Id);
                     if (lw.mylong > 0)
-                        Navigation.NavigateTo("/notedisplay/" + lw.mylong, true);
+                    {
+                        Navigation.NavigateTo("notedisplay/" + lw.mylong);
+                    }
                     break;
 
                 case "NoteHelp":

@@ -1,96 +1,112 @@
 ﻿
 <div>
-@if (model == null)
-{
-    <p class="center"><em>Loading...</em></p>
-}
-else if ( !model.access.ReadAccess)
-{
-    <p class="center"><em>Permission denied...</em></p>
-}
-else 
-{
-    if (ShowChild && model.header.RefId != 0)
+    @if (model == null)
     {
-        <SfButton @onclick="OnClickRefHide" class="logbutton">Hide References</SfButton>
-        <NotePanel NoteId="@model.header.RefId" ShowChild="true" IsRootNote="false"></NotePanel>
+            <p class="center"><em>Loading...</em></p>
     }
-    else if (model.header.RefId != 0)
+    else if (!model.access.ReadAccess)
     {
-        <SfButton @onclick="OnClickRef" class="logbutton">Show References</SfButton>
+            <p class="center"><em>Permission denied...</em></p>
     }
-
-    if (IsRootNote)
+    else
     {
-        <div>
-            <NoteMenu Model="@model"></NoteMenu>
-        </div>
-    }
-    <div  class="note-display">
-    <div class="noteheader">
-        <p>
-            <span class="keep-right">Note: @model.header.NoteOrdinal @respX&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        </p>
-
-        <h4>
-            Subject: @model.header.NoteSubject <br />
-            Author: @model.header.AuthorName &nbsp;&nbsp;&nbsp;
-            @(Globals.LocalTimeBlazor(model.header.LastEdited).ToLongDateString()) @Globals.LocalTimeBlazor(model.header.LastEdited).ToShortTimeString() @*@Model.tZone.Abbreviation*@
-            @if (!string.IsNullOrEmpty(model.content.DirectorMessage))
-            {
-                <br /><span>Director Message: @model.content.DirectorMessage</span>
-            }
-            @if (model.tags != null && model.tags.Count > 0)
-            {
-                string tl = "Tags: ";
-                foreach (Tags tag in model.tags)
-                    tl += tag.Tag + " ";
-                <br /><span>@tl</span>
-            }
-        </h4>
-    </div>
-    <div>
-        <div class="notebody">
-            @((MarkupString)model.content.NoteBody)
-        </div>
-
-        @if (ShowButtons)
+        if (ShowChild && model.header.RefId != 0)
         {
-            <SfButton @onclick="OnDone" class="donebutton">Done</SfButton>
-            <SfButton @onclick="OnPrint" class="printbutton">Print</SfButton>
-
-            @if (model.header.ResponseOrdinal == 0)
-            {
-                <SfButton @onclick="OnPrintString" class="printbutton">Print String</SfButton>
-            }
-
+                    <NotePanel NoteId="@model.header.RefId" ShowChild="true" IsRootNote="false"></NotePanel>
+                    <hr />
         }
-    </div>
-    </div>
-}
+
+        if (IsRootNote && @model != null)
+        {
+                    <div>
+                        <NoteMenu @ref="@MyMenu" Model="@model"></NoteMenu>
+                    </div>
+        }
+            <div class="@MyStyle">
+                <div class="noteheader">
+                    <p>
+                        <span class="keep-right">Note: @model.header.NoteOrdinal @respX&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    </p>
+
+                    <h4>
+                        Subject: @model.header.NoteSubject <br />
+                        Author: @model.header.AuthorName &nbsp;&nbsp;&nbsp;On:
+                    @(Globals.LocalTimeBlazor(model.header.LastEdited).ToLongDateString()) At: @Globals.LocalTimeBlazor(model.header.LastEdited).ToShortTimeString() @*@Model.tZone.Abbreviation*@
+                    @if (!string.IsNullOrEmpty(model.content.DirectorMessage))
+                    {
+                                <br />
+
+                                <span>Director Message: @model.content.DirectorMessage</span>
+                    }
+                    @if (model.tags != null && model.tags.Count > 0)
+                    {
+                        string tl = "Tags: ";
+                        foreach (Tags tag in model.tags)
+                            tl += tag.Tag + " ";
+                                <br />
+
+                                <span>@tl</span>
+                    }
+                    </h4>
+                </div>
+                <div>
+                    <div class="notebody">
+                    @((MarkupString)model.content.NoteBody)
+                    </div>
+
+                @if (ShowButtons)
+                {
+                            <SfButton @onclick="OnDone" class="donebutton">Done</SfButton>
+                            <SfButton @onclick="OnPrint" class="printbutton">Print</SfButton>
+
+                    @if (model.header.ResponseOrdinal == 0)
+                    {
+                                    <SfButton @onclick="OnPrintString" class="printbutton">Print String</SfButton>
+                    }
+
+                }
+                </div>
+            </div>
+        @if (IsRootNote && ShowChild && model.header.RefId != 0)
+        {
+                    <SfButton @onclick="OnClickRefHide" class="logbutton">Hide References</SfButton>
+        }
+        else if (IsRootNote && model.header.RefId != 0)
+        {
+                    <SfButton @onclick="OnClickRef" class="logbutton">Show References</SfButton>
+        }
+        <div class="arrow2">
+            <div>
+                Navigate: <SfTextBox @ref="@sfTextBox" ShowClearButton="true" Placeholder="b# | b#.r#*" @bind-Value="@NavString" Input="@NavInputHandler" @onkeypress="@KeyPressHandler"></SfTextBox>
+            </div>
+        </div>
+    }
 </div>
 
 <style>
-    .donebutton{
+    .donebutton {
         color: white;
         background-color: darkcyan;
         margin-right: 5px;
         margin-left: 5px;
         border-radius: 6px;
     }
-    .donebutton:hover{
-        color: white;
-        background-color: blue;
-    }
-    .printbutton{
+
+        .donebutton:hover {
+            color: white;
+            background-color: blue;
+        }
+
+    .printbutton {
         color: white;
         background-color: green;
         margin-right: 5px;
         margin-left: 5px;
         border-radius: 6px;
     }
-    .printbutton:hover{
-        color: white;
-        background-color: darkgreen;
-    }
+
+        .printbutton:hover {
+            color: white;
+            background-color: darkgreen;
+        }
 </style>
