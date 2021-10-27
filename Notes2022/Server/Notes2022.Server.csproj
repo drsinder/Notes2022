@@ -16,6 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\WeatherForecastController.cs" />
     <Compile Remove="Data\ApplicationDbContext.cs" />
     <Compile Remove="Programxx.cs" />
   </ItemGroup>

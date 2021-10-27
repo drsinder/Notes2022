@@ -2,11 +2,13 @@
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Notes2022.Client.Pages.User.Dialogs;
+using Notes2022.Client.Shared;
 using Notes2022.Shared;
 using Syncfusion.Blazor.Navigations;
 using System.Net.Http.Json;
 
-namespace Notes2022.Client.Shared
+namespace Notes2022.Client.Pages.User.Menus
 {
     public partial class NavMenu
     {

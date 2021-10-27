@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Notes2022.Shared;
 using System.Net.Http.Json;
 
-namespace Notes2022.Client.Pages
+namespace Notes2022.Client.Pages.User
 {
     public partial class Index
     {

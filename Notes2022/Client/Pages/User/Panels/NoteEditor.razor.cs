@@ -15,7 +15,7 @@ using Syncfusion.Blazor.RichTextEditor;
 using System.Net.Http;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace Notes2022.Client.Shared
+namespace Notes2022.Client.Pages.User.Panels
 {
     public partial class NoteEditor
     {

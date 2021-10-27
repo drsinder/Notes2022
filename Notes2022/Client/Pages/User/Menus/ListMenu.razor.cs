@@ -7,8 +7,9 @@ using Blazored.Modal;
 using Notes2022.Client.Pages.User.Dialogs;
 using System.Text;
 using System.Net.Http.Json;
+using Notes2022.Client.Shared;
 
-namespace Notes2022.Client.Shared
+namespace Notes2022.Client.Pages.User.Menus
 {
     public partial class ListMenu
     {

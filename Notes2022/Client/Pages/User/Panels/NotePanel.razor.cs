@@ -15,7 +15,7 @@ using System.Net.Http;
 using Microsoft.AspNetCore.Components.Web;
 using Notes2022.Client.Pages.User.Dialogs;
 
-namespace Notes2022.Client.Shared
+namespace Notes2022.Client.Pages.User.Panels
 {
     public partial class NotePanel
     {

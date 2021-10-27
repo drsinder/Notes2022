@@ -5,7 +5,7 @@ using Notes2022.Shared;
 using System.Net.Http.Json;
 using System.Text;
 
-namespace Notes2022.Client.Shared
+namespace Notes2022.Client.Pages.User.Dialogs
 {
     public partial class ExportUtil1
     {

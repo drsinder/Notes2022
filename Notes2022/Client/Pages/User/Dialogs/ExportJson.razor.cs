@@ -8,7 +8,7 @@ using System.Text;
 
 
 
-namespace Notes2022.Client.Shared
+namespace Notes2022.Client.Pages.User.Dialogs
 {
     public partial class ExportJson
     {

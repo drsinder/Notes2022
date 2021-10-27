@@ -11,26 +11,17 @@ using Blazored.Modal.Services;
 using Blazored.Modal;
 using Notes2022.Client.Pages.User.Dialogs;
 
-namespace Notes2022.Client.Shared
+namespace Notes2022.Client.Pages.User.Menus
 {
     public partial class NoteMenu
     {
         [CascadingParameter] public IModalService Modal { get; set; }
         [Parameter] public DisplayModel Model { get; set; }
-        //[Parameter] public bool ToolTips { get; set; } = true;
 
         private static List<MenuItem> menuItems { get; set; }
         protected SfMenu<MenuItem> topMenu { get; set; }
 
         private bool HamburgerMode { get; set; } = false;
-
-        //protected string Tip1 = "Go to the list of available notefiles (L)";
-        //protected string Tip2 = "Write a New base note (N)";
-        //protected string Tip3 = "<p>Export the file as text (X)</p><p>Export the file as expandable Html (H)</p><p>Export the file as flat Html (h)</p>p>mail the file (m)</p><p>Mark note strings you have written in for output</p><p>Output marked notes (O)</p><p>Print entire file (P)</p><p>Json file export (J)</p>";
-        //protected string Tip4 = "Search the file for something (S)";
-        //protected string Tip5 = "Show the HELP dialog (Z)";
-        //protected string Tip6 = "View or Edit the Access Controls (A)";
-
 
         [Inject] HttpClient Http { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
