@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using Notes2022.Client.Shared;
 using Notes2022.Shared;
 using Syncfusion.Blazor.Grids;
