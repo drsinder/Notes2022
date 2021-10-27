@@ -146,6 +146,12 @@ namespace Notes2022.Client.Pages.User
                     await MyMenu.ExecMenu("htmlFromIndex");
                     return;
 
+                case "R":
+                    await MyMenu.ExecMenu("ReloadIndex");
+                    return;
+
+
+
                 default:
                     break;
             }

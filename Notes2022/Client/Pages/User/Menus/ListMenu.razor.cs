@@ -89,6 +89,10 @@ namespace Notes2022.Client.Pages.User.Menus
                     Navigation.NavigateTo("/notesfiles/");
                     break;
 
+                case "ReloadIndex": // only a direct type in
+                    Navigation.NavigateTo("/noteindex/" + Model.noteFile.Id);
+                    break;
+
                 case "NewBaseNote":
                     Navigation.NavigateTo("/newnote/" + Model.noteFile.Id + "/0" + "/0");
                     break;

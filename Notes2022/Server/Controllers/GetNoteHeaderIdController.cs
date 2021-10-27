@@ -32,6 +32,10 @@ namespace Notes2022.Server.Controllers
             long newId = 0;
 
             NoteHeader nh = _db.NoteHeader.SingleOrDefault(p => p.NoteFileId == notefileId && p.NoteOrdinal == noteOrd && p.ResponseOrdinal == noteRespOrd);
+            if (nh == null)
+            {
+                nh = _db.NoteHeader.SingleOrDefault(p => p.NoteFileId == notefileId && p.NoteOrdinal == noteOrd+1 && p.ResponseOrdinal == 0);
+            }
             if (nh != null)
                 newId = nh.Id;
 
