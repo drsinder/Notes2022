@@ -94,7 +94,7 @@ namespace Notes2022.Client.Shared
             await ExecMenu(e.Item.Id);
         }
 
-        private async Task ExecMenu(string id)
+        public async Task ExecMenu(string id)
         {
             switch (id)
             {
@@ -132,6 +132,10 @@ namespace Notes2022.Client.Shared
 
                 case "PrintFile":
                     await PrintFile();
+                    break;
+
+                default:
+                    ShowMessage(id);
                     break;
 
             }
