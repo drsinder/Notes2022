@@ -26,7 +26,13 @@ namespace Notes2022.Client.Pages.User.Panels
         [Parameter] public bool ShowChild { get; set; }
         [Parameter] public bool IsRootNote { get; set; }
         [Parameter] public bool ShowButtons { get; set; } = true;
-        [Parameter] public string MyStyle { get; set; }
+        [Parameter] public bool AltStyle { get; set; }
+
+        //[Parameter] public string MyStyle { get; set; }
+
+        protected string HeaderStyle { get; set; }
+        protected string BodyStyle { get; set; }
+
 
         protected DisplayModel model { get; set; }
 
@@ -55,7 +61,17 @@ namespace Notes2022.Client.Pages.User.Panels
 
         protected async Task GetData()
         {
-            MyStyle = "note-display";
+            //MyStyle = "note-display";
+
+            HeaderStyle = "noteheader";
+            BodyStyle = "notebody";
+
+            if (AltStyle)
+            {
+                HeaderStyle += "-alt";
+                BodyStyle += "-alt";
+            }
+
             model = await Http.GetFromJsonAsync<DisplayModel>("api/notecontent/" + NoteId);
 
             // set text to be displayed re responses

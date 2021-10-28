@@ -12,7 +12,7 @@
     {
         if (ShowChild && model.header.RefId != 0)
         {
-                    <NotePanel NoteId="@model.header.RefId" ShowChild="true" IsRootNote="false"></NotePanel>
+                    <NotePanel NoteId="@model.header.RefId" ShowChild="true" IsRootNote="false" AltStyle="true"></NotePanel>
                     <hr />
         }
 
@@ -22,8 +22,8 @@
                         <NoteMenu @ref="@MyMenu" Model="@model"></NoteMenu>
                     </div>
         }
-            <div class="@MyStyle">
-                <div class="noteheader">
+            <div class="note-display">
+                <div class="@HeaderStyle">
                     <p>
                         <span class="keep-right">Note: @model.header.NoteOrdinal @respX&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     </p>
@@ -50,7 +50,7 @@
                     </h4>
                 </div>
                 <div>
-                    <div class="notebody">
+                    <div class="@BodyStyle">
                     @((MarkupString)model.content.NoteBody)
                     </div>
 

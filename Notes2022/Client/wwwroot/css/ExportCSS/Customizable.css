@@ -268,9 +268,18 @@ div.arrow2 {
 /*note display body/content area*/
 .notebody {
     padding: 8px;
-/*    margin-top: 4px;
-    margin-bottom: 4px;
-*/    background-color: white;
+    background-color: white;
+}
+
+.noteheader-alt {
+    padding: 8px;
+    background-color: gainsboro;
+}
+
+/*note display body/content area*/
+.notebody-alt {
+    padding: 8px;
+    background-color: gainsboro;
 }
 
 /* File dropdown on home page */
