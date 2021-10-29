@@ -83,7 +83,8 @@
         }
         else if (RespShown)
         {
-            <SfButton @onclick="OnClickShowResp" class="logbutton">Hide Responses</SfButton> <SfButton @onclick="OnClickFlipResp" class="logbutton">Flip Order</SfButton>
+            <SfButton @onclick="OnClickShowResp" class="logbutton">Hide Responses</SfButton>
+            <SfButton @onclick="OnClickFlipResp" class="logbutton">Flip Order</SfButton>
             if (respHeaders != null)
             {
                 bool alt = true;
@@ -97,7 +98,9 @@
 
         <div class="arrow2">
             <div>
-                Navigate: <strong>@model.header.NoteOrdinal@respY</strong> <SfTextBox @ref="@sfTextBox" ShowClearButton="true" Placeholder="b#.r# | (+/-)b# | (+/-).r# " @bind-Value="@NavString" Input="@NavInputHandler" @onkeyup="@KeyPressHandler"></SfTextBox>
+                Navigate: <strong>@model.header.NoteOrdinal@respY</strong>
+                <SfTextBox @ref="@sfTextBox" ShowClearButton="true" Placeholder="b#.r# | (+/-)b# | (+/-).r#"
+                @bind-Value="@NavString" Input="@NavInputHandler" @onkeyup="@KeyUpHandler"></SfTextBox>
             </div>
         </div>
     }

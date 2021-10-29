@@ -44,7 +44,7 @@ namespace Notes2022.Client.Pages.User
             Navigation.NavigateTo("notedisplay/" + args.Data.Id);
         }
 
-        private async Task KeyPressHandler(KeyboardEventArgs args)
+        private async Task KeyUpHandler(KeyboardEventArgs args)
         {
 
             switch (NavString)

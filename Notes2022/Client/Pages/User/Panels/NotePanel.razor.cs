@@ -239,7 +239,7 @@ namespace Notes2022.Client.Pages.User.Panels
             await Task.CompletedTask;
         }
 
-        private async Task KeyPressHandler(KeyboardEventArgs args)
+        private async Task KeyUpHandler(KeyboardEventArgs args)
         {
             switch (NavString)
             {

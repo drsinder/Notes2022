@@ -67,7 +67,8 @@ else
 </div>
         <div class="arrow1">
             <div>
-                Navigate: <SfTextBox @ref="@sfTextBox" ShowClearButton="true" Placeholder="b# | b#.r#*" @bind-Value="@NavString" Input="@NavInputHandler" @onkeyup="@KeyPressHandler"></SfTextBox>
+                Navigate: <SfTextBox @ref="@sfTextBox" ShowClearButton="true" Placeholder="b# | b#.r#*"
+                @bind-Value="@NavString" Input="@NavInputHandler" @onkeyup="@KeyUpHandler"></SfTextBox>
             </div>
         </div>
     }
