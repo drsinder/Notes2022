@@ -261,38 +261,24 @@ namespace Notes2022.Client.Pages.User.Panels
                     return;
 
                 case "E":
+                    await ClearNav();
                     await MyMenu.ExecMenu("Edit");
                     return;
 
-                //case "X":
-                //    await MyMenu.ExecMenu("eXport");
-                //    await ClearNav();
-                //    return;
+                case "B":
+                    await ClearNav();
+                    await MyMenu.ExecMenu("PreviousBase");
+                    return;
 
-                //case "J":
-                //    await MyMenu.ExecMenu("JsonExport");
-                //    await ClearNav();
-                //    return;
+                case "b":
+                    await ClearNav();
+                    await MyMenu.ExecMenu("PreviousNote");
+                    return;
 
-                //case "m":
-                //    await MyMenu.ExecMenu("mailFromIndex");
-                //    await ClearNav();
-                //    return;
-
-                //case "P":
-                //    await MyMenu.ExecMenu("PrintFile");
-                //    await ClearNav();
-                //    return;
-
-                //case "H":
-                //    await MyMenu.ExecMenu("HtmlFromIndex");
-                //    await ClearNav();
-                //    return;
-
-                //case "h":
-                //    await MyMenu.ExecMenu("htmlFromIndex");
-                //    await ClearNav();
-                //    return;
+                case "D":
+                    await ClearNav();
+                    await MyMenu.ExecMenu("Delete");
+                    return;
 
 
                 default:
@@ -316,13 +302,11 @@ namespace Notes2022.Client.Pages.User.Panels
                 else if (args.ShiftKey && NavString == "-")
                 {
                     await MyMenu.ExecMenu("PreviousBase");
-                    await ClearNav();
                     return;
                 }
                 else if (NavString == "-")
                 {
                     await MyMenu.ExecMenu("PreviousNote");
-                    await ClearNav();
                     return;
                 }
 
@@ -364,7 +348,6 @@ namespace Notes2022.Client.Pages.User.Panels
                     if (!int.TryParse(parts[0], out noteNum))
                     {
                         ShowMessage("Could not parse : " + parts[0]);
-                        //myTimer.Enabled = true;
                     }
                     else
                     {
@@ -429,7 +412,6 @@ namespace Notes2022.Client.Pages.User.Panels
                         else
                             ShowMessage("Could not find note : " + NavString);
                     }
-
                     await ClearNav();
                 }
             }
