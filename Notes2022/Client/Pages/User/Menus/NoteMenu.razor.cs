@@ -89,7 +89,7 @@ namespace Notes2022.Client.Pages.User.Menus
 
         public async Task ExecMenu(string id)
         {
-            long myId = 0;
+            long myId;
             switch (id)
             {
                 case "ListNotes":
@@ -145,6 +145,31 @@ namespace Notes2022.Client.Pages.User.Menus
                 case "NoteHelp":
                     Modal.Show<HelpDialog2>();
                     break;
+
+                case "Delete":
+                    ShowMessage("Delete not implemented yet.");
+                    break;
+
+                case "Forward":
+                    ShowMessage("Forward not implemented yet.");
+                    break;
+
+                case "Copy":
+                    ShowMessage("Copy not implemented yet.");
+                    break;
+
+                case "mail":
+                    ShowMessage("mail not implemented yet.");
+                    break;
+
+                case "Html":
+                    ShowMessage("Html not implemented yet.");
+                    break;
+
+                case "html":
+                    ShowMessage("html not implemented yet.");
+                    break;
+
 
             }
 

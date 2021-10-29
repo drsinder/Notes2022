@@ -278,8 +278,33 @@ namespace Notes2022.Client.Pages.User.Panels
                 case "D":
                     await ClearNav();
                     await MyMenu.ExecMenu("Delete");
+                    EatEnter = true;
                     return;
 
+                case "F":
+                    await ClearNav();
+                    await MyMenu.ExecMenu("Forward");
+                    return;
+
+                case "C":
+                    await ClearNav();
+                    await MyMenu.ExecMenu("Copy");
+                    return;
+
+                case "m":
+                    await ClearNav();
+                    await MyMenu.ExecMenu("mail");
+                    return;
+
+                case "H":
+                    await ClearNav();
+                    await MyMenu.ExecMenu("Html");
+                    return;
+
+                case "h":
+                    await ClearNav();
+                    await MyMenu.ExecMenu("html");
+                    return;
 
                 default:
                     break;
@@ -291,7 +316,7 @@ namespace Notes2022.Client.Pages.User.Panels
                 return;
             }
 
-                if (args.Key == "Enter")
+            if (args.Key == "Enter")
             {
                 if (args.ShiftKey && string.IsNullOrEmpty(NavString))
                 {
@@ -332,6 +357,7 @@ namespace Notes2022.Client.Pages.User.Panels
 
                 if (stuff.StartsWith('.'))
                 {
+                    await ClearNav();
                     IsRespOnly = true;
                     stuff = stuff.Replace(".", "");
                 }
@@ -347,6 +373,8 @@ namespace Notes2022.Client.Pages.User.Panels
                 {
                     if (!int.TryParse(parts[0], out noteNum))
                     {
+                        await ClearNav();
+                        EatEnter = true;
                         ShowMessage("Could not parse : " + parts[0]);
                     }
                     else
@@ -386,11 +414,13 @@ namespace Notes2022.Client.Pages.User.Panels
                     if (!int.TryParse(parts[0], out noteNum))
                     {
                         ShowMessage("Could not parse : " + parts[0]);
+                        EatEnter = true;
                     }
                     int noteRespOrd;
                     if (!int.TryParse(parts[1], out noteRespOrd))
                     {
                         ShowMessage("Could not parse : " + parts[1]);
+                        EatEnter = true;
                     }
                     if (noteNum != 0 && noteRespOrd != 0)
                     {
