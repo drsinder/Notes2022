@@ -31,7 +31,8 @@
                 <h4>
                     Subject: @model.header.NoteSubject <br />
                     Author: @model.header.AuthorName &nbsp;&nbsp;&nbsp;On:
-                    @(Globals.LocalTimeBlazor(model.header.LastEdited).ToLongDateString()) At: @Globals.LocalTimeBlazor(model.header.LastEdited).ToShortTimeString() @*@Model.tZone.Abbreviation*@
+                    @(Globals.LocalTimeBlazor(model.header.LastEdited).ToLongDateString()) At: 
+                    @Globals.LocalTimeBlazor(model.header.LastEdited).ToShortTimeString() @*@Model.tZone.Abbreviation*@
                     @if (!string.IsNullOrEmpty(model.content.DirectorMessage))
                     {
                         <br />
@@ -82,13 +83,15 @@
         }
         else if (RespShown)
         {
-            <SfButton @onclick="OnClickShowResp" class="logbutton">Hide Responses</SfButton>
+            <SfButton @onclick="OnClickShowResp" class="logbutton">Hide Responses</SfButton> <SfButton @onclick="OnClickFlipResp" class="logbutton">Flip Order</SfButton>
             if (respHeaders != null)
             {
+                bool alt = true;
                 foreach (NoteHeader rh in respHeaders)
                 {
-                    <NotePanel NoteId="@rh.Id" IsRootNote="false" AltStyle="true"></NotePanel>
-                }
+                    <NotePanel NoteId="@rh.Id" IsRootNote="false" AltStyle="@alt"></NotePanel>
+@*                    alt = !alt;
+*@                }
             }
         }
 

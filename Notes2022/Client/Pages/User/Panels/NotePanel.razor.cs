@@ -36,6 +36,7 @@ namespace Notes2022.Client.Pages.User.Panels
         protected string BodyStyle { get; set; }
 
         protected bool RespShown { get; set; }
+        protected bool RespFlipped { get; set; }
 
         protected DisplayModel model { get; set; }
 
@@ -123,6 +124,16 @@ namespace Notes2022.Client.Pages.User.Panels
             {
                 respHeaders = await Http.GetFromJsonAsync<List<NoteHeader>>("api/GetResponseHeaders/" + model.header.Id);
             }
+        }
+
+        private async Task OnClickFlipResp(MouseEventArgs args)
+        {
+            RespFlipped = !RespFlipped;
+            if (RespFlipped)
+                respHeaders = respHeaders.OrderByDescending(x => x.ResponseOrdinal).ToList();
+            else
+                respHeaders = respHeaders.OrderBy(x => x.ResponseOrdinal).ToList();
+
         }
 
         private void OnDone(MouseEventArgs args)
