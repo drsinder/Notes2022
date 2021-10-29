@@ -23,7 +23,6 @@ namespace Notes2022.Client.Pages.User
         public string NavString { get; set; }
 
         protected SfTextBox sfTextBox { get; set; }
-        //protected string NavCurrentVal { get; set; }
 
         [Inject] HttpClient Http { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
@@ -42,6 +41,14 @@ namespace Notes2022.Client.Pages.User
         protected void DisplayIt(RowSelectEventArgs<NoteHeader> args)
         {
             Navigation.NavigateTo("notedisplay/" + args.Data.Id);
+        }
+
+        public void RowDataBound(RowDataBoundEventArgs<NoteHeader> Args) // will be triggered when row is created
+        {
+            if (Args.Data.ResponseCount == 0)
+            {
+                Args.Row.AddClass(new string[] { "e-detail-disable" });
+            }
         }
 
         private async Task KeyUpHandler(KeyboardEventArgs args)
