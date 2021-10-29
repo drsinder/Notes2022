@@ -23,6 +23,8 @@ namespace Notes2022.Client.Pages.User
         public string NavString { get; set; }
 
         protected SfTextBox sfTextBox { get; set; }
+        
+        protected bool ShowContent { get; set; }
 
         [Inject] HttpClient Http { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
@@ -46,6 +48,14 @@ namespace Notes2022.Client.Pages.User
         public void RowDataBound(RowDataBoundEventArgs<NoteHeader> Args) // will be triggered when row is created
         {
             if (Args.Data.ResponseCount == 0)
+            {
+                Args.Row.AddClass(new string[] { "e-detail-disable" });
+            }
+        }
+
+        public void RowDataBound2(RowDataBoundEventArgs<NoteHeader> Args) // will be triggered when row is created
+        {
+            if (ShowContent)
             {
                 Args.Row.AddClass(new string[] { "e-detail-disable" });
             }

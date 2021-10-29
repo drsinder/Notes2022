@@ -10,17 +10,20 @@
     }
     else
     {
-        if (ShowChild && model.header.RefId != 0)
+        if (!IsMini)
         {
-            <NotePanel NoteId="@model.header.RefId" ShowChild="true" IsRootNote="false" AltStyle="true"></NotePanel>
-            <hr />
-        }
+            if (ShowChild && model.header.RefId != 0)
+            {
+                <NotePanel NoteId="@model.header.RefId" ShowChild="true" IsRootNote="false" AltStyle="true"></NotePanel>
+                <hr />
+            }
 
-        if (IsRootNote && @model != null)
-        {
-            <div>
-                <NoteMenu @ref="@MyMenu" Model="@model"></NoteMenu>
-            </div>
+            if (IsRootNote && @model != null)
+            {
+                <div>
+                    <NoteMenu @ref="@MyMenu" Model="@model"></NoteMenu>
+                </div>
+            }
         }
         <div class="note-display">
             <div class="@HeaderStyle">
@@ -31,7 +34,7 @@
                 <h4>
                     Subject: @model.header.NoteSubject <br />
                     Author: @model.header.AuthorName &nbsp;&nbsp;&nbsp;On:
-                    @(Globals.LocalTimeBlazor(model.header.LastEdited).ToLongDateString()) At: 
+                    @(Globals.LocalTimeBlazor(model.header.LastEdited).ToLongDateString()) At:
                     @Globals.LocalTimeBlazor(model.header.LastEdited).ToShortTimeString() @*@Model.tZone.Abbreviation*@
                     @if (!string.IsNullOrEmpty(model.content.DirectorMessage))
                     {
@@ -54,55 +57,61 @@
                 <div class="@BodyStyle">
                     @((MarkupString)model.content.NoteBody)
                 </div>
-
-                @if (ShowButtons)
+                @if (!IsMini)
                 {
-                    <SfButton @onclick="OnDone" class="donebutton">Done</SfButton>
-                    <SfButton @onclick="OnPrint" class="printbutton">Print</SfButton>
-
-                    @if (model.header.ResponseOrdinal == 0)
+                    @if (ShowButtons)
                     {
-                        <SfButton @onclick="OnPrintString" class="printbutton">Print String</SfButton>
-                    }
+                        <SfButton @onclick="OnDone" class="donebutton">Done</SfButton>
+                        <SfButton @onclick="OnPrint" class="printbutton">Print</SfButton>
 
+                        @if (model.header.ResponseOrdinal == 0)
+                        {
+                            <SfButton @onclick="OnPrintString" class="printbutton">Print String</SfButton>
+                        }
+
+                    }
                 }
             </div>
         </div>
-        @if (IsRootNote && ShowChild && model.header.RefId != 0)
+        @if (!IsMini)
         {
-            <SfButton @onclick="OnClickRefHide" class="logbutton">Hide References</SfButton>
-        }
-        else if (IsRootNote && model.header.RefId != 0)
-        {
-            <SfButton @onclick="OnClickRef" class="logbutton">Show References</SfButton>
-        }
 
-        @if (!RespShown && model.header.ResponseOrdinal == 0 && model.header.ResponseCount > 0 && !AltStyle)
-        {
-            <SfButton @onclick="OnClickShowResp" class="logbutton">Show Responses</SfButton>
-        }
-        else if (RespShown)
-        {
-            <SfButton @onclick="OnClickShowResp" class="logbutton">Hide Responses</SfButton>
-            <SfButton @onclick="OnClickFlipResp" class="logbutton">Flip Order</SfButton>
-            if (respHeaders != null)
+            @if (IsRootNote && ShowChild && model.header.RefId != 0)
             {
-                bool alt = true;
-                foreach (NoteHeader rh in respHeaders)
+                <SfButton @onclick="OnClickRefHide" class="logbutton">Hide References</SfButton>
+            }
+            else if (IsRootNote && model.header.RefId != 0)
+            {
+                <SfButton @onclick="OnClickRef" class="logbutton">Show References</SfButton>
+            }
+
+            @if (!RespShown && model.header.ResponseOrdinal == 0 && model.header.ResponseCount > 0 && !AltStyle)
+            {
+                <SfButton @onclick="OnClickShowResp" class="logbutton">Show Responses</SfButton>
+            }
+            else if (RespShown)
+            {
+                <SfButton @onclick="OnClickShowResp" class="logbutton">Hide Responses</SfButton>
+                <SfButton @onclick="OnClickFlipResp" class="logbutton">Flip Order</SfButton>
+                if (respHeaders != null)
                 {
-                    <NotePanel NoteId="@rh.Id" IsRootNote="false" AltStyle="@alt"></NotePanel>
+                    bool alt = true;
+                    foreach (NoteHeader rh in respHeaders)
+                    {
+                        <NotePanel NoteId="@rh.Id" IsRootNote="false" AltStyle="@alt"></NotePanel>
+                    }
                 }
             }
-        }
 
 
-        <div class="arrow2">
-            <div>
-                Navigate: <strong>@model.header.NoteOrdinal@respY</strong>
-                <SfTextBox @ref="@sfTextBox" ShowClearButton="true" Placeholder="b#.r# | (+/-)b# | (+/-).r#"
-                @bind-Value="@NavString" Input="@NavInputHandler" @onkeyup="@KeyUpHandler"></SfTextBox>
+            <div class="arrow2">
+                <div>
+                    Navigate: <strong>@model.header.NoteOrdinal@respY</strong>
+                    <SfTextBox @ref="@sfTextBox" ShowClearButton="true" Placeholder="b#.r# | (+/-)b# | (+/-).r#"
+                       @bind-Value="@NavString" Input="@NavInputHandler" @onkeyup="@KeyUpHandler"></SfTextBox>
+                </div>
             </div>
-        </div>
+        }
     }
 </div>
 

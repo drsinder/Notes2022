@@ -54,9 +54,20 @@ else
                             List<NoteHeader> Resp = Model.AllNotes.Where(p => p.NoteOrdinal == current.NoteOrdinal && p.ResponseOrdinal != 0).OrderBy(p => p.ResponseOrdinal).ToList();
                             bool hasResp = (Resp != null && Resp.Count > 0);
                         }
+                        @if (ShowContent)
+                        {
+                            <NotePanel NoteId="@current.Id" ShowChild="false" IsRootNote="false" IsMini="true"></NotePanel>
+                        }
                         <SfGrid DataSource="Resp" AllowPaging="false" AllowSelection="true" EnableHover="true">
                             <GridEvents RowSelected="DisplayIt" TValue="NoteHeader"></GridEvents>
                             <GridTemplates>
+                                    <DetailTemplate Context="extra">
+                                        @if (ShowContent)
+                                        {
+                                            var current2 = (extra as NoteHeader);
+                                            <NotePanel NoteId="@current2.Id" ShowChild="false" IsRootNote="false" IsMini="true"></NotePanel>
+                                        }
+                                    </DetailTemplate>
 
                             </GridTemplates>
                             <GridColumns>
@@ -93,6 +104,7 @@ else
                 </GridColumns>
 
             </SfGrid>
+            <SfSwitch @bind-Checked="@ShowContent"></SfSwitch> Show Content on Expand
         </div>
     </div>
 </div>

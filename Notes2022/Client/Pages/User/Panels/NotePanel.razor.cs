@@ -27,6 +27,7 @@ namespace Notes2022.Client.Pages.User.Panels
         [Parameter] public bool IsRootNote { get; set; }
         [Parameter] public bool ShowButtons { get; set; } = true;
         [Parameter] public bool AltStyle { get; set; }
+        [Parameter] public bool IsMini { get; set; }
 
         protected List<NoteHeader> respHeaders { get; set; }
 
