@@ -53,10 +53,10 @@ namespace Notes2022.Client.Pages.User.Menus
                 item2.Items = new List<MenuItem>();
                 item2.Items.Add(new MenuItem() { Id = "Forward", Text = "Forward" });
                 item2.Items.Add(new MenuItem() { Id = "Copy", Text = "Copy" });
-                item2.Items.Add(new MenuItem() { Id = "mailFromNote", Text = "mail" });
+                item2.Items.Add(new MenuItem() { Id = "mail", Text = "mail" });
                 //item2.Items.Add(new MenuItem() { Id = "Mark", Text = "Mark for output" });
-                item2.Items.Add(new MenuItem() { Id = "HtmlFromNote", Text = "Html (expandable)" });
-                item2.Items.Add(new MenuItem() { Id = "htmlFromNote", Text = "html (flat)" });
+                item2.Items.Add(new MenuItem() { Id = "Html", Text = "Html (expandable)" });
+                item2.Items.Add(new MenuItem() { Id = "html", Text = "html (flat)" });
                 menuItems.Add(item2);
 
                 if (Model.access.Respond)
