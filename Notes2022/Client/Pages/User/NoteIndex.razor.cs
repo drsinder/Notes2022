@@ -21,7 +21,6 @@ namespace Notes2022.Client.Pages.User
 
         protected ListMenu MyMenu { get; set; }
         public string NavString { get; set; }
-        protected string stuff { get; set; }
 
         protected SfTextBox sfTextBox { get; set; }
         protected string NavCurrentVal { get; set; }
@@ -49,7 +48,7 @@ namespace Notes2022.Client.Pages.User
         {
             if (args.Key == "Enter")
             {
-                stuff = NavCurrentVal.Replace(";", "").Replace(" ", "");
+                string stuff = NavCurrentVal.Replace(";", "").Replace(" ", "");
 
                 // parse string for # or #.#
 
@@ -64,8 +63,6 @@ namespace Notes2022.Client.Pages.User
                     if (!int.TryParse(parts[0], out noteNum))
                     {
                         ShowMessage("Could not parse : " + parts[0]);
-                        //sfTextBox.Enabled = false;
-                        myTimer.Enabled = true;
                     }
                     else
                     {
@@ -97,55 +94,65 @@ namespace Notes2022.Client.Pages.User
                             ShowMessage("Could not find note : " + stuff);
                     }
                 }
+                await ClearNav();
             }
         }
 
         private async void NavInputHandler(InputEventArgs args)
         {
-            string IdString = args.Value;
-            NavCurrentVal = IdString;
-            stuff = IdString;
+            NavCurrentVal = args.Value;
 
-            switch (stuff)
+            switch (NavCurrentVal)
             {
                 case "L":
                     await MyMenu.ExecMenu("ListNoteFiles");
+                    await ClearNav();
                     return;
 
                 case "N":
                     await MyMenu.ExecMenu("NewBaseNote");
+                    await ClearNav();
                     return;
 
                 case "X":
                     await MyMenu.ExecMenu("eXport");
+                    await ClearNav();
                     return;
 
                 case "J":
                     await MyMenu.ExecMenu("JsonExport");
+                    await ClearNav();
                     return;
 
                 case "m":
                     await MyMenu.ExecMenu("mailFromIndex");
+                    await ClearNav();
                     return;
 
                 case "P":
                     await MyMenu.ExecMenu("PrintFile");
+                    await ClearNav();
                     return;
 
                 case "Z":
-                    Modal.Show<HelpDialog>();
+                    var res = Modal.Show<HelpDialog>();
+                    await res.Result;
+                    await ClearNav();
                     return;
 
                 case "H":
                     await MyMenu.ExecMenu("HtmlFromIndex");
+                    await ClearNav();
                     return;
 
                 case "h":
                     await MyMenu.ExecMenu("htmlFromIndex");
+                    await ClearNav();
                     return;
 
                 case "R":
                     await MyMenu.ExecMenu("ReloadIndex");
+                    await ClearNav();
                     return;
 
 
@@ -154,6 +161,17 @@ namespace Notes2022.Client.Pages.User
                     break;
             }
         }
+
+        private async Task ClearNav()
+        {
+            NavCurrentVal = null;
+            NavString = null;
+
+            //myTimer = new System.Timers.Timer(3000);
+            //myTimer.Enabled = true;
+            //myTimer.Elapsed += TimeUp;
+        }
+
 
         private void ShowMessage(string message)
         {
@@ -178,10 +196,14 @@ namespace Notes2022.Client.Pages.User
 
         protected void TimeUp(Object source, ElapsedEventArgs e)
         {
-            myTimer.Enabled = false;
+            //myTimer.Enabled = false;
             myTimer.Stop();
-            //myTimer.Elapsed -= TimeUp;
-            sfTextBox.Enabled = true;
+            //sfTextBox.Enabled = true;
+
+            sfTextBox.FocusOutAsync();
+            NavCurrentVal = null;
+            NavString = null;
+
             sfTextBox.FocusAsync();
         }
 

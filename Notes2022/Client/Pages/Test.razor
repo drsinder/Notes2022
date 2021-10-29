@@ -1,0 +1,57 @@
+﻿@page "/test"
+
+@using Syncfusion.Blazor.Inputs 
+
+
+<h3>Test</h3>
+ 
+@message 
+
+<SfTextBox @bind-Value="@val" @onkeypress="@KeyPressHandler" Input="@NavInputHandler" ></SfTextBox> 
+ 
+<br /> 
+<br /> 
+<button @onclick="clickAction">Clear All</button> 
+ 
+@code {
+
+    public string val { get; set; }
+
+    private string NavCurrentVal { get; set; }
+    private string message { get; set; }
+
+
+    public void clickAction()
+    {
+        this.val = null;
+    }
+
+    private async Task KeyPressHandler(KeyboardEventArgs args)
+    {
+        if (args.Key == "Enter")
+        {
+            // process  val and clear input
+            NavCurrentVal = null;
+            this.val = null;
+        }
+    }
+    private async void NavInputHandler(InputEventArgs args)
+    {
+        NavCurrentVal = args.Value;
+
+        switch (NavCurrentVal)
+        {
+
+            case "Z":
+                message = "Z pressed";
+                this.NavCurrentVal = null;
+                this.val = null;
+                break;
+
+            default:
+                break;
+        }
+    }
+}
+
+

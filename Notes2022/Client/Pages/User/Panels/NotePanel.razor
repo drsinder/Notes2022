@@ -2,82 +2,100 @@
 <div>
     @if (model == null)
     {
-            <p class="center"><em>Loading...</em></p>
+        <p class="center"><em>Loading...</em></p>
     }
     else if (!model.access.ReadAccess)
     {
-            <p class="center"><em>Permission denied...</em></p>
+        <p class="center"><em>Permission denied...</em></p>
     }
     else
     {
         if (ShowChild && model.header.RefId != 0)
         {
-                    <NotePanel NoteId="@model.header.RefId" ShowChild="true" IsRootNote="false" AltStyle="true"></NotePanel>
-                    <hr />
+            <NotePanel NoteId="@model.header.RefId" ShowChild="true" IsRootNote="false" AltStyle="true"></NotePanel>
+            <hr />
         }
 
         if (IsRootNote && @model != null)
         {
-                    <div>
-                        <NoteMenu @ref="@MyMenu" Model="@model"></NoteMenu>
-                    </div>
+            <div>
+                <NoteMenu @ref="@MyMenu" Model="@model"></NoteMenu>
+            </div>
         }
-            <div class="note-display">
-                <div class="@HeaderStyle">
-                    <p>
-                        <span class="keep-right">Note: @model.header.NoteOrdinal @respX&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    </p>
+        <div class="note-display">
+            <div class="@HeaderStyle">
+                <p>
+                    <span class="keep-right">Note: @model.header.NoteOrdinal @respX&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                </p>
 
-                    <h4>
-                        Subject: @model.header.NoteSubject <br />
-                        Author: @model.header.AuthorName &nbsp;&nbsp;&nbsp;On:
+                <h4>
+                    Subject: @model.header.NoteSubject <br />
+                    Author: @model.header.AuthorName &nbsp;&nbsp;&nbsp;On:
                     @(Globals.LocalTimeBlazor(model.header.LastEdited).ToLongDateString()) At: @Globals.LocalTimeBlazor(model.header.LastEdited).ToShortTimeString() @*@Model.tZone.Abbreviation*@
                     @if (!string.IsNullOrEmpty(model.content.DirectorMessage))
                     {
-                                <br />
+                        <br />
 
-                                <span>Director Message: @model.content.DirectorMessage</span>
+                        <span>Director Message: @model.content.DirectorMessage</span>
                     }
                     @if (model.tags != null && model.tags.Count > 0)
                     {
                         string tl = "Tags: ";
                         foreach (Tags tag in model.tags)
                             tl += tag.Tag + " ";
-                                <br />
+                        <br />
 
-                                <span>@tl</span>
+                        <span>@tl</span>
                     }
-                    </h4>
-                </div>
-                <div>
-                    <div class="@BodyStyle">
+                </h4>
+            </div>
+            <div>
+                <div class="@BodyStyle">
                     @((MarkupString)model.content.NoteBody)
-                    </div>
+                </div>
 
                 @if (ShowButtons)
                 {
-                            <SfButton @onclick="OnDone" class="donebutton">Done</SfButton>
-                            <SfButton @onclick="OnPrint" class="printbutton">Print</SfButton>
+                    <SfButton @onclick="OnDone" class="donebutton">Done</SfButton>
+                    <SfButton @onclick="OnPrint" class="printbutton">Print</SfButton>
 
                     @if (model.header.ResponseOrdinal == 0)
                     {
-                                    <SfButton @onclick="OnPrintString" class="printbutton">Print String</SfButton>
+                        <SfButton @onclick="OnPrintString" class="printbutton">Print String</SfButton>
                     }
 
                 }
-                </div>
             </div>
+        </div>
         @if (IsRootNote && ShowChild && model.header.RefId != 0)
         {
-                    <SfButton @onclick="OnClickRefHide" class="logbutton">Hide References</SfButton>
+            <SfButton @onclick="OnClickRefHide" class="logbutton">Hide References</SfButton>
         }
         else if (IsRootNote && model.header.RefId != 0)
         {
-                    <SfButton @onclick="OnClickRef" class="logbutton">Show References</SfButton>
+            <SfButton @onclick="OnClickRef" class="logbutton">Show References</SfButton>
         }
+
+        @if (!RespShown && model.header.ResponseOrdinal == 0 && model.header.ResponseCount > 0)
+        {
+            <SfButton @onclick="OnClickShowResp" class="logbutton">Show Responses</SfButton>
+        }
+        else if (RespShown)
+        {
+            <SfButton @onclick="OnClickShowResp" class="logbutton">Hide Responses</SfButton>
+            if (respHeaders != null)
+            {
+                foreach (NoteHeader rh in respHeaders)
+                {
+                    <NotePanel NoteId="@rh.Id" IsRootNote="false" AltStyle="true"></NotePanel>
+                }
+            }
+        }
+
+
         <div class="arrow2">
             <div>
-                Navigate: <SfTextBox @ref="@sfTextBox" ShowClearButton="true" Placeholder="b# | b#.r#*" @bind-Value="@NavString" Input="@NavInputHandler" @onkeypress="@KeyPressHandler"></SfTextBox>
+                Navigate: <strong>@model.header.NoteOrdinal@respY</strong> <SfTextBox @ref="@sfTextBox" ShowClearButton="true" Placeholder="b#.r#  |  (+/-)b#  |  (+/-).r# " @bind-Value="@NavString" Input="@NavInputHandler" @onkeypress="@KeyPressHandler"></SfTextBox>
             </div>
         </div>
     }

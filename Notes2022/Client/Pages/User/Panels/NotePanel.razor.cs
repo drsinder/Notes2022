@@ -28,11 +28,14 @@ namespace Notes2022.Client.Pages.User.Panels
         [Parameter] public bool ShowButtons { get; set; } = true;
         [Parameter] public bool AltStyle { get; set; }
 
+        protected List<NoteHeader> respHeaders { get; set; }
+
         //[Parameter] public string MyStyle { get; set; }
 
         protected string HeaderStyle { get; set; }
         protected string BodyStyle { get; set; }
 
+        protected bool RespShown { get; set; }
 
         protected DisplayModel model { get; set; }
 
@@ -41,9 +44,9 @@ namespace Notes2022.Client.Pages.User.Panels
         SfTextBox sfTextBox { get; set; }
         public string NavString { get; set; }
         public string NavCurrentVal { get; set; }
-        protected string stuff { get; set; }
 
         public string respX { get; set; }
+        public string respY { get; set; }
 
 
         [Inject] HttpClient Http { get; set; }
@@ -63,6 +66,8 @@ namespace Notes2022.Client.Pages.User.Panels
         {
             //MyStyle = "note-display";
 
+            RespShown = false;
+
             HeaderStyle = "noteheader";
             BodyStyle = "notebody";
 
@@ -75,11 +80,16 @@ namespace Notes2022.Client.Pages.User.Panels
             model = await Http.GetFromJsonAsync<DisplayModel>("api/notecontent/" + NoteId);
 
             // set text to be displayed re responses
-            respX = "";
+            respX = respY = "";
             if (model.header.ResponseCount > 0)
+            {
                 respX = " - " + model.header.ResponseCount + " Responses ";
+            }
             else if (model.header.ResponseOrdinal > 0)
+            {
                 respX = " Response " + model.header.ResponseOrdinal;
+                respY = "." + model.header.ResponseOrdinal;
+            }
 
 
         }
@@ -103,6 +113,16 @@ namespace Notes2022.Client.Pages.User.Panels
             }
 
             Navigation.NavigateTo("newnote/" + model.noteFile.Id + "/" + bnId + "/" + model.header.Id);
+        }
+
+        private async Task OnClickShowResp(MouseEventArgs args)
+        {
+            RespShown = !RespShown;
+
+            if (RespShown)
+            {
+                respHeaders = await Http.GetFromJsonAsync<List<NoteHeader>>("api/GetResponseHeaders/" + model.header.Id);
+            }
         }
 
         private void OnDone(MouseEventArgs args)
@@ -195,52 +215,67 @@ namespace Notes2022.Client.Pages.User.Panels
 
         private async void NavInputHandler(InputEventArgs args)
         {
-            string IdString = args.Value;
-            NavCurrentVal = IdString;
-            stuff = IdString;
+            NavCurrentVal = args.Value;
 
-            switch (stuff)
+            switch (NavCurrentVal)
             {
                 case "I":
                 case "L":
                     await MyMenu.ExecMenu("ListNotes");
+                    await ClearNav();
                     return;
 
                 case "N":
                     await MyMenu.ExecMenu("NewResponse");
+                    await ClearNav();
                     return;
 
                 case "X":
                     await MyMenu.ExecMenu("eXport");
+                    await ClearNav();
                     return;
 
                 case "J":
                     await MyMenu.ExecMenu("JsonExport");
+                    await ClearNav();
                     return;
 
                 case "m":
                     await MyMenu.ExecMenu("mailFromIndex");
+                    await ClearNav();
                     return;
 
                 case "P":
                     await MyMenu.ExecMenu("PrintFile");
+                    await ClearNav();
                     return;
 
                 case "Z":
-                    Modal.Show<HelpDialog2>();
+                    var formModal = Modal.Show<HelpDialog2>();
+                    await formModal.Result;
+
+                    await ClearNav();
                     return;
 
                 case "H":
                     await MyMenu.ExecMenu("HtmlFromIndex");
+                    await ClearNav();
                     return;
 
                 case "h":
                     await MyMenu.ExecMenu("htmlFromIndex");
+                    await ClearNav();
                     return;
 
                 default:
                     break;
             }
+        }
+
+        private async Task ClearNav()
+        {
+            NavCurrentVal = null;
+            NavString = null;
         }
 
         private async Task KeyPressHandler(KeyboardEventArgs args)
@@ -298,7 +333,7 @@ namespace Notes2022.Client.Pages.User.Panels
                 bool IsMinus = false;
                 bool IsRespOnly = false;
 
-                stuff = NavCurrentVal.Replace(";", "").Replace(" ", "");
+                string stuff = NavCurrentVal.Replace(";", "").Replace(" ", "");
 
                 if (stuff.StartsWith("+"))
                     IsPlus = true;
@@ -416,10 +451,16 @@ namespace Notes2022.Client.Pages.User.Panels
 
         protected void TimeUp(Object source, ElapsedEventArgs e)
         {
-            myTimer.Enabled = false;
             myTimer.Stop();
-            //myTimer.Elapsed -= TimeUp;
-            sfTextBox.Enabled = true;
+            myTimer.Enabled = false;
+
+            //if (myTimer.Interval > 1000)
+            //{
+            //    sfTextBox.FocusOutAsync();
+            //    NavCurrentVal = null;
+            //    NavString = null;
+            //}
+
             sfTextBox.FocusAsync();
         }
     }
