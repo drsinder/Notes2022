@@ -164,8 +164,8 @@ namespace Notes2022.Client.Pages.User
 
         private async Task ClearNav()
         {
-            NavCurrentVal = null;
-            NavString = null;
+            //NavCurrentVal = null;
+            //NavString = null;
 
             //myTimer = new System.Timers.Timer(3000);
             //myTimer.Enabled = true;
@@ -196,13 +196,13 @@ namespace Notes2022.Client.Pages.User
 
         protected void TimeUp(Object source, ElapsedEventArgs e)
         {
-            //myTimer.Enabled = false;
+            myTimer.Enabled = false;
             myTimer.Stop();
             //sfTextBox.Enabled = true;
 
-            sfTextBox.FocusOutAsync();
-            NavCurrentVal = null;
-            NavString = null;
+            //sfTextBox.FocusOutAsync();
+            //NavCurrentVal = null;
+            //NavString = null;
 
             sfTextBox.FocusAsync();
         }
