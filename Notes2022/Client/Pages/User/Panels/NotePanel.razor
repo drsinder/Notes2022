@@ -77,7 +77,7 @@
             <SfButton @onclick="OnClickRef" class="logbutton">Show References</SfButton>
         }
 
-        @if (!RespShown && model.header.ResponseOrdinal == 0 && model.header.ResponseCount > 0)
+        @if (!RespShown && model.header.ResponseOrdinal == 0 && model.header.ResponseCount > 0 && !AltStyle)
         {
             <SfButton @onclick="OnClickShowResp" class="logbutton">Show Responses</SfButton>
         }
@@ -90,8 +90,7 @@
                 foreach (NoteHeader rh in respHeaders)
                 {
                     <NotePanel NoteId="@rh.Id" IsRootNote="false" AltStyle="@alt"></NotePanel>
-@*                    alt = !alt;
-*@                }
+                }
             }
         }
 
