@@ -159,22 +159,56 @@ namespace Notes2022.Client.Pages.User.Menus
                     break;
 
                 case "mail":
-                    ShowMessage("mail not implemented yet.");
+                    await DoEmail();
                     break;
 
                 case "Html":
-                    ShowMessage("Html not implemented yet.");
+                    DoExport(true, true);
                     break;
 
                 case "html":
-                    ShowMessage("html not implemented yet.");
+                    DoExport(true, false);
                     break;
 
 
             }
-
-            //ShowMessage(id);
         }
+
+        private void DoExport(bool isHtml, bool isCollapsible, bool isEmail = false, string emailaddr = null)
+        {
+            var parameters = new ModalParameters();
+
+            ExportViewModel vm = new ExportViewModel();
+            vm.ArchiveNumber = Model.header.ArchiveId;
+            vm.isCollapsible = isCollapsible;
+            vm.isDirectOutput = !isEmail;
+            vm.isHtml = isHtml;
+            vm.NoteFile = Model.noteFile;
+            vm.NoteOrdinal = Model.header.NoteOrdinal;
+            vm.Email = emailaddr;
+
+            parameters.Add("Model", vm);
+            parameters.Add("FileName", Model.noteFile.NoteFileName + (isHtml ? ".html" : ".txt"));
+
+            Modal.Show<ExportUtil1>("", parameters);
+        }
+
+        private async Task DoEmail()
+        {
+            string emailaddr;
+            var parameters = new ModalParameters();
+            var formModal = Modal.Show<Email>("", parameters);
+            var result = await formModal.Result;
+            if (result.Cancelled)
+                return;
+            emailaddr = (string)result.Data;
+            if (string.IsNullOrEmpty(emailaddr))
+                return;
+
+            DoExport(true, true, true, emailaddr);
+
+        }
+
 
         private void ShowMessage(string message)
         {

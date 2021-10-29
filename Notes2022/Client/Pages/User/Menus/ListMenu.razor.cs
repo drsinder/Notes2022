@@ -126,13 +126,9 @@ namespace Notes2022.Client.Pages.User.Menus
                     break;
 
                 default:
-                    //ShowMessage(id);
                     break;
 
             }
-
-            //ShowMessage(id);
-
         }
 
         private async Task PrintFile()
