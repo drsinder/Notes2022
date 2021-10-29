@@ -38,13 +38,15 @@ namespace Notes2022.Client.Pages.User.Panels
         protected bool RespShown { get; set; }
         protected bool RespFlipped { get; set; }
 
+        protected bool EatEnter { get; set; }
+
         protected DisplayModel model { get; set; }
 
         public NoteMenu MyMenu { get; set; }
 
         SfTextBox sfTextBox { get; set; }
         public string NavString { get; set; }
-        public string NavCurrentVal { get; set; }
+        //public string NavCurrentVal { get; set; }
 
         public string respX { get; set; }
         public string respY { get; set; }
@@ -226,125 +228,116 @@ namespace Notes2022.Client.Pages.User.Panels
 
         private async void NavInputHandler(InputEventArgs args)
         {
-            NavCurrentVal = args.Value;
-
-            switch (NavCurrentVal)
-            {
-                case "I":
-                case "L":
-                    await MyMenu.ExecMenu("ListNotes");
-                    await ClearNav();
-                    return;
-
-                case "N":
-                    await MyMenu.ExecMenu("NewResponse");
-                    await ClearNav();
-                    return;
-
-                case "X":
-                    await MyMenu.ExecMenu("eXport");
-                    await ClearNav();
-                    return;
-
-                case "J":
-                    await MyMenu.ExecMenu("JsonExport");
-                    await ClearNav();
-                    return;
-
-                case "m":
-                    await MyMenu.ExecMenu("mailFromIndex");
-                    await ClearNav();
-                    return;
-
-                case "P":
-                    await MyMenu.ExecMenu("PrintFile");
-                    await ClearNav();
-                    return;
-
-                case "Z":
-                    var formModal = Modal.Show<HelpDialog2>();
-                    await formModal.Result;
-
-                    await ClearNav();
-                    return;
-
-                case "H":
-                    await MyMenu.ExecMenu("HtmlFromIndex");
-                    await ClearNav();
-                    return;
-
-                case "h":
-                    await MyMenu.ExecMenu("htmlFromIndex");
-                    await ClearNav();
-                    return;
-
-                default:
-                    break;
-            }
+            NavString = args.Value;
+            await Task.CompletedTask;
+            EatEnter = false;
         }
 
         private async Task ClearNav()
         {
-            NavCurrentVal = null;
             NavString = null;
+            await Task.CompletedTask;
         }
 
         private async Task KeyPressHandler(KeyboardEventArgs args)
         {
-            if (args.Key == "Enter")
+            switch (NavString)
             {
-                if (args.ShiftKey && string.IsNullOrEmpty(NavCurrentVal))
-                {
-                    string req = "api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + (model.header.NoteOrdinal + 1) + "/0";
-                    long headerId0 = await Http.GetFromJsonAsync<long>(req);
-                    
-                    if (headerId0 != 0)
-                        Navigation.NavigateTo("notedisplay/" + headerId0);
-                    else
-                        ShowMessage("Could not find note : " + req);
+                case "I":
+                case "L":
+                    await ClearNav();
+                    await MyMenu.ExecMenu("ListNotes");
+                    return;
 
+                case "N":
+                    await ClearNav();
+                    await MyMenu.ExecMenu("NewResponse");
+                    return;
+
+                case "Z":
+                    await ClearNav();
+                    Modal.Show<HelpDialog2>();
+                    EatEnter = true;
+                    return;
+
+                case "E":
+                    await MyMenu.ExecMenu("Edit");
+                    return;
+
+                //case "X":
+                //    await MyMenu.ExecMenu("eXport");
+                //    await ClearNav();
+                //    return;
+
+                //case "J":
+                //    await MyMenu.ExecMenu("JsonExport");
+                //    await ClearNav();
+                //    return;
+
+                //case "m":
+                //    await MyMenu.ExecMenu("mailFromIndex");
+                //    await ClearNav();
+                //    return;
+
+                //case "P":
+                //    await MyMenu.ExecMenu("PrintFile");
+                //    await ClearNav();
+                //    return;
+
+                //case "H":
+                //    await MyMenu.ExecMenu("HtmlFromIndex");
+                //    await ClearNav();
+                //    return;
+
+                //case "h":
+                //    await MyMenu.ExecMenu("htmlFromIndex");
+                //    await ClearNav();
+                //    return;
+
+
+                default:
+                    break;
+            }
+
+            if (args.Key == "Enter" && EatEnter)
+            {
+                EatEnter = false;
+                return;
+            }
+
+                if (args.Key == "Enter")
+            {
+                if (args.ShiftKey && string.IsNullOrEmpty(NavString))
+                {
+                    await MyMenu.ExecMenu("NextBase");
+                    await ClearNav();
                     return;
                 }
-                else if (args.ShiftKey && NavCurrentVal == "-")
+                else if (args.ShiftKey && NavString == "-")
                 {
-                    // back one base note
-                    string req = "api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + (model.header.NoteOrdinal - 1) + "/0";
-                    long headerId0 = await Http.GetFromJsonAsync<long>(req);
-                    if (headerId0 != 0)
-                        Navigation.NavigateTo("notedisplay/" + headerId0);
-                    else
-                        ShowMessage("Could not find note : " + req);
-
+                    await MyMenu.ExecMenu("PreviousBase");
+                    await ClearNav();
                     return;
                 }
-                else if (NavCurrentVal == "-")
+                else if (NavString == "-")
                 {
-                    // back one base note
-                    string req = "api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + model.header.NoteOrdinal + "/" + (model.header.ResponseOrdinal - 1);
-                    long headerId0 = await Http.GetFromJsonAsync<long>(req);
-                    if (headerId0 != 0)
-                        Navigation.NavigateTo("notedisplay/" + headerId0);
-                    else
-                        ShowMessage("Could not find note : " + req);
-
+                    await MyMenu.ExecMenu("PreviousNote");
+                    await ClearNav();
                     return;
                 }
 
-                else if (string.IsNullOrEmpty(NavCurrentVal))
+                else if (string.IsNullOrEmpty(NavString))
                 {
-                    long headerId0 = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + model.header.NoteOrdinal + "/" + (model.header.ResponseOrdinal + 1));
-                    if (headerId0 != 0)
-                        Navigation.NavigateTo("notedisplay/" + headerId0);
-                    else
-                        ShowMessage("Could not find note : " + NavCurrentVal);
-
+                    await MyMenu.ExecMenu("NextNote");
+                    await ClearNav();
                     return;
                 }
+
                 bool IsPlus = false;
                 bool IsMinus = false;
                 bool IsRespOnly = false;
 
-                string stuff = NavCurrentVal.Replace(";", "").Replace(" ", "");
+                string stuff = NavString.Replace(";", "").Replace(" ", "");
 
                 if (stuff.StartsWith("+"))
                     IsPlus = true;
@@ -393,14 +386,15 @@ namespace Notes2022.Client.Pages.User.Panels
                             if (headerId2 != 0)
                                 Navigation.NavigateTo("notedisplay/" + headerId2);
                             else
-                                ShowMessage("Could not find note : " + NavCurrentVal);
+                                ShowMessage("Could not find note : " + NavString);
                             return;
                         }
                         long headerId = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + noteNum + "/0");
                         if (headerId != 0)
                             Navigation.NavigateTo("notedisplay/" + headerId);
                         else
-                            ShowMessage("Could not find note : " + NavCurrentVal);
+                            ShowMessage("Could not find note : " + NavString);
+                        await ClearNav();
                         return;
                     }
                 }
@@ -426,15 +420,17 @@ namespace Notes2022.Client.Pages.User.Panels
                             if (headerId2 != 0)
                                 Navigation.NavigateTo("notedisplay/" + headerId2);
                             else
-                                ShowMessage("Could not find note : " + NavCurrentVal);
+                                ShowMessage("Could not find note : " + NavString);
 
                         }
                         long headerId = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + noteNum + "/" + noteRespOrd);
                         if (headerId != 0)
                             Navigation.NavigateTo("notedisplay/" + headerId);
                         else
-                            ShowMessage("Could not find note : " + NavCurrentVal);
+                            ShowMessage("Could not find note : " + NavString);
                     }
+
+                    await ClearNav();
                 }
             }
         }

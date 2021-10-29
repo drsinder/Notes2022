@@ -7,7 +7,7 @@
  
 @message 
 
-<SfTextBox @bind-Value="@val" @onkeypress="@KeyPressHandler" Input="@NavInputHandler" ></SfTextBox> 
+<SfTextBox @bind-Value="@val" @onkeyup="@KeyPressHandler" Input="@NavInputHandler" ></SfTextBox> 
  
 <br /> 
 <br /> 
@@ -17,7 +17,7 @@
 
     public string val { get; set; }
 
-    private string NavCurrentVal { get; set; }
+    //private string NavCurrentVal { get; set; }
     private string message { get; set; }
 
 
@@ -31,26 +31,32 @@
         if (args.Key == "Enter")
         {
             // process  val and clear input
-            NavCurrentVal = null;
+            //NavCurrentVal = null;
             this.val = null;
         }
+
+        val = null;
+
+        await Task.CompletedTask; 
     }
     private async void NavInputHandler(InputEventArgs args)
     {
-        NavCurrentVal = args.Value;
+        //NavCurrentVal = args.Value;
 
-        switch (NavCurrentVal)
-        {
+        //switch (args.Value)
+        //{
 
-            case "Z":
-                message = "Z pressed";
-                this.NavCurrentVal = null;
-                this.val = null;
-                break;
+        //    case "Z":
+        //        message = "Z pressed";
+        //        //this.NavCurrentVal = null;
+        //        this.val = args.Value;
+        //        break;
 
-            default:
-                break;
-        }
+        //    default:
+        //        break;
+        //}
+        this.val = args.Value;
+        await Task.CompletedTask; 
     }
 }
 

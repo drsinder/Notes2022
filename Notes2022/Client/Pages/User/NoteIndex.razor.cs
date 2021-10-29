@@ -23,7 +23,7 @@ namespace Notes2022.Client.Pages.User
         public string NavString { get; set; }
 
         protected SfTextBox sfTextBox { get; set; }
-        protected string NavCurrentVal { get; set; }
+        //protected string NavCurrentVal { get; set; }
 
         [Inject] HttpClient Http { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
@@ -46,130 +46,133 @@ namespace Notes2022.Client.Pages.User
 
         private async Task KeyPressHandler(KeyboardEventArgs args)
         {
-            if (args.Key == "Enter")
-            {
-                string stuff = NavCurrentVal.Replace(";", "").Replace(" ", "");
 
-                // parse string for # or #.#
-
-                string[] parts = stuff.Split('.');
-                if (parts.Length > 2)
-                {
-                    ShowMessage("Too many '.'s : " + parts.Length);
-                }
-                int noteNum;
-                if (parts.Length == 1)
-                {
-                    if (!int.TryParse(parts[0], out noteNum))
-                    {
-                        ShowMessage("Could not parse : " + parts[0]);
-                    }
-                    else
-                    {
-                        long headerId = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + NotesfileId + "/" + noteNum + "/0");
-                        if (headerId != 0)
-                            Navigation.NavigateTo("notedisplay/" + headerId);
-                        else
-                            ShowMessage("Could not find note : " + stuff);
-
-                    }
-                }
-                else if (parts.Length == 2)
-                {
-                    if (!int.TryParse(parts[0], out noteNum))
-                    {
-                        ShowMessage("Could not parse : " + parts[0]);
-                    }
-                    int noteRespOrd;
-                    if (!int.TryParse(parts[1], out noteRespOrd))
-                    {
-                        ShowMessage("Could not parse : " + parts[1]);
-                    }
-                    if (noteNum != 0 && noteRespOrd != 0)
-                    {
-                        long headerId = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + NotesfileId + "/" + noteNum + "/" + noteRespOrd);
-                        if (headerId != 0)
-                            Navigation.NavigateTo("notedisplay/" + headerId);
-                        else
-                            ShowMessage("Could not find note : " + stuff);
-                    }
-                }
-                await ClearNav();
-            }
-        }
-
-        private async void NavInputHandler(InputEventArgs args)
-        {
-            NavCurrentVal = args.Value;
-
-            switch (NavCurrentVal)
+            switch (NavString)
             {
                 case "L":
-                    await MyMenu.ExecMenu("ListNoteFiles");
                     await ClearNav();
+                    await MyMenu.ExecMenu("ListNoteFiles");
                     return;
 
                 case "N":
-                    await MyMenu.ExecMenu("NewBaseNote");
                     await ClearNav();
+                    await MyMenu.ExecMenu("NewBaseNote");
                     return;
 
                 case "X":
-                    await MyMenu.ExecMenu("eXport");
                     await ClearNav();
+                    await MyMenu.ExecMenu("eXport");
                     return;
 
                 case "J":
-                    await MyMenu.ExecMenu("JsonExport");
                     await ClearNav();
+                    await MyMenu.ExecMenu("JsonExport");
                     return;
 
                 case "m":
-                    await MyMenu.ExecMenu("mailFromIndex");
                     await ClearNav();
+                    await MyMenu.ExecMenu("mailFromIndex");
                     return;
 
                 case "P":
-                    await MyMenu.ExecMenu("PrintFile");
                     await ClearNav();
+                    await MyMenu.ExecMenu("PrintFile");
                     return;
 
                 case "Z":
-                    var res = Modal.Show<HelpDialog>();
-                    await res.Result;
                     await ClearNav();
+                    Modal.Show<HelpDialog>();
                     return;
 
                 case "H":
-                    await MyMenu.ExecMenu("HtmlFromIndex");
                     await ClearNav();
+                    await MyMenu.ExecMenu("HtmlFromIndex");
                     return;
 
                 case "h":
-                    await MyMenu.ExecMenu("htmlFromIndex");
                     await ClearNav();
+                    await MyMenu.ExecMenu("htmlFromIndex");
                     return;
 
                 case "R":
-                    await MyMenu.ExecMenu("ReloadIndex");
                     await ClearNav();
+                    await MyMenu.ExecMenu("ReloadIndex");
                     return;
-
 
 
                 default:
                     break;
             }
+
+            if (args.Key == "Enter" )
+            {
+                if (!string.IsNullOrEmpty(NavString))
+                {
+
+                    string stuff = NavString.Replace(";", "").Replace(" ", "");
+
+                    // parse string for # or #.#
+
+                    string[] parts = stuff.Split('.');
+                    if (parts.Length > 2)
+                    {
+                        ShowMessage("Too many '.'s : " + parts.Length);
+                    }
+                    int noteNum;
+                    if (parts.Length == 1)
+                    {
+                        if (!int.TryParse(parts[0], out noteNum))
+                        {
+                            ShowMessage("Could not parse : " + parts[0]);
+                        }
+                        else
+                        {
+                            long headerId = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + NotesfileId + "/" + noteNum + "/0");
+                            if (headerId != 0)
+                                Navigation.NavigateTo("notedisplay/" + headerId);
+                            else
+                                ShowMessage("Could not find note : " + stuff);
+
+                        }
+                    }
+                    else if (parts.Length == 2)
+                    {
+                        if (!int.TryParse(parts[0], out noteNum))
+                        {
+                            ShowMessage("Could not parse : " + parts[0]);
+                        }
+                        int noteRespOrd;
+                        if (!int.TryParse(parts[1], out noteRespOrd))
+                        {
+                            ShowMessage("Could not parse : " + parts[1]);
+                        }
+                        if (noteNum != 0 && noteRespOrd != 0)
+                        {
+                            long headerId = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + NotesfileId + "/" + noteNum + "/" + noteRespOrd);
+                            if (headerId != 0)
+                                Navigation.NavigateTo("notedisplay/" + headerId);
+                            else
+                                ShowMessage("Could not find note : " + stuff);
+                        }
+                    }
+                    await ClearNav();
+                }
+            }
+
+        }
+
+        private async void NavInputHandler(InputEventArgs args)
+        {
+            NavString = args.Value;
+            await Task.CompletedTask;
         }
 
         private async Task ClearNav()
         {
             //NavCurrentVal = null;
-            //NavString = null;
+            NavString = null;
 
-            //myTimer = new System.Timers.Timer(3000);
-            //myTimer.Enabled = true;
-            //myTimer.Elapsed += TimeUp;
+            await Task.CompletedTask;
         }
 
 

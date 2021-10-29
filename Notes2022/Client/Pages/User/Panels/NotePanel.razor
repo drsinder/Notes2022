@@ -98,7 +98,7 @@
 
         <div class="arrow2">
             <div>
-                Navigate: <strong>@model.header.NoteOrdinal@respY</strong> <SfTextBox @ref="@sfTextBox" ShowClearButton="true" Placeholder="b#.r# | (+/-)b# | (+/-).r# " @bind-Value="@NavString" Input="@NavInputHandler" @onkeypress="@KeyPressHandler"></SfTextBox>
+                Navigate: <strong>@model.header.NoteOrdinal@respY</strong> <SfTextBox @ref="@sfTextBox" ShowClearButton="true" Placeholder="b#.r# | (+/-)b# | (+/-).r# " @bind-Value="@NavString" Input="@NavInputHandler" @onkeyup="@KeyPressHandler"></SfTextBox>
             </div>
         </div>
     }
