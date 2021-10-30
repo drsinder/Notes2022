@@ -28,6 +28,8 @@ namespace Notes2022.Client.Pages.User
         protected SfGrid<NoteHeader> sfGrid1 { get; set; }
         protected SfGrid<NoteHeader> sfGrid2 { get; set; }
 
+        NoteHeader target;
+
         protected bool ShowContent { get; set; }
         protected bool ExpandAll { get; set; }
 
@@ -50,32 +52,47 @@ namespace Notes2022.Client.Pages.User
             Navigation.NavigateTo("notedisplay/" + args.Data.Id);
         }
 
-        //public void DetailDataBound(DetailDataBoundEventArgs<NoteHeader> args) // will be triggered when row is created
+        //public async Task DetailDataBound1(DetailDataBoundEventArgs<NoteHeader> args) 
         //{
-        //    if (ExpandAll)
-        //    {
-        //        //sfGrid1.ExpandAllDetailRowAsync();
-        //        sfGrid2.ExpandAllDetailRowAsync();
-        //    }
+        //    await sfGrid1.ExpandAllDetailRowAsync();
+
+
+        //    //await sfGrid1.ExpandAllDetailRowAsync();
+
+        //    //if (target != null)
+        //    //{
+        //    //    if (target == args.Data)
+        //    //    {
+        //    //        return;
+        //    //    }
+        //    //    await sfGrid2.DetailExpandCollapseRow(target);
+        //    //}
+        //    //target = args.Data;
         //}
 
         //public void DataBound()
         //{
         //    if (ExpandAll)
         //    {
-        //        sfGrid2.ExpandAllDetailRowAsync();
+        //        sfGrid1.ExpandAllDetailRowAsync();
         //    }
         //}
 
-        //public void RowDataBoundHandler2(RowDataBoundEventArgs<NoteHeader> args)
+        //public async Task RowDataBound(RowDataBoundEventArgs<NoteHeader> args)
         //{
-        //    if (ExpandAll)
+        //    if (target != null)
         //    {
-        //        sfGrid2.ExpandAllDetailRowAsync();
+        //        //if (target == args.Data)
+        //        //{
+        //        //    return;
+        //        //}
+        //        await sfGrid1.DetailExpandCollapseRow(target);
         //    }
+        //    target = args.Data;
         //}
 
-        //public void DetailDataBound2(DetailDataBoundEventArgs<NoteHeader> args) // will be triggered when row is created
+
+        //public void DetailDataBound(DetailDataBoundEventArgs<NoteHeader> args) // will be triggered when row is created
         //{
         //    if (ExpandAll)
         //    {
@@ -220,9 +237,9 @@ namespace Notes2022.Client.Pages.User
             if (ExpandAll)
             {
 
-                sfGrid1.ExpandAllDetailRowAsync();
+                await sfGrid1.ExpandAllDetailRowAsync();
                 //await Task.CompletedTask;
-                //sfGrid2.ExpandAllDetailRowAsync();
+                //await sfGrid2.ExpandAllDetailRowAsync();
             }
             else
             {
