@@ -31,6 +31,7 @@ namespace Notes2022.Client.Pages.User
         NoteHeader target;
 
         protected bool ShowContent { get; set; }
+        protected bool ShowContentR { get; set; }
         protected bool ExpandAll { get; set; }
 
         [Inject] HttpClient Http { get; set; }
@@ -52,56 +53,7 @@ namespace Notes2022.Client.Pages.User
             Navigation.NavigateTo("notedisplay/" + args.Data.Id);
         }
 
-        //public async Task DetailDataBound1(DetailDataBoundEventArgs<NoteHeader> args) 
-        //{
-        //    await sfGrid1.ExpandAllDetailRowAsync();
-
-
-        //    //await sfGrid1.ExpandAllDetailRowAsync();
-
-        //    //if (target != null)
-        //    //{
-        //    //    if (target == args.Data)
-        //    //    {
-        //    //        return;
-        //    //    }
-        //    //    await sfGrid2.DetailExpandCollapseRow(target);
-        //    //}
-        //    //target = args.Data;
-        //}
-
-        //public void DataBound()
-        //{
-        //    if (ExpandAll)
-        //    {
-        //        sfGrid1.ExpandAllDetailRowAsync();
-        //    }
-        //}
-
-        //public async Task RowDataBound(RowDataBoundEventArgs<NoteHeader> args)
-        //{
-        //    if (target != null)
-        //    {
-        //        //if (target == args.Data)
-        //        //{
-        //        //    return;
-        //        //}
-        //        await sfGrid1.DetailExpandCollapseRow(target);
-        //    }
-        //    target = args.Data;
-        //}
-
-
-        //public void DetailDataBound(DetailDataBoundEventArgs<NoteHeader> args) // will be triggered when row is created
-        //{
-        //    if (ExpandAll)
-        //    {
-        //        sfGrid2.ExpandAllDetailRowAsync();
-        //    }
-        //}
-
-
-
+ 
         private async Task KeyUpHandler(KeyboardEventArgs args)
         {
 
@@ -238,13 +190,9 @@ namespace Notes2022.Client.Pages.User
             {
 
                 await sfGrid1.ExpandAllDetailRowAsync();
-                //await Task.CompletedTask;
-                //await sfGrid2.ExpandAllDetailRowAsync();
             }
             else
             {
-                //sfGrid2.CollapseAllDetailRowAsync();
-                //await Task.CompletedTask;
                 sfGrid1.CollapseAllDetailRowAsync();
             }
         }

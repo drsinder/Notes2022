@@ -45,6 +45,7 @@ else
         <div class="col-lg-12 control-section dialoglist">
             <div class="content-wrapper">
                 <div class="row">
+                    Show Content on Expand&nbsp; <SfSwitch @bind-Checked="@ShowContent"></SfSwitch>&nbsp; Show Response Content on Expand&nbsp; <SfSwitch @bind-Checked="@ShowContentR"></SfSwitch>&nbsp;Expand All&nbsp; <SfSwitch @bind-Checked="@ExpandAll" ValueChange="ExpandAllChange" TChecked="bool"></SfSwitch>
                     <SfGrid @ref="@sfGrid1" DataSource="@Model.Notes" AllowPaging="true" AllowSelection="true" EnableHover="true">
                         <GridEvents RowSelected="DisplayIt" TValue="NoteHeader"></GridEvents>
                         <GridTemplates>
@@ -57,31 +58,9 @@ else
                         {
                             <NotePanel NoteId="@current.Id" ShowChild="false" IsRootNote="false" IsMini="true"></NotePanel>
                         }
-                        <SfGrid @ref="@sfGrid2" DataSource="Resp" AllowPaging="false" AllowSelection="true" EnableHover="true">
-                            <GridEvents RowSelected="DisplayIt" TValue="NoteHeader"></GridEvents>
-                            <GridTemplates>
-                                <DetailTemplate Context="extra">
-                                    @if (ShowContent)
-                                    {
-                                        var current2 = (extra as NoteHeader);
-                                        <NotePanel NoteId="@current2.Id" ShowChild="false" IsRootNote="false" IsMini="true"></NotePanel>
-                                    }
-                                </DetailTemplate>
-                            </GridTemplates>
-                            <GridColumns>
-                                <GridColumn Field=@nameof(NoteHeader.ResponseOrdinal) HeaderText="Resp. #" TextAlign="TextAlign.Left" Width="25" IsPrimaryKey="true"></GridColumn>
-                                <GridColumn Field=@nameof(NoteHeader.NoteSubject) HeaderText="Subject" TextAlign="TextAlign.Left" Width="150"></GridColumn>
-                                <GridColumn Field=@nameof(NoteHeader.AuthorName) HeaderText="Writer" TextAlign="TextAlign.Left" Width="80"></GridColumn>
-                                <GridColumn Field=@nameof(NoteHeader.CreateDate) HeaderText="Date/Time" TextAlign="TextAlign.Left" Width="60">
-                                    <Template Context="inner">
-                                        @{
-                                            var itemx = (inner as NoteHeader);
-                                            <span>@Globals.LocalTimeBlazor(itemx.CreateDate)</span>
-                                        }
-                                    </Template>
-                                </GridColumn>
-                            </GridColumns>
-                        </SfGrid>
+
+                        <Responses Headers="Resp" ShowContentR="ShowContentR" ExpandAllR="ExpandAll"></Responses>
+
                     </DetailTemplate>
                 </GridTemplates>
                 <GridColumns>
@@ -100,8 +79,6 @@ else
                     <GridColumn Field=@nameof(NoteHeader.ResponseCount) HeaderText="Responses" TextAlign="TextAlign.Left" Width="40"></GridColumn>
                 </GridColumns>
             </SfGrid>
-            Show Content on Expand&nbsp; <SfSwitch @bind-Checked="@ShowContent"></SfSwitch>&nbsp; Expand All&nbsp; <SfSwitch @bind-Checked="@ExpandAll" ValueChange="ExpandAllChange" TChecked="bool"></SfSwitch>
-
         </div>
     </div>
 </div>
