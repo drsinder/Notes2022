@@ -37,6 +37,8 @@ namespace Notes2022.Client.Pages.User.Panels
         protected string BodyStyle { get; set; }
 
         protected bool RespShown { get; set; }
+        protected bool? RespShownSw { get; set; }
+
         protected bool RespFlipped { get; set; }
 
         protected bool EatEnter { get; set; }
@@ -98,16 +100,6 @@ namespace Notes2022.Client.Pages.User.Panels
 
         }
 
-        private void OnClickRef(MouseEventArgs args)
-        {
-            ShowChild = true;
-        }
-
-        private void OnClickRefHide(MouseEventArgs args)
-        {
-            ShowChild = false;
-        }
-
         private void OnClickResp(MouseEventArgs args)
         {
             long bnId = model.header.Id;           // if base note
@@ -119,24 +111,20 @@ namespace Notes2022.Client.Pages.User.Panels
             Navigation.NavigateTo("newnote/" + model.noteFile.Id + "/" + bnId + "/" + model.header.Id);
         }
 
-        private async Task OnClickShowResp(MouseEventArgs args)
+        private async Task ShowRespChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
         {
-            RespShown = !RespShown;
-
             if (RespShown)
             {
                 respHeaders = await Http.GetFromJsonAsync<List<NoteHeader>>("api/GetResponseHeaders/" + model.header.Id);
             }
         }
 
-        private async Task OnClickFlipResp(MouseEventArgs args)
+        private void FlipRespChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
         {
-            RespFlipped = !RespFlipped;
             if (RespFlipped)
                 respHeaders = respHeaders.OrderByDescending(x => x.ResponseOrdinal).ToList();
             else
                 respHeaders = respHeaders.OrderBy(x => x.ResponseOrdinal).ToList();
-
         }
 
         private void OnDone(MouseEventArgs args)

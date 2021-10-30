@@ -59,7 +59,7 @@
                 </div>
                 @if (!IsMini)
                 {
-                    @if (ShowButtons)
+                    @if (ShowButtons && !ShowChild)
                     {
                         <SfButton @onclick="OnDone" class="donebutton">Done</SfButton>
                         <SfButton @onclick="OnPrint" class="printbutton">Print</SfButton>
@@ -75,34 +75,28 @@
         </div>
         @if (!IsMini)
         {
-
-            @if (IsRootNote && ShowChild && model.header.RefId != 0)
+            @if (IsRootNote && model.header.RefId != 0)
             {
-                <SfButton @onclick="OnClickRefHide" class="logbutton">Hide References</SfButton>
-            }
-            else if (IsRootNote && model.header.RefId != 0)
-            {
-                <SfButton @onclick="OnClickRef" class="logbutton">Show References</SfButton>
+                <span><strong>Show References</strong></span><SfSwitch @bind-Checked="ShowChild" TChecked="bool"></SfSwitch>
             }
 
             @if (!RespShown && model.header.ResponseOrdinal == 0 && model.header.ResponseCount > 0 && !AltStyle)
             {
-                <SfButton @onclick="OnClickShowResp" class="logbutton">Show Responses</SfButton>
+                <span><strong>Show Responses</strong></span><SfSwitch @bind-Checked="RespShown" ValueChange="ShowRespChange" TChecked="bool"></SfSwitch>
             }
             else if (RespShown)
             {
-                <SfButton @onclick="OnClickShowResp" class="logbutton">Hide Responses</SfButton>
-                <SfButton @onclick="OnClickFlipResp" class="logbutton">Flip Order</SfButton>
+                <span><strong>Show Responses</strong></span><SfSwitch @bind-Checked="RespShown" ValueChange="ShowRespChange" TChecked="bool"></SfSwitch>
+                <span><strong>Flip Order</strong></span><SfSwitch @bind-Checked="RespFlipped" ValueChange="FlipRespChange" TChecked="bool"></SfSwitch>
                 if (respHeaders != null)
                 {
                     bool alt = true;
                     foreach (NoteHeader rh in respHeaders)
                     {
-                        <NotePanel NoteId="@rh.Id" IsRootNote="false" AltStyle="@alt"></NotePanel>
+                        <NotePanel NoteId="@rh.Id" IsRootNote="false" ShowButtons="false" AltStyle="@alt"></NotePanel>
                     }
                 }
             }
-
 
             <div class="arrow2">
                 <div>
