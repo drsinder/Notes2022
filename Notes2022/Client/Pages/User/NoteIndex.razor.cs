@@ -11,6 +11,7 @@ using Blazored.Modal.Services;
 using Blazored.Modal;
 using Notes2022.Client.Pages.User.Dialogs;
 using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor.Navigations;
 
 namespace Notes2022.Client.Pages.User
 {
@@ -23,8 +24,12 @@ namespace Notes2022.Client.Pages.User
         public string NavString { get; set; }
 
         protected SfTextBox sfTextBox { get; set; }
-        
+
+        protected SfGrid<NoteHeader> sfGrid1 { get; set; }
+        protected SfGrid<NoteHeader> sfGrid2 { get; set; }
+
         protected bool ShowContent { get; set; }
+        protected bool ExpandAll { get; set; }
 
         [Inject] HttpClient Http { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
@@ -45,21 +50,40 @@ namespace Notes2022.Client.Pages.User
             Navigation.NavigateTo("notedisplay/" + args.Data.Id);
         }
 
-        public void RowDataBound(RowDataBoundEventArgs<NoteHeader> Args) // will be triggered when row is created
+        //public void DetailDataBound(DetailDataBoundEventArgs<NoteHeader> args) // will be triggered when row is created
+        //{
+        //    if (ExpandAll)
+        //    {
+        //        //sfGrid1.ExpandAllDetailRowAsync();
+        //        sfGrid2.ExpandAllDetailRowAsync();
+        //    }
+        //}
+
+        public void DataBound()
         {
-            if (Args.Data.ResponseCount == 0)
+            if (ExpandAll)
             {
-                Args.Row.AddClass(new string[] { "e-detail-disable" });
+                sfGrid2.ExpandAllDetailRowAsync();
             }
         }
 
-        public void RowDataBound2(RowDataBoundEventArgs<NoteHeader> Args) // will be triggered when row is created
-        {
-            if (ShowContent)
-            {
-                Args.Row.AddClass(new string[] { "e-detail-disable" });
-            }
-        }
+        //public void RowDataBoundHandler2(RowDataBoundEventArgs<NoteHeader> args)
+        //{
+        //    if (ExpandAll)
+        //    {
+        //        sfGrid2.ExpandAllDetailRowAsync();
+        //    }
+        //}
+
+        //public void DetailDataBound2(DetailDataBoundEventArgs<NoteHeader> args) // will be triggered when row is created
+        //{
+        //    if (ExpandAll)
+        //    {
+        //        sfGrid2.ExpandAllDetailRowAsync();
+        //    }
+        //}
+
+
 
         private async Task KeyUpHandler(KeyboardEventArgs args)
         {
@@ -186,12 +210,27 @@ namespace Notes2022.Client.Pages.User
 
         private async Task ClearNav()
         {
-            //NavCurrentVal = null;
             NavString = null;
 
             await Task.CompletedTask;
         }
 
+        private async void ExpandAllChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (ExpandAll)
+            {
+
+                sfGrid1.ExpandAllDetailRowAsync();
+                //await Task.CompletedTask;
+                //sfGrid2.ExpandAllDetailRowAsync();
+            }
+            else
+            {
+                //sfGrid2.CollapseAllDetailRowAsync();
+                //await Task.CompletedTask;
+                sfGrid1.CollapseAllDetailRowAsync();
+            }
+        }
 
         private void ShowMessage(string message)
         {
