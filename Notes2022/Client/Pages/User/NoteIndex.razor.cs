@@ -59,13 +59,13 @@ namespace Notes2022.Client.Pages.User
         //    }
         //}
 
-        public void DataBound()
-        {
-            if (ExpandAll)
-            {
-                sfGrid2.ExpandAllDetailRowAsync();
-            }
-        }
+        //public void DataBound()
+        //{
+        //    if (ExpandAll)
+        //    {
+        //        sfGrid2.ExpandAllDetailRowAsync();
+        //    }
+        //}
 
         //public void RowDataBoundHandler2(RowDataBoundEventArgs<NoteHeader> args)
         //{
