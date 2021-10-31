@@ -50,7 +50,5 @@ namespace Notes2022.Client.Pages.User.Panels
         {
             Navigation.NavigateTo("notedisplay/" + args.Data.Id);
         }
-
-
     }
 }

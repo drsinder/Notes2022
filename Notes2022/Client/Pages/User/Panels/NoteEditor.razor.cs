@@ -59,6 +59,7 @@ namespace Notes2022.Client.Pages.User.Panels
             new ToolbarItemModel() { Command = ToolbarCommand.Separator },
             new ToolbarItemModel() { Command = ToolbarCommand.ClearFormat },
             new ToolbarItemModel() { Command = ToolbarCommand.Print },
+            new ToolbarItemModel() { Command = ToolbarCommand.InsertCode },
             new ToolbarItemModel() { Command = ToolbarCommand.SourceCode },
             new ToolbarItemModel() { Command = ToolbarCommand.FullScreen },
         };
