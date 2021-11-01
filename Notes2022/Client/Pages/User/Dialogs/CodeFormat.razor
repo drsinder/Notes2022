@@ -1,0 +1,37 @@
+﻿<div class="dialogs modal-body">
+
+<h3>Format code?</h3>    
+
+@message
+
+    <div>As:
+        <br />
+        <SfRadioButton Label="None" Name="options" Value="none" @bind-Checked="stringChecked"></SfRadioButton>
+        <br />
+        <SfRadioButton Label="C#" Name="options" Value="C#" @bind-Checked="stringChecked"></SfRadioButton>
+        <br />
+        <SfRadioButton Label="Css" Name="options" Value="Css" @bind-Checked="stringChecked"></SfRadioButton>
+        <br />
+        <SfRadioButton Label="Javascript" Name="options" Value="Javascript" @bind-Checked="stringChecked"></SfRadioButton>
+
+        <br />
+        <SfRadioButton Label="Json" Name="options" Value="Json" @bind-Checked="stringChecked"></SfRadioButton>
+
+@*        <br />
+        <SfRadioButton Label="Razor" Name="options" Value="Razor" @bind-Checked="stringChecked"></SfRadioButton>
+*@        
+        <br />
+        <SfRadioButton Label="Html" Name="options" Value="Html" @bind-Checked="stringChecked"></SfRadioButton>
+        <br />
+        <SfRadioButton Label="C++" Name="options" Value="C++" @bind-Checked="stringChecked"></SfRadioButton>
+        <br />
+        <SfRadioButton Label="C" Name="options" Value="C" @bind-Checked="stringChecked"></SfRadioButton>
+
+    </div>
+
+    <button type="button" @onclick="Ok" class="btn btn-success btn-sm">Ok</button>
+    <button type="button" @onclick="Cancel" class="btn btn-info btn-sm">Close</button>
+</div>
+
+
+

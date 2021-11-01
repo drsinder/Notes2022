@@ -14,11 +14,14 @@ using Syncfusion.Blazor.SplitButtons;
 using Syncfusion.Blazor.RichTextEditor;
 using System.Net.Http;
 using Microsoft.AspNetCore.Components.Web;
+using Notes2022.Client.Pages.User.Dialogs;
 
 namespace Notes2022.Client.Pages.User.Panels
 {
     public partial class NoteEditor
     {
+        [CascadingParameter] public IModalService Modal { get; set; }
+
         [Parameter] public TextViewModel Model { get; set; }
 
         private bool ShowChild = false;
@@ -83,6 +86,18 @@ namespace Notes2022.Client.Pages.User.Panels
 
             if (Model.NoteID == 0)    // new note
             {
+                if (Model.MyNote.Contains("<pre>"))
+                {
+                    var parameters = new ModalParameters();
+                    parameters.Add("stuff", Model.MyNote);
+                    var formModal = Modal.Show<CodeFormat>("", parameters);
+                    var result = await formModal.Result;
+                    if (!result.Cancelled)
+                    {
+                        Model.MyNote = (string)result.Data;
+                    }
+                }
+
                 await Http.PostAsJsonAsync("api/NewNote/", Model);
                 NoteHeader nh = await Http.GetFromJsonAsync<NoteHeader>("api/NewNote2");
                 Navigation.NavigateTo("/notedisplay/" + nh.Id);
@@ -90,6 +105,21 @@ namespace Notes2022.Client.Pages.User.Panels
             }
             else // editing
             {
+                if (Model.MyNote.Contains("<pre>"))
+                {
+                    if (!Model.MyNote.Contains("<pre><code"))
+                    {
+                        var parameters = new ModalParameters();
+                        parameters.Add("stuff", Model.MyNote);
+                        var formModal = Modal.Show<CodeFormat>("", parameters);
+                        var result = await formModal.Result;
+                        if (!result.Cancelled)
+                        {
+                            Model.MyNote = (string)result.Data;
+                        }
+                    }
+                }
+
                 await Http.PutAsJsonAsync("api/NewNote/", Model);
                 Navigation.NavigateTo("/notedisplay/" + Model.NoteID);
                 return;
