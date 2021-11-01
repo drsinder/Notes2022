@@ -1,5 +1,71 @@
 ﻿@page "/test"
 
+
+<code class="language-css">p { color: green }</code>
+
+<pre><code class="language-css">p { color: green }</code></pre>
+
+
+<pre><code class="language-csharp">
+using Microsoft.AspNetCore.Components;
+using Notes2022.Shared;
+using Syncfusion.Blazor.Grids;
+
+namespace Notes2022.Client.Pages.User.Panels
+{
+    public partial class Responses
+    {
+        [Parameter] public bool ShowContentR { get; set; }
+        [Parameter] public bool ExpandAllR { get; set; }
+
+        public bool ShowContent { get; set; }
+        public bool ExpandAll { get; set; }
+
+
+
+        [Inject] NavigationManager Navigation { get; set; }
+        public Responses()
+        {
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
+            ShowContent = ShowContentR;
+            ExpandAll = ExpandAllR;
+        }
+
+        public void DataBoundHandler()
+        {
+            if (ExpandAll)
+            {
+                sfGrid2.ExpandAllDetailRowAsync();
+            }
+        }
+
+        private async void ExpandAllChange(Syncfusion.Blazor.Buttons.ChangeEventArgs bool arg)
+        {
+            if (ExpandAll)
+            {
+                await sfGrid2.ExpandAllDetailRowAsync();
+            }
+            else
+            {
+                await sfGrid2.CollapseAllDetailRowAsync();
+            }
+        }
+        protected void DisplayIt(RowSelectEventArgsNoteHeader args)
+        {
+            Navigation.NavigateTo("notedisplay/" + args.Data.Id);
+        }
+    }
+}
+
+
+</code></pre>
+
+
+
+@*
 @using Syncfusion.Blazor.Inputs 
 
 
@@ -59,5 +125,5 @@
         await Task.CompletedTask; 
     }
 }
-
+*@
 

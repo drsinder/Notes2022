@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Notes2022.Client.Pages.User.Dialogs;
 using Syncfusion.Blazor.Inputs;
 using Notes2022.Client.Pages.User.Menus;
+using Microsoft.JSInterop;
 
 namespace Notes2022.Client.Pages.User.Panels
 {
@@ -57,6 +58,7 @@ namespace Notes2022.Client.Pages.User.Panels
 
         [Inject] HttpClient Http { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
+        [Inject] IJSRuntime JSRuntime { get; set; }
         public NotePanel()
         {
             ShowChild = false;
@@ -457,6 +459,8 @@ namespace Notes2022.Client.Pages.User.Panels
                 myTimer.Enabled = true;
                 myTimer.Elapsed += TimeUp;
             }
+
+            await JSRuntime.InvokeVoidAsync("Prism.highlightAll");
         }
 
         protected void TimeUp(Object source, ElapsedEventArgs e)

@@ -1,5 +1,8 @@
 ﻿@inherits LayoutComponentBase
 
+@*@inject IJSRuntime JS
+*@
+
 <div class="page">
     <main>
         <div class="top-row px-4 auth" style="background-color: #555;">
@@ -14,5 +17,12 @@
 </div>
 
 @code{
+    //protected override async Task OnAfterRenderAsync(bool firstRender)
+    //{
+    //    if(firstRender)
+    //    {
+    //        await JS.InvokeAsync<IJSObjectReference>("import", new string[] { "prism.js" });
+    //    }
+    //}
 }
 
