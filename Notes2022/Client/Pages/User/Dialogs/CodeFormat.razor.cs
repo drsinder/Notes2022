@@ -17,6 +17,7 @@ namespace Notes2022.Client.Pages.User.Dialogs
         protected async override Task OnParametersSetAsync()
         {
             message = "<pre>" + stuff + "</pre>";
+            //message = ((MarkupString)message).Value;
         }
 
         private void Ok()

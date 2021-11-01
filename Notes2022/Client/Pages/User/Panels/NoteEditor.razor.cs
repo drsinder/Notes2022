@@ -107,6 +107,10 @@ namespace Notes2022.Client.Pages.User.Panels
                             node.InnerHtml = (string)result.Data;
 
                         }
+                        else
+                        {
+                            return;
+                        }
                     }
 
                     Model.MyNote = htmlDoc.DocumentNode.OuterHtml;

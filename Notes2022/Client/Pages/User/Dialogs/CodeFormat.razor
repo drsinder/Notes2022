@@ -4,7 +4,10 @@
 
 @*@((MarkupString)message)*@
 
-<SfTextBox Multiline=true Value="@message" Enabled="false" ></SfTextBox>
+<div >
+    <SfTextBox Multiline=true Value="@message" Enabled="false" CssClass="mycode"></SfTextBox>
+</div>
+
 
     <div>As:
         <br />
@@ -32,8 +35,12 @@
     </div>
 
     <button type="button" @onclick="Ok" class="btn btn-success btn-sm">Ok</button>
-    <button type="button" @onclick="Cancel" class="btn btn-info btn-sm">Close</button>
+    <button type="button" @onclick="Cancel" class="btn btn-info btn-sm">Cancel</button>
 </div>
 
-
+<style>
+    .e-input-group.mycode {
+        height:200px;
+    }
+</style>
 
