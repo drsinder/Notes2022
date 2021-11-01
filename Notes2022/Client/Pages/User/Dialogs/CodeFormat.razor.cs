@@ -25,40 +25,9 @@ namespace Notes2022.Client.Pages.User.Dialogs
             {
                 case "none":
                     break;
-                case "C#":
-                    stuff = MakeCode(stuff, "csharp");
-                    break;
-
-                case "Css":
-                    stuff = MakeCode(stuff, "css");
-                    break;
-
-                case "Javascript":
-                    stuff = MakeCode(stuff, "js");
-                    break;
-
-                case "Json":
-                    stuff = MakeCode(stuff, "json");
-                    break;
-
-                case "Razor":
-                    stuff = MakeCode(stuff, "razor");
-                    break;
-
-                case "Html":
-                    stuff = MakeCode(stuff, "html");
-                    break;
-
-                case "C++":
-                    stuff = MakeCode(stuff, "cpp");
-                    break;
-
-                case "C":
-                    stuff = MakeCode(stuff, "c");
-                    break;
-
 
                 default:
+                    stuff = MakeCode(stuff, stringChecked);
                     break;
             }
             ModalInstance.CloseAsync(ModalResult.Ok(stuff));
