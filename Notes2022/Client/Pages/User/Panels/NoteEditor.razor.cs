@@ -15,6 +15,7 @@ using Syncfusion.Blazor.RichTextEditor;
 using System.Net.Http;
 using Microsoft.AspNetCore.Components.Web;
 using Notes2022.Client.Pages.User.Dialogs;
+using HtmlAgilityPack;
 
 namespace Notes2022.Client.Pages.User.Panels
 {
@@ -88,14 +89,28 @@ namespace Notes2022.Client.Pages.User.Panels
             {
                 if (Model.MyNote.Contains("<pre>"))
                 {
-                    var parameters = new ModalParameters();
-                    parameters.Add("stuff", Model.MyNote);
-                    var formModal = Modal.Show<CodeFormat>("", parameters);
-                    var result = await formModal.Result;
-                    if (!result.Cancelled)
+                    var htmlDoc = new HtmlDocument();
+                    htmlDoc.LoadHtml(Model.MyNote);
+
+                    var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//pre");
+
+                    foreach (var node in htmlNodes)
                     {
-                        Model.MyNote = (string)result.Data;
+                        string stuff = node.InnerHtml;
+
+                        var parameters = new ModalParameters();
+                        parameters.Add("stuff", stuff);
+                        var formModal = Modal.Show<CodeFormat>("", parameters);
+                        var result = await formModal.Result;
+                        if (!result.Cancelled)
+                        {
+                            node.InnerHtml = (string)result.Data;
+
+                        }
                     }
+
+                    Model.MyNote = htmlDoc.DocumentNode.OuterHtml;
+
                 }
 
                 await Http.PostAsJsonAsync("api/NewNote/", Model);

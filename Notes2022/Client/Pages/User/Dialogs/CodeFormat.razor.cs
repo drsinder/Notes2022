@@ -2,6 +2,7 @@
 using Blazored.Modal.Services;
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Components;
+using System.Text;
 
 namespace Notes2022.Client.Pages.User.Dialogs
 {
@@ -15,63 +16,65 @@ namespace Notes2022.Client.Pages.User.Dialogs
 
         protected async override Task OnParametersSetAsync()
         {
-            var htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(stuff);
-
-            var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//pre");
-
-            foreach (var node in htmlNodes)
-            {
-                message = node.InnerHtml;
-            }
-
+            message = "<pre>" + stuff + "</pre>";
         }
 
         private void Ok()
         {
-
             switch (stringChecked)
             {
-                case "none": break;
+                case "none":
+                    break;
                 case "C#":
-                    stuff = stuff.Replace("<pre>", "<pre><code class=\"language-csharp\">").Replace("</pre>", "</code></pre>");
+                    stuff = MakeCode(stuff, "csharp");
                     break;
 
                 case "Css":
-                    stuff = stuff.Replace("<pre>", "<pre><code class=\"language-css\">").Replace("</pre>", "</code></pre>");
+                    stuff = MakeCode(stuff, "css");
                     break;
 
                 case "Javascript":
-                    stuff = stuff.Replace("<pre>", "<pre><code class=\"language-js\">").Replace("</pre>", "</code></pre>");
+                    stuff = MakeCode(stuff, "js");
                     break;
 
                 case "Json":
-                    stuff = stuff.Replace("<pre>", "<pre><code class=\"language-json\">").Replace("</pre>", "</code></pre>");
+                    stuff = MakeCode(stuff, "json");
                     break;
 
                 case "Razor":
-                    stuff = stuff.Replace("<pre>", "<pre><code class=\"language-razor\">").Replace("</pre>", "</code></pre>");
+                    stuff = MakeCode(stuff, "razor");
                     break;
 
                 case "Html":
-                    stuff = stuff.Replace("<pre>", "<pre><code class=\"language-html\">").Replace("</pre>", "</code></pre>");
+                    stuff = MakeCode(stuff, "html");
                     break;
 
                 case "C++":
-                    stuff = stuff.Replace("<pre>", "<pre><code class=\"language-cpp\">").Replace("</pre>", "</code></pre>");
+                    stuff = MakeCode(stuff, "cpp");
                     break;
 
                 case "C":
-                    stuff = stuff.Replace("<pre>", "<pre><code class=\"language-c\">").Replace("</pre>", "</code></pre>");
+                    stuff = MakeCode(stuff, "c");
                     break;
 
 
                 default:
                     break;
             }
-
-
             ModalInstance.CloseAsync(ModalResult.Ok(stuff));
+        }
+
+        private string MakeCode (string stuff, string codeType)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("<code class=\"language-");
+            sb.Append(codeType);
+            sb.Append("\">");
+            sb.Append(stuff);
+            sb.Append("</code>");
+
+            return sb.ToString();
         }
 
 

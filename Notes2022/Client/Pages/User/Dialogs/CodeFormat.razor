@@ -1,8 +1,10 @@
-﻿<div class="dialogs modal-body">
+﻿<div class="dialogs modal-body medium-input">
 
 <h3>Format code?</h3>    
 
-@message
+@*@((MarkupString)message)*@
+
+<SfTextBox Multiline=true Value="@message" Enabled="false" ></SfTextBox>
 
     <div>As:
         <br />
