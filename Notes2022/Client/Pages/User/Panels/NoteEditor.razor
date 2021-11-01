@@ -22,34 +22,34 @@ else
     <div class="note-edit">
         <h3>Note Editor - @noteFile.NoteFileName - @noteFile.NoteFileTitle</h3>
         <EditForm id="createform" Model="@Model" OnValidSubmit="HandleValidSubmit">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <strong>Subject</strong>
+
+           <strong>Subject</strong>
             <InputText id="name" @bind-Value="Model.MySubject" class="form-control long-input" />
 
             <strong>Tags</strong>
             <InputText id="title" @bind-Value="Model.TagLine" class="form-control long-input" />
+            
             <strong>Director Message</strong>
-            <InputText id="title" @bind-Value="Model.DirectorMessage" class="form-control long-input" />
+            <InputText id="dirmessage" @bind-Value="Model.DirectorMessage" class="form-control long-input" />
 
             <strong>Note Body</strong>
-
+            <SfRichTextEditor @ref="EditObj" @bind-Value="@Model.MyNote" 
+                    EditorMode="EditorMode.HTML" EnableResize="true" 
+                    ShowCharCount="true" Height="500" Width="1000" MaxLength="100000">
+                <RichTextEditorToolbarSettings @ref="ToolBarObj" Items="@Tools" Type="ToolbarType.MultiRow" />
+                   <RichTextEditorEvents OnToolbarClick="@OnToolbarClickHandler"  />
+            </SfRichTextEditor>
         </EditForm>
-        <SfRichTextEditor @ref="EditObj" @bind-Value="@Model.MyNote" EditorMode="EditorMode.HTML" ShowCharCount="true" Height="500" Width="950" MaxLength="100000">
-            <RichTextEditorToolbarSettings @ref="ToolBarObj" Items="@Tools" Type="ToolbarType.Expand" />
-        </SfRichTextEditor>
-
 
         <br /><button type="submit" @onclick="HandleValidSubmit" class="btn btn-success btn-sm">Save</button>
         <button type="button" @onclick="CancelEdit" class="btn btn-info btn-sm">Cancel</button>
 
     </div>
-
 }
 
 <style>
     .e-richtexteditor .e-rte-content .e-content pre {
-        padding: 10px;
-        background: #F4F5F7 !important;
+@*        padding: 10px;
+*@        background: #F4F5F7 !important;
     }
 </style>

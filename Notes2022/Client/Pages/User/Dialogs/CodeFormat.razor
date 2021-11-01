@@ -1,46 +1,26 @@
-﻿<div class="dialogs modal-body medium-input">
+﻿@using Syncfusion.Blazor.DropDowns
 
-<h3>Format code?</h3>    
+<div class="dialogs modal-body medium-input">
 
-@*@((MarkupString)message)*@
+    <h3>Insert Code To Be Syntax Formatted</h3>
 
-<div >
-    <SfTextBox Multiline=true Value="@message" Enabled="false" CssClass="mycode"></SfTextBox>
-</div>
-
-
-    <div>As:
-        <br />
-        <SfRadioButton Label="None" Name="options" Value="none" @bind-Checked="stringChecked"></SfRadioButton>
-        <br />
-        <SfRadioButton Label="C#" Name="options" Value="csharp" @bind-Checked="stringChecked"></SfRadioButton>
-        <br />
-        <SfRadioButton Label="Css" Name="options" Value="css" @bind-Checked="stringChecked"></SfRadioButton>
-        <br />
-        <SfRadioButton Label="Javascript" Name="options" Value="js" @bind-Checked="stringChecked"></SfRadioButton>
-
-        <br />
-        <SfRadioButton Label="Json" Name="options" Value="json" @bind-Checked="stringChecked"></SfRadioButton>
-
-@*        <br />
-        <SfRadioButton Label="Razor" Name="options" Value="razor" @bind-Checked="stringChecked"></SfRadioButton>
-*@        
-        <br />
-        <SfRadioButton Label="Html" Name="options" Value="html" @bind-Checked="stringChecked"></SfRadioButton>
-        <br />
-        <SfRadioButton Label="C++" Name="options" Value="cpp" @bind-Checked="stringChecked"></SfRadioButton>
-        <br />
-        <SfRadioButton Label="C" Name="options" Value="c" @bind-Checked="stringChecked"></SfRadioButton>
-
+    <div>
+        Format as:  <SfDropDownList TValue="string" Placeholder="Select code type" 
+                            TItem="CFormat" @bind-Value="@DropVal" DataSource="@CFormats">
+                        <DropDownListFieldSettings Value="Name"></DropDownListFieldSettings>
+                    </SfDropDownList>
     </div>
-
+    <hr />
+    <div>
+        <SfTextBox @ref="@TextObj" Multiline=true Value="@message" Enabled="true" CssClass="mycode"></SfTextBox>
+    </div>
     <button type="button" @onclick="Ok" class="btn btn-success btn-sm">Ok</button>
     <button type="button" @onclick="Cancel" class="btn btn-info btn-sm">Cancel</button>
 </div>
 
 <style>
     .e-input-group.mycode {
-        height:200px;
+        height: 350px;
     }
 </style>
 

@@ -1,38 +1,23 @@
-﻿using System.Timers;
-using System.Text;
-using Notes2022.Shared;
-using Syncfusion.Blazor.Navigations;
-using Syncfusion.Blazor.Popups;
+﻿using Notes2022.Shared;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using Blazored.Modal.Services;
 using Blazored.Modal;
-using Newtonsoft.Json;
 using System.Net.Http.Json;
-
-using Syncfusion.Blazor.SplitButtons;
 using Syncfusion.Blazor.RichTextEditor;
-using System.Net.Http;
 using Microsoft.AspNetCore.Components.Web;
 using Notes2022.Client.Pages.User.Dialogs;
-using HtmlAgilityPack;
 
 namespace Notes2022.Client.Pages.User.Panels
 {
     public partial class NoteEditor
     {
         [CascadingParameter] public IModalService Modal { get; set; }
-
         [Parameter] public TextViewModel Model { get; set; }
 
         private bool ShowChild = false;
         private NoteFile noteFile { get; set; } = new NoteFile();
-
         private SfRichTextEditor EditObj { get; set; }
         private RichTextEditorToolbarSettings ToolBarObj { get; set; }
-
-
-        //string mynote { get; set; }
 
         private List<ToolbarItemModel> Tools = new List<ToolbarItemModel>()
         {
@@ -65,7 +50,7 @@ namespace Notes2022.Client.Pages.User.Panels
             new ToolbarItemModel() { Command = ToolbarCommand.Print },
             new ToolbarItemModel() { Command = ToolbarCommand.InsertCode },
             new ToolbarItemModel() { Command = ToolbarCommand.SourceCode },
-            new ToolbarItemModel() { Command = ToolbarCommand.FullScreen },
+            new ToolbarItemModel() { Command = ToolbarCommand.FullScreen }
         };
 
         [Inject] HttpClient Http { get; set; }
@@ -87,36 +72,6 @@ namespace Notes2022.Client.Pages.User.Panels
 
             if (Model.NoteID == 0)    // new note
             {
-                if (Model.MyNote.Contains("<pre>"))
-                {
-                    var htmlDoc = new HtmlDocument();
-                    htmlDoc.LoadHtml(Model.MyNote);
-
-                    var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//pre");
-
-                    foreach (var node in htmlNodes)
-                    {
-                        string stuff = node.InnerHtml;
-
-                        var parameters = new ModalParameters();
-                        parameters.Add("stuff", stuff);
-                        var formModal = Modal.Show<CodeFormat>("", parameters);
-                        var result = await formModal.Result;
-                        if (!result.Cancelled)
-                        {
-                            node.InnerHtml = (string)result.Data;
-
-                        }
-                        else
-                        {
-                            return;
-                        }
-                    }
-
-                    Model.MyNote = htmlDoc.DocumentNode.OuterHtml;
-
-                }
-
                 await Http.PostAsJsonAsync("api/NewNote/", Model);
                 NoteHeader nh = await Http.GetFromJsonAsync<NoteHeader>("api/NewNote2");
                 Navigation.NavigateTo("/notedisplay/" + nh.Id);
@@ -124,25 +79,36 @@ namespace Notes2022.Client.Pages.User.Panels
             }
             else // editing
             {
-                if (Model.MyNote.Contains("<pre>"))
-                {
-                    if (!Model.MyNote.Contains("<pre><code"))
-                    {
-                        var parameters = new ModalParameters();
-                        parameters.Add("stuff", Model.MyNote);
-                        var formModal = Modal.Show<CodeFormat>("", parameters);
-                        var result = await formModal.Result;
-                        if (!result.Cancelled)
-                        {
-                            Model.MyNote = (string)result.Data;
-                        }
-                    }
-                }
-
                 await Http.PutAsJsonAsync("api/NewNote/", Model);
                 Navigation.NavigateTo("/notedisplay/" + Model.NoteID);
                 return;
             }
+        }
+
+        public async Task OnToolbarClickHandler(ToolbarClickEventArgs args)
+        {
+            if (args.Item.Id == "InsertCode")
+            {
+                string xx = await EditObj.GetSelectedHtmlAsync();
+                if (xx != null && xx.Length > 0)
+                {
+                    ShowMessage("Code can not be edited.  Please Copy, Delete, and Reinsert");
+                    return;
+                }
+                // get insertion point?? how??
+
+                var parameters = new ModalParameters();
+                parameters.Add("stuff", xx);
+                parameters.Add("EditObj", EditObj);
+                Modal.Show<CodeFormat>("", parameters);
+            }
+        }
+
+        private void ShowMessage(string message)
+        {
+            var parameters = new ModalParameters();
+            parameters.Add("MessageInput", message);
+            Modal.Show<MessageBox>("", parameters);
         }
 
         protected void CancelEdit()
