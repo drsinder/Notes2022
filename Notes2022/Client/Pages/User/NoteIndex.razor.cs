@@ -26,9 +26,7 @@ namespace Notes2022.Client.Pages.User
         protected SfTextBox sfTextBox { get; set; }
 
         protected SfGrid<NoteHeader> sfGrid1 { get; set; }
-        protected SfGrid<NoteHeader> sfGrid2 { get; set; }
-
-        NoteHeader target;
+        protected int PageSize { get; set; }
 
         protected bool ShowContent { get; set; }
         protected bool ShowContentR { get; set; }
@@ -46,6 +44,7 @@ namespace Notes2022.Client.Pages.User
         {
             Model = await Http.GetFromJsonAsync<NoteDisplayIndexModel>("api/NoteIndex/" + NotesfileId);
             Model.Notes = Model.AllNotes.FindAll(p => p.ResponseOrdinal == 0).OrderBy(p => p.NoteOrdinal).ToList();
+            PageSize = Model.UserData.Ipref2;
         }
 
         protected void DisplayIt(RowSelectEventArgs<NoteHeader> args)
