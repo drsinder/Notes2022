@@ -27,18 +27,18 @@ namespace Notes2022.Client.Pages.User.Dialogs
 
         public List<CFormat> CFormats = new List<CFormat>
         {
-            new CFormat() { Name = "None", Code = "none" },
-            new CFormat() { Name = "C#", Code = "csharp" },
-            new CFormat() { Name = "C++", Code = "cpp" },
-            new CFormat() { Name = "C", Code = "c" },
-            new CFormat() { Name = "Java", Code = "java" },
+            new CFormat() { Name = "None",  Code = "none" },
+            new CFormat() { Name = "C#",    Code = "csharp" },
+            new CFormat() { Name = "C++",   Code = "cpp" },
+            new CFormat() { Name = "C",     Code = "c" },
+            new CFormat() { Name = "Java",  Code = "java" },
             new CFormat() { Name = "Razor", Code = "razor" },
             new CFormat() { Name = "JavaScript", Code = "js" },
-            new CFormat() { Name = "Json", Code = "json" },
-            new CFormat() { Name = "Html", Code = "html" },
-            new CFormat() { Name = "Perl", Code = "perl" },
-            new CFormat() { Name = "Php", Code = "php" },
-            new CFormat() { Name = "SQL", Code = "sql" },
+            new CFormat() { Name = "Json",  Code = "json" },
+            new CFormat() { Name = "Html",  Code = "html" },
+            new CFormat() { Name = "Perl",  Code = "perl" },
+            new CFormat() { Name = "Php",   Code = "php" },
+            new CFormat() { Name = "SQL",   Code = "sql" },
             new CFormat() { Name = "PowerShell", Code = "powershell" }
         };
 
