@@ -32,7 +32,7 @@ namespace Notes2022.Client.Pages.User.Dialogs
             new CFormat() { Name = "C++",   Code = "cpp" },
             new CFormat() { Name = "C",     Code = "c" },
             new CFormat() { Name = "Razor", Code = "razor" },
-            new CFormat() { Name = "Css",  Code = "css" },
+            new CFormat() { Name = "Css",   Code = "css" },
             new CFormat() { Name = "Java",  Code = "java" },
             new CFormat() { Name = "JavaScript", Code = "js" },
             new CFormat() { Name = "Json",  Code = "json" },
