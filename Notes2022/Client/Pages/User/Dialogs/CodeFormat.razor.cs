@@ -69,7 +69,7 @@ namespace Notes2022.Client.Pages.User.Dialogs
                     message = MakeCode(message, code);
                     break;
             }
-            await EditObj.ExecuteCommandAsync(CommandName.InsertHTML, message);
+            //await EditObj.ExecuteCommandAsync(CommandName.InsertHTML, message);
             await ModalInstance.CloseAsync(ModalResult.Ok(message));
         }
 
@@ -77,11 +77,11 @@ namespace Notes2022.Client.Pages.User.Dialogs
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("<code class=\"language-");
+            sb.Append("<pre><code class=\"language-");
             sb.Append(codeType);
             sb.Append("\">");
             sb.Append(stuff2);
-            sb.Append("</code>");
+            sb.Append("</code></pre>");
 
             return sb.ToString();
         }

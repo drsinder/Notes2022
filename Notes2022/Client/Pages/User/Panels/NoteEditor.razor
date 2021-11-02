@@ -21,23 +21,33 @@ else
 
     <div class="note-edit">
         <h3>Note Editor - @noteFile.NoteFileName - @noteFile.NoteFileTitle</h3>
-        <EditForm id="createform" Model="@Model" OnValidSubmit="HandleValidSubmit">
+        <EditForm id="createform" Model="@Model">
 
-           <strong>Subject</strong>
+            <strong>Subject</strong>
             <InputText id="name" @bind-Value="Model.MySubject" class="form-control long-input" />
 
             <strong>Tags</strong>
             <InputText id="title" @bind-Value="Model.TagLine" class="form-control long-input" />
-            
+
             <strong>Director Message</strong>
             <InputText id="dirmessage" @bind-Value="Model.DirectorMessage" class="form-control long-input" />
 
             <strong>Note Body</strong>
-            <SfRichTextEditor @ref="EditObj" @bind-Value="@Model.MyNote" 
-                    EditorMode="EditorMode.HTML" EnableResize="true" 
-                    ShowCharCount="true" Height="500" Width="1000" MaxLength="100000">
-                <RichTextEditorToolbarSettings @ref="ToolBarObj" Items="@Tools" Type="ToolbarType.MultiRow" />
-                   <RichTextEditorEvents OnToolbarClick="@OnToolbarClickHandler"  />
+            <SfRichTextEditor @ref="EditObj" @bind-Value="@Model.MyNote"
+                          EditorMode="EditorMode.HTML" EnableResize="true"
+                          ShowCharCount="true" Height="500" Width="1000" MaxLength="100000">
+                <RichTextEditorToolbarSettings @ref="ToolBarObj" Items="@Tools" Type="ToolbarType.MultiRow">
+
+                    <RichTextEditorCustomToolbarItems>
+                        <RichTextEditorCustomToolbarItem Name="PCode">
+                            <Template>
+                                <SfButton @onclick="InsertCode">IC</SfButton>
+                            </Template>
+                        </RichTextEditorCustomToolbarItem>
+                    </RichTextEditorCustomToolbarItems>
+
+                </RichTextEditorToolbarSettings>
+                <RichTextEditorEvents OnToolbarClick="@OnToolbarClickHandler" />
             </SfRichTextEditor>
         </EditForm>
 

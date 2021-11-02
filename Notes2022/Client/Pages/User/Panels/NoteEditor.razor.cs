@@ -19,6 +19,8 @@ namespace Notes2022.Client.Pages.User.Panels
         private SfRichTextEditor EditObj { get; set; }
         private RichTextEditorToolbarSettings ToolBarObj { get; set; }
 
+        protected string PreparedCode { get; set; }
+
         private List<ToolbarItemModel> Tools = new List<ToolbarItemModel>()
         {
             new ToolbarItemModel() { Command = ToolbarCommand.Undo },
@@ -49,6 +51,7 @@ namespace Notes2022.Client.Pages.User.Panels
             new ToolbarItemModel() { Command = ToolbarCommand.ClearFormat },
             new ToolbarItemModel() { Command = ToolbarCommand.Print },
             new ToolbarItemModel() { Command = ToolbarCommand.InsertCode },
+            new ToolbarItemModel() { Name = "PCode", TooltipText = "Insert Prepared Code" },
             new ToolbarItemModel() { Command = ToolbarCommand.SourceCode },
             new ToolbarItemModel() { Command = ToolbarCommand.FullScreen }
         };
@@ -100,8 +103,19 @@ namespace Notes2022.Client.Pages.User.Panels
                 var parameters = new ModalParameters();
                 parameters.Add("stuff", xx);
                 parameters.Add("EditObj", EditObj);
-                Modal.Show<CodeFormat>("", parameters);
+                var formModal = Modal.Show<CodeFormat>("", parameters);
+                var result = await formModal.Result;
+                if (!result.Cancelled)
+                {
+                    PreparedCode = (string)result.Data;
+                }
             }
+        }
+
+        public async Task InsertCode()
+        {
+            if (!string.IsNullOrEmpty(PreparedCode))
+                await EditObj.ExecuteCommandAsync(CommandName.InsertHTML, PreparedCode);
         }
 
         private void ShowMessage(string message)
