@@ -87,7 +87,6 @@ namespace Notes2022.Server.Controllers
             foreach (ApplicationUser userx in udl)
             {
                 UserData ud = NoteDataManager.GetUserData(userx);
-                ud.MyStyle = "";
                 model.UserListData.Add(ud);
             }
 

@@ -30,31 +30,40 @@ namespace Notes2022.Server.Controllers
             List<UserData> list = new List<UserData>();
             foreach (ApplicationUser user in users)
             {
-                UserData userData = new UserData();
+                UserData aux = new UserData();
 
-                userData.UserId = user.Id;
-                userData.DisplayName = user.DisplayName;
-                userData.Email = user.Email;
-                userData.TimeZoneID = user.TimeZoneID;
-                userData.Ipref2 = user.Ipref2;
-                userData.Ipref3 = user.Ipref3;
-                userData.Ipref4 = user.Ipref4;
-                userData.Ipref5 = user.Ipref5;
-                userData.Pref6 = user.Pref6;
-                userData.Pref7 = user.Pref7;
-                userData.Pref8 = user.Pref8;
-                userData.Pref1 = user.Pref1;
-                userData.Pref2 = user.Pref2;
-                userData.Pref3 = user.Pref3;
-                userData.Pref4 = user.Pref4;
-                userData.Pref5 = user.Pref5;
-                userData.Pref6 = user.Pref6;
-                userData.Pref7 = user.Pref7;
-                userData.Pref8 = user.Pref8;
-                userData.MyStyle = user.MyStyle;
-                userData.MyGuid = user.MyGuid;
+                aux.UserId = user.Id;
+                aux.DisplayName = user.DisplayName;
+                aux.Email = user.Email;
+                aux.TimeZoneID = user.TimeZoneID;
 
-                list.Add(userData);
+                aux.Ipref0 = user.Ipref0;
+                aux.Ipref1 = user.Ipref1;
+                aux.Ipref2 = user.Ipref2;
+                aux.Ipref3 = user.Ipref3;
+                aux.Ipref4 = user.Ipref4;
+                aux.Ipref5 = user.Ipref5;
+                aux.Ipref6 = user.Ipref6;
+                aux.Ipref7 = user.Ipref7;
+                aux.Ipref8 = user.Ipref8;
+                aux.Ipref9 = user.Ipref9;
+
+                aux.Pref0 = user.Pref0;
+                aux.Pref1 = user.Pref1;
+                aux.Pref2 = user.Pref2;
+                aux.Pref3 = user.Pref3;
+                aux.Pref4 = user.Pref4;
+                aux.Pref5 = user.Pref5;
+                aux.Pref6 = user.Pref6;
+                aux.Pref7 = user.Pref7;
+                aux.Pref8 = user.Pref8;
+                aux.Pref9 = user.Pref9;
+
+                aux.MyGuid = user.MyGuid;
+
+                //aux.MyStyle = user.MyStyle;
+
+                list.Add(aux);
             }
 
             return list;

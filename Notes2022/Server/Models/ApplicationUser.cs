@@ -16,6 +16,12 @@ namespace Notes2022.Server.Models
         public int TimeZoneID { get; set; }
 
         [PersonalData]
+        public int Ipref0 { get; set; }
+
+        [PersonalData]
+        public int Ipref1 { get; set; } 
+
+        [PersonalData]
         public int Ipref2 { get; set; } // user choosen page size
 
         [PersonalData]
@@ -34,8 +40,14 @@ namespace Notes2022.Server.Models
         public int Ipref7 { get; set; }
 
         [PersonalData]
-        public int Ipref8 { get; set; } // bits extend bool properties
+        public int Ipref8 { get; set; }
 
+        [PersonalData]
+        public int Ipref9 { get; set; } // bits extend bool properties
+
+
+        [PersonalData]
+        public bool Pref0 { get; set; }
 
         [PersonalData]
         public bool Pref1 { get; set; } // false = use paged note index, true= scrolled
@@ -61,10 +73,14 @@ namespace Notes2022.Server.Models
         [PersonalData]
         public bool Pref8 { get; set; }
 
-        [Display(Name = "Style Preferences")]
-        [StringLength(7000)]
         [PersonalData]
-        public string? MyStyle { get; set; }
+        public bool Pref9 { get; set; }
+
+
+        //[Display(Name = "Style Preferences")]
+        //[StringLength(7000)]
+        //[PersonalData]
+        //public string? MyStyle { get; set; }
 
         [StringLength(100)]
         [PersonalData]

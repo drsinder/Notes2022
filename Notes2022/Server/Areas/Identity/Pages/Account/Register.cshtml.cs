@@ -140,6 +140,7 @@ namespace Notes2022.Server.Areas.Identity.Pages.Account
 
                 user.DisplayName = displayName;
                 user.TimeZoneID = Globals.TimeZoneDefaultID;
+                user.Ipref2 = 12;   // starting page size
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

@@ -45,6 +45,10 @@ namespace Notes2022.Shared
 
         public int TimeZoneID { get; set; }
 
+        public int Ipref0 { get; set; }
+
+        public int Ipref1 { get; set; }
+
         public int Ipref2 { get; set; } // user choosen page size
 
         public int Ipref3 { get; set; }
@@ -57,8 +61,12 @@ namespace Notes2022.Shared
 
         public int Ipref7 { get; set; }
 
-        public int Ipref8 { get; set; } // bits extend bool properties
+        public int Ipref8 { get; set; }
 
+        public int Ipref9 { get; set; } // bits extend bool properties
+
+
+        public bool Pref0 { get; set; }
 
         public bool Pref1 { get; set; } // false = use paged note index, true= scrolled
 
@@ -76,9 +84,11 @@ namespace Notes2022.Shared
 
         public bool Pref8 { get; set; }
 
+        public bool Pref9 { get; set; }
+
         //[Display(Name = "Style Preferences")]
-        [StringLength(7000)]
-        public string? MyStyle { get; set; }
+        //[StringLength(7000)]
+        //public string? MyStyle { get; set; }
 
         [StringLength(100)]
         public string? MyGuid { get; set; }
