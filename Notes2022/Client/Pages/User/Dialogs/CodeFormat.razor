@@ -1,6 +1,6 @@
 ﻿@using Syncfusion.Blazor.DropDowns
 
-<div class="dialogs modal-body medium-input">
+<div class="dialogs modal-body long-input">
 
     <h3>Insert Code To Be Syntax Formatted</h3>
 
@@ -12,7 +12,8 @@
     </div>
     <hr />
     <div>
-        <SfTextBox @ref="@TextObj" Multiline=true Value="@message" Enabled="true" CssClass="mycode"></SfTextBox>
+        <SfTextBox @ref="@TextObj" Multiline=true Value="@message" Enabled="true" CssClass="mycode">
+        </SfTextBox>
     </div>
     <button type="button" @onclick="Ok" class="btn btn-success btn-sm">Ok</button>
     <button type="button" @onclick="Cancel" class="btn btn-info btn-sm">Cancel</button>
