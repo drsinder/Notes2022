@@ -26,35 +26,45 @@
         }
         <div class="note-display">
             <div class="@HeaderStyle">
-                <p>
-                    <span class="keep-right">Note: @model.header.NoteOrdinal @respX&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                </p>
+                @if (!model.header.IsDeleted)
+                {
+                    <p>
+                        <span class="keep-right">Note: @model.header.NoteOrdinal @respX&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    </p>
 
-                <h4>
-                    Subject: @model.header.NoteSubject <br />
-                    Author: @model.header.AuthorName &nbsp;&nbsp;&nbsp;On:
-                    @(Globals.LocalTimeBlazor(model.header.LastEdited).ToLongDateString()) At:
-                    @Globals.LocalTimeBlazor(model.header.LastEdited).ToShortTimeString() @*@Model.tZone.Abbreviation*@
-                    @if (!string.IsNullOrEmpty(model.content.DirectorMessage))
-                    {
-                        <br />
+                    <h4>
+                        Subject: @model.header.NoteSubject <br />
+                        Author: @model.header.AuthorName &nbsp;&nbsp;&nbsp;On:
+                        @(Globals.LocalTimeBlazor(model.header.LastEdited).ToLongDateString()) At:
+                        @Globals.LocalTimeBlazor(model.header.LastEdited).ToShortTimeString() @*@Model.tZone.Abbreviation*@
+                        @if (!string.IsNullOrEmpty(model.content.DirectorMessage))
+                        {
+                            <br />
 
-                        <span>Director Message: @model.content.DirectorMessage</span>
-                    }
-                    @if (model.tags != null && model.tags.Count > 0)
-                    {
-                        string tl = "Tags: ";
-                        foreach (Tags tag in model.tags)
-                            tl += tag.Tag + " ";
-                        <br />
+                            <span>Director Message: @model.content.DirectorMessage</span>
+                        }
+                        @if (model.tags != null && model.tags.Count > 0)
+                        {
+                            string tl = "Tags: ";
+                            foreach (Tags tag in model.tags)
+                                tl += tag.Tag + " ";
+                            <br />
 
-                        <span>@tl</span>
-                    }
-                </h4>
+                            <span>@tl</span>
+                        }
+                    </h4>
+                }
+                else
+                {
+                    <span>Note has been deleted!</span>
+                }
             </div>
             <div>
                 <div class="@BodyStyle">
-                    @((MarkupString)model.content.NoteBody)
+                    @if (!model.header.IsDeleted)
+                    {
+                        @((MarkupString)model.content.NoteBody)
+                    }
                 </div>
                 @if (!IsMini)
                 {

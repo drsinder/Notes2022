@@ -72,8 +72,6 @@ namespace Notes2022.Client.Pages.User.Panels
 
         protected async Task GetData()
         {
-            //MyStyle = "note-display";
-
             RespShown = false;
 
             HeaderStyle = "noteheader";
@@ -152,7 +150,7 @@ namespace Notes2022.Client.Pages.User.Panels
             NoteDisplayIndexModel Model = null;
 
             Model = await Http.GetFromJsonAsync<NoteDisplayIndexModel>("api/NoteIndex/" + model.noteFile.Id);
-            Model.Notes = Model.AllNotes.FindAll(p => p.ResponseOrdinal == 0).OrderBy(p => p.NoteOrdinal).ToList();
+            //Model.Notes = Model.AllNotes.FindAll(p => p.ResponseOrdinal == 0).OrderBy(p => p.NoteOrdinal).ToList();
 
             string respX = String.Empty;
 

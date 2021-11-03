@@ -26,11 +26,15 @@ namespace Notes2022.Client.Pages.User
         protected SfTextBox sfTextBox { get; set; }
 
         protected SfGrid<NoteHeader> sfGrid1 { get; set; }
+        protected GridFilterSettings FilterSettings { get; set; }
+
         protected int PageSize { get; set; }
 
         protected bool ShowContent { get; set; }
         protected bool ShowContentR { get; set; }
         protected bool ExpandAll { get; set; }
+
+        protected long Tcount { get; set; } = 0;
 
         [Inject] HttpClient Http { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
@@ -43,7 +47,6 @@ namespace Notes2022.Client.Pages.User
         protected override async Task OnParametersSetAsync()
         {
             Model = await Http.GetFromJsonAsync<NoteDisplayIndexModel>("api/NoteIndex/" + NotesfileId);
-            Model.Notes = Model.AllNotes.FindAll(p => p.ResponseOrdinal == 0).OrderBy(p => p.NoteOrdinal).ToList();
             PageSize = Model.UserData.Ipref2;
         }
 
@@ -52,6 +55,10 @@ namespace Notes2022.Client.Pages.User
             Navigation.NavigateTo("notedisplay/" + args.Data.Id);
         }
 
+        protected void FilterChange()
+        {
+
+        }
  
         private async Task KeyUpHandler(KeyboardEventArgs args)
         {
@@ -192,7 +199,7 @@ namespace Notes2022.Client.Pages.User
             }
             else
             {
-                sfGrid1.CollapseAllDetailRowAsync();
+                await sfGrid1.CollapseAllDetailRowAsync();
             }
         }
 
@@ -203,17 +210,27 @@ namespace Notes2022.Client.Pages.User
             Modal.Show<MessageBox>("", parameters);
         }
 
+        //private async Task OnValueChange()
+        //{
+        //    await sfGrid1.FilterByColumn("IsDeleted", "equal", false); //Perform filtering while check/uncheck the checkbox
+        //}
+
         System.Timers.Timer myTimer { get; set; }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            base.OnAfterRenderAsync(firstRender);
+            await base.OnAfterRenderAsync(firstRender);
 
             if (!firstRender)
             {   // have to wait a bit before putting focus in textbox
-                myTimer = new System.Timers.Timer(300);
-                myTimer.Enabled = true;
-                myTimer.Elapsed += TimeUp;
+
+                if (Tcount < 4)
+                {
+                    myTimer = new System.Timers.Timer(300);
+                    myTimer.Enabled = true;
+                    myTimer.Elapsed += TimeUp;
+                }
+                Tcount++;
             }
         }
 
@@ -221,11 +238,6 @@ namespace Notes2022.Client.Pages.User
         {
             myTimer.Enabled = false;
             myTimer.Stop();
-            //sfTextBox.Enabled = true;
-
-            //sfTextBox.FocusOutAsync();
-            //NavCurrentVal = null;
-            //NavString = null;
 
             sfTextBox.FocusAsync();
         }

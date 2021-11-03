@@ -61,6 +61,7 @@ namespace Notes2022.Server.Controllers
 
             string userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ApplicationUser user = await _userManager.FindByIdAsync(userId);
+            bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
 
             NoteHeader nh = _db.NoteHeader.Single(p => p.Id == id);
             NoteContent c = _db.NoteContent.Single(p => p.NoteHeaderId == id);
@@ -73,7 +74,7 @@ namespace Notes2022.Server.Controllers
             if (userId == nh.AuthorID)
                 canEdit = true;
 
-            return new DisplayModel { header = nh, content = c, tags = tags, noteFile = nf, access = access, CanEdit = canEdit};
+            return new DisplayModel { header = nh, content = c, tags = tags, noteFile = nf, access = access, CanEdit = canEdit, IsAdmin = isAdmin};
         }
 
     }

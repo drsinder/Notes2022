@@ -343,20 +343,23 @@ namespace Notes2022.Server
 
                 foreach (var nh in deleteCont)
                 {
+                    nh.IsDeleted = true;
+                    db.Entry(nh).State = EntityState.Modified;
+
                     await DeleteLinked(db, nh);
                 }
 
-                db.NoteHeader.RemoveRange(deleteCont);
+                //db.NoteHeader.RemoveRange(deleteCont);
 
-                List<NoteHeader> upBase = await db.NoteHeader
-                    .Where(p => p.NoteFileId == fileId && p.ArchiveId == arcId && p.NoteOrdinal > noteOrd)
-                    .ToListAsync();
+                //List<NoteHeader> upBase = await db.NoteHeader
+                //    .Where(p => p.NoteFileId == fileId && p.ArchiveId == arcId && p.NoteOrdinal > noteOrd)
+                //    .ToListAsync();
 
-                foreach (var cont in upBase)
-                {
-                    cont.NoteOrdinal--;
-                    db.Entry(cont).State = EntityState.Modified;
-                }
+                //foreach (var cont in upBase)
+                //{
+                //    cont.NoteOrdinal--;
+                //    db.Entry(cont).State = EntityState.Modified;
+                //}
 
                 await db.SaveChangesAsync();
 
@@ -389,32 +392,37 @@ namespace Notes2022.Server
 
             try
             {
-                List<NoteHeader> deleteCont = await db.NoteHeader
-                    .Where(p => p.NoteFileId == fileId && p.ArchiveId == arcId && p.NoteOrdinal == noteOrd && p.ResponseOrdinal == nc.ResponseOrdinal)
-                    .ToListAsync();
+                //    List<NoteHeader> deleteCont = await db.NoteHeader
+                //        .Where(p => p.NoteFileId == fileId && p.ArchiveId == arcId && p.NoteOrdinal == noteOrd && p.ResponseOrdinal == nc.ResponseOrdinal)
+                //        .ToListAsync();
 
-                if (deleteCont.Count != 1)
-                    return false;
+                //    if (deleteCont.Count != 1)
+                //        return false;
 
-                await DeleteLinked(db, deleteCont.First());
+                //    await DeleteLinked(db, deleteCont.First());
 
-                db.NoteHeader.Remove(deleteCont.First());
+                //    db.NoteHeader.Remove(deleteCont.First());
 
-                List<NoteHeader> upCont = await db.NoteHeader
-                    .Where(p => p.NoteFileId == fileId && p.ArchiveId == arcId && p.NoteOrdinal == noteOrd && p.ResponseOrdinal > respOrd)
-                    .ToListAsync();
+                //    List<NoteHeader> upCont = await db.NoteHeader
+                //        .Where(p => p.NoteFileId == fileId && p.ArchiveId == arcId && p.NoteOrdinal == noteOrd && p.ResponseOrdinal > respOrd)
+                //        .ToListAsync();
 
-                foreach (var cont in upCont)
-                {
-                    cont.ResponseOrdinal--;
-                    db.Entry(cont).State = EntityState.Modified;
-                }
+                //    foreach (var cont in upCont)
+                //    {
+                //        cont.ResponseOrdinal--;
+                //        db.Entry(cont).State = EntityState.Modified;
+                //    }
 
-                NoteHeader bnh = await GetBaseNoteHeader(db, fileId, arcId, noteOrd);
+                //    NoteHeader bnh = await GetBaseNoteHeader(db, fileId, arcId, noteOrd);
 
-                bnh.ResponseCount--;
-                db.Entry(bnh).State = EntityState.Modified;
+                //    bnh.ResponseCount--;
+                //    db.Entry(bnh).State = EntityState.Modified;
 
+                //await db.SaveChangesAsync();
+
+
+                nc.IsDeleted = true;
+                db.Entry(nc).State = EntityState.Modified;
                 await db.SaveChangesAsync();
 
                 return true;

@@ -69,11 +69,13 @@ namespace Notes2022.Client.Pages.User.Menus
                 {
                     item = new MenuItem() { Id = "Edit", Text = "Edit" };
                     menuItems.Add(item);
+
+                    if (Model.access.UserID == Model.header.AuthorID || Model.IsAdmin)
+                    {
+                        item = new MenuItem() { Id = "Delete", Text = "Delete" };
+                        menuItems.Add(item); 
+                    }
                 }
-
-                item = new MenuItem() { Id = "Delete", Text = "Delete" };
-                menuItems.Add(item);
-
 
                 menuItems.Add(new MenuItem() { Id = "SearchFromNote", Text = "Search" });
                 menuItems.Add(new MenuItem() { Id = "NoteHelp", Text = "Z for HELP" });

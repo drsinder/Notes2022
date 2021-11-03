@@ -108,6 +108,8 @@ namespace Notes2022.Shared
 
         public long RefId { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public NoteContent? NoteContent { get; set; }
 
         public List<Tags>? Tags { get; set; }

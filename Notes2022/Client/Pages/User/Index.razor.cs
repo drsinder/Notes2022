@@ -32,7 +32,8 @@ namespace Notes2022.Client.Pages.User
         {
         }
 
-        protected override async Task OnInitializedAsync()
+        //protected override async Task OnInitializedAsync()
+        protected override async Task OnParametersSetAsync()
         {
             fileList = new List<localFile>();
             nameList = new List<localFile>();

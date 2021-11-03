@@ -87,7 +87,7 @@ namespace Notes2022.Server.Controllers
 
             idxModel.AllNotes = await NoteDataManager.GetAllHeaders(_db, id, arcId);
 
-            // Extract the Base Notes Objects on the client side from AllNotes
+            idxModel.Notes = idxModel.AllNotes.FindAll(p => p.ResponseOrdinal == 0).OrderBy(p => p.NoteOrdinal).ToList();
 
             idxModel.UserData = LocalManager.GetUserData(user);
             idxModel.tZone = await LocalManager.GetUserTimeZone(user, _db);

@@ -36,5 +36,6 @@ namespace Notes2022.Shared
         public List<Tags> tags { get; set; }
         public NoteAccess access { get; set; }
         public bool CanEdit { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }

@@ -55,8 +55,6 @@ namespace Notes2022.Server.Controllers
         [HttpGet]
         public async Task<EditUserViewModel> Get(string Id)
         {
-            //UserData me = await _db.UserData.SingleOrDefaultAsync(p => p.UserId == Id);
-
             ApplicationUser user = await _userManager.FindByIdAsync(Id);
 
             UserData me = NoteDataManager.GetUserData(user);

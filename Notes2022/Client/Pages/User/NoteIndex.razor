@@ -25,6 +25,8 @@
 @page "/noteindex/{NotesfileId:int}"
 
 @using Syncfusion.Blazor.Data
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Buttons
 
 <h3>Note Index</h3>
 
@@ -40,13 +42,22 @@ else
     <div>
         <ListMenu Model=@Model @ref="@MyMenu"></ListMenu>
     </div>
-    @if (@Model.myAccess.ReadAccess)
+    @if (@Model.myAccess.ReadAccess && Model.Notes?.Count > 0)
     {
         <div class="col-lg-12 control-section dialoglist">
             <div class="content-wrapper">
                 <div class="row">
-                    Show Content on Expand&nbsp; <SfSwitch @bind-Checked="@ShowContent"></SfSwitch>&nbsp; Show All Response Content on Expand&nbsp; <SfSwitch @bind-Checked="@ShowContentR"></SfSwitch>&nbsp;Expand All&nbsp; <SfSwitch @bind-Checked="@ExpandAll" ValueChange="ExpandAllChange" TChecked="bool"></SfSwitch>
-                    <SfGrid @ref="@sfGrid1" DataSource="@Model.Notes" AllowPaging="true" AllowSelection="true" EnableHover="true" AllowSorting="true">
+                    Show Content on Expand&nbsp; <SfSwitch @bind-Checked="@ShowContent"></SfSwitch>&nbsp; 
+                    Show All Response Content on Expand&nbsp; <SfSwitch @bind-Checked="@ShowContentR"></SfSwitch>&nbsp;
+                    Expand All&nbsp; <SfSwitch @bind-Checked="@ExpandAll" ValueChange="ExpandAllChange" TChecked="bool"></SfSwitch>
+                    <SfGrid @ref="@sfGrid1" DataSource="@Model.Notes" AllowPaging="true" AllowSelection="true" EnableHover="true" AllowSorting="true" AllowFiltering="true">
+ 
+                        <GridFilterSettings>
+                            <GridFilterColumns>
+                                <GridFilterColumn Field = "IsDeleted" MatchCase =true Operator = "Operator.Equal" Predicate = "and" Value = "@false" ></GridFilterColumn>
+                            </GridFilterColumns>
+                        </GridFilterSettings>
+
                         <GridEvents RowSelected="DisplayIt" TValue="NoteHeader"></GridEvents>
                         <GridPageSettings PageSizes="true" PageSize="@PageSize"></GridPageSettings>
                         <GridTemplates>
@@ -78,6 +89,15 @@ else
 
                     </GridColumn>
                     <GridColumn Field=@nameof(NoteHeader.ResponseCount) HeaderText="Responses" TextAlign="TextAlign.Left" Width="40"></GridColumn>
+                    <GridColumn Field=@nameof(NoteHeader.IsDeleted) HeaderText="Del" TextAlign="TextAlign.Left" Width="0" Type="ColumnType.Boolean">
+ @*                       <FilterTemplate Context="filter">
+                            @{
+                                var FilterContext = (filter as PredicateModel);
+                                bool? fValue = string.IsNullOrEmpty(FilterContext.Value.ToString()) ? null : (bool?)FilterContext.Value;
+                            }
+                            <SfCheckBox Checked="@fValue" ValueChange="@OnValueChange" TChecked="bool?" Disabled="true"></SfCheckBox>
+                        </FilterTemplate>*@
+                    </GridColumn>
                 </GridColumns>
             </SfGrid>
         </div>
@@ -89,6 +109,10 @@ else
                              @bind-Value="@NavString" Input="@NavInputHandler" @onkeyup="@KeyUpHandler"></SfTextBox>
             </div>
         </div>
+    }
+    else
+    {
+        
     }
 
 }

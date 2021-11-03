@@ -136,7 +136,7 @@ namespace Notes2022.Server.Areas.Identity.Pages.Account
 
                 string displayName = Input.DisplayName;
                 displayName = displayName.Trim();
-                displayName = displayName.Replace(" ", "_");
+                //displayName = displayName.Replace(" ", "_");
 
                 user.DisplayName = displayName;
                 user.TimeZoneID = Globals.TimeZoneDefaultID;
