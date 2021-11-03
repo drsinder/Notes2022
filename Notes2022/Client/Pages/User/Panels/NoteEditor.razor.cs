@@ -50,7 +50,8 @@ namespace Notes2022.Client.Pages.User.Panels
             new ToolbarItemModel() { Command = ToolbarCommand.Separator },
             new ToolbarItemModel() { Command = ToolbarCommand.ClearFormat },
             new ToolbarItemModel() { Command = ToolbarCommand.Print },
-            new ToolbarItemModel() { Command = ToolbarCommand.InsertCode },
+            //new ToolbarItemModel() { Command = ToolbarCommand.InsertCode },
+            new ToolbarItemModel() { Name = "PCode1", TooltipText = "Prepare Code for Insertion" },
             new ToolbarItemModel() { Name = "PCode", TooltipText = "Insert Prepared Code" },
             new ToolbarItemModel() { Command = ToolbarCommand.SourceCode },
             new ToolbarItemModel() { Command = ToolbarCommand.FullScreen }
@@ -109,6 +110,27 @@ namespace Notes2022.Client.Pages.User.Panels
                 {
                     PreparedCode = (string)result.Data;
                 }
+            }
+        }
+
+        public async Task InsertCode1()
+        {
+            string xx = await EditObj.GetSelectedHtmlAsync();
+            if (xx != null && xx.Length > 0)
+            {
+                ShowMessage("Code can not be edited.  Please Copy, Delete, and Reinsert");
+                return;
+            }
+            // get insertion point?? how??
+
+            var parameters = new ModalParameters();
+            parameters.Add("stuff", xx);
+            parameters.Add("EditObj", EditObj);
+            var formModal = Modal.Show<CodeFormat>("", parameters);
+            var result = await formModal.Result;
+            if (!result.Cancelled)
+            {
+                PreparedCode = (string)result.Data;
             }
         }
 

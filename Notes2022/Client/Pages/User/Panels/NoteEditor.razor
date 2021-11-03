@@ -39,6 +39,11 @@ else
                 <RichTextEditorToolbarSettings @ref="ToolBarObj" Items="@Tools" Type="ToolbarType.MultiRow">
 
                     <RichTextEditorCustomToolbarItems>
+                        <RichTextEditorCustomToolbarItem Name="PCode1">
+                            <Template>
+                                <SfButton @onclick="InsertCode1">C</SfButton>
+                            </Template>
+                        </RichTextEditorCustomToolbarItem>
                         <RichTextEditorCustomToolbarItem Name="PCode">
                             <Template>
                                 <SfButton @onclick="InsertCode">IC</SfButton>
