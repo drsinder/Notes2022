@@ -55,6 +55,7 @@ else
                         <GridFilterSettings>
                             <GridFilterColumns>
                                 <GridFilterColumn Field = "IsDeleted" MatchCase =true Operator = "Operator.Equal" Predicate = "and" Value = "@false" ></GridFilterColumn>
+                                <GridFilterColumn Field = "Version" MatchCase =true Operator = "Operator.Equal" Predicate = "and" Value = "0" ></GridFilterColumn>
                             </GridFilterColumns>
                         </GridFilterSettings>
 
@@ -89,15 +90,9 @@ else
 
                     </GridColumn>
                     <GridColumn Field=@nameof(NoteHeader.ResponseCount) HeaderText="Responses" TextAlign="TextAlign.Left" Width="40"></GridColumn>
-                    <GridColumn Field=@nameof(NoteHeader.IsDeleted) HeaderText="Del" TextAlign="TextAlign.Left" Width="0" Type="ColumnType.Boolean">
- @*                       <FilterTemplate Context="filter">
-                            @{
-                                var FilterContext = (filter as PredicateModel);
-                                bool? fValue = string.IsNullOrEmpty(FilterContext.Value.ToString()) ? null : (bool?)FilterContext.Value;
-                            }
-                            <SfCheckBox Checked="@fValue" ValueChange="@OnValueChange" TChecked="bool?" Disabled="true"></SfCheckBox>
-                        </FilterTemplate>*@
-                    </GridColumn>
+                    <GridColumn Field=@nameof(NoteHeader.IsDeleted) HeaderText="Del" TextAlign="TextAlign.Left" Width="0" Type="ColumnType.Boolean"></GridColumn>
+                    <GridColumn Field=@nameof(NoteHeader.Version) HeaderText="Version" TextAlign="TextAlign.Left" Width="0"></GridColumn>
+
                 </GridColumns>
             </SfGrid>
         </div>
