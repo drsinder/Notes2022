@@ -488,6 +488,8 @@ namespace Notes2022.Server
             
             await db.SaveChangesAsync();
 
+            dh.LastEdited = DateTime.Now.ToUniversalTime();
+
             // then create new note
 
             return await CreateNote(db, userManager, dh, nc.NoteBody, tags, nc.DirectorMessage, true, false, true);

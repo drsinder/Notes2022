@@ -121,7 +121,7 @@ namespace Notes2022.Server.Controllers
             // upate header
             DateTime now = DateTime.Now.ToUniversalTime();
             nheader.NoteSubject = tvm.MySubject;
-            nheader.LastEdited = now;
+            //nheader.LastEdited = now;
             nheader.ThreadLastEdited = now;
 
             NoteContent nc = new NoteContent
