@@ -33,10 +33,10 @@ namespace Notes2022.Server.Controllers
 
             NoteHeader oh = _db.NoteHeader.SingleOrDefault(x => x.Id == headerId);
             NoteHeader nh = null;
-            nh = _db.NoteHeader.SingleOrDefault(p => p.NoteOrdinal == oh.NoteOrdinal && p.ResponseOrdinal == oh.ResponseOrdinal + 1);
+            nh = _db.NoteHeader.SingleOrDefault(p => p.NoteOrdinal == oh.NoteOrdinal && p.ResponseOrdinal == oh.ResponseOrdinal + 1 && p.Version == 0);
 
             if (nh == null)
-                nh = _db.NoteHeader.SingleOrDefault(p => p.NoteOrdinal == oh.NoteOrdinal + 1 && p.ResponseOrdinal == 0);
+                nh = _db.NoteHeader.SingleOrDefault(p => p.NoteOrdinal == oh.NoteOrdinal + 1 && p.ResponseOrdinal == 0 && p.Version == 0);
 
             if (nh != null)
                 newId = nh.Id;

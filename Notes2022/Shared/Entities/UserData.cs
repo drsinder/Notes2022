@@ -42,7 +42,7 @@ namespace Notes2022.Shared
 
         public string DisplayName2
         {
-            get { return DisplayName.Replace("_", " "); }
+            get { return DisplayName.Replace(" ", "_"); }
         }
 
         [StringLength(150)]

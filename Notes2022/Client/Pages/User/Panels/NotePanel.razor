@@ -14,13 +14,16 @@
         {
             if (ShowChild && model.header.RefId != 0)
             {
+                if (IsRootNote)
+                {
+                    <h4>References</h4>
+                }
                 <NotePanel NoteId="@model.header.RefId" ShowChild="true" IsRootNote="false" AltStyle="true"></NotePanel>
             }
 
-            @if (ShowVers)
+            if (ShowVers)
             {
-                <Versions FileId="@model.header.NoteFileId" NoteOrdinal="@model.header.NoteOrdinal" 
-                    ResponseOrdinal="@model.header.ResponseOrdinal" ArcId="@model.header.ArchiveId"></Versions>
+                <Versions FileId="@model.header.NoteFileId" NoteOrdinal="@model.header.NoteOrdinal" ResponseOrdinal="@model.header.ResponseOrdinal" ArcId="@model.header.ArchiveId"></Versions>
             }
 
             if (IsRootNote && @model != null)

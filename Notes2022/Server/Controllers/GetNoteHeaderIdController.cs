@@ -34,19 +34,17 @@ namespace Notes2022.Server.Controllers
 
             string userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ApplicationUser user = await _userManager.FindByIdAsync(userId);
-            bool test = await _userManager.IsInRoleAsync(user, "User");
-
-            if (!test)
+            if ( !await _userManager.IsInRoleAsync(user, "User"))
                 return 0;
 
-            NoteHeader nh = _db.NoteHeader.SingleOrDefault(p => p.NoteFileId == notefileId && p.NoteOrdinal == noteOrd && p.ResponseOrdinal == noteRespOrd);
+            NoteHeader nh = _db.NoteHeader.Single(p => p.NoteFileId == notefileId && p.NoteOrdinal == noteOrd && p.ResponseOrdinal == noteRespOrd && p.Version == 0);
             if (nh == null && noteRespOrd > -1) // try next base note -- special case if noteOrd == 0 and ResponseOrd == 0  ==> get first base note in file
             {
-                nh = _db.NoteHeader.SingleOrDefault(p => p.NoteFileId == notefileId && p.NoteOrdinal == noteOrd + 1 && p.ResponseOrdinal == 0);
+                nh = _db.NoteHeader.Single(p => p.NoteFileId == notefileId && p.NoteOrdinal == noteOrd + 1 && p.ResponseOrdinal == 0 && p.Version == 0);
             }
             else if (nh == null)    // try previous base note
             {
-                nh = _db.NoteHeader.SingleOrDefault(p => p.NoteFileId == notefileId && p.NoteOrdinal == noteOrd - 1 && p.ResponseOrdinal == 0);
+                nh = _db.NoteHeader.Single(p => p.NoteFileId == notefileId && p.NoteOrdinal == noteOrd - 1 && p.ResponseOrdinal == 0 && p.Version == 0);
             }
 
             if (nh != null)

@@ -1,12 +1,16 @@
-﻿<h4>Versions</h4>
+﻿<h4>Versions:</h4>
 
 @if (Headers == null)
 {
-    <span>Loading...</span> 
+    <span>Loading...</span>
 }
 else
 {
-    @foreach ( NoteHeader Header in Headers)
+    if (Headers.Count == 0)
+    {
+        <strong>No versions</strong>
+    }
+    foreach ( NoteHeader Header in Headers)
     {
 
         <NotePanel NoteId="@Header.Id" IsMini="true" IsRootNote="false" ShowButtons="false" ShowChild="false" Vers="@Header.Version"></NotePanel>

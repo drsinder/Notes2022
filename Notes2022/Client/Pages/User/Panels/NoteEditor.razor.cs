@@ -72,7 +72,11 @@ namespace Notes2022.Client.Pages.User.Panels
         protected async Task HandleValidSubmit()
         {
             if (string.IsNullOrEmpty(Model.MySubject))
-                Model.MySubject = "*none*";  // must have title
+            {
+                ShowMessage("Please provide a note Subject");
+                return;
+            }
+                //Model.MySubject = "*none*";  // must have title
 
             if (Model.NoteID == 0)    // new note
             {
