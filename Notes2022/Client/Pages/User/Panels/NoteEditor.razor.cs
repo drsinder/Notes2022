@@ -84,7 +84,8 @@ namespace Notes2022.Client.Pages.User.Panels
             else // editing
             {
                 await Http.PutAsJsonAsync("api/NewNote/", Model);
-                Navigation.NavigateTo("/notedisplay/" + Model.NoteID);
+                NoteHeader nh = await Http.GetFromJsonAsync<NoteHeader>("api/NewNote2");
+                Navigation.NavigateTo("/notedisplay/" + nh.Id);
                 return;
             }
         }
@@ -134,7 +135,7 @@ namespace Notes2022.Client.Pages.User.Panels
             }
         }
 
-        public async Task InsertCode()
+        public async Task InsertCode2()
         {
             if (!string.IsNullOrEmpty(PreparedCode))
                 await EditObj.ExecuteCommandAsync(CommandName.InsertHTML, PreparedCode);

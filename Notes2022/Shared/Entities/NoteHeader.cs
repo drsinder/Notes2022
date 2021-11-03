@@ -82,15 +82,6 @@ namespace Notes2022.Shared
         [Display(Name = "Created")]
         public DateTime CreateDate { get; set; }
 
-        //public DateTime CreateDateLocal { get 
-        //    {
-        //        int OHours = TimeZoneInfo.Local.GetUtcOffset(DateTime.Now).Hours;
-        //        int OMinutes = TimeZoneInfo.Local.GetUtcOffset(DateTime.Now).Minutes;
-
-        //        return CreateDate.AddHours(OHours).AddMinutes(OMinutes);
-        //    }
-        //}
-
         // Meaningful only if ResponseOrdinal = 0
         [Required]
         public int ResponseCount { get; set; }
@@ -115,6 +106,34 @@ namespace Notes2022.Shared
         public NoteContent? NoteContent { get; set; }
 
         public List<Tags>? Tags { get; set; }
+
+
+        public NoteHeader Clone()
+        {
+            NoteHeader nh = new NoteHeader()
+            {
+                Id = Id,
+                NoteFileId = NoteFileId,
+                ArchiveId = ArchiveId,
+                BaseNoteId = BaseNoteId,
+                NoteOrdinal = NoteOrdinal,
+                NoteSubject = NoteSubject,
+                LastEdited = LastEdited,
+                ThreadLastEdited = ThreadLastEdited,
+                CreateDate = CreateDate,
+                ResponseCount = ResponseCount,
+                AuthorID = AuthorID,
+                AuthorName = AuthorName,
+                LinkGuid = LinkGuid,
+                RefId = RefId,
+                IsDeleted = IsDeleted,
+                Version = Version,
+                ResponseOrdinal = ResponseOrdinal
+            };
+
+            return nh;
+        }
+
 
         public NoteHeader CloneForLink()
         {
@@ -149,6 +168,11 @@ namespace Notes2022.Shared
             };
 
             return nh;
+        }
+
+        public static explicit operator NoteHeader(Task<NoteHeader> v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -63,9 +63,9 @@ namespace Notes2022.Server.Controllers
             ApplicationUser user = await _userManager.FindByIdAsync(userId);
             bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
 
-            NoteHeader nh = _db.NoteHeader.Single(p => p.Id == id);
-            NoteContent c = _db.NoteContent.Single(p => p.NoteHeaderId == id);
-            List<Tags> tags = await _db.Tags.Where(p => p.NoteHeaderId == id).ToListAsync();
+            NoteHeader nh = _db.NoteHeader.Single(p => p.Id == id && p.Version == 0);
+            NoteContent c = _db.NoteContent.Single(p => p.NoteHeaderId == nh.Id);
+            List<Tags> tags = await _db.Tags.Where(p => p.NoteHeaderId == nh.Id).ToListAsync();
             NoteFile nf = _db.NoteFile.Single(p => p.Id == nh.NoteFileId);
 
             NoteAccess access = await AccessManager.GetAccess(_db, userId, nh.NoteFileId, nh.ArchiveId);
