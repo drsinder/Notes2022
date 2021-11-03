@@ -12,7 +12,6 @@ namespace Notes2022.Client.Pages.User.Menus
 {
     public partial class NavMenu
     {
-
         [CascadingParameter] public IModalService Modal { get; set; }
 
         protected static List<MenuItem> menuItemsTop { get; set; }
@@ -25,6 +24,7 @@ namespace Notes2022.Client.Pages.User.Menus
         [Inject] HttpClient Http { get; set; }
         [Inject] AuthenticationStateProvider AuthProv { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
+        //[Inject] Blazored.SessionStorage.ISessionStorageService sessionStorage { get; set; }
         public NavMenu()
         {
         }
@@ -54,20 +54,25 @@ namespace Notes2022.Client.Pages.User.Menus
             {
                 try
                 {
+                    // session...
+
+                    //Globals.EditUserVModel = await sessionStorage.GetItemAsync<EditUserViewModel>("EditUserView");
+
+                    if (Globals.EditUserVModel == null)
+                    {
+                        UserData udata = await Http.GetFromJsonAsync<UserData>("api/User");
+                        string uid = udata.UserId;
+                        Globals.UserData = udata;
+
+                        Globals.EditUserVModel = await Http.GetFromJsonAsync<EditUserViewModel>("api/UserEdit/" + uid);
+                        //await sessionStorage.SetItemAsync("EditUserView", Globals.EditUserVModel);
+
+                    }
+
                     if (Globals.RolesValid)
                         goto Found;
 
-                    //ShowMessage("Look up menu");
-
-
-                    UserData udata = await Http.GetFromJsonAsync<UserData>("api/User");
-                    string uid = udata.UserId;
-
-                    EditUserViewModel Umodel = await Http.GetFromJsonAsync<EditUserViewModel>("api/UserEdit/" + uid);
-
-                    Globals.EditUserVModel = Umodel;
-
-                    foreach (CheckedUser u in Umodel.RolesList)
+                    foreach (CheckedUser u in Globals.EditUserVModel.RolesList)
                     {
                         if (u.theRole.NormalizedName == "ADMIN" && u.isMember)
                         {
@@ -94,44 +99,44 @@ namespace Notes2022.Client.Pages.User.Menus
 
             }
 
-                menuItemsTop = new List<MenuItem>();
-                MenuItem item;
+            menuItemsTop = new List<MenuItem>();
+            MenuItem item;
 
-                item = new MenuItem() { Id = "Recent", Text = "Recent Notes"};
-                menuItemsTop.Add(item);
+            item = new MenuItem() { Id = "Recent", Text = "Recent Notes" };
+            menuItemsTop.Add(item);
 
-                MenuItem item2 = new MenuItem() { Id = "MRecent", Text = "Recent" };
-                MenuItem item2a = new MenuItem() { Id = "Subscriptions", Text = "Subscriptions" };
-                MenuItem item2b = new MenuItem() { Id = "Preferences", Text = "Preferences" };
+            MenuItem item2 = new MenuItem() { Id = "MRecent", Text = "Recent" };
+            MenuItem item2a = new MenuItem() { Id = "Subscriptions", Text = "Subscriptions" };
+            MenuItem item2b = new MenuItem() { Id = "Preferences", Text = "Preferences" };
 
-                MenuItem item3 = new MenuItem() { Id = "Manage", Text = "Manage" };
-                item3.Items = new List<MenuItem>();
-                item3.Items.Add(item2);
-                item3.Items.Add(item2a);
-                item3.Items.Add(item2b);
-                menuItemsTop.Add(item3);
-
-
-                item = new MenuItem() { Id = "Help", Text = "Help" };
-                item.Items = new List<MenuItem>();
-                MenuItem item4 = new MenuItem() { Id = "MainHelp", Text = "Help" };
-                MenuItem item4a = new MenuItem() { Id = "About", Text = "About" };
-                MenuItem item4b = new MenuItem() { Id = "License", Text = "License" };
-                item.Items.Add(item4);
-                item.Items.Add(item4b);
-                item.Items.Add(item4a);
-                menuItemsTop.Add(item);
+            MenuItem item3 = new MenuItem() { Id = "Manage", Text = "Manage" };
+            item3.Items = new List<MenuItem>();
+            item3.Items.Add(item2);
+            item3.Items.Add(item2a);
+            item3.Items.Add(item2b);
+            menuItemsTop.Add(item3);
 
 
-                item = new MenuItem() { Id = "Admin", Text = "Admin"};
-                item.Items = new List<MenuItem>();
-                MenuItem item5 = new MenuItem() { Id = "NoteFiles", Text = "NoteFiles" };
-                MenuItem item5a = new MenuItem() { Id = "Roles", Text = "Roles" };
-                MenuItem item5b = new MenuItem() { Id = "Linked", Text = "Linked" };
-                item.Items.Add(item5);
-                item.Items.Add(item5a);
-                item.Items.Add(item5b);
-                menuItemsTop.Add(item);
+            item = new MenuItem() { Id = "Help", Text = "Help" };
+            item.Items = new List<MenuItem>();
+            MenuItem item4 = new MenuItem() { Id = "MainHelp", Text = "Help" };
+            MenuItem item4a = new MenuItem() { Id = "About", Text = "About" };
+            MenuItem item4b = new MenuItem() { Id = "License", Text = "License" };
+            item.Items.Add(item4);
+            item.Items.Add(item4b);
+            item.Items.Add(item4a);
+            menuItemsTop.Add(item);
+
+
+            item = new MenuItem() { Id = "Admin", Text = "Admin" };
+            item.Items = new List<MenuItem>();
+            MenuItem item5 = new MenuItem() { Id = "NoteFiles", Text = "NoteFiles" };
+            MenuItem item5a = new MenuItem() { Id = "Roles", Text = "Roles" };
+            MenuItem item5b = new MenuItem() { Id = "Linked", Text = "Linked" };
+            item.Items.Add(item5);
+            item.Items.Add(item5a);
+            item.Items.Add(item5b);
+            menuItemsTop.Add(item);
 
 
             if (!isAdmin)

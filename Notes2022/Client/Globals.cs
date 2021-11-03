@@ -33,6 +33,19 @@ namespace Notes2022.Client
         public static bool IsUser { get; set; }
         public static EditUserViewModel? EditUserVModel { get; set; }
 
+        public static UserData UserData { get; set; }
+
+        public static UserData GetUserData()
+        {
+            return UserData;
+        }
+
+
+        //public static string? DisplayName()
+        //{
+        //    return EditUserVModel?.UserData?.DisplayName;
+        //}
+
         public static List<UserData> UserDataList { get; set; }
 
         public static DateTime StartupDateTime { get; set; }

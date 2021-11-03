@@ -40,6 +40,11 @@ namespace Notes2022.Shared
         [StringLength(50)]
         public string DisplayName { get; set; }
 
+        public string DisplayName2()
+        {
+            return DisplayName.Replace("_", " ");
+        }
+
         [StringLength(150)]
         public string Email { get; set; }
 
