@@ -92,19 +92,19 @@
             </div>
         </div>
 
-        if (IsRootNote && @model != null)
+        if (IsRootNote && @model != null && !model.header.IsDeleted)
         {
             <span><strong>Show versions </strong></span><SfSwitch @bind-Checked="ShowVers" TChecked="bool"></SfSwitch>
         }
 
         @if (!IsMini)
         {
-            @if (IsRootNote && model.header.RefId != 0)
+            @if (IsRootNote && model.header.RefId != 0 && !model.header.IsDeleted)
             {
                 <span><strong>Show References</strong></span><SfSwitch @bind-Checked="ShowChild" TChecked="bool"></SfSwitch>
             }
 
-            @if (!RespShown && model.header.ResponseOrdinal == 0 && model.header.ResponseCount > 0 && !AltStyle)
+            @if (!RespShown && model.header.ResponseOrdinal == 0 && model.header.ResponseCount > 0 && !AltStyle && !model.header.IsDeleted)
             {
                 <span><strong>Show Responses</strong></span><SfSwitch @bind-Checked="RespShown" ValueChange="ShowRespChange" TChecked="bool"></SfSwitch>
             }

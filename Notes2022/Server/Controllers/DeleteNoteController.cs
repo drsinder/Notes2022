@@ -39,6 +39,7 @@ namespace Notes2022.Server.Controllers
             NoteHeader nh = _db.NoteHeader.Single(p => p.Id == noteid);
             nh.IsDeleted = true;
             _db.Entry(nh).State = EntityState.Modified;
+            await _db.SaveChangesAsync();
 
             if (nh.ResponseOrdinal == 0 && nh.ResponseCount > 0)
             {
@@ -49,8 +50,8 @@ namespace Notes2022.Server.Controllers
                     rh.IsDeleted = true;
                     _db.Entry(rh).State = EntityState.Modified;
                 }
+                await _db.SaveChangesAsync();
             }
-            await _db.SaveChangesAsync();
         }
 
     }
