@@ -17,6 +17,12 @@
                 <NotePanel NoteId="@model.header.RefId" ShowChild="true" IsRootNote="false" AltStyle="true"></NotePanel>
             }
 
+            @if (ShowVers)
+            {
+                <Versions FileId="@model.header.NoteFileId" NoteOrdinal="@model.header.NoteOrdinal" 
+                    ResponseOrdinal="@model.header.ResponseOrdinal" ArcId="@model.header.ArchiveId"></Versions>
+            }
+
             if (IsRootNote && @model != null)
             {
                 <div>
@@ -82,6 +88,12 @@
                 }
             </div>
         </div>
+
+        if (IsRootNote && @model != null)
+        {
+            <span><strong>Show versions </strong></span><SfSwitch @bind-Checked="ShowVers" TChecked="bool"></SfSwitch>
+        }
+
         @if (!IsMini)
         {
             @if (IsRootNote && model.header.RefId != 0)

@@ -29,6 +29,7 @@ namespace Notes2022.Client.Pages.User.Panels
         [Parameter] public bool ShowButtons { get; set; } = true;
         [Parameter] public bool AltStyle { get; set; }
         [Parameter] public bool IsMini { get; set; }
+        [Parameter] public int Vers { get; set; } = 0;
 
         protected List<NoteHeader> respHeaders { get; set; }
 
@@ -43,6 +44,8 @@ namespace Notes2022.Client.Pages.User.Panels
         protected bool RespFlipped { get; set; }
 
         protected bool EatEnter { get; set; }
+
+        protected bool ShowVers { get; set; } = false;
 
         protected DisplayModel model { get; set; }
 
@@ -83,7 +86,7 @@ namespace Notes2022.Client.Pages.User.Panels
                 BodyStyle += "-alt";
             }
 
-            model = await Http.GetFromJsonAsync<DisplayModel>("api/notecontent/" + NoteId);
+            model = await Http.GetFromJsonAsync<DisplayModel>("api/notecontent/" + NoteId + "/" + Vers);
 
             // set text to be displayed re responses
             respX = respY = "";

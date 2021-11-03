@@ -38,7 +38,7 @@ using System.Security.Claims;
 namespace Notes2022.Server.Controllers
 {
     [Route("api/[controller]")]
-    [Route("api/[controller]/{sid}")]
+    [Route("api/[controller]/{id:long}/{vers:int}")]
     [ApiController]
     public class NoteContentController : ControllerBase
     {
@@ -55,18 +55,17 @@ namespace Notes2022.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<DisplayModel> Get(string sid)
+        public async Task<DisplayModel> Get(long id, int vers)
         {
-            long id = long.Parse(sid);
 
             string userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ApplicationUser user = await _userManager.FindByIdAsync(userId);
             bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
 
-            NoteHeader nh = _db.NoteHeader.Single(p => p.Id == id && p.Version == 0);
-            NoteContent c = _db.NoteContent.Single(p => p.NoteHeaderId == nh.Id);
+            NoteHeader nh = await _db.NoteHeader.SingleAsync(p => p.Id == id && p.Version == vers);
+            NoteContent c = await _db.NoteContent.SingleAsync(p => p.NoteHeaderId == nh.Id);
             List<Tags> tags = await _db.Tags.Where(p => p.NoteHeaderId == nh.Id).ToListAsync();
-            NoteFile nf = _db.NoteFile.Single(p => p.Id == nh.NoteFileId);
+            NoteFile nf = await _db.NoteFile.SingleAsync(p => p.Id == nh.NoteFileId);
 
             NoteAccess access = await AccessManager.GetAccess(_db, userId, nh.NoteFileId, nh.ArchiveId);
 

@@ -20,7 +20,7 @@ namespace Notes2022.Client.Pages.User
 
         protected override async Task OnParametersSetAsync()
         {
-            stuff = await Http.GetFromJsonAsync<DisplayModel>("api/notecontent/" + NoteId);
+            stuff = await Http.GetFromJsonAsync<DisplayModel>("api/notecontent/" + NoteId + "/0");
 
             Model.NoteFileID = stuff.noteFile.Id;
             Model.NoteID = NoteId;
