@@ -1,6 +1,6 @@
 ﻿/*--------------------------------------------------------------------------
     **
-    ** Copyright(c) 2020, Dale Sinder
+    ** Copyright © 2022, Dale Sinder
     **
     ** Name: LinkQueue.cs
     **
