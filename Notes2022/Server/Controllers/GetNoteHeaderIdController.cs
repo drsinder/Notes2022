@@ -30,13 +30,13 @@ namespace Notes2022.Server.Controllers
         public async Task<long> Get(int notefileId, int noteOrd, int noteRespOrd)
         {
             long newId = 0;
+            NoteHeader nh;
 
             string userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ApplicationUser user = await _userManager.FindByIdAsync(userId);
             if ( !await _userManager.IsInRoleAsync(user, "User"))
                 return 0;
 
-            NoteHeader nh;
             try
             {
                 nh = _db.NoteHeader.Single(p => p.NoteFileId == notefileId && p.NoteOrdinal == noteOrd && p.ResponseOrdinal == noteRespOrd && p.Version == 0);
@@ -52,7 +52,6 @@ namespace Notes2022.Server.Controllers
             catch(Exception e)
             { return 0; }
 
-            
             if (nh != null)
                 newId = nh.Id;
 
