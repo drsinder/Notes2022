@@ -149,7 +149,18 @@ namespace Notes2022.Client.Pages.User.Menus
                     break;
 
                 case "Delete":
-                    ShowMessage("Delete not implemented yet.");
+                    if (Model.IsAdmin || Model.CanEdit)
+                    {
+                        if (!await YesNo("Are you sure you want to delete this note?"))
+                            return;
+                        await Http.DeleteAsync("api/DeleteNote/" + Model.header.Id);
+                        Navigation.NavigateTo("notedisplay/" + Model.header.Id, true);
+                    }
+                    else
+                    {
+                        ShowMessage("You may not delete this note.");
+                    }
+
                     break;
 
                 case "Forward":
@@ -211,12 +222,20 @@ namespace Notes2022.Client.Pages.User.Menus
 
         }
 
+        private async Task<bool> YesNo(string message)
+        {
+            var parameters = new ModalParameters();
+            parameters.Add("MessageInput", message);
+            var formModal = Modal.Show<YesNo>("", parameters);
+            var result = await formModal.Result;
+            return !result.Cancelled;
+        }
 
         private void ShowMessage(string message)
         {
             var parameters = new ModalParameters();
             parameters.Add("MessageInput", message);
-            Modal.Show<MessageBox>("", parameters);
+            var formModal = Modal.Show<MessageBox>("", parameters);
         }
     }
 }
