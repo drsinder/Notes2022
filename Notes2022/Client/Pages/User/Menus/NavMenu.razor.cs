@@ -177,14 +177,8 @@ namespace Notes2022.Client.Pages.User.Menus
                 case "NoteFiles":
                     Navigation.NavigateTo("/admin/notefilelist");
                     break;
-
-
             }
-
-            //ShowMessage(id);
-
         }
-
 
         private void ShowMessage(string message)
         {
@@ -192,6 +186,5 @@ namespace Notes2022.Client.Pages.User.Menus
             parameters.Add("MessageInput", message);
             Modal.Show<MessageBox>("Error", parameters);
         }
-
     }
 }

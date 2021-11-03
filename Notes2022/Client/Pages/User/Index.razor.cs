@@ -28,11 +28,11 @@ namespace Notes2022.Client.Pages.User
         [Inject] HttpClient Http { get; set; }
         [Inject] AuthenticationStateProvider AuthProv { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
+        [Inject] Blazored.SessionStorage.ISessionStorageService sessionStorage { get; set; }
         public Index()
         {
         }
 
-        //protected override async Task OnInitializedAsync()
         protected override async Task OnParametersSetAsync()
         {
             fileList = new List<localFile>();
@@ -45,13 +45,13 @@ namespace Notes2022.Client.Pages.User
             AuthenticationState authstate = await AuthProv.GetAuthenticationStateAsync();
             if (authstate.User.Identity.IsAuthenticated)
             {
+                await sessionStorage.SetItemAsync<int>("ArcId", 0);
                 try
                 {
                     //model = await Http.GetFromJsonAsync<AboutModel>("api/About");
                     //upTime = DateTime.Now.ToUniversalTime() - model.StartupDateTime;
 
                     hpModel = await Http.GetFromJsonAsync<HomePageModel>("api/HomePageData");
-
 
                     List<NoteFile> fileList1 = hpModel.NoteFiles.OrderBy(p => p.NoteFileName).ToList();
                     List<NoteFile> nameList1 = hpModel.NoteFiles.OrderBy(p => p.NoteFileTitle).ToList();

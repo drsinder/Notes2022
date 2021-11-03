@@ -6,6 +6,7 @@ using Syncfusion.Blazor;
 using Syncfusion.Licensing;
 using Notes2022.Client;
 using Notes2022.Shared;
+using Blazored.SessionStorage;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -26,6 +27,8 @@ builder.Services.AddBlazoredModal();
 builder.Services.AddApiAuthorization();
 
 builder.Services.AddSyncfusionBlazor();
+
+builder.Services.AddBlazoredSessionStorage();
 
 if (Globals.UserDataList == null)
 {
