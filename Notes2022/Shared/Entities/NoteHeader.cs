@@ -110,6 +110,8 @@ namespace Notes2022.Shared
 
         public bool IsDeleted { get; set; }
 
+        public int Version { get; set; }
+
         public NoteContent? NoteContent { get; set; }
 
         public List<Tags>? Tags { get; set; }
