@@ -40,15 +40,16 @@ namespace Notes2022.Client
             return UserData;
         }
 
+        public static List<UserData> UserDataList { get; set; }
+
+        public static DateTime StartupDateTime { get; set; }
+
+        public static string StuffUrl { get; } = "https://www.drsinder.com/NotesStuff/Notes2022/";
 
         //public static string? DisplayName()
         //{
         //    return EditUserVModel?.UserData?.DisplayName;
         //}
-
-        public static List<UserData> UserDataList { get; set; }
-
-        public static DateTime StartupDateTime { get; set; }
 
         //public static TimeSpan Uptime()
         //{

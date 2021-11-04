@@ -2,6 +2,7 @@
 
 @inject HttpClient Http
 @inject NavigationManager Navigation
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 
 <h3>NotesFiles</h3>
 
@@ -11,14 +12,12 @@
 }
 else
 {
-
     <SfGrid DataSource="@Files" EnableAltRow="true" AllowPaging="true" AllowSelection="true" EnableHover="true" Toolbar="@(new List<object>() { "Print" })">
-        <GridPageSettings PageSize="20"></GridPageSettings>
+        <GridPageSettings PageSize="12"></GridPageSettings>
         <GridEvents RowSelected="DisplayIt" TValue="NoteFile"></GridEvents>
         <GridColumns>
             <GridColumn Field=@nameof(NoteFile.NoteFileName) HeaderText="NoteFile Name" TextAlign="TextAlign.Left" Width="80" IsPrimaryKey="true"></GridColumn>
             <GridColumn Field=@nameof(NoteFile.NoteFileTitle) HeaderText="NoteFile Title" TextAlign="TextAlign.Left" Width="150"></GridColumn>
-
             <GridColumn HeaderText="Date/Time" TextAlign="TextAlign.Left" Width="60">
                 <Template Context="inner">
                 @{
@@ -39,6 +38,9 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
+        await sessionStorage.SetItemAsync<int>("ArcId", 0);
+        await sessionStorage.SetItemAsync<int>("IndexPage", 1);
+
         HomePageModel model = await Http.GetFromJsonAsync<HomePageModel>("api/HomePageData");
         Files = model.NoteFiles;
         UserData = model.UserData;
