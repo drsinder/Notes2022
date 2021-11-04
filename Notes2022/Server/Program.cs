@@ -76,6 +76,8 @@ Globals.StartupDateTime = DateTime.Now.ToUniversalTime();
 
 Globals.ProductionUrl = builder.Configuration["ProductionUrl"];
 
+Globals.ImportRoot = builder.Configuration["ImportRoot"];
+
 Globals.PathBase = builder.Configuration["PathBase"];
 
 Globals.MigrateDb = builder.Configuration["MigrateDb"];

@@ -140,5 +140,11 @@ namespace Notes2022.Client.Pages.Admin
                 Navigation.NavigateTo("/admin/notefilelist", true);
         }
 
+        async Task ImportNoteFile(int id)
+        {
+
+            await Http.GetFromJsonAsync<bool>("api/Import");
+        }
+
     }
 }

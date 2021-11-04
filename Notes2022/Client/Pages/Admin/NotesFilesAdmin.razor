@@ -82,7 +82,8 @@ else
                                 <button @onclick="@(() => EditNoteFile(file.Id))">Edit</button>
                                 <button @onclick="@(() => NoteFileDetails(file.Id))">Details</button>
                                 <button @onclick="@(() => DeleteNoteFile(file.Id))">Delete</button>
-                            </td>
+                                <button @onclick="@(() => ImportNoteFile(file.Id))">Import</button>
+                             </td>
                         </tr>
                     }
 

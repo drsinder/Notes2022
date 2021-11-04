@@ -38,6 +38,8 @@ namespace Notes2022.Server
 
         public static string RootUri { get; set; }
 
+        public static string ImportRoot { get; set; }
+
         public static string PathBase { get; set; }
 
         public static string MigrateDb { get; set; }

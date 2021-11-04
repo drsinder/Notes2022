@@ -1,18 +1,14 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Notes2022.Client.Pages.User.Menus;
-using Notes2022.Client.Shared;
 using Notes2022.Shared;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.Net.Http.Json;
-using System.Timers;
 
 using Blazored.Modal.Services;
 using Blazored.Modal;
 using Notes2022.Client.Pages.User.Dialogs;
 using Microsoft.AspNetCore.Components.Web;
-using Syncfusion.Blazor.Navigations;
-using EventArgs = Syncfusion.Blazor.Navigations.EventArgs;
 
 namespace Notes2022.Client.Pages.User
 {
@@ -121,7 +117,6 @@ namespace Notes2022.Client.Pages.User
                     await MyMenu.ExecMenu("ReloadIndex");
                     return;
 
-
                 default:
                     break;
             }
@@ -130,7 +125,6 @@ namespace Notes2022.Client.Pages.User
             {
                 if (!string.IsNullOrEmpty(NavString))
                 {
-
                     string stuff = NavString.Replace(";", "").Replace(" ", "");
 
                     // parse string for # or #.#
@@ -154,7 +148,6 @@ namespace Notes2022.Client.Pages.User
                                 Navigation.NavigateTo("notedisplay/" + headerId);
                             else
                                 ShowMessage("Could not find note : " + stuff);
-
                         }
                     }
                     else if (parts.Length == 2)
@@ -180,7 +173,6 @@ namespace Notes2022.Client.Pages.User
                     await ClearNav();
                 }
             }
-
         }
 
         private async void NavInputHandler(InputEventArgs args)
@@ -200,7 +192,6 @@ namespace Notes2022.Client.Pages.User
         {
             if (ExpandAll)
             {
-
                 await sfGrid1.ExpandAllDetailRowAsync();
             }
             else

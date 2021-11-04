@@ -16,6 +16,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\Import\**" />
+    <Content Remove="wwwroot\Import\**" />
+    <EmbeddedResource Remove="wwwroot\Import\**" />
+    <None Remove="wwwroot\Import\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Controllers\WeatherForecastController.cs" />
     <Compile Remove="Data\ApplicationDbContext.cs" />
     <Compile Remove="Programxx.cs" />
