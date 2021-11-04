@@ -6,7 +6,7 @@ using Notes2022.Server.Models;
 
 namespace Notes2022.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/{notefile}/{uploadfile}")]
     [ApiController]
     public class ImportController : ControllerBase
     {
@@ -23,16 +23,11 @@ namespace Notes2022.Server.Controllers
             _httpContextAccessor = httpContextAccessor;
         }
 
-
-
         [HttpGet]
-        public async Task<bool> Get()
+        public async Task<bool> Get(string notefile, string uploadfile)
         {
-
             Importer imp = new Importer();
-
-            return await imp.Import(_db, Globals.ImportRoot + "padofold.txt", "padofold");
-
+            return await imp.Import(_db, Globals.ImportRoot + uploadfile, notefile);
         }
     }
 }

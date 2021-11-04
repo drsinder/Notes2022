@@ -1,11 +1,11 @@
 ﻿/*--------------------------------------------------------------------------
 **
-**  Copyright (c) 2020, Dale Sinder
+**  Copyright (c) 2022, Dale Sinder
 **
 **  Name: Import.cs
 **
 **  Description:
-**      Notes Import for Notes 2021
+**      Notes Import for Notes 2022
 **
 **  This program is free software: you can redistribute it and/or modify
 **  it under the terms of the GNU General Public License version 3 as
@@ -26,11 +26,8 @@
 
 using Notes2022.Server.Data;
 using Notes2022.Shared;
-using System;
-using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Notes2022.Server
 {
@@ -57,7 +54,6 @@ namespace Notes2022.Server
             if (noteFile == null) 
                 return false;
                                     
-
             //int id = noteFile.Id;
             int numberArchives = noteFile.NumberArchives;
             long counter = 0;

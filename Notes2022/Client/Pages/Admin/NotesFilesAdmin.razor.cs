@@ -5,6 +5,7 @@ using Blazored.Modal;
 using Blazored.Modal.Services;
 using Notes2022.Shared;
 using Notes2022.Client.Pages.Admin.Dialogs;
+using Notes2022.Client.Pages.User.Dialogs;
 
 namespace Notes2022.Client.Pages.Admin
 {
@@ -140,10 +141,36 @@ namespace Notes2022.Client.Pages.Admin
                 Navigation.NavigateTo("/admin/notefilelist", true);
         }
 
-        async Task ImportNoteFile(int id)
+        async Task ImportNoteFile(int Id)
         {
+            var parameters = new ModalParameters();
+            var xModal = Modal.Show<Upload1>("Upload1", parameters);
+            var result = await xModal.Result;
+            if (result.Cancelled)
+            {
+                return;
+            }
+            else
+            {
+                NoteFile file = files.Find(p => p.Id == Id);
 
-            await Http.GetFromJsonAsync<bool>("api/Import");
+                string filename = (string)result.Data;
+                parameters = new ModalParameters();
+                parameters.Add("UploadFile",  filename);
+                parameters.Add("NoteFile", file.NoteFileName);
+
+                var yModal = Modal.Show<Upload2>("Upload2", parameters);
+                await yModal.Result;
+
+                Navigation.NavigateTo("noteindex/" + Id);
+                return;
+            }
+
+
+
+
+
+            //await Http.GetFromJsonAsync<bool>("api/Import");
         }
 
     }
