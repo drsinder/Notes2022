@@ -12,6 +12,7 @@ using Blazored.Modal;
 using Notes2022.Client.Pages.User.Dialogs;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Navigations;
+using EventArgs = Syncfusion.Blazor.Navigations.EventArgs;
 
 namespace Notes2022.Client.Pages.User
 {
@@ -27,8 +28,11 @@ namespace Notes2022.Client.Pages.User
 
         protected SfGrid<NoteHeader> sfGrid1 { get; set; }
         protected GridFilterSettings FilterSettings { get; set; }
+        protected GridPageSettings PageSettings { get; set; }
+
 
         protected int PageSize { get; set; }
+        protected int CurPage { get; set; }
 
         protected bool ShowContent { get; set; }
         protected bool ShowContentR { get; set; }
@@ -38,6 +42,7 @@ namespace Notes2022.Client.Pages.User
 
         [Inject] HttpClient Http { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
+        [Inject] Blazored.SessionStorage.ISessionStorageService sessionStorage { get; set; }
         public NoteIndex()
         {
         }
@@ -48,6 +53,7 @@ namespace Notes2022.Client.Pages.User
         {
             Model = await Http.GetFromJsonAsync<NoteDisplayIndexModel>("api/NoteIndex/" + NotesfileId);
             PageSize = Model.UserData.Ipref2;
+            CurPage = await sessionStorage.GetItemAsync<int>("IndexPage");
         }
 
         protected void DisplayIt(RowSelectEventArgs<NoteHeader> args)
@@ -55,11 +61,11 @@ namespace Notes2022.Client.Pages.User
             Navigation.NavigateTo("notedisplay/" + args.Data.Id);
         }
 
-        protected void FilterChange()
+        public async void ActionCompleteHandler(ActionEventArgs<NoteHeader> args)
         {
-
+            await sessionStorage.SetItemAsync<int>("IndexPage", sfGrid1.PageSettings.CurrentPage);
         }
- 
+
         private async Task KeyUpHandler(KeyboardEventArgs args)
         {
 

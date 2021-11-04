@@ -46,6 +46,7 @@ namespace Notes2022.Client.Pages.User
             if (authstate.User.Identity.IsAuthenticated)
             {
                 await sessionStorage.SetItemAsync<int>("ArcId", 0);
+                await sessionStorage.SetItemAsync<int>("IndexPage", 1);
                 try
                 {
                     //model = await Http.GetFromJsonAsync<AboutModel>("api/About");

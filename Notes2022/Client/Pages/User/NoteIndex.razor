@@ -59,8 +59,8 @@ else
                             </GridFilterColumns>
                         </GridFilterSettings>
 
-                        <GridEvents RowSelected="DisplayIt" TValue="NoteHeader"></GridEvents>
-                        <GridPageSettings PageSizes="true" PageSize="@PageSize"></GridPageSettings>
+                        <GridEvents RowSelected="DisplayIt" OnActionComplete="ActionCompleteHandler" TValue="NoteHeader"></GridEvents>
+                        <GridPageSettings @ref="@PageSettings" PageSizes="true" PageSize="@PageSize" CurrentPage="@CurPage"></GridPageSettings>
                         <GridTemplates>
                             <DetailTemplate>
                                 @{
