@@ -452,31 +452,15 @@ namespace Notes2022.Client.Pages.User.Panels
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            base.OnAfterRenderAsync(firstRender);
+            await base.OnAfterRenderAsync(firstRender);
 
             if (!firstRender)
             {   // have to wait a bit before putting focus in textbox
-                myTimer = new System.Timers.Timer(300);
-                myTimer.Enabled = true;
-                myTimer.Elapsed += TimeUp;
+                await Task.Delay(300);
+                await sfTextBox.FocusAsync();
             }
 
             await JSRuntime.InvokeVoidAsync("Prism.highlightAll");
-        }
-
-        protected void TimeUp(Object source, ElapsedEventArgs e)
-        {
-            myTimer.Stop();
-            myTimer.Enabled = false;
-
-            //if (myTimer.Interval > 1000)
-            //{
-            //    sfTextBox.FocusOutAsync();
-            //    NavCurrentVal = null;
-            //    NavString = null;
-            //}
-
-            sfTextBox.FocusAsync();
         }
     }
 }

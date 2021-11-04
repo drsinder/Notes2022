@@ -230,23 +230,9 @@ namespace Notes2022.Client.Pages.User
             if (!firstRender)
             {   // have to wait a bit before putting focus in textbox
 
-                if (Tcount < 4)
-                {
-                    myTimer = new System.Timers.Timer(300);
-                    myTimer.Enabled = true;
-                    myTimer.Elapsed += TimeUp;
-                }
-                Tcount++;
+                await Task.Delay(300);
+                await sfTextBox.FocusAsync();
             }
         }
-
-        protected void TimeUp(Object source, ElapsedEventArgs e)
-        {
-            myTimer.Enabled = false;
-            myTimer.Stop();
-
-            sfTextBox.FocusAsync();
-        }
-
     }
 }
