@@ -67,24 +67,13 @@ namespace Notes2022.Server.Controllers
                     .ThenBy(p => p.ResponseOrdinal)
                     .ToListAsync();
 
-            List<long> Ids = new List<long>();
             foreach (NoteHeader item in stuff.NoteHeaders)
             {
-                Ids.Add(item.Id);
+                item.NoteContent = await _db.NoteContent
+                    .SingleAsync(p => p.NoteHeaderId == item.Id);
+
+                item.Tags = await _db.Tags.Where(p => p.NoteHeaderId == item.Id).ToListAsync();
             }
-
-            stuff.NoteContents = await _db.NoteContent
-                    .Where(p => Ids.Contains(p.NoteHeaderId))
-                    .ToListAsync();
-
-            //foreach (NoteContent item in stuff.NoteContents)
-            //{
-            //    item.NoteHeader = null;
-            //}
-
-            stuff.Tags = await _db.Tags
-                .Where(p => Ids.Contains(p.NoteHeaderId))
-                .ToListAsync();
 
             return stuff;
         }

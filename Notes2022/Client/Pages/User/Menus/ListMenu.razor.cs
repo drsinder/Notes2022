@@ -61,7 +61,7 @@ namespace Notes2022.Client.Pages.User.Menus
                 //    item2.Items.Add(new MenuItem() { Id = "OutputMarked", Text = "Output marked notes" });
                 //}
 
-                item2.Items.Add(new MenuItem { Id = "JsonExport", Text = "Json Export - for later import" });
+                item2.Items.Add(new MenuItem { Id = "JsonExport", Text = "Json Export" });
 
                 menuItems.Add(item2);
 

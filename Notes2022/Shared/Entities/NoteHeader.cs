@@ -43,9 +43,9 @@ namespace Notes2022.Shared
         [Required]
         public int NoteFileId { get; set; }
 
-        [ForeignKey("NoteFileId")]
-        // ReSharper disable once UnusedAutoPropertyAccessor.Global
-        public NoteFile? NoteFile { get; set; }
+        //[ForeignKey("NoteFileId")]
+        //// ReSharper disable once UnusedAutoPropertyAccessor.Global
+        //public NoteFile? NoteFile { get; set; }
 
         [Required]
         public int ArchiveId { get; set; }
