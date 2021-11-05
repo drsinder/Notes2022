@@ -217,7 +217,7 @@ namespace Notes2022.Client.Pages.User
         //    await sfGrid1.FilterByColumn("IsDeleted", "equal", false); //Perform filtering while check/uncheck the checkbox
         //}
 
-        System.Timers.Timer myTimer { get; set; }
+        //System.Timers.Timer myTimer { get; set; }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -227,7 +227,8 @@ namespace Notes2022.Client.Pages.User
             {   // have to wait a bit before putting focus in textbox
 
                 await Task.Delay(300);
-                await sfTextBox.FocusAsync();
+                if (sfTextBox != null)
+                    await sfTextBox.FocusAsync();
             }
         }
     }

@@ -25,19 +25,20 @@
 @using Notes2022.Shared
 @inject HttpClient Http
 
-    <button type="button" class="linkblue" @onclick="Delete">Delete</button>
+<button type="button" class="linkblue" @onclick="Delete">Delete</button>
 
-    @code {
-        [Parameter] public NoteAccess noteAccess { get; set; }
-        [Parameter] public EventCallback<string> OnClick { get; set; }
+@code 
+{
+    [Parameter] public NoteAccess noteAccess { get; set; }
+    [Parameter] public EventCallback<string> OnClick { get; set; }
 
-        protected async Task Delete()
-        {
-            string encoded = "api/accesslist/" + noteAccess.NoteFileId + "." + noteAccess.ArchiveId + "." + noteAccess.UserID;
+    protected async Task Delete()
+    {
+        string encoded = "api/accesslist/" + noteAccess.NoteFileId + "." + noteAccess.ArchiveId + "." + noteAccess.UserID;
 
-            await Http.DeleteAsync(encoded);
+        await Http.DeleteAsync(encoded);
 
-            await OnClick.InvokeAsync("Delete");
-        }
-
+        await OnClick.InvokeAsync("Delete");
     }
+
+}
