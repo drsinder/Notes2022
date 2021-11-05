@@ -456,8 +456,12 @@ namespace Notes2022.Client.Pages.User.Panels
 
             if (!firstRender)
             {   // have to wait a bit before putting focus in textbox
-                await Task.Delay(300);
-                await sfTextBox.FocusAsync();
+
+                if (sfTextBox != null)
+                {
+                    await Task.Delay(300);
+                    await sfTextBox.FocusAsync();
+                }
             }
 
             await JSRuntime.InvokeVoidAsync("Prism.highlightAll");

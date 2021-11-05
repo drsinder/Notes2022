@@ -34,7 +34,7 @@ namespace Notes2022.Client.Pages.User
         protected bool ShowContentR { get; set; }
         protected bool ExpandAll { get; set; }
 
-        protected long Tcount { get; set; } = 0;
+        protected bool Tdone { get; set; }
 
         [Inject] HttpClient Http { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
@@ -49,6 +49,9 @@ namespace Notes2022.Client.Pages.User
         {
             Model = await Http.GetFromJsonAsync<NoteDisplayIndexModel>("api/NoteIndex/" + NotesfileId);
             PageSize = Model.UserData.Ipref2;
+            ShowContent = Model.UserData.Pref7;
+            ExpandAll = Model.UserData.Pref3;
+
             CurPage = await sessionStorage.GetItemAsync<int>("IndexPage");
         }
 
@@ -216,12 +219,21 @@ namespace Notes2022.Client.Pages.User
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (!firstRender)
+            if (!firstRender && !Tdone)
             {   // have to wait a bit before putting focus in textbox
 
                 await Task.Delay(300);
+
+                if (ExpandAll)
+                    await sfGrid1.ExpandAllDetailRowAsync();
+
                 if (sfTextBox != null)
                     await sfTextBox.FocusAsync();
+
+                Tdone = true;
+            }
+            else
+            {
             }
         }
     }

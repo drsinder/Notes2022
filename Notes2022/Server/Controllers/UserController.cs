@@ -45,8 +45,7 @@ namespace Notes2022.Server.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public UserController(NotesDbContext db,
-            UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor
-            )
+            UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _db = db;
             _userManager = userManager;
@@ -68,13 +67,10 @@ namespace Notes2022.Server.Controllers
             return null;
         }
 
-        //[HttpPut]
-        //public async Task Put(UserData uData)
-        //{
-        //    _db.Entry(uData).State = EntityState.Modified;
-        //    int count = await _db.SaveChangesAsync();
-        //}
-
-
+        [HttpPut]
+        public async Task Put(UserData uData)
+        {
+            NoteDataManager.PutUserData(_userManager, _httpContextAccessor, _db, uData);
+        }
     }
 }

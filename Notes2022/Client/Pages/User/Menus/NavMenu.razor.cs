@@ -177,6 +177,10 @@ namespace Notes2022.Client.Pages.User.Menus
                 case "NoteFiles":
                     Navigation.NavigateTo("/admin/notefilelist");
                     break;
+
+                case "Preferences":
+                    Navigation.NavigateTo("/preferences");
+                    break;
             }
         }
 

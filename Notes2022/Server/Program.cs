@@ -10,6 +10,7 @@ using Notes2022.Server;
 using Notes2021Blazor.Server.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Configuration;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
