@@ -212,13 +212,6 @@ namespace Notes2022.Client.Pages.User
             Modal.Show<MessageBox>("", parameters);
         }
 
-        //private async Task OnValueChange()
-        //{
-        //    await sfGrid1.FilterByColumn("IsDeleted", "equal", false); //Perform filtering while check/uncheck the checkbox
-        //}
-
-        //System.Timers.Timer myTimer { get; set; }
-
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
