@@ -5,7 +5,7 @@
     ** Name: NoteDataManager.cs
     **
     ** Description:
-    **     LOts of methods for dealing with the database
+    **     Lots of methods for dealing with the database
     **
     ** This program is free software: you can redistribute it and/or modify
     ** it under the terms of the GNU General Public License version 3 as
@@ -385,10 +385,10 @@ namespace Notes2022.Server
         // 3. Decrement single row (Responses field)in BaseNoteHeader where NoteFileID, NoteOrdinal match input
         private static async Task<bool> DeleteResponse(NotesDbContext db, NoteHeader nc)
         {
-            int fileId = nc.NoteFileId;
-            int arcId = nc.ArchiveId;
-            int noteOrd = nc.NoteOrdinal;
-            int respOrd = nc.ResponseOrdinal;
+            //int fileId = nc.NoteFileId;
+            //int arcId = nc.ArchiveId;
+            //int noteOrd = nc.NoteOrdinal;
+            //int respOrd = nc.ResponseOrdinal;
 
             try
             {
@@ -613,8 +613,6 @@ namespace Notes2022.Server
 
             aux.MyGuid = user.MyGuid;
 
-            //aux.MyStyle = user.MyStyle;
-
             return aux;
         }
 
@@ -650,29 +648,11 @@ namespace Notes2022.Server
 
             aux.MyGuid = user.MyGuid;
 
-            //aux.MyStyle = user.MyStyle;
-
-            return aux;
-        }
-
-
-        public static UserData GetUserData(UserManager<ApplicationUser> userManager, ClaimsPrincipal userP, NotesDbContext db)
-        {
-            UserData aux = new UserData();
-            try
-            {
-                ApplicationUser user = userManager.FindByNameAsync(userP.Identity.Name).GetAwaiter().GetResult();
-
-                aux = GetUserData(user);
-            }
-            catch
-            { }
             return aux;
         }
 
         public static void PutUserData(UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor, NotesDbContext db, UserData userD)
         {
-            UserData aux = new UserData();
             try
             {
                 string userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -685,34 +665,47 @@ namespace Notes2022.Server
                 db.SaveChanges();
             }
             catch (Exception ex)
-            { 
+            {
                 string x = ex.Message;
             }
             return;
         }
 
+        //public static UserData GetUserData(UserManager<ApplicationUser> userManager, ClaimsPrincipal userP, NotesDbContext db)
+        //{
+        //    UserData aux = new UserData();
+        //    try
+        //    {
+        //        ApplicationUser user = userManager.FindByNameAsync(userP.Identity.Name).GetAwaiter().GetResult();
 
-        public static string GetUserDisplayName(UserManager<ApplicationUser> userManager, ClaimsPrincipal user, NotesDbContext db)
-        {
-            UserData aux = null;
-            string myName = " ";
-            try
-            {
-                aux = GetUserData(userManager, user, db);
-                myName = aux.DisplayName;
-            }
-            catch
-            { }
+        //        aux = GetUserData(user);
+        //    }
+        //    catch
+        //    { }
+        //    return aux;
+        //}
 
-            return myName;
-        }
+        //public static string GetUserDisplayName(UserManager<ApplicationUser> userManager, ClaimsPrincipal user, NotesDbContext db)
+        //{
+        //    UserData aux = null;
+        //    string myName = " ";
+        //    try
+        //    {
+        //        aux = GetUserData(userManager, user, db);
+        //        myName = aux.DisplayName;
+        //    }
+        //    catch
+        //    { }
+
+        //    return myName;
+        //}
 
 
-        public static string GetSafeUserDisplayName(UserManager<ApplicationUser> userManager, ClaimsPrincipal user, NotesDbContext db)
-        {
-            string uName = GetUserDisplayName(userManager, user, db);
-            return uName.Replace(" ", "_");
-        }
+        //public static string GetSafeUserDisplayName(UserManager<ApplicationUser> userManager, ClaimsPrincipal user, NotesDbContext db)
+        //{
+        //    string uName = GetUserDisplayName(userManager, user, db);
+        //    return uName.Replace(" ", "_");
+        //}
 
         public static async Task<Search> GetUserSearch(NotesDbContext db, string userid)
         {
@@ -770,8 +763,6 @@ namespace Notes2022.Server
             NoteHeader bnh = await bnhq.FirstAsync();
             return bnh.NoteOrdinal + 1;
         }
-
-
 
         public static async Task<long> GetNumberOfNotes(NotesDbContext db, int fileid, int arcId)
         {
@@ -887,8 +878,6 @@ namespace Notes2022.Server
             return tags;
         }
 
-
-        
         public static async Task<bool> SendNotesAsync(ForwardViewModel fv, NotesDbContext db, IEmailSender emailSender,
                 string email, string name, string Url)
         {
@@ -898,14 +887,13 @@ namespace Notes2022.Server
             return true;
         }
 
-
         private static async Task<string> MakeNoteForEmail(ForwardViewModel fv, NotesDbContext db, string email, string name, string ProductionUrl)
         {
             NoteHeader nc = await GetNoteByIdWithFile(db, fv.NoteID);
 
             if (!fv.hasstring || !fv.wholestring)
             {
-                return "Forwarded by Notes 2021 - User: " + email + " / " + name
+                return "Forwarded by Notes 2022 - User: " + email + " / " + name
                     + "<p>File: " + nc.NoteFile.NoteFileName + " - File Title: " + nc.NoteFile.NoteFileTitle + "</p><hr/>"
                     + "<p>Author: " + nc.AuthorName + "  - Director Message: " + nc.NoteContent.DirectorMessage + "</p><p>"
                     + "<p>Subject: " + nc.NoteSubject + "</p>"
@@ -921,7 +909,7 @@ namespace Notes2022.Server
                 List<NoteHeader> notes = await GetBaseNoteAndResponses(db, nc.NoteFileId, nc.ArchiveId, nc.NoteOrdinal);
 
                 StringBuilder sb = new StringBuilder();
-                sb.Append("Forwarded by Notes 2020 - User: " + email + " / " + name
+                sb.Append("Forwarded by Notes 2022 - User: " + email + " / " + name
                     + "<p>\nFile: " + nc.NoteFile.NoteFileName + " - File Title: " + nc.NoteFile.NoteFileTitle + "</p>"
                     + "<hr/>");
 
@@ -1023,8 +1011,6 @@ namespace Notes2022.Server
                                 .Where(p => p.NoteFileId == fileId && p.ArchiveId == arcId && p.NoteOrdinal == noteOrd && p.ResponseOrdinal == 0)
                                 .FirstOrDefaultAsync();
         }
-
-
 
         /// <summary>
         /// Get a list of all Notes in a string/thread
