@@ -117,6 +117,11 @@ namespace Notes2022.Client.Pages.User
                     await MyMenu.ExecMenu("ReloadIndex");
                     return;
 
+                case "A":
+                    await ClearNav();
+                    await MyMenu.ExecMenu("AccessControls");
+                    return;
+
                 default:
                     break;
             }

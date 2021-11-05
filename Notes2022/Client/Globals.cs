@@ -46,6 +46,11 @@ namespace Notes2022.Client
 
         public static string StuffUrl { get; } = "https://www.drsinder.com/NotesStuff/Notes2022/";
 
+        public static string AccessOther() { return "Other"; }
+
+        public static string AccessOtherId() { return "Other"; }
+
+
         //public static string? DisplayName()
         //{
         //    return EditUserVModel?.UserData?.DisplayName;
@@ -68,10 +73,6 @@ namespace Notes2022.Client
         //public static string SendGridApiKey { get; set; }
 
         //public static string EmailName { get; set; }
-
-        //public static string AccessOther() { return "Other"; }
-
-        //public static string AccessOtherId() { return "Other"; }
 
         //public static string ImportedAuthorId() { return "*imported*"; }
 

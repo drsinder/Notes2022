@@ -101,6 +101,12 @@ namespace Notes2022.Client.Pages.User.Menus
                     Modal.Show<HelpDialog>();
                     break;
 
+                case "AccessControls":
+                    var parameters = new ModalParameters();
+                    parameters.Add("fileId", Model.noteFile.Id);
+                    Modal.Show<AccessList>("", parameters);
+                    break;
+
                 case "eXport":
                     DoExport(false, false);
                     break;
