@@ -2,10 +2,10 @@
     **
     **  Copyright (c) 2020, Dale Sinder
     **
-    **  Name: AccessDeleteButton.razor
+    **  Name: AddAccessDlg.razor
     **
     **  Description:
-    **      Displays access item delete button and dones delete when clicked
+    **      Adds a user to the access list
     **
     **  This program is free software: you can redistribute it and/or modify
     **  it under the terms of the GNU General Public License version 3 as
@@ -22,22 +22,27 @@
     **
     **--------------------------------------------------------------------------*@
 
-@using Notes2022.Shared
-@inject HttpClient Http
+@if (NoteFileId == 0)
+{
+    <p class="center"><em>Loading...</em></p>
+}
+else
+{
+    <div class="dialogs modal-body">
+        <h3>Add Access Element for User</h3>
 
-    <button type="button" class="linkblue" @onclick="Delete">Delete</button>
+        <h5>Select the User</h5>
 
-    @code {
-        [Parameter] public NoteAccess noteAccess { get; set; }
-        [Parameter] public EventCallback<string> OnClick { get; set; }
+        <select @bind="selectedUserId">
+            <option value="none">Choose from below</option>
+            @foreach (UserData item in userList)
+            {
+                <option value="@item.UserId">@item.DisplayName</option>
+            }
+        </select>
+        <br /><br />
+        <button type="button" @onclick="Create" class="btn btn-success btn-sm">Create</button>
 
-        protected async Task Delete()
-        {
-            string encoded = "api/accesslist/" + noteAccess.NoteFileId + "." + noteAccess.ArchiveId + "." + noteAccess.UserID;
-
-            await Http.DeleteAsync(encoded);
-
-            await OnClick.InvokeAsync("Delete");
-        }
-
-    }
+        <button type="button" @onclick="Cancel" class="btn btn-info btn-sm">Cancel</button>
+    </div>
+}

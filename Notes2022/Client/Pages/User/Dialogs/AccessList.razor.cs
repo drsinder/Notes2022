@@ -1,4 +1,5 @@
 ﻿using Blazored.Modal;
+using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 using Notes2022.Shared;
 using Syncfusion.Blazor.Grids;
@@ -8,6 +9,7 @@ namespace Notes2022.Client.Pages.User.Dialogs
 {
     public partial class AccessList
     {
+        [CascadingParameter] public IModalService Modal { get; set; }
         [CascadingParameter] public BlazoredModalInstance ModalInstance { get; set; }
         [Parameter] public int fileId { get; set; }
 
@@ -56,12 +58,20 @@ namespace Notes2022.Client.Pages.User.Dialogs
 
         private void Cancel()
         {
-            ModalInstance.CloseAsync();
+            ModalInstance.CancelAsync();
         }
 
-        protected void CreateNew()
+        protected async void CreateNew()
         {
-            //ModalService.Close(ModalResult.Ok<List<UserData>>(userList));
+            var parameters = new ModalParameters();
+            parameters.Add("userList", userList);
+            parameters.Add("NoteFileId", fileId);
+
+            var xx = Modal.Show<AddAccessDlg>("", parameters);
+            await xx.Result;
+
+            StateHasChanged();
+            MyGrid.Refresh();
         }
 
         protected async Task ClickHandler(string newMessage)

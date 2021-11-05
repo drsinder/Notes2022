@@ -91,7 +91,9 @@ namespace Notes2022.Server.Controllers
         [HttpPost]
         public async Task Post(NoteAccess item)
         {
-            IdentityUser me = await _userManager.FindByNameAsync(User.Identity.Name);
+            string userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ApplicationUser me = await _userManager.FindByIdAsync(userId);
+
             NoteAccess myAccess = await AccessManager.GetAccess(_db, me.Id, item.NoteFileId, item.ArchiveId);
             if (!myAccess.EditAccess)
                 return;
