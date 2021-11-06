@@ -114,8 +114,11 @@ iframe.loginclock {
     filter: invert(1);
 }
 
-/* Blazored Modal style -- removes white default border*/
+.copiednote {
+    font-size: 125%;
+}
 
+/* Blazored Modal style -- removes white default border*/
 .blazored-custom-modal {
     display: flex;
     flex-direction: column;

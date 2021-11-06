@@ -168,7 +168,10 @@ namespace Notes2022.Client.Pages.User.Menus
                     break;
 
                 case "Copy":
-                    ShowMessage("Copy not implemented yet.");
+                    var parameters = new ModalParameters();
+                    parameters.Add("Note", Model.header);
+                    //parameters.Add("UserData", Model.U);
+                    Modal.Show<Copy>("", parameters);
                     break;
 
                 case "mail":
@@ -182,7 +185,6 @@ namespace Notes2022.Client.Pages.User.Menus
                 case "html":
                     DoExport(true, false);
                     break;
-
 
             }
         }

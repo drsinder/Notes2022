@@ -9,6 +9,6 @@ namespace Notes2022.Shared
         public NoteHeader Note { get; set; }
         public int FileId { get; set; }
         public bool WholeString { get; set; }
-        public UserData UserData { get; set; }
+        //public UserData UserData { get; set; }
     }
 }
