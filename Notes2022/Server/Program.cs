@@ -122,6 +122,8 @@ else
 
 app.UseHttpsRedirection();
 
+//app.UsePathBase(Globals.PathBase);
+
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Compile Remove="NotesModels\LongWrapper.cs" />
+    <Compile Remove="NotesModels\Message.cs" />
     <Compile Remove="WeatherForecast.cs" />
   </ItemGroup>
 
