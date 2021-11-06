@@ -86,15 +86,15 @@ namespace Notes2022.Client.Pages.User.Menus
             switch (id)
             {
                 case "ListNoteFiles":
-                    Navigation.NavigateTo("/notesfiles/");
+                    Navigation.NavigateTo("notesfiles/");
                     break;
 
                 case "ReloadIndex": // only a direct type in
-                    Navigation.NavigateTo("/noteindex/" + Model.noteFile.Id);
+                    Navigation.NavigateTo("noteindex/" + Model.noteFile.Id);
                     break;
 
                 case "NewBaseNote":
-                    Navigation.NavigateTo("/newnote/" + Model.noteFile.Id + "/0" + "/0");
+                    Navigation.NavigateTo("newnote/" + Model.noteFile.Id + "/0" + "/0");
                     break;
 
                 case "ListHelp":

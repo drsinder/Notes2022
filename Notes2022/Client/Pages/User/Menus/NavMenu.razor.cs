@@ -165,21 +165,21 @@ namespace Notes2022.Client.Pages.User.Menus
             switch (id)
             {
                 case "MainHelp":
-                    Navigation.NavigateTo("/help");
+                    Navigation.NavigateTo("help");
                     break;
                 case "About":
-                    Navigation.NavigateTo("/about");
+                    Navigation.NavigateTo("about");
                     break;
                 case "License":
-                    Navigation.NavigateTo("/license");
+                    Navigation.NavigateTo("license");
                     break;
 
                 case "NoteFiles":
-                    Navigation.NavigateTo("/admin/notefilelist");
+                    Navigation.NavigateTo("admin/notefilelist");
                     break;
 
                 case "Preferences":
-                    Navigation.NavigateTo("/preferences");
+                    Navigation.NavigateTo("preferences");
                     break;
             }
         }

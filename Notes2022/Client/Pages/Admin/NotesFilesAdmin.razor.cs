@@ -55,31 +55,31 @@ namespace Notes2022.Client.Pages.Admin
         private async Task CreateAnnounce()
         {
             await Http.PostAsJsonAsync("api/NoteFileAdminStd", new Stringy { value = "announce" });
-            Navigation.NavigateTo("/admin/notefilelist", true);
+            Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         private async Task CreatePbnotes()
         {
             await Http.PostAsJsonAsync("api/NoteFileAdminStd", new Stringy { value = "pbnotes" });
-            Navigation.NavigateTo("/admin/notefilelist", true);
+            Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         private async Task CreateNotesHelp()
         {
             await Http.PostAsJsonAsync("api/NoteFileAdminStd", new Stringy { value = "noteshelp" });
-            Navigation.NavigateTo("/admin/notefilelist", true);
+            Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         private async Task CreatePad()
         {
             await Http.PostAsJsonAsync("api/NoteFileAdminStd", new Stringy { value = "pad" });
-            Navigation.NavigateTo("/admin/notefilelist", true);
+            Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         private async Task CreateHomePageMessages()
         {
             await Http.PostAsJsonAsync("api/NoteFileAdminStd", new Stringy { value = "homepagemessages" });
-            Navigation.NavigateTo("/admin/notefilelist", true);
+            Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         async void CreateNoteFile(int Id)
@@ -90,7 +90,7 @@ namespace Notes2022.Client.Pages.Admin
             var xModal = Modal.Show<CreateNoteFile>("Create Notefile", parameters);
             var result = await xModal.Result;
             if (!result.Cancelled)
-                Navigation.NavigateTo("/admin/notefilelist", true);
+                Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         async void DeleteNoteFile(int Id)
@@ -105,7 +105,7 @@ namespace Notes2022.Client.Pages.Admin
             var xModal = Modal.Show<DeleteNoteFile>("Delete", parameters);
             var result = await xModal.Result;
             if (!result.Cancelled)
-                Navigation.NavigateTo("/admin/notefilelist", true);
+                Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         async void NoteFileDetails(int Id)
@@ -138,7 +138,7 @@ namespace Notes2022.Client.Pages.Admin
             var xModal = Modal.Show<EditNoteFile>("Edit Notefile", parameters);
             var result = await xModal.Result;
             if (!result.Cancelled)
-                Navigation.NavigateTo("/admin/notefilelist", true);
+                Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         async Task ImportNoteFile(int Id)

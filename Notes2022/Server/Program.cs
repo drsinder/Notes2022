@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
-using Syncfusion.Blazor;
-using Syncfusion.Licensing;
+//using Syncfusion.Blazor;
+//using Syncfusion.Licensing;
 using Microsoft.AspNetCore.Identity;
 using Notes2022.Server;
 using Notes2021Blazor.Server.Services;
@@ -14,11 +14,11 @@ using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
-if (File.Exists(System.IO.Directory.GetCurrentDirectory() + "/SyncfusionLicense.txt"))
-{
-    string licenseKey = System.IO.File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "/SyncfusionLicense.txt");
-    SyncfusionLicenseProvider.RegisterLicense(licenseKey);
-}
+//if (File.Exists(System.IO.Directory.GetCurrentDirectory() + "/SyncfusionLicense.txt"))
+//{
+//    string licenseKey = System.IO.File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "/SyncfusionLicense.txt");
+//    SyncfusionLicenseProvider.RegisterLicense(licenseKey);
+//}
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -63,7 +63,7 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddRazorPages();
 
-builder.Services.AddSyncfusionBlazor();
+//builder.Services.AddSyncfusionBlazor();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);

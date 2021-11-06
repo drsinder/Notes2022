@@ -82,14 +82,14 @@ namespace Notes2022.Client.Pages.User.Panels
             {
                 await Http.PostAsJsonAsync("api/NewNote/", Model);
                 NoteHeader nh = await Http.GetFromJsonAsync<NoteHeader>("api/NewNote2");
-                Navigation.NavigateTo("/notedisplay/" + nh.Id);
+                Navigation.NavigateTo("notedisplay/" + nh.Id);
                 return;
             }
             else // editing
             {
                 await Http.PutAsJsonAsync("api/NewNote/", Model);
                 NoteHeader nh = await Http.GetFromJsonAsync<NoteHeader>("api/NewNote2");
-                Navigation.NavigateTo("/notedisplay/" + nh.Id);
+                Navigation.NavigateTo("notedisplay/" + nh.Id);
                 return;
             }
         }
@@ -154,7 +154,7 @@ namespace Notes2022.Client.Pages.User.Panels
 
         protected void CancelEdit()
         {
-            Navigation.NavigateTo("/noteindex/" + Model.NoteFileID);
+            Navigation.NavigateTo("noteindex/" + Model.NoteFileID);
         }
 
         protected void OnClickRef(MouseEventArgs args)

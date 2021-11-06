@@ -89,7 +89,7 @@ namespace Notes2022.Client.Pages.User
                 {
                     if (value == item.NoteFileName)
                     {
-                        Navigation.NavigateTo("/noteindex/" + item.Id);
+                        Navigation.NavigateTo("noteindex/" + item.Id);
                         return;
                     }
                 }

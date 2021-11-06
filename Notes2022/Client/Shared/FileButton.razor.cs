@@ -14,7 +14,7 @@ namespace Notes2022.Client.Shared
 
         protected void OnClick()
         {
-            Navigation.NavigateTo("/noteindex/" + NoteFile.Id);
+            Navigation.NavigateTo("noteindex/" + NoteFile.Id);
         }
     }
 }
