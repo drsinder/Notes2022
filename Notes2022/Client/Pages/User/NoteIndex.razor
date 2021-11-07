@@ -52,7 +52,7 @@ else
                     Expand All&nbsp; <SfSwitch @bind-Checked="@ExpandAll" ValueChange="ExpandAllChange" TChecked="bool"></SfSwitch>
                     <SfGrid @ref="@sfGrid1" DataSource="@Model.Notes" AllowPaging="true" AllowSelection="true" EnableHover="true" AllowSorting="true" AllowFiltering="true">
  
-                        <GridFilterSettings>
+                        <GridFilterSettings Type ="Syncfusion.Blazor.Grids.FilterType.Menu">
                             <GridFilterColumns>
                                 <GridFilterColumn Field = "IsDeleted" MatchCase =true Operator = "Operator.Equal" Predicate = "and" Value = "@false" ></GridFilterColumn>
                                 <GridFilterColumn Field = "Version" MatchCase =true Operator = "Operator.Equal" Predicate = "and" Value = "0" ></GridFilterColumn>
