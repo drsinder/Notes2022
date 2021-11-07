@@ -164,7 +164,7 @@ namespace Notes2022.Client.Pages.User.Menus
                     break;
 
                 case "Forward":
-                    ShowMessage("Forward not implemented yet.");
+                    Forward();
                     break;
 
                 case "Copy":
@@ -187,6 +187,25 @@ namespace Notes2022.Client.Pages.User.Menus
                     break;
 
             }
+        }
+
+        protected void Forward()
+        {
+            var parameters = new ModalParameters();
+            ForwardViewModel fv = new ForwardViewModel();
+            fv.NoteID = Model.header.Id;
+            fv.FileID = Model.header.NoteFileId;
+            fv.ArcID = Model.header.ArchiveId;
+            fv.NoteOrdinal = Model.header.NoteOrdinal;
+            fv.NoteSubject = Model.header.NoteSubject;
+            fv.NoteFile = Model.noteFile;
+
+            if (Model.header.ResponseCount > 0 || Model.header.BaseNoteId > 0)
+                fv.hasstring = true;
+
+            parameters.Add("ForwardView", fv);
+
+            Modal.Show<Forward>("", parameters);
         }
 
         private void DoExport(bool isHtml, bool isCollapsible, bool isEmail = false, string emailaddr = null)

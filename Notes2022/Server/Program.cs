@@ -7,7 +7,7 @@ using Notes2022.Server.Models;
 //using Syncfusion.Licensing;
 using Microsoft.AspNetCore.Identity;
 using Notes2022.Server;
-using Notes2021Blazor.Server.Services;
+using Notes2022.Server.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Configuration;
 using System.Security.Claims;

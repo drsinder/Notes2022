@@ -25,7 +25,7 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Notes2021Blazor.Server.Services;
+using Notes2022.Server.Services;
 using Notes2022.Server.Data;
 using Notes2022.Shared;
 using System.Threading.Tasks;

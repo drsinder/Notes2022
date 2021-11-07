@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using Notes2022.Server.Models;
 using System.Security.Claims;
 
-namespace Notes2021Blazor.Server.Controllers
+namespace Notes2022.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

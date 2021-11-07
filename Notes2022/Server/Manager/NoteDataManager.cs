@@ -831,7 +831,7 @@ namespace Notes2022.Server
         {
             return await db.NoteHeader
                 .Include("NoteContent")
-                .Include("NoteFile")
+                //.Include("NoteFile")
                 .Include("Tags")
                 .Where(p => p.Id == noteid)
                 .OrderBy((x => x.NoteOrdinal))

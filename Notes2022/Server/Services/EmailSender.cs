@@ -31,7 +31,7 @@ using System.Threading.Tasks;
 using Notes2022.Server;
 using Microsoft.Extensions.Options;
 
-namespace Notes2021Blazor.Server.Services
+namespace Notes2022.Server.Services
 {
     public class EmailSender : IEmailSender
     {

@@ -96,6 +96,10 @@
     width: 600px;
 }
 
+.medium-input-minus {
+    width: 500px;
+}
+
 .long-input {
     width: 1000px;
 }

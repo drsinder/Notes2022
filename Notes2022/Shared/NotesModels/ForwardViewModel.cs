@@ -9,6 +9,7 @@ namespace Notes2022.Shared
 {
     public class ForwardViewModel
     {
+        public NoteFile NoteFile { get; set; }
         public long NoteID { get; set; }
         public int FileID { get; set; }
         public int ArcID { get; set; }
@@ -29,7 +30,7 @@ namespace Notes2022.Shared
         [Required]
         [EmailAddress]
         [Display(Name = "Forward to Email Address")]
-        public string ToEmail { get; set; }
+        public string? ToEmail { get; set; }
 
     }
 }
