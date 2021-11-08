@@ -71,6 +71,13 @@
 }
 
 /****************/
+.center {
+    text-align: center;
+}
+
+.center-menu {
+    align-content: center
+}
 
 .large {
     font-size: 200%;
