@@ -31,17 +31,4 @@
 </div>
 
 
-@code {
-    [CascadingParameter] public BlazoredModalInstance ModalInstance { get; set; }
-    public string emailaddr { get; set; }
 
-    private void Ok()
-    {
-        ModalInstance.CloseAsync(ModalResult.Ok(emailaddr));
-    }
-
-    private void Cancel()
-    {
-        ModalInstance.CancelAsync();
-    }
-}

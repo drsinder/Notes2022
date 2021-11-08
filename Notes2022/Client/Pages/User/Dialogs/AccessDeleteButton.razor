@@ -27,18 +27,4 @@
 
 <button type="button" class="linkblue" @onclick="Delete">Delete</button>
 
-@code 
-{
-    [Parameter] public NoteAccess noteAccess { get; set; }
-    [Parameter] public EventCallback<string> OnClick { get; set; }
 
-    protected async Task Delete()
-    {
-        string encoded = "api/accesslist/" + noteAccess.NoteFileId + "." + noteAccess.ArchiveId + "." + noteAccess.UserID;
-
-        await Http.DeleteAsync(encoded);
-
-        await OnClick.InvokeAsync("Delete");
-    }
-
-}
