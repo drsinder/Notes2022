@@ -16,7 +16,7 @@ namespace Notes2022.Client.Pages.User.Dialogs
         private bool readonlyPrint { get; set; }
 
         SfRichTextEditor RteObj;
-        private Timer timer2 { get; set; }
+        private System.Timers.Timer timer2 { get; set; }
 
         private void onPrint()
         {
@@ -27,7 +27,7 @@ namespace Notes2022.Client.Pages.User.Dialogs
         {
             if (firstRender)
             {
-                timer2 = new Timer(500);
+                timer2 = new System.Timers.Timer(500);
                 timer2.Elapsed += TimerTick2;
                 timer2.Enabled = true;
             }
