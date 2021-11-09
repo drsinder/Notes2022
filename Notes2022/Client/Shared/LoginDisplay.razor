@@ -8,7 +8,7 @@
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 
 <AuthorizeView>
-    <Authorized> 
+    <Authorized>
         <SfButton @onclick="GotoProfile" class="logbutton">@context.User.Identity?.Name</SfButton>
         <SfButton @onclick="BeginSignOut" class="logbutton">Log out</SfButton>
         <SfButton @onclick="GotoHome" class="homebutton">Home</SfButton>
@@ -21,7 +21,7 @@
 </AuthorizeView>
 
 <style>
-    .logbutton{
+    .logbutton {
         color: white;
         background-color: darkcyan;
         margin-right: 5px;
@@ -29,11 +29,12 @@
         border-radius: 6px;
     }
 
-    .logbutton:hover{
-        color: white;
-        background-color: blue;
-    }
-    .homebutton{
+        .logbutton:hover {
+            color: white;
+            background-color: blue;
+        }
+
+    .homebutton {
         color: white;
         background-color: darkblue;
         margin-right: 5px;
@@ -41,13 +42,13 @@
         border-radius: 6px;
     }
 
-    .homebutton:hover{
-        color: white;
-        background-color: blue;
-    }
+        .homebutton:hover {
+            color: white;
+            background-color: blue;
+        }
 </style>
 
-@code{
+@code {
 
     //protected string UserName { get; set; }
 
