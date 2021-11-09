@@ -24,12 +24,9 @@
 
 
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System.IO;
-using System.Threading.Tasks;
-using Notes2022.Server;
-using Microsoft.Extensions.Options;
 
 namespace Notes2022.Server.Services
 {

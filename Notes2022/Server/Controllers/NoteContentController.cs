@@ -23,16 +23,12 @@
     **--------------------------------------------------------------------------*/
 
 
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Notes2022.Shared;
 using Notes2022.Server.Data;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Notes2022.Server.Models;
-using Microsoft.AspNetCore.Identity;
+using Notes2022.Shared;
 using System.Security.Claims;
 
 namespace Notes2022.Server.Controllers
@@ -73,7 +69,7 @@ namespace Notes2022.Server.Controllers
             if (userId == nh.AuthorID)
                 canEdit = true;
 
-            return new DisplayModel { header = nh, content = c, tags = tags, noteFile = nf, access = access, CanEdit = canEdit, IsAdmin = isAdmin};
+            return new DisplayModel { header = nh, content = c, tags = tags, noteFile = nf, access = access, CanEdit = canEdit, IsAdmin = isAdmin };
         }
 
     }

@@ -1,21 +1,14 @@
-﻿using System.Timers;
-using System.Text;
-using Notes2022.Shared;
-using Syncfusion.Blazor.Navigations;
-using Syncfusion.Blazor.Popups;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
+﻿using Blazored.Modal;
 using Blazored.Modal.Services;
-using Blazored.Modal;
-using Newtonsoft.Json;
-using System.Net.Http.Json;
-using Syncfusion.Blazor.SplitButtons;
-using System.Net.Http;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Notes2022.Client.Pages.User.Dialogs;
-using Syncfusion.Blazor.Inputs;
-using Notes2022.Client.Pages.User.Menus;
 using Microsoft.JSInterop;
+using Notes2022.Client.Pages.User.Dialogs;
+using Notes2022.Client.Pages.User.Menus;
+using Notes2022.Shared;
+using Syncfusion.Blazor.Inputs;
+using System.Net.Http.Json;
+using System.Text;
 
 namespace Notes2022.Client.Pages.User.Panels
 {

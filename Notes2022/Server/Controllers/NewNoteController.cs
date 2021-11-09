@@ -23,16 +23,12 @@
     **--------------------------------------------------------------------------*/
 
 
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
 using Notes2022.Shared;
-using Newtonsoft.Json;
-using System.Text;
+using System.Security.Claims;
 
 namespace Notes2022.Server.Controllers
 {

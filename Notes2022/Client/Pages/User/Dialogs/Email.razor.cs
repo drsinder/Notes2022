@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Components;
 using Blazored.Modal;
 using Blazored.Modal.Services;
+using Microsoft.AspNetCore.Components;
 
 namespace Notes2022.Client.Pages.User.Dialogs
 {

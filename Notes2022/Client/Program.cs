@@ -1,14 +1,14 @@
 // Client side
 
+using Blazored.Modal;
+using Blazored.SessionStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Blazored.Modal;
-using Syncfusion.Blazor;
-using Syncfusion.Licensing;
 using Notes2022.Client;
 using Notes2022.Shared;
-using Blazored.SessionStorage;
+using Syncfusion.Blazor;
+using Syncfusion.Licensing;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 

@@ -23,15 +23,11 @@
     **--------------------------------------------------------------------------*/
 
 
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Notes2022.Shared;
-using Notes2022.Server.Models;
 using Notes2022.Server.Data;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Notes2022.Server.Models;
+using Notes2022.Shared;
 using System.Security.Claims;
 
 namespace Notes2022.Server.Controllers

@@ -1,11 +1,11 @@
-﻿using Notes2022.Shared;
-using Microsoft.AspNetCore.Components;
+﻿using Blazored.Modal;
 using Blazored.Modal.Services;
-using Blazored.Modal;
-using System.Net.Http.Json;
-using Syncfusion.Blazor.RichTextEditor;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Notes2022.Client.Pages.User.Dialogs;
+using Notes2022.Shared;
+using Syncfusion.Blazor.RichTextEditor;
+using System.Net.Http.Json;
 
 namespace Notes2022.Client.Pages.User.Panels
 {
@@ -76,7 +76,7 @@ namespace Notes2022.Client.Pages.User.Panels
                 ShowMessage("Please provide a note Subject");
                 return;
             }
-                //Model.MySubject = "*none*";  // must have title
+            //Model.MySubject = "*none*";  // must have title
 
             if (Model.NoteID == 0)    // new note
             {

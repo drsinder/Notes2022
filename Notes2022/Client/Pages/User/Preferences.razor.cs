@@ -1,5 +1,5 @@
-using System.Net.Http.Json;
 using Notes2022.Shared;
+using System.Net.Http.Json;
 
 namespace Notes2022.Client.Pages.User
 {
@@ -29,7 +29,7 @@ namespace Notes2022.Client.Pages.User
             //MyZone = TZones.SingleOrDefault(p => p.Id == UserData.TimeZoneID);
             //myZid = UserData.TimeZoneID;
             pageSize = UserData.Ipref2.ToString();
-            MySizes = new List<LocalModel2>{new LocalModel2("0", "All"), new LocalModel2("5"), new LocalModel2("10"), new LocalModel2("12"), new LocalModel2("20")};
+            MySizes = new List<LocalModel2> { new LocalModel2("0", "All"), new LocalModel2("5"), new LocalModel2("10"), new LocalModel2("12"), new LocalModel2("20") };
             //TimeZone = TimeZoneInfo.Local.DisplayName;
             //int OHours = TimeZoneInfo.Local.GetUtcOffset(DateTime.Now).Hours;
             //int OMinutes = TimeZoneInfo.Local.GetUtcOffset(DateTime.Now).Minutes;

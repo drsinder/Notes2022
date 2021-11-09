@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
@@ -29,7 +28,7 @@ namespace Notes2022.Server.Controllers
         {
             List<NoteHeader> hl;
 
-            hl = _db.NoteHeader.Where(p => p.NoteFileId == fileid && p.Version != 0 
+            hl = _db.NoteHeader.Where(p => p.NoteFileId == fileid && p.Version != 0
                     && p.NoteOrdinal == ordinal && p.ResponseOrdinal == respordinal && p.ArchiveId == arcid)
                 .OrderBy(p => p.Version)
                 .ToList();

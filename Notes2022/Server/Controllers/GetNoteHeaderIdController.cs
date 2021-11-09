@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
 using Notes2022.Shared;
+using System.Security.Claims;
 
 namespace Notes2022.Server.Controllers
 {
@@ -34,7 +33,7 @@ namespace Notes2022.Server.Controllers
 
             string userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ApplicationUser user = await _userManager.FindByIdAsync(userId);
-            if ( !await _userManager.IsInRoleAsync(user, "User"))
+            if (!await _userManager.IsInRoleAsync(user, "User"))
                 return 0;
 
             try
@@ -49,7 +48,7 @@ namespace Notes2022.Server.Controllers
                     nh = _db.NoteHeader.Single(p => p.NoteFileId == notefileId && p.NoteOrdinal == noteOrd - 1 && p.ResponseOrdinal == 0 && p.Version == 0);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             { return 0; }
 
             if (nh != null)

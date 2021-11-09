@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Components;
-using System.Net.Http.Json;
 using Blazored.Modal;
+using Microsoft.AspNetCore.Components;
 using Notes2022.Shared;
+using System.Net.Http.Json;
 
 namespace Notes2022.Client.Pages.User.Dialogs
 {
@@ -22,7 +22,7 @@ namespace Notes2022.Client.Pages.User.Dialogs
         protected async override Task OnInitializedAsync()
         {
             Files = await Http.GetFromJsonAsync<List<NoteFile>>("api/NoteFileAdmin");
-            Files.Insert(0, new NoteFile{Id = 0, NoteFileName = "Select a file"});
+            Files.Insert(0, new NoteFile { Id = 0, NoteFileName = "Select a file" });
         }
 
         protected async Task OnSubmit()

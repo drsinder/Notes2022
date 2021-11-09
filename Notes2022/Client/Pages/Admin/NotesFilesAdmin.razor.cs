@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using System.Net.Http.Json;
-using Blazored.Modal;
+﻿using Blazored.Modal;
 using Blazored.Modal.Services;
-using Notes2022.Shared;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Notes2022.Client.Pages.Admin.Dialogs;
-using Notes2022.Client.Pages.User.Dialogs;
+using Notes2022.Shared;
+using System.Net.Http.Json;
 
 namespace Notes2022.Client.Pages.Admin
 {
@@ -156,7 +155,7 @@ namespace Notes2022.Client.Pages.Admin
 
                 string filename = (string)result.Data;
                 parameters = new ModalParameters();
-                parameters.Add("UploadFile",  filename);
+                parameters.Add("UploadFile", filename);
                 parameters.Add("NoteFile", file.NoteFileName);
 
                 var yModal = Modal.Show<Upload2>("Upload2", parameters);

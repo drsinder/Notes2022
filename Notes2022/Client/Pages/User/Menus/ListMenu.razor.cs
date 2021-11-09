@@ -1,13 +1,12 @@
 ﻿
+using Blazored.Modal;
+using Blazored.Modal.Services;
+using Microsoft.AspNetCore.Components;
+using Notes2022.Client.Pages.User.Dialogs;
 using Notes2022.Shared;
 using Syncfusion.Blazor.Navigations;
-using Microsoft.AspNetCore.Components;
-using Blazored.Modal.Services;
-using Blazored.Modal;
-using Notes2022.Client.Pages.User.Dialogs;
-using System.Text;
 using System.Net.Http.Json;
-using Notes2022.Client.Shared;
+using System.Text;
 
 namespace Notes2022.Client.Pages.User.Menus
 {
@@ -38,7 +37,7 @@ namespace Notes2022.Client.Pages.User.Menus
             sliderValueText = "1/" + baseNotes;
             menuItems = new List<MenuItem>();
 
-            MenuItem item = new MenuItem (){ Id = "ListNoteFiles", Text = "List Note Files" };
+            MenuItem item = new MenuItem() { Id = "ListNoteFiles", Text = "List Note Files" };
             menuItems.Add(item);
             if (Model.myAccess.Write)
             {
@@ -178,7 +177,7 @@ namespace Notes2022.Client.Pages.User.Menus
             sb.Append((Globals.LocalTimeBlazor(currentHeader.LastEdited).ToLongDateString()) + " " + (Globals.LocalTimeBlazor(currentHeader.LastEdited).ToShortTimeString())/* + " " + Model.tZone.Abbreviation*/);
 
             NoteContent currentContent = await Http.GetFromJsonAsync<NoteContent>("api/Export2/" + currentHeader.Id);
-            
+
             if (!string.IsNullOrEmpty(currentContent.DirectorMessage))
             {
                 sb.Append("<br /><span>Director Message: ");
@@ -201,7 +200,7 @@ namespace Notes2022.Client.Pages.User.Menus
             if (currentHeader.ResponseOrdinal < baseHeader.ResponseCount) // more responses in string
             {
                 currentHeader = Model.AllNotes.Single(p => p.NoteOrdinal == currentHeader.NoteOrdinal && p.ResponseOrdinal == currentHeader.ResponseOrdinal + 1);
-                
+
                 goto reloop;        // print another note
             }
 

@@ -22,10 +22,6 @@
     **
     **--------------------------------------------------------------------------*/
 
-
-
-using System.Collections.Generic;
-
 namespace Notes2022.Shared
 {
     public class ExportViewModel

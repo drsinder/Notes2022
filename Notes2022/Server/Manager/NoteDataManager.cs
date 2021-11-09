@@ -26,17 +26,11 @@
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Notes2022.Shared;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
+using Notes2022.Shared;
+using System.Security.Claims;
 using SearchOption = Notes2022.Shared.SearchOption;
-using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace Notes2022.Server
 {
@@ -175,7 +169,7 @@ namespace Notes2022.Server
         public static async Task<NoteHeader> CreateNote(NotesDbContext db, UserManager<ApplicationUser> userManager, NoteHeader nh, string body, string tags, string dMessage, bool send, bool linked, bool editing = false)
         {
             nh.Id = 0;
-            if (nh.ResponseOrdinal == 0 && !editing )  // base note
+            if (nh.ResponseOrdinal == 0 && !editing)  // base note
             {
                 nh.NoteOrdinal = await NextBaseNoteOrdinal(db, nh.NoteFileId, nh.ArchiveId);
             }
@@ -485,7 +479,7 @@ namespace Notes2022.Server
             NoteHeader oh = await db.NoteHeader.SingleAsync(p => p.Id == dh.Id);     //.Where(p => p.Id == nh.Id);
             oh.Version = nvers;
             db.Entry(oh).State = EntityState.Modified;
-            
+
             await db.SaveChangesAsync();
 
             dh.LastEdited = DateTime.Now.ToUniversalTime();
@@ -616,7 +610,7 @@ namespace Notes2022.Server
             return aux;
         }
 
-        public static ApplicationUser PutUserData(ApplicationUser aux,  UserData user)
+        public static ApplicationUser PutUserData(ApplicationUser aux, UserData user)
         {
 
             aux.Id = user.UserId;

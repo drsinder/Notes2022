@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.Modal;
+using Blazored.Modal.Services;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Notes2022.Client.Pages.User.Dialogs;
 using Notes2022.Client.Pages.User.Menus;
 using Notes2022.Shared;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.Net.Http.Json;
-
-using Blazored.Modal.Services;
-using Blazored.Modal;
-using Notes2022.Client.Pages.User.Dialogs;
-using Microsoft.AspNetCore.Components.Web;
 
 namespace Notes2022.Client.Pages.User
 {
@@ -129,7 +128,7 @@ namespace Notes2022.Client.Pages.User
                     break;
             }
 
-            if (args.Key == "Enter" )
+            if (args.Key == "Enter")
             {
                 if (!string.IsNullOrEmpty(NavString))
                 {

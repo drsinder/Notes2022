@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
 using Notes2022.Shared;
@@ -33,7 +31,7 @@ namespace Notes2022.Server.Controllers
 
             NoteHeader oh = _db.NoteHeader.SingleOrDefault(x => x.Id == headerId);
             NoteHeader nh = _db.NoteHeader.SingleOrDefault(p => p.NoteOrdinal == oh.NoteOrdinal + 1 && p.ResponseOrdinal == 0 && p.Version == 0);
-        
+
             if (nh != null)
                 newId = nh.Id;
 

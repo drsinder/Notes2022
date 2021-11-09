@@ -29,7 +29,7 @@ namespace Notes2022.Client
     public static class Globals
     {
         public static bool RolesValid { get; set; }
-        public static bool IsAdmin  { get; set; }
+        public static bool IsAdmin { get; set; }
         public static bool IsUser { get; set; }
         public static EditUserViewModel? EditUserVModel { get; set; }
 

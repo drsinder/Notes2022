@@ -73,7 +73,7 @@ namespace Notes2022.Client.Pages.User.Dialogs
             await ModalInstance.CloseAsync(ModalResult.Ok(message));
         }
 
-        private string MakeCode (string stuff2, string codeType)
+        private string MakeCode(string stuff2, string codeType)
         {
             StringBuilder sb = new StringBuilder();
 

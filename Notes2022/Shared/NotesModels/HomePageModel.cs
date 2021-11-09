@@ -23,8 +23,6 @@
 **--------------------------------------------------------------------------
 */
 
-using System.Collections.Generic;
-
 namespace Notes2022.Shared
 {
     public class HomePageModel
@@ -37,7 +35,7 @@ namespace Notes2022.Shared
 
         public UserData UserData { get; set; }
 
-        public List<UserData> UserListData { get;set; }
+        public List<UserData> UserListData { get; set; }
 
 
     }

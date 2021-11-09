@@ -35,7 +35,7 @@ namespace Notes2022.Client.Pages.User
                 }
                 else
                 {
-                    message = "Note File '" +  filename + "' not found...";
+                    message = "Note File '" + filename + "' not found...";
                 }
 
             }

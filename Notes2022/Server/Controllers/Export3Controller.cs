@@ -23,19 +23,10 @@
     **--------------------------------------------------------------------------*/
 
 
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Notes2022.Server.Data;
 using Notes2022.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace Notes2022.Server.Controllers
 {
@@ -46,7 +37,7 @@ namespace Notes2022.Server.Controllers
     {
         private readonly NotesDbContext _db;
 
-        public Export3Controller(NotesDbContext db )
+        public Export3Controller(NotesDbContext db)
         {
             _db = db;
         }

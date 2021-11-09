@@ -1,18 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Notes2022.Shared;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
-using System.Linq;
-using System;
-using System.Text;
 using Notes2022.Server.Data;
-using Notes2022.Server;
-using Microsoft.AspNetCore.Identity;
 using Notes2022.Server.Models;
+using Notes2022.Shared;
 using System.Security.Claims;
+using System.Text;
 
 namespace Notes2022.Server.Controllers
 {

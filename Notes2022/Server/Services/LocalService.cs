@@ -24,13 +24,9 @@
 
 
 using Microsoft.EntityFrameworkCore;
-using Notes2022.Shared;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Notes2022.Server;
 using Notes2022.Server.Data;
+using Notes2022.Shared;
+using System.Text;
 
 namespace Notes2022.Server.Services
 {

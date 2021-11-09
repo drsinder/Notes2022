@@ -1,13 +1,10 @@
-﻿using Notes2022.Shared;
-using Syncfusion.Blazor.Navigations;
-using Syncfusion.Blazor.Popups;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using System.Net.Http.Json;
-using Syncfusion.Blazor.SplitButtons;
+﻿using Blazored.Modal;
 using Blazored.Modal.Services;
-using Blazored.Modal;
+using Microsoft.AspNetCore.Components;
 using Notes2022.Client.Pages.User.Dialogs;
+using Notes2022.Shared;
+using Syncfusion.Blazor.Navigations;
+using System.Net.Http.Json;
 
 namespace Notes2022.Client.Pages.User.Menus
 {
@@ -73,7 +70,7 @@ namespace Notes2022.Client.Pages.User.Menus
                     if (Model.access.UserID == Model.header.AuthorID || Model.IsAdmin)
                     {
                         item = new MenuItem() { Id = "Delete", Text = "Delete" };
-                        menuItems.Add(item); 
+                        menuItems.Add(item);
                     }
                 }
 

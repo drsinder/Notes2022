@@ -1,6 +1,5 @@
 ﻿using Duende.IdentityServer.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Notes2022.Server.Models;
@@ -68,8 +67,8 @@ namespace Notes2022.Server.Data
 
             builder.Entity<NoteHeader>()
                 .HasOne(p => p.NoteContent);
-                //.WithOne(i => i.NoteHeader)
-                //.HasForeignKey<NoteContent>(b => b.NoteHeaderId);
+            //.WithOne(i => i.NoteHeader)
+            //.HasForeignKey<NoteContent>(b => b.NoteHeaderId);
 
             builder.Entity<NoteHeader>()
                 .HasIndex(new string[] { "NoteFileId" });

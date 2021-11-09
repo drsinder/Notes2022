@@ -23,17 +23,11 @@
     **--------------------------------------------------------------------------*/
 
 
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Notes2022.Shared;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+using Notes2022.Shared;
 
 namespace Notes2022.Server
 {

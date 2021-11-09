@@ -51,7 +51,7 @@ namespace Notes2022.Client.Pages.User.Dialogs
             }
             catch (Exception ex)
             {
-                message += ex.Message; 
+                message += ex.Message;
                 myAccess = new NoteAccess();
             }
         }

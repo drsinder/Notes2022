@@ -29,7 +29,7 @@ namespace Notes2022.Shared
         public string PrimeAdminName { get; set; }
         public string PrimeAdminEmail { get; set; }
         public DateTime StartupDateTime { get; set; }
-        
+
         //public string userId {  get; set; } 
 
         //public UserData userData { get; set; }

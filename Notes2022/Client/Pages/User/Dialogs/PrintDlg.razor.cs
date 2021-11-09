@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Components;
 using Blazored.Modal;
-using System.Timers;
+using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.RichTextEditor;
+using System.Timers;
 
 namespace Notes2022.Client.Pages.User.Dialogs
 {

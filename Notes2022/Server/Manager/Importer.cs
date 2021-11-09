@@ -51,9 +51,9 @@ namespace Notes2022.Server
 
             NoteFile noteFile = await NoteDataManager.GetFileByName(_db, myNotesFile);
 
-            if (noteFile == null) 
+            if (noteFile == null)
                 return false;
-                                    
+
             //int id = noteFile.Id;
             int numberArchives = noteFile.NumberArchives;
             long counter = 0;

@@ -1,16 +1,13 @@
 // Server side
 
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Notes2022.Server;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
-using Microsoft.AspNetCore.Identity;
-using Notes2022.Server;
 using Notes2022.Server.Services;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using System.Configuration;
-using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -21,16 +21,12 @@
     **  If not, see<http://www.gnu.org/licenses/gpl-3.0.txt>.
     **
     **--------------------------------------------------------------------------*/
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Notes2022.Shared;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
-using System.Collections.Generic;
-using System.Linq;
+using Notes2022.Shared;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 
 namespace Notes2022.Server.Controllers

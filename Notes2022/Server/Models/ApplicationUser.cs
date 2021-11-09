@@ -19,7 +19,7 @@ namespace Notes2022.Server.Models
         public int Ipref0 { get; set; }
 
         [PersonalData]
-        public int Ipref1 { get; set; } 
+        public int Ipref1 { get; set; }
 
         [PersonalData]
         public int Ipref2 { get; set; } // user choosen page size

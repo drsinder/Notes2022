@@ -19,7 +19,7 @@ namespace Notes2022.Client.Pages.User.Dialogs
         private string message = "Getting ready...";
 
         [Inject] HttpClient Http { get; set; }
-        public ExportUtil1() 
+        public ExportUtil1()
         {
         }
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -63,7 +63,7 @@ namespace Notes2022.Client.Pages.User.Dialogs
 
             if (model.isDirectOutput)
             {
-                await SaveAs(FileName, ms.GetBuffer() );
+                await SaveAs(FileName, ms.GetBuffer());
             }
             else
             {
@@ -189,7 +189,7 @@ namespace Notes2022.Client.Pages.User.Dialogs
 
                     req = "" + nfid + "." + model.ArchiveNumber + "." + bnh.NoteOrdinal + "." + rnum;
                     List<NoteHeader> zz = (await Http.GetFromJsonAsync<List<NoteHeader>>("api/Export/" + req));
-                    
+
                     nh = zz[0];
 
                     req = nh.Id.ToString();

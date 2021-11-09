@@ -25,10 +25,10 @@
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using Notes2022.Shared;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
+using Notes2022.Shared;
+using System.Security.Claims;
 
 namespace Notes2022.Server.Controllers
 {
