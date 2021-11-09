@@ -73,8 +73,7 @@ Example you will need to fill in the values for your case:
 - PrimeAdminEmail will become an Admin when the email address is used for registeration.
 - SendGridApiKey: Your sendgrid api key
 - SendGridEmail: Email from the app will be from this address.
-- ConnectionStrings:DefaultConnection: Modify if needed for your situation.
-- 
+- ConnectionStrings:DefaultConnection: Modify if needed for your situation. 
 
 Use Visual Studio to perform an Update-Database in the Package Manager Console.
 
