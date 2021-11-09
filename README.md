@@ -30,14 +30,23 @@ The Notes2022.Server project "secrets.json" file with appropriate values:
 Example you will need to fill in the values for your case:
 
 {
+
   "ConnectionStrings:DefaultConnection": "Server=localhost;Database=Notes2022;Trusted_Connection=True;MultipleActiveResultSets=true",
+  
   "ImportRoot": "E:\\Projects\\2022\\Notes2022\\Notes2022\\Server\\wwwroot\\Import\\",
+  
   "PrimeAdminEmail": "youremail@wherever.com",
+  
   "PrimeAdminName": "Your_Name",
+  
   "ProductionUrl": "https://localhost:7148",
+  
   "SendGridApiKey": "SG.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  
   "SendGridEmail": "youremail@wherever.com",
+  
   "SendGridName": "Your Name on behalf of Notes 2022"
+  
 }
 
 PrimeAdminEmail will become an Admin when the email address is used for registeration.
