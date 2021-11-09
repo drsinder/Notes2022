@@ -54,15 +54,10 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddRazorPages();
 
-//builder.Services.AddSyncfusionBlazor();
-
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
 
-
-
-//Globals.UserDataList = new List<Notes2022.Shared.UserData>();
 
 Globals.StartupDateTime = DateTime.Now.ToUniversalTime();
 
@@ -70,12 +65,7 @@ Globals.ProductionUrl = builder.Configuration["ProductionUrl"];
 
 Globals.ImportRoot = builder.Configuration["ImportRoot"];
 
-Globals.PathBase = builder.Configuration["PathBase"];
-
-Globals.MigrateDb = builder.Configuration["MigrateDb"];
-
-
-Globals.TimeZoneDefaultID = 54;   /// int.Parse(builder.Configuration["DefaultTZ"]);  // this would fail during a db migration!!
+Globals.TimeZoneDefaultID = 54; // not needed with blazor
 
 Globals.SendGridApiKey = builder.Configuration["SendGridApiKey"];
 Globals.SendGridEmail = builder.Configuration["SendGridEmail"];
@@ -86,7 +76,7 @@ Globals.DBConnectString = builder.Configuration.GetConnectionString("DefaultConn
 Globals.PrimeAdminName = "Dale Sinder";
 Globals.PrimeAdminEmail = "sinder@illinois.edu";
 
-try
+try  // replace default with config values,  fails during migration so try
 {
     Globals.PrimeAdminName = builder.Configuration["PrimeAdminName"];
     Globals.PrimeAdminEmail = builder.Configuration["PrimeAdminEmail"];
