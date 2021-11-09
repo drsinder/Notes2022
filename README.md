@@ -1,7 +1,7 @@
 # Notes2022
 Next iteration of Notes for the web. Based on PLATO Notes.
 
-Notes2021 Blazor Edition
+Notes2022 Blazor Edition
 
 Notes 2022 is a set of forums inspired by the PLATO (later known as NovaNET) communications system. The purpose of PLATO was to provide Computer Based Education facilities. The origin of PLATO goes back to 1960 at the Computer-based Education Research Lab (CERL) at the University of Illinois. By 1973 a need was recognized for a means for users of PLATO to communicate in a durable and structured format. At this time David R. Woolley created "lesson" "notes". Mr. Woolley describes "notes" here: http://just.thinkofit.com/plato-the-emergence-of-online-community/ His original implementation remains available on Cyber1: https://cyber1.org/index.asp
 
