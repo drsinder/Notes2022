@@ -9,7 +9,7 @@ Notes 2022 is a set of forums inspired by the PLATO (later known as NovaNET) com
 
 Notes 2 continued to function through August 31, 2015 at which time the then owner of NovaNET (Pearson Learning) shut down NovaNET.
 
-This effort (Notes 2022) is intended to continue the Notes tradition on a new platform. Many of the ideas and features of the original PLATO Notes are retained. Many of the Notes 2 advances are also retained. Finally Notes 2021 is updated and rewritten again from the ground up to make appropriate use of the Web platform rather than a dedicated PLATO terminal or a NovaNET specific protocal Portal program.
+This effort (Notes 2022) is intended to continue the Notes tradition on a new platform. Many of the ideas and features of the original PLATO Notes are retained. Many of the Notes 2 advances are also retained. Finally Notes 2022 is updated and rewritten again from the ground up to make appropriate use of the Web platform rather than a dedicated PLATO terminal or a NovaNET specific protocal Portal program.
 
 The author of Notes 2022 managed and contributed to the Notes 2 rewrite on NovaNET.
 
