@@ -301,134 +301,24 @@ namespace Notes2022.Server
         /// <param name="db">NotesDbContext</param>
         /// <param name="nc">NoteContent</param>
         /// <returns></returns>
-        //public static async Task<bool> DeleteNote(NotesDbContext db, NoteHeader nc)
-        //{
-        //    if (nc.ResponseOrdinal == 0)     // base note
-        //    {
-        //        return await DeleteBaseNote(db, nc);
-        //    }
-        //    else  // Response
-        //    {
-        //        return await DeleteResponse(db, nc);
-        //    }
-        //}
+        public static async Task DeleteNote(NotesDbContext _db, NoteHeader nh)
+        {
+            nh.IsDeleted = true;
+            _db.Entry(nh).State = EntityState.Modified;
+            await _db.SaveChangesAsync();
 
-        /// <summary>
-        /// Delete a Base Note
-        /// </summary>
-        /// <param name="db">NotesDbContext</param>
-        /// <param name="nc">NoteContent</param>
-        /// <returns></returns>
-        // Steps involved:
-        // 1. Delete all NoteContent rows where NoteFileID, NoteOrdinal match input
-        // 2. Delete single row in BaseNoteHeader where NoteFileID, NoteOrdinal match input
-        // 3. Decrement all BaseNoteHeader.NoteOrdinal where NoteFileID match input and
-        //    BaseNoteHeader.NoteOrdinal > nc.NoteOrdinal
-        // 4. Decrement all NoteContent.NoteOrdinal where NoteFileID match input and NoteContent.NoteOrdinal > nc.NoteOrdinal
-        //private static async Task<bool> DeleteBaseNote(NotesDbContext db, NoteHeader nc)
-        //{
-        //    int fileId = nc.NoteFileId;
-        //    int arcId = nc.ArchiveId;
-        //    int noteOrd = nc.NoteOrdinal;
-
-        //    try
-        //    {
-        //        List<NoteHeader> deleteCont = await GetNoteContentList(db, fileId, arcId, noteOrd);
-
-        //        foreach (var nh in deleteCont)
-        //        {
-        //            nh.IsDeleted = true;
-        //            db.Entry(nh).State = EntityState.Modified;
-
-        //            await DeleteLinked(db, nh);
-        //        }
-
-        //        //db.NoteHeader.RemoveRange(deleteCont);
-
-        //        //List<NoteHeader> upBase = await db.NoteHeader
-        //        //    .Where(p => p.NoteFileId == fileId && p.ArchiveId == arcId && p.NoteOrdinal > noteOrd)
-        //        //    .ToListAsync();
-
-        //        //foreach (var cont in upBase)
-        //        //{
-        //        //    cont.NoteOrdinal--;
-        //        //    db.Entry(cont).State = EntityState.Modified;
-        //        //}
-
-        //        await db.SaveChangesAsync();
-
-        //        return true;
-        //    }
-        //    catch
-        //    {
-        //        // ignored
-        //    }
-
-        //    return false;
-        //}
-
-        /// <summary>
-        /// Delete a Response Note
-        /// </summary>
-        /// <param name="db">NotesDbContext</param>
-        /// <param name="nc">NoteContent</param>
-        /// <returns></returns>
-        // Steps involved:
-        // 1. Delete single NoteContent row where NoteFileID, NoteOrdinal, and ResponseOrdinal match input
-        // 2. Decrement all NoteContent.ResponseOrdinal where NoteFileID, and NoteOrdinal match input and NoteContent.ResponseOrdinal > nc.ResponseOrdinal
-        // 3. Decrement single row (Responses field)in BaseNoteHeader where NoteFileID, NoteOrdinal match input
-        //private static async Task<bool> DeleteResponse(NotesDbContext db, NoteHeader nc)
-        //{
-        //    //int fileId = nc.NoteFileId;
-        //    //int arcId = nc.ArchiveId;
-        //    //int noteOrd = nc.NoteOrdinal;
-        //    //int respOrd = nc.ResponseOrdinal;
-
-        //    try
-        //    {
-        //        //    List<NoteHeader> deleteCont = await db.NoteHeader
-        //        //        .Where(p => p.NoteFileId == fileId && p.ArchiveId == arcId && p.NoteOrdinal == noteOrd && p.ResponseOrdinal == nc.ResponseOrdinal)
-        //        //        .ToListAsync();
-
-        //        //    if (deleteCont.Count != 1)
-        //        //        return false;
-
-        //        //    await DeleteLinked(db, deleteCont.First());
-
-        //        //    db.NoteHeader.Remove(deleteCont.First());
-
-        //        //    List<NoteHeader> upCont = await db.NoteHeader
-        //        //        .Where(p => p.NoteFileId == fileId && p.ArchiveId == arcId && p.NoteOrdinal == noteOrd && p.ResponseOrdinal > respOrd)
-        //        //        .ToListAsync();
-
-        //        //    foreach (var cont in upCont)
-        //        //    {
-        //        //        cont.ResponseOrdinal--;
-        //        //        db.Entry(cont).State = EntityState.Modified;
-        //        //    }
-
-        //        //    NoteHeader bnh = await GetBaseNoteHeader(db, fileId, arcId, noteOrd);
-
-        //        //    bnh.ResponseCount--;
-        //        //    db.Entry(bnh).State = EntityState.Modified;
-
-        //        //await db.SaveChangesAsync();
-
-
-        //        nc.IsDeleted = true;
-        //        db.Entry(nc).State = EntityState.Modified;
-        //        await db.SaveChangesAsync();
-
-        //        return true;
-        //    }
-        //    catch
-        //    {
-        //        // ignored
-        //    }
-
-        //    return false;
-        //}
-
+            if (nh.ResponseOrdinal == 0 && nh.ResponseCount > 0)
+            {
+                // delete all responses
+                for (int i = 1; i <= nh.ResponseCount; i++)
+                {
+                    NoteHeader rh = _db.NoteHeader.Single(p => p.ResponseOrdinal == i && p.Version == 0);
+                    rh.IsDeleted = true;
+                    _db.Entry(rh).State = EntityState.Modified;
+                }
+                await _db.SaveChangesAsync();
+            }
+        }
 
         public static async Task<string> DeleteLinked(NotesDbContext db, NoteHeader nh)
         {
