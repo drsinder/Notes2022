@@ -39,14 +39,15 @@ Client/Server (Hosted) app. Webasm (HTML/C#/Blazor).
 
 This is a Visual Studio 2022 project.
 
-Things you will need to develop this project:
+### Things you will need to develop this project:
 
-Visual Studio 2022 with dotNET 6 installed.
-SQL Server - Express, Developer Edition, or better.
-A SendGrid Account and an API Key.
+- Visual Studio 2022 with dotNET 6 installed.
+- SQL Server - Express, Developer Edition, or better.
+- A SendGrid Account and an API Key.
 
-Things you will need to do to get started:
+### Things you will need to do to get started:
 The Notes2022.Server project "secrets.json" file with appropriate values:
+
 Example you will need to fill in the values for your case:
 
 {
@@ -69,10 +70,10 @@ Example you will need to fill in the values for your case:
   
 }
 
-PrimeAdminEmail will become an Admin when the email address is used for registeration.
-SendGridApiKey: Your sendgrid api key
-SendGridEmail: Email from the app will be from this address.
-ConnectionStrings:DefaultConnection: Modify if needed for your situation.
+- PrimeAdminEmail will become an Admin when the email address is used for registeration.
+- SendGridApiKey: Your sendgrid api key
+- SendGridEmail: Email from the app will be from this address.
+- ConnectionStrings:DefaultConnection: Modify if needed for your situation. 
 
 Use Visual Studio to perform an Update-Database in the Package Manager Console.
 
@@ -82,6 +83,6 @@ From the Admin menu item choose NoteFiles.  Then add a few note files to work wi
 Write some notes!
 
 --------------
-Note:  The app does not yet work when deployed to a server.  Still trying to figure that out.  It's related to Identity prvoider.
+Note:  The app does not yet work when deployed to a server.  Still trying to figure that out.  It's related to Identity provider.
 If you have any ideas...!!
 
