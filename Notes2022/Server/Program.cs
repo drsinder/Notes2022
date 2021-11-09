@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Hangfire;
+using Hangfire.SqlServer;
+using Hangfire.Dashboard;
 using Notes2022.Server;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
@@ -17,6 +20,20 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<NotesDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+// Add Hangfire services.
+builder.Services.AddHangfire(configuration => configuration
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UseSqlServerStorage(connectionString, new SqlServerStorageOptions
+    {
+        CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+        SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+        QueuePollInterval = TimeSpan.Zero,
+        UseRecommendedIsolationLevel = true,
+        DisableGlobalLocks = true
+    }));
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
@@ -47,6 +64,8 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredUniqueChars = 1;
 
 });
+
+builder.Services.AddHangfireServer();
 
 builder.Services.AddControllersWithViews();
 
@@ -114,8 +133,32 @@ app.UseIdentityServer();
 app.UseAuthentication();
 app.UseAuthorization();
 
+
+
+app.UseHangfireDashboard("/hangfoodcoded");
+
+//app.UseHangfireDashboard("/hangfire", new DashboardOptions
+//{
+//    Authorization = new[] { new MyAuthorizationFilter() }
+//});
+
+BackgroundJob.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
+
+
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
 app.Run();
+
+
+public class MyAuthorizationFilter : IDashboardAuthorizationFilter
+{
+    public bool Authorize(DashboardContext context)
+    {
+        var httpContext = context.GetHttpContext();
+
+        // Allow all authenticated users to see the Dashboard (potentially dangerous).
+        return httpContext.User.Identity.IsAuthenticated;   //httpContext.User.IsInRole("Admin");
+    }
+}

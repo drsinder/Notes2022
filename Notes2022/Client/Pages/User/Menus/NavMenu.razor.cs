@@ -132,9 +132,11 @@ namespace Notes2022.Client.Pages.User.Menus
             MenuItem item5 = new MenuItem() { Id = "NoteFiles", Text = "NoteFiles" };
             MenuItem item5a = new MenuItem() { Id = "Roles", Text = "Roles" };
             MenuItem item5b = new MenuItem() { Id = "Linked", Text = "Linked" };
+            MenuItem item5c = new MenuItem() { Id = "Hangfire", Text = "Hangfire" };
             item.Items.Add(item5);
             item.Items.Add(item5a);
             item.Items.Add(item5b);
+            item.Items.Add(item5c);
             menuItemsTop.Add(item);
 
 
@@ -180,6 +182,11 @@ namespace Notes2022.Client.Pages.User.Menus
                 case "Preferences":
                     Navigation.NavigateTo("preferences");
                     break;
+
+                case "Hangfire":
+                    Navigation.NavigateTo("hangfoodcoded", true);
+                    break;
+
             }
         }
 
