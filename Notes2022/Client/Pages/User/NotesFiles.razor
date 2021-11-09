@@ -16,8 +16,8 @@ else
         <GridPageSettings PageSize="12"></GridPageSettings>
         <GridEvents RowSelected="DisplayIt" TValue="NoteFile"></GridEvents>
         <GridColumns>
-            <GridColumn Field=@nameof(NoteFile.NoteFileName) HeaderText="NoteFile Name" TextAlign="TextAlign.Left" Width="80" IsPrimaryKey="true"></GridColumn>
             <GridColumn Field=@nameof(NoteFile.NoteFileTitle) HeaderText="NoteFile Title" TextAlign="TextAlign.Left" Width="150"></GridColumn>
+            <GridColumn Field=@nameof(NoteFile.NoteFileName) HeaderText="NoteFile Name" TextAlign="TextAlign.Left" Width="80" IsPrimaryKey="true"></GridColumn>
             <GridColumn HeaderText="Date/Time" TextAlign="TextAlign.Left" Width="60">
                 <Template Context="inner">
                 @{
