@@ -1,10 +1,10 @@
+// Server side
+
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
-//using Syncfusion.Blazor;
-//using Syncfusion.Licensing;
 using Microsoft.AspNetCore.Identity;
 using Notes2022.Server;
 using Notes2022.Server.Services;
@@ -13,12 +13,6 @@ using System.Configuration;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
-
-//if (File.Exists(System.IO.Directory.GetCurrentDirectory() + "/SyncfusionLicense.txt"))
-//{
-//    string licenseKey = System.IO.File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "/SyncfusionLicense.txt");
-//    SyncfusionLicenseProvider.RegisterLicense(licenseKey);
-//}
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
