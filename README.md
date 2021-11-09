@@ -18,3 +18,41 @@ A prior effort, 3.0, was written using Microsoft ASP.NET MVC 5. Version 2017 was
 Client/Server (Hosted) app. Webasm (HTML/C#/Blazor).
 
 This is a Visual Studio 2022 project.
+
+Things you will need to develop this project:
+
+Visual Studio 2022 with dotNET 6 installed.
+SQL Server - Express, Developer Edition, or better.
+A SendGrid Account and an API Key.
+
+Things you will need to do to get started:
+The Notes2022.Server project "secrets.json" file with appropriate values:
+Example you will need to fill in the values for your case:
+
+{
+  "ConnectionStrings:DefaultConnection": "Server=localhost;Database=Notes2022;Trusted_Connection=True;MultipleActiveResultSets=true",
+  "ImportRoot": "E:\\Projects\\2022\\Notes2022\\Notes2022\\Server\\wwwroot\\Import\\",
+  "PrimeAdminEmail": "youremail@wherever.com",
+  "PrimeAdminName": "Your_Name",
+  "ProductionUrl": "https://localhost:7148",
+  "SendGridApiKey": "SG.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "SendGridEmail": "youremail@wherever.com",
+  "SendGridName": "Your Name on behalf of Notes 2022"
+}
+
+PrimeAdminEmail will become an Admin when the email address is used for registeration.
+SendGridApiKey: Your sendgrid api key
+SendGridEmail: Email from the app will be from this address.
+ConnectionStrings:DefaultConnection: Modify if needed for your situation.
+
+Use Visual Studio to perform an Update-Database in the Package Manager Console.
+
+Start debugging the app.  Register, confirm your email when the message arrives (keep app running for this), Log in.
+From the Admin menu item choose NoteFiles.  Then add a few note files to work with.  Some buttons are available to add some standard ones.
+
+Write some notes!
+
+--------------
+Note:  The app does not yet work when deployed to a server.  Still trying to figure that out.  It's related to Identity prvoider.
+If you have any ideas...!!
+
