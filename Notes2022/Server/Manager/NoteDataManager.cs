@@ -52,7 +52,7 @@ namespace Notes2022.Server
             var query = db.NoteFile.Where(p => p.NoteFileName == name);
             if (!query.Any())
             {
-                NoteFile noteFile = new NoteFile()
+                NoteFile noteFile = new ()
                 {
                     NoteFileName = name,
                     NoteFileTitle = title,
@@ -166,7 +166,7 @@ namespace Notes2022.Server
             _db.SaveChanges();
         }
 
-        public static async Task<NoteHeader> CreateNote(NotesDbContext db, UserManager<ApplicationUser> userManager, NoteHeader nh, string body, string tags, string dMessage, bool send, bool linked, bool editing = false)
+        public static async Task<NoteHeader> CreateNote(NotesDbContext db, NoteHeader nh, string body, string tags, string dMessage, bool send, bool linked, bool editing = false)
         {
             nh.Id = 0;
             if (nh.ResponseOrdinal == 0 && !editing)  // base note
@@ -185,7 +185,7 @@ namespace Notes2022.Server
                 if (nh.LastEdited.IsDaylightSavingTime())
                     offset--;
 
-                Random rand = new Random();
+                Random rand = new ();
                 int ms = rand.Next(999);
 
                 nh.LastEdited = nh.LastEdited.AddHours(offset).AddMilliseconds(ms);
@@ -222,7 +222,7 @@ namespace Notes2022.Server
 
             }
 
-            NoteContent newContent = new NoteContent()
+            NoteContent newContent = new ()
             {
                 NoteHeaderId = newHeader.Id,
                 NoteBody = body,
@@ -258,7 +258,7 @@ namespace Notes2022.Server
                 {
                     if (link.SendTo)
                     {
-                        LinkQueue q = new LinkQueue
+                        LinkQueue q = new()
                         {
                             Activity = newHeader.ResponseOrdinal == 0 ? LinkAction.CreateBase : LinkAction.CreateResponse,
                             LinkGuid = newHeader.LinkGuid,
@@ -278,7 +278,7 @@ namespace Notes2022.Server
 
 
 
-        public static async Task<NoteHeader> CreateResponse(NotesDbContext db, UserManager<ApplicationUser> userManager, NoteHeader nh, string body, string tags, string dMessage, bool send, bool linked, bool editing = false)
+        public static async Task<NoteHeader> CreateResponse(NotesDbContext db, NoteHeader nh, string body, string tags, string dMessage, bool send, bool linked, bool editing = false)
         {
             NoteHeader mine = await GetBaseNoteHeader(db, nh.BaseNoteId);
             db.Entry(mine).State = EntityState.Unchanged;
@@ -292,7 +292,7 @@ namespace Notes2022.Server
 
             nh.ResponseOrdinal = mine.ResponseCount;
             nh.NoteOrdinal = mine.NoteOrdinal;
-            return await CreateNote(db, userManager, nh, body, tags, dMessage, send, linked, editing);
+            return await CreateNote(db, nh, body, tags, dMessage, send, linked, editing);
         }
 
         /// <summary>
@@ -336,7 +336,7 @@ namespace Notes2022.Server
                 {
                     if (link.SendTo)
                     {
-                        LinkQueue q = new LinkQueue
+                        LinkQueue q = new()
                         {
                             Activity = LinkAction.Delete,
                             LinkGuid = nh.LinkGuid,
@@ -376,7 +376,7 @@ namespace Notes2022.Server
 
             // then create new note
 
-            return await CreateNote(db, userManager, dh, nc.NoteBody, tags, nc.DirectorMessage, true, false, true);
+            return await CreateNote(db, dh, nc.NoteBody, tags, nc.DirectorMessage, true, false, true);
 
             // below is for the old replacing edited notes
 
@@ -466,7 +466,7 @@ namespace Notes2022.Server
 
         public static UserData GetUserData(ApplicationUser user)
         {
-            UserData aux = new UserData();
+            UserData aux = new ();
 
             aux.UserId = user.Id;
             aux.DisplayName = user.DisplayName;

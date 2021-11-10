@@ -1,6 +1,6 @@
 ﻿/*--------------------------------------------------------------------------
     **
-    ** Copyright(c) 2020, Dale Sinder
+    ** Copyright © 2022, Dale Sinder
     **
     ** Name: LocalService.cs
     **
@@ -18,7 +18,7 @@
     **
     **  You should have received a copy of the GNU General Public License
     **  version 3 along with this program in file "license-gpl-3.0.txt".
-    **  If not, see<http: //www.gnu.org/licenses/gpl-3.0.txt>.
+    **  If not, see<http://www.gnu.org/licenses/gpl-3.0.txt>.
     **
     **--------------------------------------------------------------------------*/
 
@@ -57,7 +57,7 @@ namespace Notes2022.Server.Services
                     .Where(p => p.NoteFileId == nc.NoteFileId && p.NoteOrdinal == nc.NoteOrdinal)
                     .ToListAsync();
 
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new ();
                 sb.Append("Forwarded by Notes 2022 - User: " + email + " / " + name
                     + "<p>\nFile: " + NoteFile.NoteFileName + " - File Title: " + NoteFile.NoteFileTitle + "</p>"
                     + "<hr/>");

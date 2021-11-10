@@ -72,7 +72,7 @@ namespace Notes2022.Server.Controllers
             ApplicationUser me = await _userManager.FindByIdAsync(userId);
 
             DateTime now = DateTime.Now.ToUniversalTime();
-            NoteHeader nheader = new NoteHeader()
+            NoteHeader nheader = new()
             {
                 LastEdited = now,
                 ThreadLastEdited = now,
@@ -89,13 +89,13 @@ namespace Notes2022.Server.Controllers
 
             if (tvm.BaseNoteHeaderID == 0)
             {
-                created = await NoteDataManager.CreateNote(_db, _userManager, nheader, tvm.MyNote, tvm.TagLine, tvm.DirectorMessage, true, false);
+                created = await NoteDataManager.CreateNote(_db, nheader, tvm.MyNote, tvm.TagLine, tvm.DirectorMessage, true, false);
             }
             else
             {
                 nheader.BaseNoteId = tvm.BaseNoteHeaderID;
                 nheader.RefId = tvm.RefId;
-                created = await NoteDataManager.CreateResponse(_db, _userManager, nheader, tvm.MyNote, tvm.TagLine, tvm.DirectorMessage, true, false);
+                created = await NoteDataManager.CreateResponse(_db, nheader, tvm.MyNote, tvm.TagLine, tvm.DirectorMessage, true, false);
             }
 
             // TODO
@@ -120,7 +120,7 @@ namespace Notes2022.Server.Controllers
             //nheader.LastEdited = now;
             nheader.ThreadLastEdited = now;
 
-            NoteContent nc = new NoteContent
+            NoteContent nc = new()
             {
                 NoteHeaderId = tvm.NoteID,
                 NoteBody = tvm.MyNote,

@@ -57,8 +57,8 @@ namespace Notes2022.Server.Services
 
             if (isHtml)
             {
-                MemoryStream ms = new MemoryStream();
-                StreamWriter sw = new StreamWriter(ms);
+                MemoryStream ms = new ();
+                StreamWriter sw = new (ms);
                 await sw.WriteAsync(message);
                 await sw.FlushAsync();
                 ms.Seek(0, SeekOrigin.Begin);
@@ -66,7 +66,7 @@ namespace Notes2022.Server.Services
                 ms.Dispose();
             }
 
-            Response response = await client.SendEmailAsync(msg);
+            await client.SendEmailAsync(msg);
         }
 
 

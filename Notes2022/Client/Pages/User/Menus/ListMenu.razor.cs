@@ -37,30 +37,32 @@ namespace Notes2022.Client.Pages.User.Menus
             sliderValueText = "1/" + baseNotes;
             menuItems = new List<MenuItem>();
 
-            MenuItem item = new MenuItem() { Id = "ListNoteFiles", Text = "List Note Files" };
+            MenuItem item = new() { Id = "ListNoteFiles", Text = "List Note Files" };
             menuItems.Add(item);
             if (Model.myAccess.Write)
             {
-                item = new MenuItem() { Id = "NewBaseNote", Text = "New Base Note" };
+                item = new() { Id = "NewBaseNote", Text = "New Base Note" };
                 menuItems.Add(item);
             }
             if (Model.myAccess.ReadAccess)
             {
-                MenuItem item2 = new MenuItem() { Id = "OutPutMenu", Text = "Output" };
-                item2.Items = new List<MenuItem>();
-                item2.Items.Add(new MenuItem() { Id = "eXport", Text = "eXport" });
-                item2.Items.Add(new MenuItem() { Id = "HtmlFromIndex", Text = "Html (expandable)" });
-                item2.Items.Add(new MenuItem() { Id = "htmlFromIndex", Text = "html (flat)" });
-                item2.Items.Add(new MenuItem() { Id = "mailFromIndex", Text = "mail" });
-                //item2.Items.Add(new MenuItem() { Id = "MarkMine", Text = "Mark my notes for output" });
-                item2.Items.Add(new MenuItem() { Id = "PrintFile", Text = "Print entire file" });
+                MenuItem item2 = new () { Id = "OutPutMenu", Text = "Output" };
+                item2.Items = new List<MenuItem>
+                {
+                    new () { Id = "eXport", Text = "eXport" },
+                    new () { Id = "HtmlFromIndex", Text = "Html (expandable)" },
+                    new () { Id = "htmlFromIndex", Text = "html (flat)" },
+                    new () { Id = "mailFromIndex", Text = "mail" },
+                    //item2.Items.Add(new MenuItem() { Id = "MarkMine", Text = "Mark my notes for output" });
+                    new MenuItem() { Id = "PrintFile", Text = "Print entire file" },
 
-                //if (Model.isMarked)
-                //{
-                //    item2.Items.Add(new MenuItem() { Id = "OutputMarked", Text = "Output marked notes" });
-                //}
+                    //if (Model.isMarked)
+                    //{
+                    //    item2.Items.Add(new MenuItem() { Id = "OutputMarked", Text = "Output marked notes" });
+                    //}
 
-                item2.Items.Add(new MenuItem { Id = "JsonExport", Text = "Json Export" });
+                    new (){ Id = "JsonExport", Text = "Json Export" }
+                };
 
                 menuItems.Add(item2);
 
@@ -156,7 +158,7 @@ namespace Notes2022.Client.Pages.User.Menus
 
             NoteHeader currentHeader = Model.Notes[0];
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new ();
 
             sb.Append("<h4 class=\"text-center\">" + Model.noteFile.NoteFileTitle + "</h4>");
 
@@ -233,7 +235,7 @@ namespace Notes2022.Client.Pages.User.Menus
         {
             var parameters = new ModalParameters();
 
-            ExportViewModel vm = new ExportViewModel();
+            ExportViewModel vm = new ();
             vm.ArchiveNumber = Model.ArcId;
             vm.isCollapsible = isCollapsible;
             vm.isDirectOutput = !isEmail;
@@ -252,7 +254,7 @@ namespace Notes2022.Client.Pages.User.Menus
         {
             var parameters = new ModalParameters();
 
-            ExportViewModel vm = new ExportViewModel();
+            ExportViewModel vm = new();
             vm.ArchiveNumber = Model.ArcId;
             vm.NoteFile = Model.noteFile;
             vm.NoteOrdinal = 0;

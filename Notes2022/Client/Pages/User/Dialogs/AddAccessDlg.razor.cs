@@ -46,7 +46,7 @@ namespace Notes2022.Client.Pages.User.Dialogs
             {
                 int aId = await sessionStorage.GetItemAsync<int>("ArcId");
 
-                NoteAccess item = new NoteAccess();
+                NoteAccess item = new ();
 
                 item.UserID = selectedUserId;
                 item.NoteFileId = NoteFileId;
@@ -55,7 +55,7 @@ namespace Notes2022.Client.Pages.User.Dialogs
 
                 await Http.PostAsJsonAsync("api/AccessList", item);
 
-                delay = new System.Timers.Timer(250);
+                delay = new(250);
                 delay.Enabled = true;
                 delay.Elapsed += Done;
 

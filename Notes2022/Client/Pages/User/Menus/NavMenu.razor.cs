@@ -101,42 +101,37 @@ namespace Notes2022.Client.Pages.User.Menus
             menuItemsTop = new List<MenuItem>();
             MenuItem item;
 
-            item = new MenuItem() { Id = "Recent", Text = "Recent Notes" };
+            item = new () { Id = "Recent", Text = "Recent Notes" };
             menuItemsTop.Add(item);
 
-            MenuItem item2 = new MenuItem() { Id = "MRecent", Text = "Recent" };
-            MenuItem item2a = new MenuItem() { Id = "Subscriptions", Text = "Subscriptions" };
-            MenuItem item2b = new MenuItem() { Id = "Preferences", Text = "Preferences" };
-
-            MenuItem item3 = new MenuItem() { Id = "Manage", Text = "Manage" };
-            item3.Items = new List<MenuItem>();
-            item3.Items.Add(item2);
-            item3.Items.Add(item2a);
-            item3.Items.Add(item2b);
+            MenuItem item3 = new() { Id = "Manage", Text = "Manage" };
+            item3.Items = new List<MenuItem>
+            {
+                new () { Id = "MRecent", Text = "Recent" },
+                new () { Id = "Subscriptions", Text = "Subscriptions" },
+                new () { Id = "Preferences", Text = "Preferences" }
+            };
             menuItemsTop.Add(item3);
 
-
-            item = new MenuItem() { Id = "Help", Text = "Help" };
-            item.Items = new List<MenuItem>();
-            MenuItem item4 = new MenuItem() { Id = "MainHelp", Text = "Help" };
-            MenuItem item4a = new MenuItem() { Id = "About", Text = "About" };
-            MenuItem item4b = new MenuItem() { Id = "License", Text = "License" };
-            item.Items.Add(item4);
-            item.Items.Add(item4b);
-            item.Items.Add(item4a);
+            item = new () { Id = "Help", Text = "Help" };
+            item.Items = new List<MenuItem>
+            {
+                new () { Id = "MainHelp", Text = "Help" },
+                new () { Id = "About", Text = "About" },
+                new () { Id = "License", Text = "License" }
+            };
             menuItemsTop.Add(item);
 
-
             item = new MenuItem() { Id = "Admin", Text = "Admin" };
-            item.Items = new List<MenuItem>();
-            MenuItem item5 = new MenuItem() { Id = "NoteFiles", Text = "NoteFiles" };
-            MenuItem item5a = new MenuItem() { Id = "Roles", Text = "Roles" };
-            MenuItem item5b = new MenuItem() { Id = "Linked", Text = "Linked" };
-            MenuItem item5c = new MenuItem() { Id = "Hangfire", Text = "Hangfire" };
-            item.Items.Add(item5);
-            item.Items.Add(item5a);
-            item.Items.Add(item5b);
-            item.Items.Add(item5c);
+            item.Items = new List<MenuItem>
+            {
+                new () { Id = "NoteFiles", Text = "NoteFiles" },
+                new () { Id = "Roles", Text = "Roles" },
+                new () { Id = "Linked", Text = "Linked" },
+                new () { Id = "Hangfire", Text = "Hangfire" }
+            };
+
+
             menuItemsTop.Add(item);
 
 

@@ -16,9 +16,7 @@ namespace Notes2022.Client.Pages.Admin
         private HomePageModel model { get; set; }
 
         [Inject] HttpClient Http { get; set; }
-        [Inject] AuthenticationStateProvider AuthProv { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
-        [Inject] AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [Inject] IModalService Modal { get; set; }
         public NotesFilesAdmin()
         {

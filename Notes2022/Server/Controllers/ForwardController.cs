@@ -58,11 +58,11 @@ namespace Notes2022.Server.Controllers
             ApplicationUser user = await _userManager.FindByIdAsync(userId);
             UserData ud = NoteDataManager.GetUserData(user);
 
-            NoteHeader nh = await NoteDataManager.GetBaseNoteHeaderById(_db, fv.NoteID);
+            //NoteHeader nh = await NoteDataManager.GetBaseNoteHeaderById(_db, fv.NoteID);
 
             string myEmail = await LocalService.MakeNoteForEmail(fv, fv.NoteFile, _db, ud.Email, ud.DisplayName);
 
-            EmailSender emailSender = new EmailSender();
+            EmailSender emailSender = new ();
 
             await emailSender.SendEmailAsync(ud.Email, fv.NoteSubject, myEmail);
         }

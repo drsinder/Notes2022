@@ -29,53 +29,55 @@ namespace Notes2022.Client.Pages.User.Menus
         {
             menuItems = new List<MenuItem>();
 
-            MenuItem item = new MenuItem() { Id = "ListNotes", Text = "Listing" };
+            MenuItem item = new () { Id = "ListNotes", Text = "Listing" };
             menuItems.Add(item);
 
-            item = new MenuItem() { Id = "NextBase", Text = "Next Base" };
+            item = new () { Id = "NextBase", Text = "Next Base" };
             menuItems.Add(item);
 
-            item = new MenuItem() { Id = "PreviousBase", Text = "Previous Base" };
+            item = new () { Id = "PreviousBase", Text = "Previous Base" };
             menuItems.Add(item);
 
-            item = new MenuItem() { Id = "NextNote", Text = "Next" };
+            item = new () { Id = "NextNote", Text = "Next" };
             menuItems.Add(item);
 
-            item = new MenuItem() { Id = "PreviousNote", Text = "Previous" };
+            item = new() { Id = "PreviousNote", Text = "Previous" };
             menuItems.Add(item);
 
             if (Model.access.ReadAccess)
             {
-                MenuItem item2 = new MenuItem() { Id = "OutPutMenu", Text = "Output" };
-                item2.Items = new List<MenuItem>();
-                item2.Items.Add(new MenuItem() { Id = "Forward", Text = "Forward" });
-                item2.Items.Add(new MenuItem() { Id = "Copy", Text = "Copy" });
-                item2.Items.Add(new MenuItem() { Id = "mail", Text = "mail" });
-                //item2.Items.Add(new MenuItem() { Id = "Mark", Text = "Mark for output" });
-                item2.Items.Add(new MenuItem() { Id = "Html", Text = "Html (expandable)" });
-                item2.Items.Add(new MenuItem() { Id = "html", Text = "html (flat)" });
+                MenuItem item2 = new () { Id = "OutPutMenu", Text = "Output" };
+                item2.Items = new List<MenuItem>
+                {
+                    new() { Id = "Forward", Text = "Forward" },
+                    new() { Id = "Copy", Text = "Copy" },
+                    new() { Id = "mail", Text = "mail" },
+                    //item2.Items.Add(new MenuItem() { Id = "Mark", Text = "Mark for output" });
+                    new() { Id = "Html", Text = "Html (expandable)" },
+                    new() { Id = "html", Text = "html (flat)" }
+                };
                 menuItems.Add(item2);
 
                 if (Model.access.Respond)
                 {
-                    item = new MenuItem() { Id = "NewResponse", Text = "New Response" };
+                    item = new () { Id = "NewResponse", Text = "New Response" };
                     menuItems.Add(item);
                 }
 
                 if (Model.CanEdit)
                 {
-                    item = new MenuItem() { Id = "Edit", Text = "Edit" };
+                    item = new () { Id = "Edit", Text = "Edit" };
                     menuItems.Add(item);
 
                     if (Model.access.UserID == Model.header.AuthorID || Model.IsAdmin)
                     {
-                        item = new MenuItem() { Id = "Delete", Text = "Delete" };
+                        item = new () { Id = "Delete", Text = "Delete" };
                         menuItems.Add(item);
                     }
                 }
 
-                menuItems.Add(new MenuItem() { Id = "SearchFromNote", Text = "Search" });
-                menuItems.Add(new MenuItem() { Id = "NoteHelp", Text = "Z for HELP" });
+                menuItems.Add(new () { Id = "SearchFromNote", Text = "Search" });
+                menuItems.Add(new () { Id = "NoteHelp", Text = "Z for HELP" });
             }
 
             return Task.CompletedTask;
@@ -189,7 +191,7 @@ namespace Notes2022.Client.Pages.User.Menus
         protected void Forward()
         {
             var parameters = new ModalParameters();
-            ForwardViewModel fv = new ForwardViewModel();
+            ForwardViewModel fv = new ();
             fv.NoteID = Model.header.Id;
             fv.FileID = Model.header.NoteFileId;
             fv.ArcID = Model.header.ArchiveId;
@@ -209,7 +211,7 @@ namespace Notes2022.Client.Pages.User.Menus
         {
             var parameters = new ModalParameters();
 
-            ExportViewModel vm = new ExportViewModel();
+            ExportViewModel vm = new ();
             vm.ArchiveNumber = Model.header.ArchiveId;
             vm.isCollapsible = isCollapsible;
             vm.isDirectOutput = !isEmail;
@@ -253,7 +255,7 @@ namespace Notes2022.Client.Pages.User.Menus
         {
             var parameters = new ModalParameters();
             parameters.Add("MessageInput", message);
-            var formModal = Modal.Show<MessageBox>("", parameters);
+            Modal.Show<MessageBox>("", parameters);
         }
     }
 }
