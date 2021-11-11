@@ -59,7 +59,7 @@ namespace Notes2022.Server.Controllers
             NoteFile hpmf = _db.NoteFile.Where(p => p.NoteFileName == "homepagemessages").FirstOrDefault();
             if (hpmf != null)
             {
-                NoteHeader hpmh = _db.NoteHeader.Where(p => p.NoteFileId == hpmf.Id).OrderByDescending(p => p.CreateDate).FirstOrDefault();
+                NoteHeader hpmh = _db.NoteHeader.Where(p => p.NoteFileId == hpmf.Id && p.IsDeleted == false).OrderByDescending(p => p.CreateDate).FirstOrDefault();
                 if (hpmh != null)
                 {
                     model.Message = _db.NoteContent.Where(p => p.NoteHeaderId == hpmh.Id).FirstOrDefault().NoteBody;
