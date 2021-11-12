@@ -36,7 +36,7 @@ namespace Notes2022.Server.Controllers
             if (!test)
                 return null;
 
-            List<NoteHeader> result = _db.NoteHeader.Where(p => p.BaseNoteId == headerId && (p.ResponseOrdinal != 0)).OrderBy(p => p.ResponseOrdinal).ToList();
+            List<NoteHeader> result = _db.NoteHeader.Where(p => p.BaseNoteId == headerId && (p.ResponseOrdinal != 0) && p.IsDeleted == false && p.Version == 0).OrderBy(p => p.ResponseOrdinal).ToList();
 
             return result;
 
