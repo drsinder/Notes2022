@@ -142,12 +142,16 @@ app.UseHangfireDashboard("/hangfoodcoded");
 //    Authorization = new[] { new MyAuthorizationFilter() }
 //});
 
-BackgroundJob.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
-
-
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
+
+
+BackgroundJob.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
+
+//EmailSender s = new EmailSender();
+
+//BackgroundJob.Enqueue(() => s.SendEmailAsync("sinder@illinois.edu", "Notes 2022", "Startup"));
 
 app.Run();
 

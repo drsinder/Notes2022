@@ -23,6 +23,7 @@
     **--------------------------------------------------------------------------*/
 
 
+using Hangfire;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Notes2022.Server.Data;
@@ -64,8 +65,12 @@ namespace Notes2022.Server.Controllers
 
             EmailSender emailSender = new ();
 
-            await emailSender.SendEmailAsync(ud.Email, fv.NoteSubject, myEmail);
+            //await emailSender.SendEmailAsync(ud.Email, fv.NoteSubject, myEmail);
+
+            BackgroundJob.Enqueue(() => emailSender.SendEmailAsync(ud.Email, fv.NoteSubject, myEmail));
         }
 
     }
+
+}
 }
