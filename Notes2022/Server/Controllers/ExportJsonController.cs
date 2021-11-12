@@ -58,7 +58,7 @@ namespace Notes2022.Server.Controllers
             stuff.NoteFile = _db.NoteFile.Single(p => p.Id == fileId);
 
             stuff.NoteHeaders = await _db.NoteHeader
-                    .Where(p => p.NoteFileId == fileId && p.ArchiveId == arcId)
+                    .Where(p => p.NoteFileId == fileId && p.ArchiveId == arcId && !p.IsDeleted && p.Version == 0)
                     .OrderBy(p => p.NoteOrdinal)
                     .ThenBy(p => p.ResponseOrdinal)
                     .ToListAsync();

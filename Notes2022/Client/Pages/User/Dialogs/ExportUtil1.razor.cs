@@ -160,6 +160,9 @@ namespace Notes2022.Client.Pages.User.Dialogs
             // loop over each base note in order
             foreach (NoteHeader bnh in bnhl)
             {
+                if (bnh.IsDeleted || bnh.Version > 0)
+                    continue;
+
                 if (marked && !model.Marks.Where(p => p.NoteOrdinal == bnh.NoteOrdinal).Any())
                     continue;
 
@@ -192,11 +195,15 @@ namespace Notes2022.Client.Pages.User.Dialogs
 
                     nh = zz[0];
 
-                    req = nh.Id.ToString();
+                    if (!nh.IsDeleted && nh.Version == 0)
+                    {
 
-                    ncr = await Http.GetFromJsonAsync<NoteContent>("api/Export2/" + req);
+                        req = nh.Id.ToString();
 
-                    await WriteNote(sw, bnh, nh, ncr, isHtml, true, tags);
+                        ncr = await Http.GetFromJsonAsync<NoteContent>("api/Export2/" + req);
+
+                        await WriteNote(sw, bnh, nh, ncr, isHtml, true, tags);
+                    }
                 }
 
                 // extra stuff to terminate collapsable responses
