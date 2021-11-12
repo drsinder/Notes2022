@@ -213,7 +213,7 @@ namespace Notes2022.Server
 
                 if (editing)
                 {
-                    // TODO: TEST ME - update BaseNoteId for all responses
+                    // update BaseNoteId for all responses
                     List<NoteHeader> rhl = db.NoteHeader.Where(p => p.BaseNoteId == editingId && p.ResponseOrdinal > 0).ToList();
                     foreach (NoteHeader ln in rhl)
                     {
@@ -239,7 +239,7 @@ namespace Notes2022.Server
 
             if (editing)
             {
-                // TODO: Test Me -  update RefId
+                // update RefId
                 List<NoteHeader> rhl = db.NoteHeader.Where(p => p.RefId == editingId).ToList();
                 foreach(NoteHeader ln in rhl)
                 {

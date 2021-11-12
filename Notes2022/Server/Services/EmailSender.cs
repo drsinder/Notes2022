@@ -49,11 +49,28 @@ namespace Notes2022.Server.Services
         {
             var apiKey = Globals.SendGridApiKey;
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress(Globals.SendGridEmail, Globals.EmailName);
+            var from = new EmailAddress(Globals.SendGridEmail, Globals.SendGridName);
             var to = new EmailAddress(email);
             var htmlStart = "<!DOCTYPE html>";
             var isHtml = message.StartsWith(htmlStart);
-            SendGridMessage msg = MailHelper.CreateSingleEmail(from, to, subject, isHtml ? "See Html." : message, message);
+            
+            SendGridMessage msg;
+
+            if (email.Contains(';')) // multiple targets
+            {
+                string[] who = email.Split(';');
+
+                List<EmailAddress> addresses = new List<EmailAddress>();
+                foreach(string a in who)
+                { 
+                    addresses.Add(new EmailAddress(a.Trim()));
+                }
+                msg = MailHelper.CreateSingleEmailToMultipleRecipients(from, addresses, subject, isHtml ? "See Html Attachment." : message, isHtml ? "See Html Attachment." : message);
+            }
+            else // single target
+            {
+                msg = MailHelper.CreateSingleEmail(from, to, subject, isHtml ? "See Html Attachment." : message, isHtml ? "See Html Attachment." : message);
+            }
 
             if (isHtml)
             {
@@ -62,7 +79,7 @@ namespace Notes2022.Server.Services
                 await sw.WriteAsync(message);
                 await sw.FlushAsync();
                 ms.Seek(0, SeekOrigin.Begin);
-                await msg.AddAttachmentAsync("FromNotes2022.html", ms);
+                await msg.AddAttachmentAsync( subject + ".html", ms);
                 ms.Dispose();
             }
 
