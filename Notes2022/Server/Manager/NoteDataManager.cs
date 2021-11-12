@@ -168,13 +168,15 @@ namespace Notes2022.Server
 
         public static async Task<NoteHeader> CreateNote(NotesDbContext db, NoteHeader nh, string body, string tags, string dMessage, bool send, bool linked, bool editing = false)
         {
+            long editingId = nh.Id;
+
             nh.Id = 0;
             if (nh.ResponseOrdinal == 0 && !editing)  // base note
             {
                 nh.NoteOrdinal = await NextBaseNoteOrdinal(db, nh.NoteFileId, nh.ArchiveId);
             }
 
-            if (!linked)
+            if (!linked && !editing)
             {
                 nh.LinkGuid = Guid.NewGuid().ToString();
             }
@@ -208,7 +210,20 @@ namespace Notes2022.Server
             {
                 newHeader.BaseNoteId = newHeader.Id;
                 db.Entry(newHeader).State = EntityState.Modified;
+
+                if (editing)
+                {
+                    // TODO: TEST ME - update BaseNoteId for all responses
+                    List<NoteHeader> rhl = db.NoteHeader.Where(p => p.BaseNoteId == editingId && p.ResponseOrdinal > 0).ToList();
+                    foreach (NoteHeader ln in rhl)
+                    {
+                        ln.BaseNoteId = newHeader.Id;
+                        db.Entry(ln).State = EntityState.Modified;
+                    }
+                }
+
                 await db.SaveChangesAsync();
+
             }
             else
             {
@@ -220,6 +235,18 @@ namespace Notes2022.Server
                 db.Entry(newHeader).State = EntityState.Modified;
                 await db.SaveChangesAsync();
 
+            }
+
+            if (editing)
+            {
+                // TODO: Test Me -  update RefId
+                List<NoteHeader> rhl = db.NoteHeader.Where(p => p.RefId == editingId).ToList();
+                foreach(NoteHeader ln in rhl)
+                {
+                    ln.RefId = newHeader.Id;
+                    db.Entry(ln).State = EntityState.Modified;
+                }
+                await db.SaveChangesAsync();
             }
 
             NoteContent newContent = new ()
@@ -363,7 +390,7 @@ namespace Notes2022.Server
             // clone nh
             NoteHeader dh = nh.Clone();
 
-            int nvers = await db.NoteHeader.CountAsync(p => p.NoteOrdinal == dh.NoteOrdinal
+            int nvers = await db.NoteHeader.CountAsync(p => p.NoteFileId == dh.NoteFileId && p.NoteOrdinal == dh.NoteOrdinal
                 && p.ResponseOrdinal == dh.ResponseOrdinal && p.ArchiveId == dh.ArchiveId);
 
             NoteHeader oh = await db.NoteHeader.SingleAsync(p => p.Id == dh.Id);     //.Where(p => p.Id == nh.Id);
