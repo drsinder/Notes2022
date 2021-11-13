@@ -77,7 +77,7 @@ namespace Notes2022.Server.Controllers
                 if (na.ReadAccess)
                     avail.Add(m);
             }
-            return avail;
+            return avail.OrderBy(p => p.Ordinal).ToList();
         }
 
         [HttpPost]
@@ -85,13 +85,26 @@ namespace Notes2022.Server.Controllers
         {
             string userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ApplicationUser me = await _userManager.FindByIdAsync(userId);
+
+            List<Sequencer> mine = await _db.Sequencer.Where(p => p.UserId == me.Id).OrderByDescending(p => p.Ordinal).ToListAsync();
+
+            int ord; 
+            if (mine == null || mine.Count == 0)
+            {
+                ord = 1;
+            }
+            else
+            {
+                ord = mine[0].Ordinal + 1;
+            }
+
             Sequencer tracker = new Sequencer
             {
                 Active = true,
                 NoteFileId = model.fileId,
                 LastTime = DateTime.Now.ToUniversalTime(),
                 UserId = me.Id,
-                Ordinal = 0,
+                Ordinal = ord,
                 StartTime = DateTime.Now.ToUniversalTime()
             };
 

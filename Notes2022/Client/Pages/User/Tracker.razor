@@ -62,7 +62,7 @@ else
                         bool current = trackers.SingleOrDefault(p => p.NoteFileId == file.Id) != null;
                         <tr>
                             <td>
-                                <SCheckBox fileId="@file.Id" isChecked="@current" />
+                                <SCheckBox fileId="@file.Id" isChecked="@current" Tracker="@this"></SCheckBox>
                             </td>
                             <td>
                                 @file.NoteFileName
