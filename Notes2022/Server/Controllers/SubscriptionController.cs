@@ -27,6 +27,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Notes2022.Server;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
 using Notes2022.Shared;
@@ -67,7 +68,16 @@ namespace Notes2021Blazor.Server.Controllers
             if (mine == null)
                 mine = new List<Subscription>();
 
-            return mine;
+            List<Subscription> avail = new List<Subscription>();
+
+            foreach (Subscription m in mine)
+            {
+                NoteAccess na = await AccessManager.GetAccess(_db, userId, m.NoteFileId, 0);
+                if (na.ReadAccess)
+                    avail.Add(m);
+            }
+
+            return avail;
         }
 
         [HttpPost]

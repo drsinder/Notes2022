@@ -159,7 +159,9 @@ namespace Notes2022.Server.Controllers
             {
                 ApplicationUser usr = await _userManager.FindByIdAsync(s.SubscriberId);
 
-                BackgroundJob.Enqueue(() => emailSender.SendEmailAsync(usr.UserName, myNote.NoteSubject, myEmail));
+                NoteAccess na = await AccessManager.GetAccess(_db, usr.Id, s.NoteFileId, 0);
+                if (na.ReadAccess)
+                    BackgroundJob.Enqueue(() => emailSender.SendEmailAsync(usr.UserName, myNote.NoteSubject, myEmail));
             }
         }
 
