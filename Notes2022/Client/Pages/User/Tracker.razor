@@ -44,6 +44,7 @@ else
             <table class="table">
                 <thead>
                     <tr>
+                        <th>Move Up/Down</th>
                         <th>Check to Follow</th>
                         <th>
                             NoteFile Name
@@ -59,8 +60,12 @@ else
                 <tbody>
                     @foreach (NoteFile file in files)
                     {
-                        bool current = trackers.SingleOrDefault(p => p.NoteFileId == file.Id) != null;
+                        Sequencer CurrentTracker = trackers.SingleOrDefault(p => p.NoteFileId == file.Id);
+                        bool current = CurrentTracker != null;
                         <tr>
+                            <td>
+                                <TrackerMover CurrentTracker="@CurrentTracker" Trackers="@trackers" Tracker="@this"></TrackerMover>
+                            </td>
                             <td>
                                 <SCheckBox fileId="@file.Id" isChecked="@current" Tracker="@this"></SCheckBox>
                             </td>
