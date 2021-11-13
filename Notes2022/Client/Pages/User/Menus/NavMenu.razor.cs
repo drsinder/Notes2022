@@ -174,6 +174,10 @@ namespace Notes2022.Client.Pages.User.Menus
                     Navigation.NavigateTo("subscribe");
                     break;
 
+                case "MRecent":
+                    Navigation.NavigateTo("tracker");
+                    break;
+
                 case "NoteFiles":
                     Navigation.NavigateTo("admin/notefilelist");
                     break;
