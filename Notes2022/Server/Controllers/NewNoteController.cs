@@ -23,10 +23,13 @@
     **--------------------------------------------------------------------------*/
 
 
+using Hangfire;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
+using Notes2022.Server.Services;
 using Notes2022.Shared;
 using System.Security.Claims;
 
@@ -101,7 +104,7 @@ namespace Notes2022.Server.Controllers
             // TODO
             //await ProcessLinkedNotes();
 
-            //await SendNewNoteToSubscribers(created);
+            await SendNewNoteToSubscribers(created);
 
         }
 
@@ -134,6 +137,45 @@ namespace Notes2022.Server.Controllers
             return;
         }
 
+        private async Task SendNewNoteToSubscribers(NoteHeader myNote)
+        {
+            List<Subscription> subs = await _db.Subscription
+                .Where(p => p.NoteFileId == myNote.NoteFileId)
+                .ToListAsync();
 
+            if (subs == null || subs.Count == 0)
+                return;
+
+            ForwardViewModel fv = new ForwardViewModel();
+            fv.NoteID = myNote.Id;
+
+            fv.NoteFile = await _db.NoteFile.SingleAsync(p => p.Id == myNote.NoteFileId);
+
+            string myEmail = await LocalService.MakeNoteForEmail(fv, fv.NoteFile, _db, Globals.PrimeAdminEmail, Globals.PrimeAdminName );
+
+            EmailSender emailSender = new EmailSender();
+
+            foreach (Subscription s in subs)
+            {
+                ApplicationUser usr = await _userManager.FindByIdAsync(s.SubscriberId);
+
+                BackgroundJob.Enqueue(() => emailSender.SendEmailAsync(usr.UserName, myNote.NoteSubject, myEmail));
+            }
+        }
+
+        //private async Task ProcessLinkedNotes()
+        //{
+        //    List<LinkQueue> items = await _db.LinkQueue.Where(p => p.Enqueued == false).ToListAsync();
+        //    foreach (LinkQueue item in items)
+        //    {
+        //        LinkProcessor lp = new LinkProcessor(_db);
+        //        BackgroundJob.Enqueue(() => lp.ProcessLinkAction(item.Id));
+        //        item.Enqueued = true;
+        //        _db.Update(item);
+        //    }
+        //    if (items.Count > 0)
+        //        await _db.SaveChangesAsync();
+
+        //}
     }
 }

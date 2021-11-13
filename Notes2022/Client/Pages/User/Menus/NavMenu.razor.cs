@@ -170,6 +170,10 @@ namespace Notes2022.Client.Pages.User.Menus
                     Navigation.NavigateTo("license");
                     break;
 
+                case "Subscriptions":
+                    Navigation.NavigateTo("subscribe");
+                    break;
+
                 case "NoteFiles":
                     Navigation.NavigateTo("admin/notefilelist");
                     break;
