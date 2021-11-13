@@ -23,7 +23,7 @@ namespace Notes2022.Client.Pages.User.Menus
         [Inject] HttpClient Http { get; set; }
         [Inject] AuthenticationStateProvider AuthProv { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
-        //[Inject] Blazored.SessionStorage.ISessionStorageService sessionStorage { get; set; }
+        [Inject] Blazored.SessionStorage.ISessionStorageService sessionStorage { get; set; }
         public NavMenu()
         {
         }
@@ -178,6 +178,10 @@ namespace Notes2022.Client.Pages.User.Menus
                     Navigation.NavigateTo("tracker");
                     break;
 
+                case "Recent":
+                    await StartSeq();
+                    break;
+
                 case "NoteFiles":
                     Navigation.NavigateTo("admin/notefilelist");
                     break;
@@ -191,6 +195,21 @@ namespace Notes2022.Client.Pages.User.Menus
                     break;
 
             }
+        }
+
+        private async Task StartSeq()
+        {
+            List<Sequencer> sequencers = await Http.GetFromJsonAsync<List<Sequencer>>("api/sequencer");
+            if (sequencers.Count == 0)
+                return;
+
+            sequencers = sequencers.OrderBy(p => p.NoteFileId).ToList();
+
+            await sessionStorage.SetItemAsync<List<Sequencer>>("SeqList", sequencers);
+            await sessionStorage.SetItemAsync<int>("SeqIndex", 0);
+            await sessionStorage.SetItemAsync<Sequencer>("SeqItem", sequencers[0]);
+            await sessionStorage.SetItemAsync<bool>("IsSeq", true);
+            Navigation.NavigateTo("noteindex/" + sequencers[0].NoteFileId);
         }
 
         private void ShowMessage(string message)

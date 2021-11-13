@@ -38,7 +38,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 
 
-namespace Notes2021Blazor.Server.Controllers
+namespace Notes2022.Server.Controllers
 {
     [Route("api/[controller]")]
     [Route("api/[controller]/{fileId}")]
@@ -116,7 +116,17 @@ namespace Notes2021Blazor.Server.Controllers
         public async Task Put(Sequencer seq)
         {
             Sequencer modified = await _db.Sequencer.SingleAsync(p => p.UserId == seq.UserId && p.NoteFileId == seq.NoteFileId);
-            modified.LastTime = DateTime.Now.ToUniversalTime();
+
+            modified.Active = seq.Active;
+            if (seq.Active)  // starting to seq
+            {
+                modified.StartTime = DateTime.Now.ToUniversalTime();
+            }
+            else
+            {
+                modified.LastTime = seq.StartTime;
+            }
+
             _db.Entry(modified).State = EntityState.Modified;
             await _db.SaveChangesAsync();
         }

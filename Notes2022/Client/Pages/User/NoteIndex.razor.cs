@@ -35,6 +35,8 @@ namespace Notes2022.Client.Pages.User
 
         protected bool Tdone { get; set; }
 
+        protected bool IsSeq { get; set; }
+
         [Inject] HttpClient Http { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
         [Inject] Blazored.SessionStorage.ISessionStorageService sessionStorage { get; set; }
@@ -46,17 +48,82 @@ namespace Notes2022.Client.Pages.User
 
         protected override async Task OnParametersSetAsync()
         {
+            IsSeq = await sessionStorage.GetItemAsync<bool>("IsSeq");
+            if (IsSeq && NotesfileId < 0)
+            {
+                NotesfileId = -NotesfileId;
+            }
+
             Model = await Http.GetFromJsonAsync<NoteDisplayIndexModel>("api/NoteIndex/" + NotesfileId);
             PageSize = Model.UserData.Ipref2;
             ShowContent = Model.UserData.Pref7;
             ExpandAll = Model.UserData.Pref3;
 
             CurPage = await sessionStorage.GetItemAsync<int>("IndexPage");
+
+            if (IsSeq)
+                await StartSeq();
         }
 
         protected void DisplayIt(RowSelectEventArgs<NoteHeader> args)
         {
             Navigation.NavigateTo("notedisplay/" + args.Data.Id);
+        }
+
+        protected async Task StartSeq()
+        {
+            Sequencer seq = await sessionStorage.GetItemAsync<Sequencer>("SeqItem");
+            if (seq == null)
+                return;
+
+            List<NoteHeader> noteHeaders = Model.AllNotes.FindAll(p => p.LastEdited >= seq.LastTime
+                && p.IsDeleted == false && p.Version == 0)
+                .OrderBy(p => p.NoteOrdinal)
+                .ThenBy(p => p.ResponseOrdinal)
+                .ToList();
+
+            if (noteHeaders.Count == 0)
+            {
+                List<Sequencer> sequencers = await sessionStorage.GetItemAsync<List<Sequencer>>("SeqList");
+                int seqIndex = await sessionStorage.GetItemAsync<int>("SeqIndex");
+                if (sequencers.Count <= ++seqIndex)
+                {
+                    await sessionStorage.SetItemAsync<bool>("IsSeq", false);
+                    await sessionStorage.RemoveItemAsync("SeqList");
+                    await sessionStorage.RemoveItemAsync("SeqItem");
+                    await sessionStorage.RemoveItemAsync("SeqIndex");
+
+                    await sessionStorage.RemoveItemAsync("SeqHeaders");
+                    await sessionStorage.RemoveItemAsync("SeqHeaderIndex");
+                    await sessionStorage.RemoveItemAsync("CurrentSeqHeader");
+
+                    ShowMessage("You have seen all the new notes!");
+
+                    Navigation.NavigateTo("");
+
+                    return;  // end it all
+                }
+
+                Sequencer currSeq = sequencers[seqIndex];
+
+                await sessionStorage.SetItemAsync<int>("SeqIndex", seqIndex);
+
+                Navigation.NavigateTo("noteindex/" + (-currSeq.NoteFileId));
+                return;
+            }
+
+            await sessionStorage.SetItemAsync<List<NoteHeader>>("SeqHeaders", noteHeaders);
+            await sessionStorage.SetItemAsync<int>("SeqHeaderIndex", 0);
+
+            NoteHeader currHeader = noteHeaders[0];
+
+            await sessionStorage.SetItemAsync<NoteHeader>("CurrentSeqHeader", currHeader);
+
+            seq.Active = true;
+
+            await Http.PutAsJsonAsync("api/sequencer", seq);
+
+            Navigation.NavigateTo("notedisplay/" + currHeader.Id);
         }
 
         public async void ActionCompleteHandler(ActionEventArgs<NoteHeader> args)

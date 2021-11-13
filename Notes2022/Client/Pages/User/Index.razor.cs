@@ -47,6 +47,16 @@ namespace Notes2022.Client.Pages.User
             {
                 await sessionStorage.SetItemAsync<int>("ArcId", 0);
                 await sessionStorage.SetItemAsync<int>("IndexPage", 1);
+                
+                await sessionStorage.SetItemAsync<bool>("IsSeq", false);
+                await sessionStorage.RemoveItemAsync("SeqList");
+                await sessionStorage.RemoveItemAsync("SeqItem");
+                await sessionStorage.RemoveItemAsync("SeqIndex");
+
+                await sessionStorage.RemoveItemAsync("SeqHeaders");
+                await sessionStorage.RemoveItemAsync("SeqHeaderIndex");
+                await sessionStorage.RemoveItemAsync("CurrentSeqHeader");
+
                 try
                 {
                     //model = await Http.GetFromJsonAsync<AboutModel>("api/About");
