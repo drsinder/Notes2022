@@ -108,6 +108,12 @@ namespace Notes2022.Server.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var cookies = Response.Cookies;
+                    cookies.Delete("IsAdmin");
+                    if (Input.Email == Globals.PrimeAdminEmail)
+                    {
+                        cookies.Append("IsAdmin", "true");  // for hangfire
+                    }
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

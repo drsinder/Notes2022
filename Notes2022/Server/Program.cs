@@ -156,6 +156,9 @@ public class MyAuthorizationFilter : IDashboardAuthorizationFilter
 {
     public bool Authorize(DashboardContext context)
     {
-        return true;
+        var cookies = context.GetHttpContext().Request.Cookies;
+        bool test = cookies.ContainsKey("IsAdmin");
+
+        return test;
     }
 }
