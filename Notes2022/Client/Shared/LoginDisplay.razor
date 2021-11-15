@@ -1,11 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Syncfusion.Blazor.Buttons
 
 @inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
-@inject HttpClient Http
-@inject AuthenticationStateProvider AuthProv
-@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 
 <AuthorizeView>
     <Authorized>

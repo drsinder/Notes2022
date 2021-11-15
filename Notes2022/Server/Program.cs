@@ -135,22 +135,18 @@ app.UseAuthorization();
 
 
 
-app.UseHangfireDashboard("/hangfoodcoded");
+//app.UseHangfireDashboard("/hangfoodcoded");
 
-//app.UseHangfireDashboard("/hangfire", new DashboardOptions
-//{
-//    Authorization = new[] { new MyAuthorizationFilter() }
-//});
+app.UseHangfireDashboard("/hangfoodcoded", new DashboardOptions
+{
+    Authorization = new[] { new MyAuthorizationFilter() }
+});
 
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
-
-BackgroundJob.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
-
 //EmailSender s = new EmailSender();
-
 //BackgroundJob.Enqueue(() => s.SendEmailAsync("sinder@illinois.edu", "Notes 2022", "Startup"));
 
 app.Run();
@@ -160,9 +156,6 @@ public class MyAuthorizationFilter : IDashboardAuthorizationFilter
 {
     public bool Authorize(DashboardContext context)
     {
-        var httpContext = context.GetHttpContext();
-
-        // Allow all authenticated users to see the Dashboard (potentially dangerous).
-        return httpContext.User.Identity.IsAuthenticated;   //httpContext.User.IsInRole("Admin");
+        return true;
     }
 }
