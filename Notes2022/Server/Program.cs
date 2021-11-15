@@ -6,19 +6,53 @@ using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+
+// database providers
+
 using Microsoft.EntityFrameworkCore;
+
+//using Npgsql.EntityFrameworkCore.PostgreSQL;
+//using IBM.EntityFrameworkCore;
+//using MySql.Data.EntityFrameworkCore;
+//using Pomelo.EntityFrameworkCore.MySql;
+
+// end database providers
+
 using Notes2022.Server;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
 using Notes2022.Server.Services;
+
+/*
+ *      Partial list of possible database providers
+ * 
+Database 	            Package
+SQLite	                Microsoft.EntityFrameworkCore.Sqlite
+Microsoft SQL Server	Microsoft.EntityFrameworkCore.SqlServer
+Npgsql (PostgreSQL)     Npgsql.EntityFrameworkCore.PostgreSQL
+IBM Data Servers	    IBM.EntityFrameworkCore
+MySQL (Official)	    MySql.Data.EntityFrameworkCore
+Pomelo (MySQL)	        Pomelo.EntityFrameworkCore.MySql
+InMemory (for Testing)	Microsoft.EntityFrameworkCore.InMemory * 
+ * 
+ * See full list at: https://docs.microsoft.com/en-us/ef/core/providers/?tabs=dotnet-core-cli
+ */
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+// Later we could add a switch to select from the above databases via
+// appsettings.json config value OR eaasier, just select the appropriate 
+// commented out using above and modify the statement below...
+// ... need to add the NuGet Package to the project too.
+
 builder.Services.AddDbContext<NotesDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+// end of switchable db section
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Add Hangfire services.
