@@ -1,6 +1,8 @@
-﻿
-@inject HttpClient Http
+﻿@inject HttpClient Http
 @inject AuthenticationStateProvider AuthProv
+
+@using Notes2022.Shared
+@using System.Net.Http.Json
 
 <h2>About Notes 2022</h2>
 <p>
@@ -42,7 +44,7 @@
     from 3.0 but uses a new foundation, CORE 6.0 with Blazor, which permits greater flexibility.
 </p>
 <p>
-    Uses components from the Community Edition of <a href="https://www.syncfusion.com/" target="_blank">Syncfusion</a> Essential Studio 2019 Volume 4.
+    Uses components from the Community Edition of <a href="https://www.syncfusion.com/" target="_blank">Syncfusion</a> Essential Studio 2021 Volume 3.
 </p>
 <p>
     See also <a href="http://www.platohistory.org/" target="_blank">http://www.platohistory.org/</a> and
@@ -68,7 +70,7 @@
 
 
 @code {
-    private AboutModel model { get; set; }
+    private Notes2022.Shared.AboutModel model { get; set; }
     private TimeSpan upTime { get; set; }
 
     protected override async Task OnInitializedAsync()

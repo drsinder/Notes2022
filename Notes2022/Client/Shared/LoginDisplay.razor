@@ -50,29 +50,6 @@
 
 @code {
 
-    //protected string UserName { get; set; }
-
-    //protected override async Task OnParametersSetAsync()
-    //{
-    //    AuthenticationState authstate = await AuthProv.GetAuthenticationStateAsync();
-    //    if (authstate.User.Identity.IsAuthenticated && Globals.EditUserVModel == null)
-    //    {
-    //        UserData udata = await Http.GetFromJsonAsync<UserData>("api/User");
-    //        string uid = udata.UserId;
-    //        Globals.UserData = udata;
-    //        Globals.EditUserVModel = await Http.GetFromJsonAsync<EditUserViewModel>("api/UserEdit/" + uid);
-    //    }
-    //    else
-    //    {
-    //        Globals.EditUserVModel = null;
-    //    }
-    //    if (authstate.User.Identity.IsAuthenticated)
-    //    {
-    //        UserName = Globals.EditUserVModel.UserData.DisplayName;
-    //    }
-    //    this.StateHasChanged();
-    //}
-
     private async Task BeginSignOut()
     {
         Globals.RolesValid = false;
