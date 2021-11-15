@@ -2,7 +2,6 @@
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Notes2022.RCL;
 using Notes2022.RCL.User.Dialogs;
 using Notes2022.Shared;
 using Syncfusion.Blazor.Navigations;
@@ -102,7 +101,7 @@ namespace Notes2022.RCL.User.Menus
             menuItemsTop = new List<MenuItem>();
             MenuItem item;
 
-            item = new () { Id = "Recent", Text = "Recent Notes" };
+            item = new() { Id = "Recent", Text = "Recent Notes" };
             menuItemsTop.Add(item);
 
             MenuItem item3 = new() { Id = "Manage", Text = "Manage" };
@@ -114,7 +113,7 @@ namespace Notes2022.RCL.User.Menus
             };
             menuItemsTop.Add(item3);
 
-            item = new () { Id = "Help", Text = "Help" };
+            item = new() { Id = "Help", Text = "Help" };
             item.Items = new List<MenuItem>
             {
                 new () { Id = "MainHelp", Text = "Help" },

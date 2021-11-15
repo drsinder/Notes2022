@@ -151,7 +151,7 @@ namespace Notes2022.Server.Controllers
 
             fv.NoteFile = await _db.NoteFile.SingleAsync(p => p.Id == myNote.NoteFileId);
 
-            string myEmail = await LocalService.MakeNoteForEmail(fv, fv.NoteFile, _db, Globals.PrimeAdminEmail, Globals.PrimeAdminName );
+            string myEmail = await LocalService.MakeNoteForEmail(fv, fv.NoteFile, _db, Globals.PrimeAdminEmail, Globals.PrimeAdminName);
 
             EmailSender emailSender = new EmailSender();
 

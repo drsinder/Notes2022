@@ -46,7 +46,7 @@ namespace Notes2022.RCL.User.Dialogs
             {
                 int aId = await sessionStorage.GetItemAsync<int>("ArcId");
 
-                NoteAccess item = new ();
+                NoteAccess item = new();
 
                 item.UserID = selectedUserId;
                 item.NoteFileId = NoteFileId;

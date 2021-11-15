@@ -63,7 +63,7 @@ namespace Notes2022.Server.Controllers
 
             string myEmail = await LocalService.MakeNoteForEmail(fv, fv.NoteFile, _db, ud.Email, ud.DisplayName);
 
-            EmailSender emailSender = new ();
+            EmailSender emailSender = new();
 
             //await emailSender.SendEmailAsync(ud.Email, fv.NoteSubject, myEmail);
 

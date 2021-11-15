@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Notes2022.Shared;
 
 namespace Notes2022.Client.Pages.User
 {

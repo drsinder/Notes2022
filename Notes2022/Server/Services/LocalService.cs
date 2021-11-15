@@ -57,7 +57,7 @@ namespace Notes2022.Server.Services
                     .Where(p => p.NoteFileId == nc.NoteFileId && p.NoteOrdinal == nc.NoteOrdinal)
                     .ToListAsync();
 
-                StringBuilder sb = new ();
+                StringBuilder sb = new();
                 sb.Append("Forwarded by Notes 2022 - User: " + email + " / " + name
                     + "<p>\nFile: " + NoteFile.NoteFileName + " - File Title: " + NoteFile.NoteFileTitle + "</p>"
                     + "<hr/>");

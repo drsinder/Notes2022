@@ -52,7 +52,7 @@ namespace Notes2022.Server
             var query = db.NoteFile.Where(p => p.NoteFileName == name);
             if (!query.Any())
             {
-                NoteFile noteFile = new ()
+                NoteFile noteFile = new()
                 {
                     NoteFileName = name,
                     NoteFileTitle = title,
@@ -187,7 +187,7 @@ namespace Notes2022.Server
                 if (nh.LastEdited.IsDaylightSavingTime())
                     offset--;
 
-                Random rand = new ();
+                Random rand = new();
                 int ms = rand.Next(999);
 
                 nh.LastEdited = nh.LastEdited.AddHours(offset).AddMilliseconds(ms);
@@ -241,7 +241,7 @@ namespace Notes2022.Server
             {
                 // update RefId
                 List<NoteHeader> rhl = db.NoteHeader.Where(p => p.RefId == editingId).ToList();
-                foreach(NoteHeader ln in rhl)
+                foreach (NoteHeader ln in rhl)
                 {
                     ln.RefId = newHeader.Id;
                     db.Entry(ln).State = EntityState.Modified;
@@ -249,7 +249,7 @@ namespace Notes2022.Server
                 await db.SaveChangesAsync();
             }
 
-            NoteContent newContent = new ()
+            NoteContent newContent = new()
             {
                 NoteHeaderId = newHeader.Id,
                 NoteBody = body,
@@ -493,7 +493,7 @@ namespace Notes2022.Server
 
         public static UserData GetUserData(ApplicationUser user)
         {
-            UserData aux = new ();
+            UserData aux = new();
 
             aux.UserId = user.Id;
             aux.DisplayName = user.DisplayName;

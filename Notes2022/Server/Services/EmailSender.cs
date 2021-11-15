@@ -23,7 +23,6 @@
     **--------------------------------------------------------------------------*/
 
 
-using Hangfire;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using SendGrid;
@@ -54,7 +53,7 @@ namespace Notes2022.Server.Services
             var to = new EmailAddress(email);
             var htmlStart = "<!DOCTYPE html>";
             var isHtml = message.StartsWith(htmlStart);
-            
+
             SendGridMessage msg;
 
             if (email.Contains(';')) // multiple targets
@@ -62,8 +61,8 @@ namespace Notes2022.Server.Services
                 string[] who = email.Split(';');
 
                 List<EmailAddress> addresses = new List<EmailAddress>();
-                foreach(string a in who)
-                { 
+                foreach (string a in who)
+                {
                     addresses.Add(new EmailAddress(a.Trim()));
                 }
                 msg = MailHelper.CreateSingleEmailToMultipleRecipients(from, addresses, subject, isHtml ? "See Html Attachment." : message, isHtml ? "See Html Attachment." : message);
@@ -75,12 +74,12 @@ namespace Notes2022.Server.Services
 
             if (isHtml)
             {
-                MemoryStream ms = new ();
-                StreamWriter sw = new (ms);
+                MemoryStream ms = new();
+                StreamWriter sw = new(ms);
                 await sw.WriteAsync(message);
                 await sw.FlushAsync();
                 ms.Seek(0, SeekOrigin.Begin);
-                await msg.AddAttachmentAsync( subject + ".html", ms);
+                await msg.AddAttachmentAsync(subject + ".html", ms);
                 ms.Dispose();
             }
 

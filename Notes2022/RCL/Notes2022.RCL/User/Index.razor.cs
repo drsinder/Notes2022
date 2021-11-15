@@ -47,7 +47,7 @@ namespace Notes2022.RCL.User
             {
                 await sessionStorage.SetItemAsync<int>("ArcId", 0);
                 await sessionStorage.SetItemAsync<int>("IndexPage", 1);
-                
+
                 await sessionStorage.SetItemAsync<bool>("IsSeq", false);
                 await sessionStorage.RemoveItemAsync("SeqList");
                 await sessionStorage.RemoveItemAsync("SeqItem");

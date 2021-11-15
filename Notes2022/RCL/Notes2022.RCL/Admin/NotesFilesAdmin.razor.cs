@@ -1,7 +1,6 @@
 ﻿using Blazored.Modal;
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using Notes2022.RCL.Admin.Dialogs;
 using Notes2022.Shared;
 using System.Net.Http.Json;

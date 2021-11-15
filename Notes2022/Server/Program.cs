@@ -1,12 +1,12 @@
 // Server side
 
+using Hangfire;
+using Hangfire.Dashboard;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using Hangfire;
-using Hangfire.SqlServer;
-using Hangfire.Dashboard;
 using Notes2022.Server;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
