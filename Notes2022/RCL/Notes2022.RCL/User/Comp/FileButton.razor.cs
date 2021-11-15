@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Notes2022.Shared;
 
-namespace Notes2022.RCL
+namespace Notes2022.RCL.User.Comp
 {
     public partial class FileButton
     {
