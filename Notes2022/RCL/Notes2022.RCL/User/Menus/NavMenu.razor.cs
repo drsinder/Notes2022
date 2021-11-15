@@ -194,6 +194,10 @@ namespace Notes2022.RCL.User.Menus
                     Navigation.NavigateTo(Globals.EditUserVModel.HangfireLoc, true);
                     break;
 
+                case "Roles":
+                    Navigation.NavigateTo("admin/editroles");
+                    break;
+
             }
         }
 

@@ -76,23 +76,23 @@ namespace Notes2022.Server.Controllers
             return stuff;
         }
 
-        //[HttpPut]
-        //public async Task Put(EditUserViewModel model)
-        //{
-        //    IdentityUser user = await _userManager.FindByIdAsync(model.UserData.UserId);
-        //    var myRoles = await _userManager.GetRolesAsync(user);
-        //    foreach (CheckedUser item in model.RolesList)
-        //    {
-        //        if (item.isMember && !myRoles.Contains(item.theRole.Name)) // need to add role
-        //        {
-        //            await _userManager.AddToRoleAsync(user, item.theRole.Name);
-        //        }
-        //        else if (!item.isMember && myRoles.Contains(item.theRole.Name)) // need to remove role
-        //        {
-        //            await _userManager.RemoveFromRoleAsync(user, item.theRole.Name);
-        //        }
-        //    }
-        //}
+        [HttpPut]
+        public async Task Put(EditUserViewModel model)
+        {
+            ApplicationUser user = await _userManager.FindByIdAsync(model.UserData.UserId);
+            var myRoles = await _userManager.GetRolesAsync(user);
+            foreach (CheckedUser item in model.RolesList)
+            {
+                if (item.isMember && !myRoles.Contains(item.theRole.Name)) // need to add role
+                {
+                    await _userManager.AddToRoleAsync(user, item.theRole.Name);
+                }
+                else if (!item.isMember && myRoles.Contains(item.theRole.Name)) // need to remove role
+                {
+                    await _userManager.RemoveFromRoleAsync(user, item.theRole.Name);
+                }
+            }
+        }
 
     }
 }
