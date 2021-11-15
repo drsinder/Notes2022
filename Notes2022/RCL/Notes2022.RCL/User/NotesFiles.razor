@@ -11,7 +11,7 @@
 }
 else
 {
-    <SfGrid DataSource="@Files" EnableAltRow="true" AllowPaging="true" AllowSelection="true" EnableHover="true" Toolbar="@(new List<object>() { "Print" })">
+    <SfGrid DataSource="@Files" EnableAltRow="true" AllowPaging="true" AllowSelection="true" EnableHover="true" AllowSorting="true" Toolbar="@(new List<object>() { "Print" })">
         <GridPageSettings PageSize="12" PageSizes="true"></GridPageSettings>
         <GridEvents RowSelected="DisplayIt" TValue="NoteFile"></GridEvents>
         <GridColumns>
