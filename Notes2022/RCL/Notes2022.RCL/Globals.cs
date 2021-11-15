@@ -35,66 +35,21 @@ namespace Notes2022.RCL
 
         public static UserData UserData { get; set; }
 
-        public static UserData GetUserData()
-        {
-            return UserData;
-        }
+        //public static UserData GetUserData()
+        //{
+        //    return UserData;
+        //}
 
         public static List<UserData> UserDataList { get; set; }
 
         public static DateTime StartupDateTime { get; set; }
 
-        public static string StuffUrl { get; } = "https://www.drsinder.com/NotesStuff/Notes2022/";
+        //public static string StuffUrl { get; } = "https://www.drsinder.com/NotesStuff/Notes2022/";
 
-        public static string AccessOther() { return "Other"; }
+        //public static string AccessOther() { return "Other"; }
 
         public static string AccessOtherId() { return "Other"; }
 
-
-        //public static string? DisplayName()
-        //{
-        //    return EditUserVModel?.UserData?.DisplayName;
-        //}
-
-        //public static TimeSpan Uptime()
-        //{
-        //    return DateTime.Now.ToUniversalTime() - StartupDateTime;
-        //}
-
-        //public static string RootUri { get; set; }
-
-        //public static string PathBase { get; set; }
-
-        //public static string MigrateDb { get; set; }
-        //public static string SendGridEmail { get; set; }
-
-        //public static string SendGridName { get; set; }
-
-        //public static string SendGridApiKey { get; set; }
-
-        //public static string EmailName { get; set; }
-
-        //public static string ImportedAuthorId() { return "*imported*"; }
-
-        //public static string ProductionUrl { get; set; }
-
-        //public static int TimeZoneDefaultID { get; set; }
-
-        //public static string PusherAppId { get; set; }
-        //public static string PusherKey { get; set; }
-        //public static string PusherSecret { get; set; }
-        //public static string PusherCluster { get; set; }
-
-        //public static string ChatKitAppLoc { get; set; }
-        //public static string ChatKitKey { get; set; }
-
-        //public static string DBConnectString { get; set; }
-
-        //public static string PrimeAdminName { get; set; }
-        //public static string PrimeAdminEmail { get; set; }
-
-        //public static string GuestId { get; set; } = "x";
-        //public static string GuestEmail { get; set; }
 
         public static DateTime LocalTimeBlazor(DateTime dt)
         {
@@ -103,8 +58,5 @@ namespace Notes2022.RCL
 
             return dt.AddHours(OHours).AddMinutes(OMinutes);
         }
-
-        //public static IWebHostEnvironment Env { get; set; }
-
     }
 }
