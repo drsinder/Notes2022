@@ -95,6 +95,8 @@ Globals.DBConnectString = builder.Configuration.GetConnectionString("DefaultConn
 Globals.PrimeAdminName = "Dale Sinder";
 Globals.PrimeAdminEmail = "sinder@illinois.edu";
 
+Globals.HangfireLoc = Guid.NewGuid().ToString();
+
 try  // replace default with config values,  fails during migration so try
 {
     Globals.PrimeAdminName = builder.Configuration["PrimeAdminName"];
@@ -133,11 +135,7 @@ app.UseIdentityServer();
 app.UseAuthentication();
 app.UseAuthorization();
 
-
-
-//app.UseHangfireDashboard("/hangfoodcoded");
-
-app.UseHangfireDashboard("/hangfoodcoded", new DashboardOptions
+app.UseHangfireDashboard("/" + Globals.HangfireLoc, new DashboardOptions
 {
     Authorization = new[] { new MyAuthorizationFilter() }
 });

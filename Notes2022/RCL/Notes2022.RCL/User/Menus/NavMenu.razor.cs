@@ -191,7 +191,7 @@ namespace Notes2022.RCL.User.Menus
                     break;
 
                 case "Hangfire":
-                    Navigation.NavigateTo("hangfoodcoded", true);
+                    Navigation.NavigateTo(Globals.EditUserVModel.HangfireLoc, true);
                     break;
 
             }

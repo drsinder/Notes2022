@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Notes2022.Server.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace Notes2022.Server.Areas.Identity.Pages.Account
 {
@@ -15,11 +16,14 @@ namespace Notes2022.Server.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger,
+            UserManager<ApplicationUser> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -97,6 +101,9 @@ namespace Notes2022.Server.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            var cookies = Response.Cookies;
+            cookies.Delete("IsAdmin");
+
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -108,9 +115,9 @@ namespace Notes2022.Server.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    var cookies = Response.Cookies;
-                    cookies.Delete("IsAdmin");
-                    if (Input.Email == Globals.PrimeAdminEmail)
+                    ApplicationUser user = await _userManager.FindByEmailAsync(Input.Email);
+                    bool test = await _userManager.IsInRoleAsync(user, "Admin");
+                    if (test)
                     {
                         cookies.Append("IsAdmin", "true");  // for hangfire
                     }

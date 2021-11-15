@@ -45,34 +45,3 @@
             background-color: blue;
         }
 </style>
-
-@code {
-
-    private async Task BeginSignOut()
-    {
-        Globals.RolesValid = false;
-        await SignOutManager.SetSignOutState();
-        Navigation.NavigateTo("authentication/logout");
-    }
-
-    private void GotoProfile()
-    {
-        Navigation.NavigateTo("authentication/profile");
-    }
-
-    private void GotoRegister()
-    {
-        Navigation.NavigateTo("authentication/register");
-    }
-
-    private void GotoLogin()
-    {
-        Globals.RolesValid = false;
-        Navigation.NavigateTo("authentication/login");
-    }
-
-    private void GotoHome()
-    {
-        Navigation.NavigateTo("");
-    }
-}

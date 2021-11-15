@@ -61,6 +61,9 @@ namespace Notes2022.Server
 
         public static int TimeZoneDefaultID { get; set; }
 
+        public static string HangfireLoc { get; set; }
+
+
         public static string PusherAppId { get; set; }
         public static string PusherKey { get; set; }
         public static string PusherSecret { get; set; }

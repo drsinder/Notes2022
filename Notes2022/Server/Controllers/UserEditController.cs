@@ -69,7 +69,8 @@ namespace Notes2022.Server.Controllers
             EditUserViewModel stuff = new EditUserViewModel()
             {
                 UserData = me,
-                RolesList = myList
+                RolesList = myList,
+                HangfireLoc = Globals.HangfireLoc
             };
 
             return stuff;

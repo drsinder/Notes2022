@@ -37,6 +37,7 @@ namespace Notes2022.Shared
     {
         public UserData UserData { get; set; }
         public List<CheckedUser> RolesList { get; set; }
+        public string HangfireLoc { get; set; }
     }
 
 }

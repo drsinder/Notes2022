@@ -25,6 +25,8 @@
 }
 else
 {
+    var cookies = Context.Response.Cookies;
+    cookies.Delete("IsAdmin");
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@returnUrl">Register</a>
     </li>
