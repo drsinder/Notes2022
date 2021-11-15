@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Notes2022.Client;
+using Notes2022.RCL;
 using Notes2022.Shared;
 using Syncfusion.Blazor;
 using Syncfusion.Licensing;

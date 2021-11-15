@@ -1,0 +1,34 @@
+﻿
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+
+<h3>NotesFiles</h3>
+
+@if( UserData == null)
+{
+    <p class=""><em>Loading...</em></p>
+}
+else
+{
+    <SfGrid DataSource="@Files" EnableAltRow="true" AllowPaging="true" AllowSelection="true" EnableHover="true" Toolbar="@(new List<object>() { "Print" })">
+        <GridPageSettings PageSize="12" PageSizes="true"></GridPageSettings>
+        <GridEvents RowSelected="DisplayIt" TValue="NoteFile"></GridEvents>
+        <GridColumns>
+            <GridColumn Field=@nameof(NoteFile.NoteFileTitle) HeaderText="NoteFile Title" TextAlign="TextAlign.Left" Width="150"></GridColumn>
+            <GridColumn Field=@nameof(NoteFile.NoteFileName) HeaderText="NoteFile Name" TextAlign="TextAlign.Left" Width="80" IsPrimaryKey="true"></GridColumn>
+            <GridColumn HeaderText="Date/Time" TextAlign="TextAlign.Left" Width="60">
+                <Template Context="inner">
+                @{
+                    var itemx = (inner as NoteFile);
+                    DateTime curTimex = Globals.LocalTimeBlazor(itemx.LastEdited);
+                    string tellx = curTimex.ToShortDateString() + " " + curTimex.ToShortTimeString();
+                    <span>@tellx</span>
+                 }
+                </Template> 
+            </GridColumn>
+        </GridColumns>
+    </SfGrid>
+}
+
+

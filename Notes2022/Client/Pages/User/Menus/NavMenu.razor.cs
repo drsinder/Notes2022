@@ -2,7 +2,8 @@
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Notes2022.Client.Pages.User.Dialogs;
+using Notes2022.RCL;
+using Notes2022.RCL.User.Dialogs;
 using Notes2022.Shared;
 using Syncfusion.Blazor.Navigations;
 using System.Net.Http.Json;

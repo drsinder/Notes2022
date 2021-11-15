@@ -1,12 +1,11 @@
 ﻿using Blazored.Modal;
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using Notes2022.Client.Pages.Admin.Dialogs;
+using Notes2022.RCL.Admin.Dialogs;
 using Notes2022.Shared;
 using System.Net.Http.Json;
 
-namespace Notes2022.Client.Pages.Admin
+namespace Notes2022.RCL.Admin
 {
     public partial class NotesFilesAdmin
     {
@@ -81,7 +80,7 @@ namespace Notes2022.Client.Pages.Admin
 
         async void CreateNoteFile(int Id)
         {
-            this.StateHasChanged();
+            StateHasChanged();
             var parameters = new ModalParameters();
             parameters.Add("FileId", Id);
             var xModal = Modal.Show<CreateNoteFile>("Create Notefile", parameters);
@@ -94,7 +93,7 @@ namespace Notes2022.Client.Pages.Admin
         {
             NoteFile file = files.Find(p => p.Id == Id);
 
-            this.StateHasChanged();
+            StateHasChanged();
             var parameters = new ModalParameters();
             parameters.Add("FileId", Id);
             parameters.Add("FileName", file.NoteFileName);
