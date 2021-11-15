@@ -55,6 +55,7 @@
     <Content Remove="Pages\User\TrackerMover.razor" />
     <Content Remove="Shared\FileButton.razor" />
     <Content Remove="Shared\SurveyPrompt.razor" />
+    <Content Remove="wwwroot\css\ExportCSS\NotesExport31.css" />
   </ItemGroup>
 
   <ItemGroup>
