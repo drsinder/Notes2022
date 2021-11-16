@@ -56,7 +56,8 @@ namespace Notes2022.RCL.Admin
         protected async Task Create()
         {
             var parameters = new ModalParameters();
-            Modal.Show<CreateLinked>("", parameters);
+            var x = Modal.Show<CreateLinked>("", parameters);
+            await x.Result;
             Model = await Http.GetFromJsonAsync<List<LinkedFile>>("api/Linked");
             Navigation.NavigateTo("admin/linkindex");
         }
