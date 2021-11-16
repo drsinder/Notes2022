@@ -38,7 +38,7 @@ else
     <h3 class="center">@Model.noteFile.NoteFileTitle - @Model.noteFile.NoteFileName</h3>
 
     <div>
-        <ListMenu Model=@Model @ref="@MyMenu"></ListMenu>
+        <ListMenu Model=@Model Caller="@this" @ref="@MyMenu"></ListMenu>
     </div>
     @if (@Model.myAccess.ReadAccess && Model.Notes?.Count > 0)
     {

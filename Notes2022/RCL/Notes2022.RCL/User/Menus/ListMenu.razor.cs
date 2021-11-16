@@ -15,6 +15,8 @@ namespace Notes2022.RCL.User.Menus
         [CascadingParameter] public IModalService Modal { get; set; }
         [Parameter] public NoteDisplayIndexModel Model { get; set; }
 
+        [Parameter] public NoteIndex Caller { get; set; }
+
         private static List<MenuItem> menuItems { get; set; }
         protected SfMenu<MenuItem> topMenu { get; set; }
 
@@ -132,9 +134,30 @@ namespace Notes2022.RCL.User.Menus
                     await PrintFile();
                     break;
 
+                case "SearchFromIndex":
+                    await SetSearch();
+                    break;
+
                 default:
                     break;
 
+            }
+        }
+
+        private async Task SetSearch()
+        {
+            var parameters = new ModalParameters();
+            parameters.Add("searchtype", "File");
+            var formModal = Modal.Show<SearchDlg>();
+            var result = await formModal.Result;
+            if (result.Cancelled)
+                return;
+            else
+            {
+                Search target = (Search)result.Data;
+                // start the search
+                await Caller.StartSearch(target);
+                return;
             }
         }
 

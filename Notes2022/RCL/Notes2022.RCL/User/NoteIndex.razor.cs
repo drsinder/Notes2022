@@ -8,6 +8,7 @@ using Notes2022.Shared;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.Net.Http.Json;
+using SearchOption = Notes2022.Shared.SearchOption;
 
 namespace Notes2022.RCL.User
 {
@@ -48,6 +49,10 @@ namespace Notes2022.RCL.User
 
         protected override async Task OnParametersSetAsync()
         {
+            await sessionStorage.SetItemAsync<bool>("InSearch", false);
+            await sessionStorage.RemoveItemAsync("SearchIndex");
+            await sessionStorage.RemoveItemAsync("SearchList");
+
             IsSeq = await sessionStorage.GetItemAsync<bool>("IsSeq");
             if (IsSeq && NotesfileId < 0)
             {
@@ -69,6 +74,131 @@ namespace Notes2022.RCL.User
         {
             Navigation.NavigateTo("notedisplay/" + args.Data.Id);
         }
+
+        private List<NoteHeader> results { get; set; }
+        private bool isSearch { get; set; }
+        private long mode { get; set; }
+
+
+        public async Task StartSearch(Search target)
+        {
+            //message = "Searching... Please Wait...";
+            //StateHasChanged();
+
+            switch (target.Option)
+            {
+                case SearchOption.Author:
+                case SearchOption.Title:
+                case SearchOption.TimeIsAfter:
+                case SearchOption.TimeIsBefore:
+                    await SearchHeader(target);
+                    break;
+
+                case SearchOption.Content:
+                case SearchOption.DirMess:
+                    await SearchContents(target);
+                    break;
+
+                //case SearchOption.Tag:
+                //    await SearchTags(target);
+                //    break;
+
+                default:
+                    break;
+            }
+
+            //message = null;
+            //StateHasChanged();
+        }
+
+        protected async Task SearchHeader(Search target)
+        {
+            results = new List<NoteHeader>();
+            List<NoteHeader> lookin = Model.AllNotes;
+
+            foreach (NoteHeader nh in lookin)
+            {
+                bool isMatch = false;
+                switch (target.Option)
+                {
+                    case SearchOption.Author:
+                        isMatch = nh.AuthorName.Contains(target.Text);
+                        break;
+                    case SearchOption.Title:
+                        isMatch = nh.NoteSubject.ToLower().Contains(target.Text.ToLower());
+                        break;
+                    case SearchOption.TimeIsAfter:
+                        isMatch = DateTime.Compare(nh.LastEdited, target.Time) > 0;
+                        break;
+                    case SearchOption.TimeIsBefore:
+                        isMatch = DateTime.Compare(nh.LastEdited, target.Time) < 0;
+                        break;
+                }
+                if (isMatch)
+                    results.Add(nh);
+            }
+
+            if (results.Count == 0)
+            {
+                ShowMessage("Nothing Found.");
+                return;
+            }
+
+            results = results.OrderBy(p => p.LastEdited).ToList();
+
+            mode = results[0].Id;
+            isSearch = true;
+
+            await sessionStorage.SetItemAsync<bool>("InSearch", true);
+            await sessionStorage.SetItemAsync<int>("SearchIndex", 0);
+            await sessionStorage.SetItemAsync<List<NoteHeader>>("SearchList", results);
+
+            Navigation.NavigateTo("notedisplay/" + mode);
+        }
+
+        protected async Task SearchContents(Search target)
+        {
+            results = new List<NoteHeader>();
+            List<NoteHeader> lookin = Model.AllNotes;
+
+            foreach (NoteHeader nh in lookin)
+            {
+                DisplayModel dm = await Http.GetFromJsonAsync<DisplayModel>("api/NoteContent/" + nh.Id);
+                NoteContent nc = dm.content;
+                List<Tags> tags = dm.tags;
+
+                bool isMatch = false;
+                switch (target.Option)
+                {
+                    case SearchOption.Content:
+                        isMatch = nc.NoteBody.ToLower().Contains(target.Text.ToLower());
+                        break;
+                    case SearchOption.DirMess:
+                        isMatch = nc.DirectorMessage.ToLower().Contains(target.Text.ToLower());
+                        break;
+                }
+                if (isMatch)
+                    results.Add(nh);
+            }
+
+            if (results.Count == 0)
+            {
+                ShowMessage("Nothing Found.");
+                return;
+            }
+
+            results = results.OrderBy(p => p.LastEdited).ToList();
+
+            mode = results[0].Id;
+
+            await sessionStorage.SetItemAsync<bool>("InSearch", true);
+            await sessionStorage.SetItemAsync<int>("SearchIndex", 0);
+            await sessionStorage.SetItemAsync<List<NoteHeader>>("SearchList", results);
+
+            Navigation.NavigateTo("notedisplay/" + mode);
+        }
+
+
 
         protected async Task StartSeq()
         {
@@ -189,6 +319,11 @@ namespace Notes2022.RCL.User
                 case "A":
                     await ClearNav();
                     await MyMenu.ExecMenu("AccessControls");
+                    return;
+
+                case "S":
+                    await ClearNav();
+                    await MyMenu.ExecMenu("SearchFromIndex");
                     return;
 
                 default:

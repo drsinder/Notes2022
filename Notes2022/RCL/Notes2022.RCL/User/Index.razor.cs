@@ -57,6 +57,10 @@ namespace Notes2022.RCL.User
                 await sessionStorage.RemoveItemAsync("SeqHeaderIndex");
                 await sessionStorage.RemoveItemAsync("CurrentSeqHeader");
 
+                await sessionStorage.SetItemAsync<bool>("InSearch", false);
+                await sessionStorage.RemoveItemAsync("SearchIndex");
+                await sessionStorage.RemoveItemAsync("SearchList");
+
                 try
                 {
                     //model = await Http.GetFromJsonAsync<AboutModel>("api/About");

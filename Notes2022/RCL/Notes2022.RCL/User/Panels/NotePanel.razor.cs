@@ -299,7 +299,15 @@ namespace Notes2022.RCL.User.Panels
 
                 case " ":
                     await ClearNav();
-                    await SeqNext();
+                    
+                    if (args.ShiftKey)
+                    {
+                        await NextSearch();
+                    }
+                    else
+                    {
+                        await SeqNext();
+                    }
                     return;
 
 
@@ -441,6 +449,32 @@ namespace Notes2022.RCL.User.Panels
                     }
                     await ClearNav();
                 }
+            }
+        }
+
+        protected async Task NextSearch()
+        {
+            bool InSearch = await sessionStorage.GetItemAsync<bool>("InSearch");
+            if (!InSearch)
+                return;
+
+            int SearchIndex = await sessionStorage.GetItemAsync<int>("SearchIndex");
+            List<NoteHeader> SearchList = await sessionStorage.GetItemAsync<List<NoteHeader>>("SearchList");
+
+            if ((++SearchIndex + 1) < SearchList.Count)
+            {
+                long mode = SearchList[SearchIndex].Id;
+                await sessionStorage.SetItemAsync<int>("SearchIndex", SearchIndex);
+
+                Navigation.NavigateTo("notedisplay/" + mode);
+            }
+            else
+            {
+                await sessionStorage.SetItemAsync<bool>("InSearch", false);
+                await sessionStorage.RemoveItemAsync("SearchIndex");
+                await sessionStorage.RemoveItemAsync("SearchList");
+
+                ShowMessage("Search Completed!");
             }
         }
 
