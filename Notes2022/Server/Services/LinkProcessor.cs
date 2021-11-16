@@ -330,26 +330,26 @@ namespace Notes2022.Server.Services
             return result3 == "Hello Notes2022";
         }
 
-        public async Task<bool> Test2(string Uri)
+        public async Task<bool> Test2(string Uri, string file)
         {
-            string file;
-            string uri;
+            //string file;
+            //string uri;
 
-            int index = Uri.LastIndexOf("/");
+            //int index = Uri.LastIndexOf("/");
 
-            uri = Uri.Substring(0, index - 1);
-            file = Uri.Substring(index, Uri.Length - index);
+            //uri = Uri.Substring(0, index - 1);
+            //file = Uri.Substring(index, Uri.Length - index);
 
             HttpClient MyClient = new HttpClient
             {
-                BaseAddress = new Uri(uri)
+                BaseAddress = new Uri(Uri)
             };
 
             HttpResponseMessage resp3;
 
             try
             {
-                resp3 = await MyClient.GetAsync("api/ApiLinkR" + file);
+                resp3 = await MyClient.GetAsync("api/ApiLinkR/" + file);
             }
             catch
             {

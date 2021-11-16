@@ -11,7 +11,6 @@ namespace Notes2022.Server.Controllers
     {
         public LinkTest2Controller()
         {
-
         }
 
         [HttpGet]
@@ -20,10 +19,8 @@ namespace Notes2022.Server.Controllers
             string urireal = HttpUtility.UrlDecode(uri);
 
             LinkProcessor lp = new LinkProcessor(null);
-            bool test = await lp.Test2(urireal + "/" + file);
+            bool test = await lp.Test2(urireal, file);
             return test;
-            
-            //return true;
         }
     }
 }

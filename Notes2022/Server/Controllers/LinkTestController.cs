@@ -11,7 +11,6 @@ namespace Notes2022.Server.Controllers
     {
         public LinkTestController()
         {
-
         }
 
         [HttpGet]
@@ -21,8 +20,6 @@ namespace Notes2022.Server.Controllers
 
             LinkProcessor lp = new LinkProcessor(null);
             return await lp.Test(urireal);
-
-            //return true;
         }
     }
 }
