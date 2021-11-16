@@ -101,8 +101,8 @@ namespace Notes2022.Server.Controllers
                 created = await NoteDataManager.CreateResponse(_db, nheader, tvm.MyNote, tvm.TagLine, tvm.DirectorMessage, true, false);
             }
 
-            // TODO
-            //await ProcessLinkedNotes();
+
+            await ProcessLinkedNotes();
 
             await SendNewNoteToSubscribers(created);
 
@@ -132,7 +132,7 @@ namespace Notes2022.Server.Controllers
 
             await NoteDataManager.EditNote(_db, _userManager, nheader, nc, tvm.TagLine);
 
-            //await ProcessLinkedNotes();
+            await ProcessLinkedNotes();
 
             return;
         }
@@ -165,19 +165,19 @@ namespace Notes2022.Server.Controllers
             }
         }
 
-        //private async Task ProcessLinkedNotes()
-        //{
-        //    List<LinkQueue> items = await _db.LinkQueue.Where(p => p.Enqueued == false).ToListAsync();
-        //    foreach (LinkQueue item in items)
-        //    {
-        //        LinkProcessor lp = new LinkProcessor(_db);
-        //        BackgroundJob.Enqueue(() => lp.ProcessLinkAction(item.Id));
-        //        item.Enqueued = true;
-        //        _db.Update(item);
-        //    }
-        //    if (items.Count > 0)
-        //        await _db.SaveChangesAsync();
+        private async Task ProcessLinkedNotes()
+        {
+            List<LinkQueue> items = await _db.LinkQueue.Where(p => p.Enqueued == false).ToListAsync();
+            foreach (LinkQueue item in items)
+            {
+                LinkProcessor lp = new LinkProcessor(_db);
+                BackgroundJob.Enqueue(() => lp.ProcessLinkAction(item.Id));
+                item.Enqueued = true;
+                _db.Update(item);
+            }
+            if (items.Count > 0)
+                await _db.SaveChangesAsync();
 
-        //}
+        }
     }
 }

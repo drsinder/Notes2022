@@ -198,6 +198,9 @@ namespace Notes2022.RCL.User.Menus
                     Navigation.NavigateTo("admin/editroles");
                     break;
 
+                case "Linked":
+                    Navigation.NavigateTo("admin/linkindex");
+                    break;
             }
         }
 
