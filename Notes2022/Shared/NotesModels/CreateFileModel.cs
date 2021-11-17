@@ -1,6 +1,6 @@
 ﻿/*--------------------------------------------------------------------------
 **
-**  Copyright (c) 2019, Dale Sinder
+**  Copyright © 2019, Dale Sinder
 **
 **  Name: CreateFileModel.cs
 **
