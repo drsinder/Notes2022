@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Notes2022.Server.Models;
 using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
 
 namespace Notes2022.Server.Areas.Identity.Pages.Account
 {

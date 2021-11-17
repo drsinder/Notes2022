@@ -23,16 +23,12 @@
     **--------------------------------------------------------------------------*/
 
 
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Notes2022.Server.Services;
-using Notes2022.Shared;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
+using Notes2022.Shared;
 
 namespace Notes2022.Server.Controllers
 {
@@ -58,21 +54,21 @@ namespace Notes2022.Server.Controllers
             return await _db.LinkedFile.ToListAsync();
         }
 
-        [HttpPost] 
+        [HttpPost]
         public async Task Post(LinkedFile linkedFile)
         {
             _db.LinkedFile.Add(linkedFile);
             await _db.SaveChangesAsync();
         }
 
-        [HttpPut] 
+        [HttpPut]
         public async Task Put(LinkedFile linkedFile)
         {
             _db.Entry(linkedFile).State = EntityState.Modified;
             await _db.SaveChangesAsync();
         }
 
-        [HttpDelete] 
+        [HttpDelete]
         public async Task Delete(string Id)
         {
             int myId = int.Parse(Id);

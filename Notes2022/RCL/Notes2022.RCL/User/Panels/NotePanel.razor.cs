@@ -299,7 +299,7 @@ namespace Notes2022.RCL.User.Panels
 
                 case " ":
                     await ClearNav();
-                    
+
                     if (args.ShiftKey)
                     {
                         await NextSearch();

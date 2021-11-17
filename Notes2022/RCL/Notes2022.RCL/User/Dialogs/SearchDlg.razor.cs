@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Components;
 using Blazored.Modal;
 using Blazored.Modal.Services;
+using Microsoft.AspNetCore.Components;
 using Notes2022.Shared;
 using SearchOption = Notes2022.Shared.SearchOption;
 
@@ -26,7 +26,7 @@ namespace Notes2022.RCL.User.Dialogs
         }
         private void Searchfor()
         {
-            Search target = new Search(); 
+            Search target = new Search();
             switch (option)
             {
                 case 1: target.Option = SearchOption.Author; break;

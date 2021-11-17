@@ -60,7 +60,7 @@ namespace Notes2022.RCL.User.Dialogs
                     break;
             }
 
-            await Http.PutAsJsonAsync("api/accesslist/", Model.Item);
+            await Http.PutAsJsonAsync("api/accesslist", Model.Item);
         }
     }
 }

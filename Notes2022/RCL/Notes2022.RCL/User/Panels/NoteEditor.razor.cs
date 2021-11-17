@@ -87,7 +87,7 @@ namespace Notes2022.RCL.User.Panels
             }
             else // editing
             {
-                await Http.PutAsJsonAsync("api/NewNote/", Model);
+                await Http.PutAsJsonAsync("api/NewNote", Model);
                 NoteHeader nh = await Http.GetFromJsonAsync<NoteHeader>("api/NewNote2");
                 Navigation.NavigateTo("notedisplay/" + nh.Id);
                 return;
