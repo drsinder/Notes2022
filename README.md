@@ -82,7 +82,4 @@ From the Admin menu item choose NoteFiles.  Then add a few note files to work wi
 
 Write some notes!
 
---------------
-Note:  The app does not yet work when deployed to a server.  Still trying to figure that out.  It's related to Identity provider.
-If you have any ideas...!!
 
