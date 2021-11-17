@@ -32,7 +32,7 @@ namespace Notes2022.RCL.User.Panels
         protected string BodyStyle { get; set; }
 
         protected bool RespShown { get; set; }
-        protected bool? RespShownSw { get; set; }
+        //protected bool? RespShownSw { get; set; }
 
         protected bool RespFlipped { get; set; }
 
@@ -41,6 +41,8 @@ namespace Notes2022.RCL.User.Panels
         protected bool ShowVers { get; set; } = false;
 
         protected bool IsSeq { get; set; }
+
+        //protected PrismJsInterop Prism { get; set; }    
 
         protected DisplayModel model { get; set; }
 
@@ -546,6 +548,12 @@ namespace Notes2022.RCL.User.Panels
         {
             await base.OnAfterRenderAsync(firstRender);
 
+            //if (firstRender)
+            //{
+            //    if (!Navigation.BaseUri.Contains("localhost"))
+            //        Prism = new PrismJsInterop(JSRuntime);
+            //}
+
             if (!firstRender)
             {   // have to wait a bit before putting focus in textbox
 
@@ -554,6 +562,8 @@ namespace Notes2022.RCL.User.Panels
                     await Task.Delay(300);
                     await sfTextBox.FocusAsync();
                 }
+                //if (!Navigation.BaseUri.Contains("localhost"))
+                //    await Prism.Prism();
             }
             if (!Navigation.BaseUri.Contains("localhost"))
             {
@@ -561,4 +571,30 @@ namespace Notes2022.RCL.User.Panels
             }
         }
     }
+
+    //public class PrismJsInterop : IAsyncDisposable
+    //{
+    //    private readonly Lazy<Task<IJSObjectReference>> moduleTask;
+
+    //    public PrismJsInterop(IJSRuntime jsRuntime)
+    //    {
+    //        moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
+    //           "import", "./_content/Notes2022.RCL/prism.js").AsTask());
+    //    }
+
+    //    public async Task Prism()
+    //    {
+    //        var module = await moduleTask.Value;
+    //        await module.InvokeVoidAsync("Prism.highlightAll");
+    //    }
+
+    //    public async ValueTask DisposeAsync()
+    //    {
+    //        if (moduleTask.IsValueCreated)
+    //        {
+    //            var module = await moduleTask.Value;
+    //            await module.DisposeAsync();
+    //        }
+    //    }
+    //}
 }
