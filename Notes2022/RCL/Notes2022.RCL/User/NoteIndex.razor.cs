@@ -52,7 +52,6 @@ namespace Notes2022.RCL.User
         protected GridFilterSettings FilterSettings { get; set; }
         protected GridPageSettings PageSettings { get; set; }
 
-
         protected int PageSize { get; set; }
         protected int CurPage { get; set; }
 
@@ -100,8 +99,6 @@ namespace Notes2022.RCL.User
         {
             CurrentNoteId = args.Data.Id;
             StateHasChanged();
-
-            //Navigation.NavigateTo("notedisplay/" + args.Data.Id);
         }
 
         public void GotoNote(long Id)
@@ -110,10 +107,16 @@ namespace Notes2022.RCL.User
             StateHasChanged();
         }
 
+        public void Listing()
+        {
+            CurrentNoteId = 0;
+            StateHasChanged();
+        }
+
         public long GetNextBaseNote(NoteHeader oh)
         {
             long newId = 0;
-            NoteHeader nh =Model.Notes.SingleOrDefault(p => p.NoteFileId == oh.NoteFileId && p.NoteOrdinal == oh.NoteOrdinal + 1 && p.ResponseOrdinal == 0 && p.Version == 0);
+            NoteHeader nh =Model.Notes.SingleOrDefault(p => p.NoteOrdinal == oh.NoteOrdinal + 1 && p.ResponseOrdinal == 0 && p.Version == 0);
             if (nh != null)
                 newId = nh.Id;
             return newId;
@@ -122,23 +125,19 @@ namespace Notes2022.RCL.User
         public long GetNextNote(NoteHeader oh)
         {
             long newId = 0;
-
             NoteHeader nh = null;
-            nh = Model.AllNotes.SingleOrDefault(p => p.NoteFileId == oh.NoteFileId && p.NoteOrdinal == oh.NoteOrdinal && p.ResponseOrdinal == (oh.ResponseOrdinal + 1) && p.Version == 0);
-
+            nh = Model.AllNotes.SingleOrDefault(p => p.NoteOrdinal == oh.NoteOrdinal && p.ResponseOrdinal == (oh.ResponseOrdinal + 1) && p.Version == 0);
             if (nh == null)
-                nh = Model.AllNotes.SingleOrDefault(p => p.NoteFileId == oh.NoteFileId && p.NoteOrdinal == (oh.NoteOrdinal + 1) && p.ResponseOrdinal == 0 && p.Version == 0);
-
+                nh = Model.AllNotes.SingleOrDefault(p => p.NoteOrdinal == (oh.NoteOrdinal + 1) && p.ResponseOrdinal == 0 && p.Version == 0);
             if (nh != null)
                 newId = nh.Id;
-
             return newId;
         }
 
         public long GetPreviousBaseNote(NoteHeader oh)
         {
             long newId = 0;
-            NoteHeader nh = Model.Notes.SingleOrDefault(p => p.NoteFileId == oh.NoteFileId && p.NoteOrdinal == oh.NoteOrdinal - 1 && p.ResponseOrdinal == 0 && p.Version == 0);
+            NoteHeader nh = Model.Notes.SingleOrDefault(p => p.NoteOrdinal == oh.NoteOrdinal - 1 && p.ResponseOrdinal == 0 && p.Version == 0);
             if (nh != null)
                 newId = nh.Id;
             return newId;
@@ -147,23 +146,44 @@ namespace Notes2022.RCL.User
         public long GetPreviousNote(NoteHeader oh)
         {
             long newId = 0;
-
             NoteHeader nh = null;
-            nh = Model.AllNotes.SingleOrDefault(p => p.NoteFileId == oh.NoteFileId && p.NoteOrdinal == oh.NoteOrdinal && p.ResponseOrdinal == oh.ResponseOrdinal - 1 && p.Version == 0);
-
+            nh = Model.AllNotes.SingleOrDefault(p => p.NoteOrdinal == oh.NoteOrdinal && p.ResponseOrdinal == oh.ResponseOrdinal - 1 && p.Version == 0);
             if (nh == null)
-                nh = Model.Notes.SingleOrDefault(p => p.NoteFileId == oh.NoteFileId && p.NoteOrdinal == oh.NoteOrdinal - 1 && p.ResponseOrdinal == 0 && p.Version == 0);
+                nh = Model.Notes.SingleOrDefault(p => p.NoteOrdinal == oh.NoteOrdinal - 1 && p.ResponseOrdinal == 0 && p.Version == 0);
+            if (nh != null)
+                newId = nh.Id;
+            return newId;
+        }
 
+        public List<NoteHeader> GetResponseHeaders(long headerId)
+        {
+            return Model.AllNotes.Where(p => p.BaseNoteId == headerId && (p.ResponseOrdinal != 0) && p.IsDeleted == false && p.Version == 0)
+                .OrderBy(p => p.ResponseOrdinal).ToList();
+        }
+
+        public NoteDisplayIndexModel GetModel()
+        {
+            return Model;
+        }
+
+        public long GetNoteHeaderId(int noteOrd, int respOrd)
+        {
+            long newId = 0;
+            NoteHeader nh;
+
+            nh = Model.AllNotes.SingleOrDefault(p => p.NoteOrdinal == noteOrd && p.ResponseOrdinal == respOrd && p.Version == 0);
+            if (nh == null && respOrd > -1) // try next base note -- special case if noteOrd == 0 and ResponseOrd == 0  ==> get first base note in file
+            {
+                nh = Model.AllNotes.SingleOrDefault(p => p.NoteOrdinal == noteOrd + 1 && p.ResponseOrdinal == 0 && p.Version == 0);
+            }
+            else if (nh == null)    // try previous base note
+            {
+                nh = Model.AllNotes.SingleOrDefault(p => p.NoteOrdinal == noteOrd - 1 && p.ResponseOrdinal == 0 && p.Version == 0);
+            }
             if (nh != null)
                 newId = nh.Id;
 
             return newId;
-        }
-
-        public void Listing()
-        {
-            CurrentNoteId = 0;
-            StateHasChanged();
         }
 
         private List<NoteHeader> results { get; set; }
@@ -246,8 +266,6 @@ namespace Notes2022.RCL.User
 
             CurrentNoteId = mode;
             StateHasChanged();
-
-            //Navigation.NavigateTo("notedisplay/" + mode);
         }
 
         protected async Task SearchContents(Search target)
@@ -291,11 +309,7 @@ namespace Notes2022.RCL.User
 
             CurrentNoteId = mode;
             StateHasChanged();
-
-            //Navigation.NavigateTo("notedisplay/" + mode);
         }
-
-
 
         protected async Task StartSeq()
         {
@@ -352,8 +366,6 @@ namespace Notes2022.RCL.User
 
             CurrentNoteId = currHeader.Id;
             StateHasChanged();
-
-            //Navigation.NavigateTo("notedisplay/" + currHeader.Id);
         }
 
         public async void ActionCompleteHandler(ActionEventArgs<NoteHeader> args)
@@ -452,14 +464,12 @@ namespace Notes2022.RCL.User
                         }
                         else
                         {
-                            long headerId = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + NotesfileId + "/" + noteNum + "/0");
+                            long headerId = GetNoteHeaderId(noteNum, 0); 
                             if (headerId != 0)
                             {
                                 CurrentNoteId = headerId;
                                 StateHasChanged();
                                 return;
-
-                                //Navigation.NavigateTo("notedisplay/" + headerId);
                             }
                             else
                                 ShowMessage("Could not find note : " + stuff);
@@ -478,14 +488,12 @@ namespace Notes2022.RCL.User
                         }
                         if (noteNum != 0 && noteRespOrd != 0)
                         {
-                            long headerId = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + NotesfileId + "/" + noteNum + "/" + noteRespOrd);
+                            long headerId = GetNoteHeaderId(noteNum, noteRespOrd);
                             if (headerId != 0)
                             {
                                 CurrentNoteId = headerId;
                                 StateHasChanged();
                                 return;
-
-                                //Navigation.NavigateTo("notedisplay/" + headerId);
                             }
                             else
                                 ShowMessage("Could not find note : " + stuff);

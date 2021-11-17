@@ -127,22 +127,22 @@ namespace Notes2022.RCL.User.Panels
             }
         }
 
-        private void OnClickResp(MouseEventArgs args)
-        {
-            long bnId = model.header.Id;           // if base note
-            if (model.header.ResponseOrdinal > 0)   // if response
-            {
-                bnId = model.header.BaseNoteId;
-            }
+        //private void OnClickResp(MouseEventArgs args)
+        //{
+        //    long bnId = model.header.Id;           // if base note
+        //    if (model.header.ResponseOrdinal > 0)   // if response
+        //    {
+        //        bnId = model.header.BaseNoteId;
+        //    }
 
-            Navigation.NavigateTo("newnote/" + model.noteFile.Id + "/" + bnId + "/" + model.header.Id);
-        }
+        //    Navigation.NavigateTo("newnote/" + model.noteFile.Id + "/" + bnId + "/" + model.header.Id);
+        //}
 
         private async Task ShowRespChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
         {
             if (RespShown)
             {
-                respHeaders = await Http.GetFromJsonAsync<List<NoteHeader>>("api/GetResponseHeaders/" + model.header.Id);
+                respHeaders = MyNoteIndex.GetResponseHeaders(model.header.Id);
             }
         }
 
@@ -156,8 +156,6 @@ namespace Notes2022.RCL.User.Panels
 
         private void OnDone(MouseEventArgs args)
         {
-            //Navigation.NavigateTo("noteindex/" + model.noteFile.Id);
-
             MyNoteIndex.Listing();
         }
 
@@ -176,10 +174,9 @@ namespace Notes2022.RCL.User.Panels
         /// </summary>
         protected async Task PrintString(bool wholeString)
         {
-            NoteDisplayIndexModel Model = null;
+            NoteDisplayIndexModel Model = MyNoteIndex.GetModel();
 
-            Model = await Http.GetFromJsonAsync<NoteDisplayIndexModel>("api/NoteIndex/" + model.noteFile.Id);
-            //Model.Notes = Model.AllNotes.FindAll(p => p.ResponseOrdinal == 0).OrderBy(p => p.NoteOrdinal).ToList();
+            //Model = await Http.GetFromJsonAsync<NoteDisplayIndexModel>("api/NoteIndex/" + model.noteFile.Id);
 
             string respX = string.Empty;
 
@@ -425,27 +422,23 @@ namespace Notes2022.RCL.User.Panels
                             else if (IsMinus)
                                 noteNum = model.header.ResponseOrdinal - noteNum;
 
-                            long headerId2 = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + model.header.NoteOrdinal + "/" + noteNum);
+                            long headerId2 = MyNoteIndex.GetNoteHeaderId(model.header.NoteOrdinal, noteNum); 
                             if (headerId2 != 0)
                             {
                                 NoteId = headerId2;
                                 await GetData();
                                 StateHasChanged();
-                                
-                                //Navigation.NavigateTo("notedisplay/" + headerId2);
                             }
                             else
                                 ShowMessage("Could not find note : " + NavString);
                             return;
                         }
-                        long headerId = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + noteNum + "/0");
+                        long headerId = MyNoteIndex.GetNoteHeaderId(noteNum, 0); 
                         if (headerId != 0)
                         {
                             NoteId = headerId;
                             await GetData();
                             StateHasChanged();
-
-                            //Navigation.NavigateTo("notedisplay/" + headerId);
                         }
                         else
                             ShowMessage("Could not find note : " + NavString);
@@ -473,7 +466,7 @@ namespace Notes2022.RCL.User.Panels
                                 noteNum = model.header.NoteOrdinal + noteNum;
                             else if (IsMinus)
                                 noteNum = model.header.NoteOrdinal - noteNum;
-                            long headerId2 = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + noteNum + "/0");
+                            long headerId2 = MyNoteIndex.GetNoteHeaderId(noteNum, 0); 
                             if (headerId2 != 0)
                             {
                                 NoteId = headerId2;
@@ -486,14 +479,12 @@ namespace Notes2022.RCL.User.Panels
                                 ShowMessage("Could not find note : " + NavString);
 
                         }
-                        long headerId = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + noteNum + "/" + noteRespOrd);
+                        long headerId = MyNoteIndex.GetNoteHeaderId(noteNum, noteRespOrd);  
                         if (headerId != 0)
                         {
                             NoteId = headerId;
                             await GetData();
                             StateHasChanged();
-
-                            //Navigation.NavigateTo("notedisplay/" + headerId);
                         }
                         else
                             ShowMessage("Could not find note : " + NavString);
@@ -591,7 +582,6 @@ namespace Notes2022.RCL.User.Panels
             }
         }
 
-
         private void ShowMessage(string message)
         {
             var parameters = new ModalParameters();
@@ -605,12 +595,6 @@ namespace Notes2022.RCL.User.Panels
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            //if (firstRender)
-            //{
-            //    if (!Navigation.BaseUri.Contains("localhost"))
-            //        Prism = new PrismJsInterop(JSRuntime);
-            //}
-
             if (!firstRender)
             {   // have to wait a bit before putting focus in textbox
 
@@ -619,8 +603,6 @@ namespace Notes2022.RCL.User.Panels
                     await Task.Delay(300);
                     await sfTextBox.FocusAsync();
                 }
-                //if (!Navigation.BaseUri.Contains("localhost"))
-                //    await Prism.Prism();
             }
             if (!Navigation.BaseUri.Contains("localhost"))
             {
@@ -628,30 +610,4 @@ namespace Notes2022.RCL.User.Panels
             }
         }
     }
-
-    //public class PrismJsInterop : IAsyncDisposable
-    //{
-    //    private readonly Lazy<Task<IJSObjectReference>> moduleTask;
-
-    //    public PrismJsInterop(IJSRuntime jsRuntime)
-    //    {
-    //        moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-    //           "import", "./_content/Notes2022.RCL/prism.js").AsTask());
-    //    }
-
-    //    public async Task Prism()
-    //    {
-    //        var module = await moduleTask.Value;
-    //        await module.InvokeVoidAsync("Prism.highlightAll");
-    //    }
-
-    //    public async ValueTask DisposeAsync()
-    //    {
-    //        if (moduleTask.IsValueCreated)
-    //        {
-    //            var module = await moduleTask.Value;
-    //            await module.DisposeAsync();
-    //        }
-    //    }
-    //}
 }

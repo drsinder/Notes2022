@@ -23,6 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\GetNoteHeaderIdController.cs" />
+    <Compile Remove="Controllers\GetResponseHeadersController.cs" />
     <Compile Remove="Controllers\NextBaseNoteController.cs" />
     <Compile Remove="Controllers\NextNoteController.cs" />
     <Compile Remove="Controllers\PreviousBaseController.cs" />

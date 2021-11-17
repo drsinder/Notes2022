@@ -119,8 +119,6 @@ namespace Notes2022.RCL.User.Menus
             switch (id)
             {
                 case "ListNotes":
-                    //Navigation.NavigateTo("noteindex/" + Model.noteFile.Id);
-
                     MyNoteIndex.Listing();
                     break;
 
@@ -139,53 +137,36 @@ namespace Notes2022.RCL.User.Menus
                     break;
 
                 case "NextBase":
-                    //myId = await Http.GetFromJsonAsync<long>("api/NextBaseNote/" + Model.header.Id);
-
                     myId = MyNoteIndex.GetNextBaseNote(Model.header);
-
                     if (myId > 0)
                     {
                         MyNoteIndex.GotoNote(myId);
-                        //Navigation.NavigateTo("notedisplay/" + myId);
                     }
                     break;
 
                 case "PreviousBase":
-                    //myId = await Http.GetFromJsonAsync<long>("api/PreviousBaseNote/" + Model.header.Id);
-
                     myId = MyNoteIndex.GetPreviousBaseNote(Model.header);
 
                     if (myId > 0)
                     {
                         MyNoteIndex.GotoNote(myId);
-
-                        //Navigation.NavigateTo("notedisplay/" + myId);
                     }
                     break;
 
                 case "NextNote":
-                    //myId = await Http.GetFromJsonAsync<long>("api/NextNote/" + Model.header.Id);
-
                     myId = MyNoteIndex.GetNextNote(Model.header);
-
                     if (myId > 0)
                     {
                         MyNoteIndex.GotoNote(myId);
-
-                        //Navigation.NavigateTo("notedisplay/" + myId);
                     }
                     break;
 
                 case "PreviousNote":
-                    //myId = await Http.GetFromJsonAsync<long>("api/PreviousNote/" + Model.header.Id);
-
                     myId = MyNoteIndex.GetPreviousNote(Model.header);
 
                     if (myId > 0)
                     {
                         MyNoteIndex.GotoNote(myId);
-
-                        //Navigation.NavigateTo("notedisplay/" + myId);
                     }
                     break;
 
@@ -215,7 +196,6 @@ namespace Notes2022.RCL.User.Menus
                 case "Copy":
                     var parameters = new ModalParameters();
                     parameters.Add("Note", Model.header);
-                    //parameters.Add("UserData", Model.U);
                     Modal.Show<Copy>("", parameters);
                     break;
 
