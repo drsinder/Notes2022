@@ -555,8 +555,10 @@ namespace Notes2022.RCL.User.Panels
                     await sfTextBox.FocusAsync();
                 }
             }
-
-            await JSRuntime.InvokeVoidAsync("Prism.highlightAll");
+            if (!Navigation.BaseUri.Contains("localhost"))
+            {
+                await JSRuntime.InvokeVoidAsync("Prism.highlightAll");
+            }
         }
     }
 }

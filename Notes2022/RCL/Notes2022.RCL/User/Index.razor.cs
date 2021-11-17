@@ -17,10 +17,6 @@ namespace Notes2022.RCL.User
         private List<localFile> impfileList { get; set; }
         private List<localFile> histfileList { get; set; }
 
-
-        //private bool isChecked = true;
-        //private AboutModel? model { get; set; }
-        //private TimeSpan upTime { get; set; }
         private HomePageModel? hpModel { get; set; }
         private DateTime mytime { get; set; }
 
@@ -63,9 +59,6 @@ namespace Notes2022.RCL.User
 
                 try
                 {
-                    //model = await Http.GetFromJsonAsync<AboutModel>("api/About");
-                    //upTime = DateTime.Now.ToUniversalTime() - model.StartupDateTime;
-
                     hpModel = await Http.GetFromJsonAsync<HomePageModel>("api/HomePageData");
 
                     List<NoteFile> fileList1 = hpModel.NoteFiles.OrderBy(p => p.NoteFileName).ToList();
