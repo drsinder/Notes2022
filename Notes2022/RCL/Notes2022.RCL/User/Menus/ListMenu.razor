@@ -1,12 +1,9 @@
-﻿@using Syncfusion.Blazor.Popups
-@*--------------------------------------------------------------------------
+﻿@*--------------------------------------------------------------------------
     **
-    *colort ©.e-caret2020, Dale Sinder
-    **
-    **  -moz-animation-timing-functionstMenu.razor
+    ** Copyright © 2022, Dale Sinder
     **
     **  Description:
-    **      Menu bar for Main (mode 0)
+    **      Menu bar for Main List of notes
     **
     **  This program is free software: you can redistribute it and/or modify
     **  it under the terms of the GNU General Public License version 3 as
@@ -23,6 +20,7 @@
     **
     **--------------------------------------------------------------------------*@
 
+@using Syncfusion.Blazor.Popups
 
 <div class="top-row navbar-full-dark" >
     <SfMenu Items="@menuItems" @ref="@topMenu" HamburgerMode="@HamburgerMode" CssClass="e-std-menu"  ShowItemOnClick="true">
