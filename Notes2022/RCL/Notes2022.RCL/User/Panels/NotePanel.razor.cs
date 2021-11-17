@@ -175,9 +175,6 @@ namespace Notes2022.RCL.User.Panels
         protected async Task PrintString(bool wholeString)
         {
             NoteDisplayIndexModel Model = MyNoteIndex.GetModel();
-
-            //Model = await Http.GetFromJsonAsync<NoteDisplayIndexModel>("api/NoteIndex/" + model.noteFile.Id);
-
             string respX = string.Empty;
 
             // keep track of base note

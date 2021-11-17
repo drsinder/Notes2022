@@ -186,14 +186,14 @@ namespace Notes2022.RCL.User.Menus
         {
             currNote = 1;
             IsPrinting = true;
-            await PrintString();
+            await PrintFile2();
             IsPrinting = false;
         }
 
         /// <summary>
-        /// Print a whole file if PrintFile is true
+        /// Print a whole file
         /// </summary>
-        protected async Task PrintString()
+        protected async Task PrintFile2()
         {
             string respX = String.Empty;
 
@@ -220,7 +220,8 @@ namespace Notes2022.RCL.User.Menus
             sb.Append(currentHeader.NoteSubject);
             sb.Append("<br />Author: ");
             sb.Append(currentHeader.AuthorName + "    ");
-            sb.Append((Globals.LocalTimeBlazor(currentHeader.LastEdited).ToLongDateString()) + " " + (Globals.LocalTimeBlazor(currentHeader.LastEdited).ToShortTimeString())/* + " " + Model.tZone.Abbreviation*/);
+            sb.Append((Globals.LocalTimeBlazor(currentHeader.LastEdited).ToLongDateString()) + " " 
+                + (Globals.LocalTimeBlazor(currentHeader.LastEdited).ToShortTimeString()));
 
             NoteContent currentContent = await Http.GetFromJsonAsync<NoteContent>("api/Export2/" + currentHeader.Id);
 
@@ -252,19 +253,16 @@ namespace Notes2022.RCL.User.Menus
 
             currentHeader = baseHeader; // set back to base note
 
-            //if (PrintFile)  // whole file printing
+            NoteHeader next = Model.Notes.SingleOrDefault(p => p.NoteOrdinal == currentHeader.NoteOrdinal + 1);
+            if (next != null)       // still base notes left to print
             {
-                NoteHeader next = Model.Notes.SingleOrDefault(p => p.NoteOrdinal == currentHeader.NoteOrdinal + 1);
-                if (next != null)       // still base notes left to print
-                {
-                    currentHeader = next;   // set current note and base note
-                    baseHeader = next;
-                    //await SetNote();        // set important stuff
-                    sliderValueText = currentHeader.NoteOrdinal + "/" + baseNotes;  // update progress test
-                    currNote = currentHeader.NoteOrdinal;                           // update progress bar
+                currentHeader = next;   // set current note and base note
+                baseHeader = next;
+                //await SetNote();        // set important stuff
+                sliderValueText = currentHeader.NoteOrdinal + "/" + baseNotes;  // update progress test
+                currNote = currentHeader.NoteOrdinal;                           // update progress bar
 
-                    goto reloop;    // print another string
-                }
+                goto reloop;    // print another string
             }
 
             string stuff = sb.ToString();           // turn accumulated output into a string
