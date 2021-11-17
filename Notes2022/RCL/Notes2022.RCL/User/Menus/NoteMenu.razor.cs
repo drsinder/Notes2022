@@ -36,6 +36,7 @@ namespace Notes2022.RCL.User.Menus
     {
         [CascadingParameter] public IModalService Modal { get; set; }
         [Parameter] public DisplayModel Model { get; set; }
+        [Parameter] public NoteIndex MyNoteIndex { get; set; }
 
         private static List<MenuItem> menuItems { get; set; }
         protected SfMenu<MenuItem> topMenu { get; set; }
@@ -136,34 +137,53 @@ namespace Notes2022.RCL.User.Menus
                     break;
 
                 case "NextBase":
-                    myId = await Http.GetFromJsonAsync<long>("api/NextBaseNote/" + Model.header.Id);
+                    //myId = await Http.GetFromJsonAsync<long>("api/NextBaseNote/" + Model.header.Id);
+
+                    myId = MyNoteIndex.GetNextBaseNote(Model.header);
+
                     if (myId > 0)
                     {
-                        Navigation.NavigateTo("notedisplay/" + myId);
+                        MyNoteIndex.GotoNote(myId);
+                        //Navigation.NavigateTo("notedisplay/" + myId);
                     }
                     break;
 
                 case "PreviousBase":
-                    myId = await Http.GetFromJsonAsync<long>("api/PreviousBaseNote/" + Model.header.Id);
+                    //myId = await Http.GetFromJsonAsync<long>("api/PreviousBaseNote/" + Model.header.Id);
+
+                    myId = MyNoteIndex.GetPreviousBaseNote(Model.header);
+
                     if (myId > 0)
                     {
-                        Navigation.NavigateTo("notedisplay/" + myId);
+                        MyNoteIndex.GotoNote(myId);
+
+                        //Navigation.NavigateTo("notedisplay/" + myId);
                     }
                     break;
 
                 case "NextNote":
-                    myId = await Http.GetFromJsonAsync<long>("api/NextNote/" + Model.header.Id);
+                    //myId = await Http.GetFromJsonAsync<long>("api/NextNote/" + Model.header.Id);
+
+                    myId = MyNoteIndex.GetNextNote(Model.header);
+
                     if (myId > 0)
                     {
-                        Navigation.NavigateTo("notedisplay/" + myId);
+                        MyNoteIndex.GotoNote(myId);
+
+                        //Navigation.NavigateTo("notedisplay/" + myId);
                     }
                     break;
 
                 case "PreviousNote":
-                    myId = await Http.GetFromJsonAsync<long>("api/PreviousNote/" + Model.header.Id);
+                    //myId = await Http.GetFromJsonAsync<long>("api/PreviousNote/" + Model.header.Id);
+
+                    myId = MyNoteIndex.GetPreviousNote(Model.header);
+
                     if (myId > 0)
                     {
-                        Navigation.NavigateTo("notedisplay/" + myId);
+                        MyNoteIndex.GotoNote(myId);
+
+                        //Navigation.NavigateTo("notedisplay/" + myId);
                     }
                     break;
 

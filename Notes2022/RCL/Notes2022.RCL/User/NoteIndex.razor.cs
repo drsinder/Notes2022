@@ -40,8 +40,10 @@ namespace Notes2022.RCL.User
     {
         [CascadingParameter] public IModalService Modal { get; set; }
         [Parameter] public int NotesfileId { get; set; }
+        [Parameter] public long CurrentNoteId { get; set; }
 
         protected ListMenu MyMenu { get; set; }
+
         public string NavString { get; set; }
 
         protected SfTextBox sfTextBox { get; set; }
@@ -96,8 +98,68 @@ namespace Notes2022.RCL.User
 
         protected void DisplayIt(RowSelectEventArgs<NoteHeader> args)
         {
-            Navigation.NavigateTo("notedisplay/" + args.Data.Id);
+            CurrentNoteId = args.Data.Id;
+            StateHasChanged();
+
+            //Navigation.NavigateTo("notedisplay/" + args.Data.Id);
         }
+
+        public void GotoNote(long Id)
+        {
+            CurrentNoteId = Id;
+            StateHasChanged();
+        }
+
+        public long GetNextBaseNote(NoteHeader oh)
+        {
+            long newId = 0;
+            NoteHeader nh =Model.Notes.SingleOrDefault(p => p.NoteFileId == oh.NoteFileId && p.NoteOrdinal == oh.NoteOrdinal + 1 && p.ResponseOrdinal == 0 && p.Version == 0);
+            if (nh != null)
+                newId = nh.Id;
+            return newId;
+        }
+
+        public long GetNextNote(NoteHeader oh)
+        {
+            long newId = 0;
+
+            NoteHeader nh = null;
+            nh = Model.AllNotes.SingleOrDefault(p => p.NoteFileId == oh.NoteFileId && p.NoteOrdinal == oh.NoteOrdinal && p.ResponseOrdinal == (oh.ResponseOrdinal + 1) && p.Version == 0);
+
+            if (nh == null)
+                nh = Model.AllNotes.SingleOrDefault(p => p.NoteFileId == oh.NoteFileId && p.NoteOrdinal == (oh.NoteOrdinal + 1) && p.ResponseOrdinal == 0 && p.Version == 0);
+
+            if (nh != null)
+                newId = nh.Id;
+
+            return newId;
+        }
+
+        public long GetPreviousBaseNote(NoteHeader oh)
+        {
+            long newId = 0;
+            NoteHeader nh = Model.Notes.SingleOrDefault(p => p.NoteFileId == oh.NoteFileId && p.NoteOrdinal == oh.NoteOrdinal - 1 && p.ResponseOrdinal == 0 && p.Version == 0);
+            if (nh != null)
+                newId = nh.Id;
+            return newId;
+        }
+
+        public long GetPreviousNote(NoteHeader oh)
+        {
+            long newId = 0;
+
+            NoteHeader nh = null;
+            nh = Model.AllNotes.SingleOrDefault(p => p.NoteFileId == oh.NoteFileId && p.NoteOrdinal == oh.NoteOrdinal && p.ResponseOrdinal == oh.ResponseOrdinal - 1 && p.Version == 0);
+
+            if (nh == null)
+                nh = Model.Notes.SingleOrDefault(p => p.NoteFileId == oh.NoteFileId && p.NoteOrdinal == oh.NoteOrdinal - 1 && p.ResponseOrdinal == 0 && p.Version == 0);
+
+            if (nh != null)
+                newId = nh.Id;
+
+            return newId;
+        }
+
 
         private List<NoteHeader> results { get; set; }
         private bool isSearch { get; set; }
@@ -177,7 +239,10 @@ namespace Notes2022.RCL.User
             await sessionStorage.SetItemAsync<int>("SearchIndex", 0);
             await sessionStorage.SetItemAsync<List<NoteHeader>>("SearchList", results);
 
-            Navigation.NavigateTo("notedisplay/" + mode);
+            CurrentNoteId = mode;
+            StateHasChanged();
+
+            //Navigation.NavigateTo("notedisplay/" + mode);
         }
 
         protected async Task SearchContents(Search target)
@@ -219,7 +284,10 @@ namespace Notes2022.RCL.User
             await sessionStorage.SetItemAsync<int>("SearchIndex", 0);
             await sessionStorage.SetItemAsync<List<NoteHeader>>("SearchList", results);
 
-            Navigation.NavigateTo("notedisplay/" + mode);
+            CurrentNoteId = mode;
+            StateHasChanged();
+
+            //Navigation.NavigateTo("notedisplay/" + mode);
         }
 
 
@@ -277,7 +345,10 @@ namespace Notes2022.RCL.User
 
             await Http.PutAsJsonAsync("api/sequencer", seq);
 
-            Navigation.NavigateTo("notedisplay/" + currHeader.Id);
+            CurrentNoteId = currHeader.Id;
+            StateHasChanged();
+
+            //Navigation.NavigateTo("notedisplay/" + currHeader.Id);
         }
 
         public async void ActionCompleteHandler(ActionEventArgs<NoteHeader> args)
@@ -378,7 +449,13 @@ namespace Notes2022.RCL.User
                         {
                             long headerId = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + NotesfileId + "/" + noteNum + "/0");
                             if (headerId != 0)
-                                Navigation.NavigateTo("notedisplay/" + headerId);
+                            {
+                                CurrentNoteId = headerId;
+                                StateHasChanged();
+                                return;
+
+                                //Navigation.NavigateTo("notedisplay/" + headerId);
+                            }
                             else
                                 ShowMessage("Could not find note : " + stuff);
                         }
@@ -398,7 +475,13 @@ namespace Notes2022.RCL.User
                         {
                             long headerId = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + NotesfileId + "/" + noteNum + "/" + noteRespOrd);
                             if (headerId != 0)
-                                Navigation.NavigateTo("notedisplay/" + headerId);
+                            {
+                                CurrentNoteId = headerId;
+                                StateHasChanged();
+                                return;
+
+                                //Navigation.NavigateTo("notedisplay/" + headerId);
+                            }
                             else
                                 ShowMessage("Could not find note : " + stuff);
                         }

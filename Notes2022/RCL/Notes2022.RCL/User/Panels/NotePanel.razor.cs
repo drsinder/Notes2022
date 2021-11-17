@@ -47,6 +47,7 @@ namespace Notes2022.RCL.User.Panels
         [Parameter] public bool AltStyle { get; set; }
         [Parameter] public bool IsMini { get; set; }
         [Parameter] public int Vers { get; set; } = 0;
+        [Parameter] public NoteIndex MyNoteIndex { get; set; }
 
         protected List<NoteHeader> respHeaders { get; set; }
 
@@ -124,8 +125,6 @@ namespace Notes2022.RCL.User.Panels
                 respX = " Response " + model.header.ResponseOrdinal;
                 respY = "." + model.header.ResponseOrdinal;
             }
-
-
         }
 
         private void OnClickResp(MouseEventArgs args)
@@ -426,14 +425,26 @@ namespace Notes2022.RCL.User.Panels
 
                             long headerId2 = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + model.header.NoteOrdinal + "/" + noteNum);
                             if (headerId2 != 0)
-                                Navigation.NavigateTo("notedisplay/" + headerId2);
+                            {
+                                NoteId = headerId2;
+                                await GetData();
+                                StateHasChanged();
+                                
+                                //Navigation.NavigateTo("notedisplay/" + headerId2);
+                            }
                             else
                                 ShowMessage("Could not find note : " + NavString);
                             return;
                         }
                         long headerId = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + noteNum + "/0");
                         if (headerId != 0)
-                            Navigation.NavigateTo("notedisplay/" + headerId);
+                        {
+                            NoteId = headerId;
+                            await GetData();
+                            StateHasChanged();
+
+                            //Navigation.NavigateTo("notedisplay/" + headerId);
+                        }
                         else
                             ShowMessage("Could not find note : " + NavString);
                         await ClearNav();
@@ -462,14 +473,26 @@ namespace Notes2022.RCL.User.Panels
                                 noteNum = model.header.NoteOrdinal - noteNum;
                             long headerId2 = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + noteNum + "/0");
                             if (headerId2 != 0)
-                                Navigation.NavigateTo("notedisplay/" + headerId2);
+                            {
+                                NoteId = headerId2;
+                                await GetData();
+                                StateHasChanged();
+
+                                //Navigation.NavigateTo("notedisplay/" + headerId2);
+                            }
                             else
                                 ShowMessage("Could not find note : " + NavString);
 
                         }
                         long headerId = await Http.GetFromJsonAsync<long>("api/GetNoteHeaderId/" + model.header.NoteFileId + "/" + noteNum + "/" + noteRespOrd);
                         if (headerId != 0)
-                            Navigation.NavigateTo("notedisplay/" + headerId);
+                        {
+                            NoteId = headerId;
+                            await GetData();
+                            StateHasChanged();
+
+                            //Navigation.NavigateTo("notedisplay/" + headerId);
+                        }
                         else
                             ShowMessage("Could not find note : " + NavString);
                     }
@@ -492,7 +515,11 @@ namespace Notes2022.RCL.User.Panels
                 long mode = SearchList[SearchIndex].Id;
                 await sessionStorage.SetItemAsync<int>("SearchIndex", SearchIndex);
 
-                Navigation.NavigateTo("notedisplay/" + mode);
+                NoteId = mode;
+                await GetData();
+                StateHasChanged();
+
+                //Navigation.NavigateTo("notedisplay/" + mode);
             }
             else
             {
@@ -520,7 +547,11 @@ namespace Notes2022.RCL.User.Panels
 
                 await sessionStorage.SetItemAsync("CurrentSeqHeader", currHeader);
 
-                Navigation.NavigateTo("notedisplay/" + currHeader.Id);
+                NoteId = currHeader.Id;
+                await GetData();
+                StateHasChanged();
+
+                //Navigation.NavigateTo("notedisplay/" + currHeader.Id);
             }
             else
             {

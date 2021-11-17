@@ -23,6 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\NextBaseNoteController.cs" />
+    <Compile Remove="Controllers\NextNoteController.cs" />
+    <Compile Remove="Controllers\PreviousBaseController.cs" />
+    <Compile Remove="Controllers\PreviousNoteController.cs" />
     <Compile Remove="Controllers\WeatherForecastController.cs" />
     <Compile Remove="Data\ApplicationDbContext.cs" />
     <Compile Remove="Programxx.cs" />
