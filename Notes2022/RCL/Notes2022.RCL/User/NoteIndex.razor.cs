@@ -160,6 +160,11 @@ namespace Notes2022.RCL.User
             return newId;
         }
 
+        public void Listing()
+        {
+            CurrentNoteId = 0;
+            StateHasChanged();
+        }
 
         private List<NoteHeader> results { get; set; }
         private bool isSearch { get; set; }

@@ -156,7 +156,9 @@ namespace Notes2022.RCL.User.Panels
 
         private void OnDone(MouseEventArgs args)
         {
-            Navigation.NavigateTo("noteindex/" + model.noteFile.Id);
+            //Navigation.NavigateTo("noteindex/" + model.noteFile.Id);
+
+            MyNoteIndex.Listing();
         }
 
         private async void OnPrint(MouseEventArgs args)

@@ -114,7 +114,7 @@ namespace Notes2022.RCL.User.Menus
                     break;
 
                 case "ReloadIndex": // only a direct type in
-                    Navigation.NavigateTo("noteindex/" + Model.noteFile.Id);
+                    Navigation.NavigateTo("noteindex/" + Model.noteFile.Id, true);
                     break;
 
                 case "NewBaseNote":

@@ -119,7 +119,9 @@ namespace Notes2022.RCL.User.Menus
             switch (id)
             {
                 case "ListNotes":
-                    Navigation.NavigateTo("noteindex/" + Model.noteFile.Id);
+                    //Navigation.NavigateTo("noteindex/" + Model.noteFile.Id);
+
+                    MyNoteIndex.Listing();
                     break;
 
                 case "NewResponse":
