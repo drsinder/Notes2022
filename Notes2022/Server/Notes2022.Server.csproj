@@ -17,9 +17,13 @@
 
   <ItemGroup>
     <Compile Remove="wwwroot\Import\**" />
+    <Compile Remove="wwwroot\UserImages\**" />
     <Content Remove="wwwroot\Import\**" />
+    <Content Remove="wwwroot\UserImages\**" />
     <EmbeddedResource Remove="wwwroot\Import\**" />
+    <EmbeddedResource Remove="wwwroot\UserImages\**" />
     <None Remove="wwwroot\Import\**" />
+    <None Remove="wwwroot\UserImages\**" />
   </ItemGroup>
 
   <ItemGroup>
