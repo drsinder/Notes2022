@@ -58,6 +58,7 @@ else
             <SfRichTextEditor @ref="EditObj" @bind-Value="@Model.MyNote"
                           EditorMode="EditorMode.HTML" EnableResize="true"
                           ShowCharCount="true" Height="500" Width="1000" MaxLength="100000">
+                <RichTextEditorImageSettings SaveUrl="api/Image/Save" Path="./UserImages/" />
                 <RichTextEditorToolbarSettings @ref="ToolBarObj" Items="@Tools" Type="ToolbarType.MultiRow">
 
                     <RichTextEditorCustomToolbarItems>
