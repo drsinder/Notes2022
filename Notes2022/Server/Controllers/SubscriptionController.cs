@@ -33,7 +33,7 @@ using Notes2022.Shared;
 using System.Security.Claims;
 
 
-namespace Notes2021Blazor.Server.Controllers
+namespace Notes2022.Server.Controllers
 {
     [Route("api/[controller]")]
     [Route("api/[controller]/{fileId}")]

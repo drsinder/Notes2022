@@ -1,10 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
 
 namespace Notes2022.Server.Controllers
