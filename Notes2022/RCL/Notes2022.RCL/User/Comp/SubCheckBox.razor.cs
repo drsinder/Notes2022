@@ -28,11 +28,11 @@ namespace Notes2022.RCL.User.Comp
 
             if (isChecked) // create item
             {
-                await Http.PostAsJsonAsync("api/Subscription", Model);
+                await DAL.CreateSubscription(Http, Model);
             }
             else // delete it
             {
-                await Http.DeleteAsync("api/Subscription/" + fileId);
+                await DAL.DeleteSubscription(Http, fileId);
             }
 
             StateHasChanged();

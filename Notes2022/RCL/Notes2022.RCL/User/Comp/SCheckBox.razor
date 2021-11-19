@@ -52,11 +52,11 @@
 
         if (isChecked) // create item
         {
-            await Http.PostAsJsonAsync("api/sequencer", Model);
+            await DAL.CreateSequencer(Http, Model);
         }
         else // delete it
         {
-            await Http.DeleteAsync("api/sequencer/" + fileId);
+            await DAL.DeleteSequencer(Http, fileId);
         }
         await Tracker.Shuffle();
     }

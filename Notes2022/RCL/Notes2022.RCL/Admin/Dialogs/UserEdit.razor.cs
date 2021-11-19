@@ -21,12 +21,12 @@ namespace Notes2022.RCL.Admin.Dialogs
 
         protected override async Task OnParametersSetAsync()
         {
-            Model = await Http.GetFromJsonAsync<EditUserViewModel>("api/useredit/" + UserId);
+            Model = await DAL.GetUserEdit(Http, UserId);
         }
 
         private async Task Submit()
         {
-            await Http.PutAsJsonAsync("api/useredit", Model);
+            await DAL.PutUserEdit(Http, Model);
 
             await ModalInstance.CancelAsync();
         }

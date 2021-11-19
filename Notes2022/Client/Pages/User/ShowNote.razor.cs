@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Notes2022.Shared;
 using System.Net.Http.Json;
 
 namespace Notes2022.Client.Pages.User
@@ -18,7 +19,7 @@ namespace Notes2022.Client.Pages.User
         {
             // find the file id for this note - get note header
 
-            FileId = await Http.GetFromJsonAsync<int>("api/GetFIleIdForNoteId/" + NoteId);
+            FileId = await DAL.GetFileIdForNoteId(Http, NoteId);
         }
 
     }

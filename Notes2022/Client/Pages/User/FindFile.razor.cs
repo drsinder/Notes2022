@@ -26,7 +26,7 @@ namespace Notes2022.Client.Pages.User
             AuthenticationState authstate = await AuthProv.GetAuthenticationStateAsync();
             if (authstate.User.Identity.IsAuthenticated)
             {
-                hpModel = await Http.GetFromJsonAsync<HomePageModel>("api/HomePageData");
+                hpModel = await DAL.GetHomePageData(Http);
 
                 NoteFile nf = hpModel.NoteFiles.SingleOrDefault(p => p.NoteFileName == filename);
                 if (nf != null)

@@ -17,7 +17,7 @@ namespace Notes2022.RCL.User.Dialogs
         {
             if (ForwardView.ToEmail == null || ForwardView.ToEmail.Length < 8 || !ForwardView.ToEmail.Contains("@") || !ForwardView.ToEmail.Contains("."))
                 return;
-            HttpResponseMessage result = await Http.PostAsJsonAsync("api/Forward/", ForwardView);
+            await DAL.PostForward(Http, ForwardView);
             await ModalInstance.CancelAsync();
         }
 

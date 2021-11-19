@@ -84,7 +84,7 @@ namespace Notes2022.RCL.User
                 NotesfileId = -NotesfileId;
             }
 
-            Model = await Http.GetFromJsonAsync<NoteDisplayIndexModel>("api/NoteIndex/" + NotesfileId);
+            Model = await DAL.GetNoteIndex(Http, NotesfileId);
             PageSize = Model.UserData.Ipref2;
             ShowContent = Model.UserData.Pref7;
             ExpandAll = Model.UserData.Pref3;
@@ -275,7 +275,7 @@ namespace Notes2022.RCL.User
 
             foreach (NoteHeader nh in lookin)
             {
-                DisplayModel dm = await Http.GetFromJsonAsync<DisplayModel>("api/NoteContent/" + nh.Id);
+                DisplayModel dm = await DAL.GetNoteContent(Http, nh.Id);
                 NoteContent nc = dm.content;
                 List<Tags> tags = dm.tags;
 
@@ -362,7 +362,7 @@ namespace Notes2022.RCL.User
 
             seq.Active = true;
 
-            await Http.PutAsJsonAsync("api/sequencer", seq);
+            await DAL.UpateSequencer(Http, seq);
 
             CurrentNoteId = currHeader.Id;
             StateHasChanged();

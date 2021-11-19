@@ -32,7 +32,6 @@ using System.Security.Claims;
 
 namespace Notes2022.Server.Controllers
 {
-    //[Route("api/[controller]/{Id:int}")]
     [Route("api/[controller]/{fileId}")]
     [Route("api/[controller]")]
     [ApiController]
@@ -130,7 +129,7 @@ namespace Notes2022.Server.Controllers
 
             // also can not delete self
             string userName = this.HttpContext.User.FindFirst(ClaimTypes.Name).Value;
-            IdentityUser user = await _userManager.FindByNameAsync(userName);
+            ApplicationUser user = await _userManager.FindByNameAsync(userName);
             NoteAccess myAccess = await AccessManager.GetAccess(_db, user.Id, fid, aid);
             if (!myAccess.EditAccess)
                 return;

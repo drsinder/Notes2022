@@ -95,9 +95,9 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        subscriptions = await Http.GetFromJsonAsync<List<Subscription>>("api/subscription");
+        subscriptions = await DAL.GetSubscriptions(Http);
 
-        HomePageModel model = await Http.GetFromJsonAsync<HomePageModel>("api/HomePageData");
+        HomePageModel model = await DAL.GetHomePageData(Http);
 
         files = model.NoteFiles;
     }

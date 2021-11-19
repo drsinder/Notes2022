@@ -59,7 +59,7 @@ else
 
         CreateFileModel crm = new CreateFileModel { NoteFileName = dummyFile.NoteFileName, NoteFileTitle = dummyFile.NoteFileTitle };
 
-        await Http.PostAsJsonAsync("api/NoteFileAdmin", crm);
+        await DAL.CreateNoteFile(Http, crm);
 
         await ModalInstance.CloseAsync();
     }

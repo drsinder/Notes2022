@@ -110,7 +110,5 @@ namespace Notes2022.Server.Controllers
 
             return model;
         }
-
-
     }
 }

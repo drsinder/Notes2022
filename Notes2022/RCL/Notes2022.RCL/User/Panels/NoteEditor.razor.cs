@@ -90,7 +90,7 @@ namespace Notes2022.RCL.User.Panels
         protected async override Task OnParametersSetAsync()
         {
             if (Model.NoteFileID != 0)
-                noteFile = await Http.GetFromJsonAsync<NoteFile>("api/NewNote/" + Model.NoteFileID);
+                noteFile = await DAL.GetNewNote(Http, Model.NoteFileID);
         }
 
         protected async Task HandleValidSubmit()
@@ -104,15 +104,15 @@ namespace Notes2022.RCL.User.Panels
 
             if (Model.NoteID == 0)    // new note
             {
-                await Http.PostAsJsonAsync("api/NewNote/", Model);
-                NoteHeader nh = await Http.GetFromJsonAsync<NoteHeader>("api/NewNote2");
+                await DAL.PostNewNote(Http, Model);
+                NoteHeader nh = await DAL.GetNewNote2(Http);
                 Navigation.NavigateTo("notedisplay/" + nh.Id);
                 return;
             }
             else // editing
             {
-                await Http.PutAsJsonAsync("api/NewNote", Model);
-                NoteHeader nh = await Http.GetFromJsonAsync<NoteHeader>("api/NewNote2");
+                await DAL.PutEditedNote(Http, Model);
+                NoteHeader nh = await DAL.GetNewNote2(Http);
                 Navigation.NavigateTo("notedisplay/" + nh.Id);
                 return;
             }

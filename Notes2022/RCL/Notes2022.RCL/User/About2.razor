@@ -1,8 +1,6 @@
 ﻿@inject HttpClient Http
-@inject AuthenticationStateProvider AuthProv
 
 @using Notes2022.Shared
-@using System.Net.Http.Json
 
 <h2>About Notes 2022</h2>
 <p>
@@ -75,16 +73,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-        AuthenticationState authstate = await AuthProv.GetAuthenticationStateAsync();
-        if (authstate.User.Identity.IsAuthenticated)
+        try
         {
-            try
-            {
-                model = await Http.GetFromJsonAsync<AboutModel>("api/About");
-                upTime = DateTime.Now.ToUniversalTime() - model.StartupDateTime;
-            }
-            finally { }
+            model = await DAL.GetAbout(Http);
+            upTime = DateTime.Now.ToUniversalTime() - model.StartupDateTime;
         }
+        finally { }
     }
 }
 

@@ -84,8 +84,8 @@ namespace Notes2022.RCL.User.Comp
             a.Ordinal = bord;
             b.Ordinal = aord;
 
-            await Http.PutAsJsonAsync("api/sequenceredit", a);
-            await Http.PutAsJsonAsync("api/sequenceredit", b);
+            await DAL.UpateSequencerPosition(Http, a);
+            await DAL.UpateSequencerPosition(Http, b);
 
         }
     }

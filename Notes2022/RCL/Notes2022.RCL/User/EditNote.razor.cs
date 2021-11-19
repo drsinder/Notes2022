@@ -19,7 +19,7 @@ namespace Notes2022.RCL.User
 
         protected override async Task OnParametersSetAsync()
         {
-            stuff = await Http.GetFromJsonAsync<DisplayModel>("api/notecontent/" + NoteId + "/0");
+            stuff = await DAL.GetNoteContent(Http, NoteId);
 
             Model.NoteFileID = stuff.noteFile.Id;
             Model.NoteID = NoteId;

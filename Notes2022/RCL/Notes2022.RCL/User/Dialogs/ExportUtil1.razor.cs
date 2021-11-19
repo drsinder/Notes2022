@@ -77,7 +77,7 @@ namespace Notes2022.RCL.User.Dialogs
                 stuff.subject = "Notes 2022 - " + model.NoteFile.NoteFileTitle;
                 stuff.payload = email;
 
-                await Http.PostAsJsonAsync("api/Email", stuff);
+                await DAL.PostEmail(Http, stuff);
             }
 
             ms.Dispose();
@@ -155,7 +155,7 @@ namespace Notes2022.RCL.User.Dialogs
 
                 req = "" + nfid + "." + model.ArchiveNumber + "." + model.NoteOrdinal + ".0";
             }
-            bnhl = await Http.GetFromJsonAsync<List<NoteHeader>>("api/Export/" + req);
+            bnhl = await DAL.GetExport(Http, req);
 
             // loop over each base note in order
             foreach (NoteHeader bnh in bnhl)
@@ -169,7 +169,7 @@ namespace Notes2022.RCL.User.Dialogs
                 // get content for base note
                 NoteContent nc = null;
                 req = bnh.Id.ToString();
-                nc = await Http.GetFromJsonAsync<NoteContent>("api/Export2/" + req);
+                nc = await DAL.GetExport2(Http, req);
                 // format it and write it
                 await WriteNote(sw, bnh, bnh, nc, isHtml, false, tags);
 
@@ -191,7 +191,7 @@ namespace Notes2022.RCL.User.Dialogs
                     NoteContent ncr = null;
 
                     req = "" + nfid + "." + model.ArchiveNumber + "." + bnh.NoteOrdinal + "." + rnum;
-                    List<NoteHeader> zz = (await Http.GetFromJsonAsync<List<NoteHeader>>("api/Export/" + req));
+                    List<NoteHeader> zz = await DAL.GetExport(Http, req);
 
                     nh = zz[0];
 
@@ -200,7 +200,7 @@ namespace Notes2022.RCL.User.Dialogs
 
                         req = nh.Id.ToString();
 
-                        ncr = await Http.GetFromJsonAsync<NoteContent>("api/Export2/" + req);
+                        ncr = await DAL.GetExport2(Http, req);
 
                         await WriteNote(sw, bnh, nh, ncr, isHtml, true, tags);
                     }

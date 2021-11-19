@@ -47,7 +47,7 @@
 
     private async Task HandleValidSubmit()
     {
-        await Http.DeleteAsync("api/NoteFileAdmin/" + FileId);
+        await DAL.DeleteNoteFile(Http, FileId);
 
         ModalInstance.CloseAsync(ModalResult.Ok($"Delete was submitted successfully."));
     }

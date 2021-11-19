@@ -13,8 +13,7 @@ namespace Notes2022.RCL.User.Dialogs
 
         protected async Task Delete()
         {
-            string encoded = "api/accesslist/" + noteAccess.NoteFileId + "." + noteAccess.ArchiveId + "." + noteAccess.UserID;
-            await Http.DeleteAsync(encoded);
+            await DAL.DeleteAccessList(Http, noteAccess.NoteFileId, noteAccess.ArchiveId, noteAccess.UserID);
             await OnClick.InvokeAsync("Delete");
         }
     }

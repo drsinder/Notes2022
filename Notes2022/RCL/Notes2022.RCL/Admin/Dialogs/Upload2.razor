@@ -38,7 +38,7 @@
     {
         if (firstRender)
         {
-            await Http.GetFromJsonAsync<bool>("api/Import/" + NoteFile + "/" + UploadFile);
+            await DAL.GetImport(Http, NoteFile, UploadFile);
 
             await ModalInstance.CancelAsync();
         }

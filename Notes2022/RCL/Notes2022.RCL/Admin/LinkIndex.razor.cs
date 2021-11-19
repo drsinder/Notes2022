@@ -23,7 +23,7 @@ namespace Notes2022.RCL.Admin
 
         protected override async Task OnParametersSetAsync()
         {
-            Model = await Http.GetFromJsonAsync<List<LinkedFile>>("api/Linked");
+            Model = await DAL.GetLinked(Http);
         }
 
         protected async Task Create()
@@ -31,7 +31,7 @@ namespace Notes2022.RCL.Admin
             var parameters = new ModalParameters();
             var x = Modal.Show<CreateLinked>("", parameters);
             await x.Result;
-            Model = await Http.GetFromJsonAsync<List<LinkedFile>>("api/Linked");
+            Model = await DAL.GetLinked(Http);
             Navigation.NavigateTo("admin/linkindex");
         }
 
@@ -51,9 +51,9 @@ namespace Notes2022.RCL.Admin
             if (!await YesNo("Are you sure you want to delete this Linked file?"))
                 return;
 
-            await Http.DeleteAsync("api/Linked/" + deleteId);
+            await DAL.DeleteLinked(Http, deleteId);
 
-            Model = await Http.GetFromJsonAsync<List<LinkedFile>>("api/Linked");
+            Model = await DAL.GetLinked(Http);
 
             StateHasChanged();
         }

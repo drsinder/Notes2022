@@ -21,7 +21,7 @@ namespace Notes2022.RCL.Admin
 
         protected override async Task OnParametersSetAsync()
         {
-            UList = await Http.GetFromJsonAsync<List<UserData>>("api/userlists");
+            UList = await DAL.GetUserList(Http);
         }
 
         protected void EditLink(string Id)

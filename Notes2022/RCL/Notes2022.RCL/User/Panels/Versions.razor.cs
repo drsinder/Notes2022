@@ -45,8 +45,7 @@ namespace Notes2022.RCL.User.Panels
 
         protected override async Task OnParametersSetAsync()
         {
-            Headers = await Http.GetFromJsonAsync<List<NoteHeader>>("api/Versions/" + FileId + "/"
-                + NoteOrdinal + "/" + ResponseOrdinal + "/" + ArcId);
+            Headers = await DAL.GetVersions(Http, FileId, NoteOrdinal, ResponseOrdinal, ArcId);
         }
     }
 }

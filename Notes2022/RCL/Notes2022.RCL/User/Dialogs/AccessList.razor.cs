@@ -32,7 +32,7 @@ namespace Notes2022.RCL.User.Dialogs
         {
             arcId = await sessionStorage.GetItemAsync<int>("ArcId");
 
-            temp = await Http.GetFromJsonAsync<List<NoteAccess>>("api/accesslist/" + fileId);
+            temp = await DAL.GetAccessList(Http, fileId);
             myList = new List<NoteAccess>();
 
             foreach (NoteAccess item in temp)
@@ -43,11 +43,11 @@ namespace Notes2022.RCL.User.Dialogs
                 }
             }
 
-            userList = await Http.GetFromJsonAsync<List<UserData>>("api/userlists");
+            userList = await DAL.GetUserList(Http);
 
             try
             {
-                myAccess = await Http.GetFromJsonAsync<NoteAccess>("api/myaccess/" + fileId);
+                myAccess = await DAL.GetMyAccess(Http, fileId);
             }
             catch (Exception ex)
             {
@@ -78,7 +78,7 @@ namespace Notes2022.RCL.User.Dialogs
         {
             arcId = await sessionStorage.GetItemAsync<int>("ArcId");
 
-            temp = await Http.GetFromJsonAsync<List<NoteAccess>>("api/AccessList/" + fileId);
+            temp = await DAL.GetAccessList(Http, fileId);
             myList = new List<NoteAccess>();
 
             foreach (NoteAccess item in temp)

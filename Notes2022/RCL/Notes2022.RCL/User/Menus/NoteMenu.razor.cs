@@ -179,7 +179,7 @@ namespace Notes2022.RCL.User.Menus
                     {
                         if (!await YesNo("Are you sure you want to delete this note?"))
                             return;
-                        await Http.DeleteAsync("api/DeleteNote/" + Model.header.Id);
+                        await DAL.DeleteNote(Http, Model.header.Id);
                         Navigation.NavigateTo("notedisplay/" + Model.header.Id, true);
                     }
                     else

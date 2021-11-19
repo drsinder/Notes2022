@@ -21,7 +21,7 @@ namespace Notes2022.RCL.User.Dialogs
         private int SelectedId { get; set; } = 0;
         protected async override Task OnInitializedAsync()
         {
-            Files = await Http.GetFromJsonAsync<List<NoteFile>>("api/NoteFileAdmin");
+            Files = await DAL.GetNoteFilesOrderedByName(Http);
             Files.Insert(0, new NoteFile { Id = 0, NoteFileName = "Select a file" });
         }
 
@@ -34,7 +34,7 @@ namespace Notes2022.RCL.User.Dialogs
             cm.Note = Note;
             cm.WholeString = WholeString;
             //cm.UserData = UserData;
-            await Http.PostAsJsonAsync("api/CopyNote", cm);
+            await DAL.PostCopyNote(Http, cm);
             await ModalInstance.CloseAsync();
         }
 

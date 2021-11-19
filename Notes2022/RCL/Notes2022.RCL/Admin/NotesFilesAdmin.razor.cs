@@ -28,7 +28,7 @@ namespace Notes2022.RCL.Admin
 
         protected async Task GetStuff()
         {
-            model = await Http.GetFromJsonAsync<HomePageModel>("api/AdminPageData");
+            model = await DAL.GetAdminPageData(Http);
 
             todo = new List<string> { "announce", "pbnotes", "noteshelp", "pad", "homepagemessages" };
 
@@ -50,31 +50,31 @@ namespace Notes2022.RCL.Admin
 
         private async Task CreateAnnounce()
         {
-            await Http.PostAsJsonAsync("api/NoteFileAdminStd", new Stringy { value = "announce" });
+            await DAL.CreateStdNoteFile(Http, "announce");
             Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         private async Task CreatePbnotes()
         {
-            await Http.PostAsJsonAsync("api/NoteFileAdminStd", new Stringy { value = "pbnotes" });
+            await DAL.CreateStdNoteFile(Http, "pbnotes");
             Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         private async Task CreateNotesHelp()
         {
-            await Http.PostAsJsonAsync("api/NoteFileAdminStd", new Stringy { value = "noteshelp" });
+            await DAL.CreateStdNoteFile(Http, "noteshelp");
             Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         private async Task CreatePad()
         {
-            await Http.PostAsJsonAsync("api/NoteFileAdminStd", new Stringy { value = "pad" });
+            await DAL.CreateStdNoteFile(Http, "pad");
             Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         private async Task CreateHomePageMessages()
         {
-            await Http.PostAsJsonAsync("api/NoteFileAdminStd", new Stringy { value = "homepagemessages" });
+            await DAL.CreateStdNoteFile(Http, "homepagemessages");
             Navigation.NavigateTo("admin/notefilelist", true);
         }
 
@@ -161,12 +161,6 @@ namespace Notes2022.RCL.Admin
                 Navigation.NavigateTo("noteindex/" + Id);
                 return;
             }
-
-
-
-
-
-            //await Http.GetFromJsonAsync<bool>("api/Import");
         }
 
     }

@@ -25,7 +25,7 @@ namespace Notes2022.RCL.User
         {
             //TZones = await Http.GetJsonAsync<List<TZone>>("api/TimeZones/");
             //TZones = TZones.OrderBy(p => p.OffsetHours).ThenBy(p => p.OffsetMinutes).ToList();
-            UserData = await Http.GetFromJsonAsync<UserData>("api/User/");
+            UserData = await DAL.GetUserData(Http);
             //MyZone = TZones.SingleOrDefault(p => p.Id == UserData.TimeZoneID);
             //myZid = UserData.TimeZoneID;
             pageSize = UserData.Ipref2.ToString();
@@ -52,7 +52,7 @@ namespace Notes2022.RCL.User
             UserData.Ipref2 = int.Parse(pageSize);
             //MyZone = TZones.SingleOrDefault(p => p.Id == UserData.TimeZoneID);
             //currentText = "Current Time Zone: " + MyZone.Name + " - " + MyZone.Abbreviation + " - " + MyZone.Offset;
-            await Http.PutAsJsonAsync("api/User", UserData);
+            await DAL.UpdateUserData(Http, UserData);
             Navigation.NavigateTo("");
         }
 

@@ -223,7 +223,7 @@ namespace Notes2022.RCL.User.Menus
             sb.Append((Globals.LocalTimeBlazor(currentHeader.LastEdited).ToLongDateString()) + " " 
                 + (Globals.LocalTimeBlazor(currentHeader.LastEdited).ToShortTimeString()));
 
-            NoteContent currentContent = await Http.GetFromJsonAsync<NoteContent>("api/Export2/" + currentHeader.Id);
+            NoteContent currentContent = await DAL.GetExport2(Http, currentHeader.Id.ToString());
 
             if (!string.IsNullOrEmpty(currentContent.DirectorMessage))
             {

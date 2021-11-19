@@ -83,11 +83,11 @@ namespace Notes2022.RCL.User.Menus
 
                     if (Globals.EditUserVModel == null)
                     {
-                        UserData udata = await Http.GetFromJsonAsync<UserData>("api/User");
+                        UserData udata = await DAL.GetUserData(Http);
                         string uid = udata.UserId;
                         Globals.UserData = udata;
 
-                        Globals.EditUserVModel = await Http.GetFromJsonAsync<EditUserViewModel>("api/UserEdit/" + uid);
+                        Globals.EditUserVModel = await DAL.GetUserEdit(Http, uid);
                         //await sessionStorage.SetItemAsync("EditUserView", Globals.EditUserVModel);
 
                     }
@@ -230,7 +230,7 @@ namespace Notes2022.RCL.User.Menus
 
         private async Task StartSeq()
         {
-            List<Sequencer> sequencers = await Http.GetFromJsonAsync<List<Sequencer>>("api/sequencer");
+            List<Sequencer> sequencers = await DAL.GetSequencer(Http);
             if (sequencers.Count == 0)
                 return;
 

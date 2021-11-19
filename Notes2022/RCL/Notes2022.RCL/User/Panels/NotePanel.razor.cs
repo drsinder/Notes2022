@@ -112,7 +112,7 @@ namespace Notes2022.RCL.User.Panels
                 BodyStyle += "-alt";
             }
 
-            model = await Http.GetFromJsonAsync<DisplayModel>("api/notecontent/" + NoteId + "/" + Vers);
+            model = await DAL.GetNoteContent(Http, NoteId, Vers);
 
             // set text to be displayed re responses
             respX = respY = "";
@@ -201,7 +201,7 @@ namespace Notes2022.RCL.User.Panels
             sb.Append(currentHeader.AuthorName + "    ");
             sb.Append(Globals.LocalTimeBlazor(currentHeader.LastEdited).ToLongDateString() + " " + Globals.LocalTimeBlazor(currentHeader.LastEdited).ToShortTimeString()/* + " " + Model.tZone.Abbreviation*/);
 
-            NoteContent currentContent = await Http.GetFromJsonAsync<NoteContent>("api/Export2/" + currentHeader.Id);
+            NoteContent currentContent = await DAL.GetExport2(Http, currentHeader.Id.ToString());
 
             if (!string.IsNullOrEmpty(currentContent.DirectorMessage))
             {
@@ -469,8 +469,6 @@ namespace Notes2022.RCL.User.Panels
                                 NoteId = headerId2;
                                 await GetData();
                                 StateHasChanged();
-
-                                //Navigation.NavigateTo("notedisplay/" + headerId2);
                             }
                             else
                                 ShowMessage("Could not find note : " + NavString);
@@ -508,8 +506,6 @@ namespace Notes2022.RCL.User.Panels
                 NoteId = mode;
                 await GetData();
                 StateHasChanged();
-
-                //Navigation.NavigateTo("notedisplay/" + mode);
             }
             else
             {
@@ -540,15 +536,13 @@ namespace Notes2022.RCL.User.Panels
                 NoteId = currHeader.Id;
                 await GetData();
                 StateHasChanged();
-
-                //Navigation.NavigateTo("notedisplay/" + currHeader.Id);
             }
             else
             {
                 // update seq entry for user
                 Sequencer seq = await sessionStorage.GetItemAsync<Sequencer>("SeqItem");
                 seq.Active = false;
-                await Http.PutAsJsonAsync("api/sequencer", seq);
+                await DAL.UpateSequencer(Http, seq);
 
                 // goto next file
                 List<Sequencer> sequencers = await sessionStorage.GetItemAsync<List<Sequencer>>("SeqList");

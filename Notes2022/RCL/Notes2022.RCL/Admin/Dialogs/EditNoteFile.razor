@@ -79,7 +79,7 @@ else
             LastEdited = LastEdited
         };
 
-        await Http.PutAsJsonAsync("api/NoteFileAdmin", nf);
+        await DAL.EditNoteFile(Http, nf);
 
         await ModalInstance.CloseAsync();
     }

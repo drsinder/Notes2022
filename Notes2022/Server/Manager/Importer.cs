@@ -85,7 +85,7 @@ namespace Notes2022.Server
 
                     if (counter == 0)
                     {
-                        if (line.StartsWith("2021 NoteFile "))  // By this we know it came from Notes 3.1
+                        if (line.StartsWith("2021 NoteFile ") || line.StartsWith("2022 NoteFile "))  // By this we know it came from Notes Web edition
                         {
                             filetype = 1;   // Notes 3.1
                             await file.ReadLineAsync();

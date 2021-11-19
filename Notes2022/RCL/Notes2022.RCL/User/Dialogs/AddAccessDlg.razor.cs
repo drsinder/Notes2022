@@ -53,11 +53,11 @@ namespace Notes2022.RCL.User.Dialogs
                 item.ArchiveId = aId;
                 // all access options left false
 
-                await Http.PostAsJsonAsync("api/AccessList", item);
+                await DAL.PostAccessList(Http, item);
 
                 delay = new(250);
                 delay.Enabled = true;
-                delay.Elapsed += Done;
+                delay.Elapsed += Done;      // TODO why is this here??
 
                 return;
             }

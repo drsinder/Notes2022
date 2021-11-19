@@ -37,8 +37,8 @@ namespace Notes2022.RCL.User
 
         protected override async Task OnParametersSetAsync()
         {
-            trackers = await Http.GetFromJsonAsync<List<Sequencer>>("api/sequencer");
-            HomePageModel model = await Http.GetFromJsonAsync<HomePageModel>("api/HomePageData");
+            trackers = await DAL.GetSequencer(Http);
+            HomePageModel model = await DAL.GetHomePageData(Http);
             stuff = model.NoteFiles.OrderBy(p => p.NoteFileName).ToList();
             await Shuffle();
         }
@@ -47,7 +47,7 @@ namespace Notes2022.RCL.User
         {
             files = new List<NoteFile>();
 
-            trackers = await Http.GetFromJsonAsync<List<Sequencer>>("api/sequencer");
+            trackers = await DAL.GetSequencer(Http);
             if (trackers != null)
             {
                 trackers = trackers.OrderBy(p => p.Ordinal).ToList();

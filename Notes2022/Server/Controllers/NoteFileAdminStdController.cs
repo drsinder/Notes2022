@@ -151,8 +151,5 @@ namespace Notes2022.Server.Controllers
             _db.Entry(access).State = EntityState.Modified;
             await _db.SaveChangesAsync();
         }
-
-
-
     }
 }

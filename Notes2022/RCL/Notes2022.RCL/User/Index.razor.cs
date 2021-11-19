@@ -59,7 +59,7 @@ namespace Notes2022.RCL.User
 
                 try
                 {
-                    hpModel = await Http.GetFromJsonAsync<HomePageModel>("api/HomePageData");
+                    hpModel = await DAL.GetHomePageData(Http);
 
                     List<NoteFile> fileList1 = hpModel.NoteFiles.OrderBy(p => p.NoteFileName).ToList();
                     List<NoteFile> nameList1 = hpModel.NoteFiles.OrderBy(p => p.NoteFileTitle).ToList();

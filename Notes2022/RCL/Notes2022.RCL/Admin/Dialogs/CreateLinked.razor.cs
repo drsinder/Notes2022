@@ -28,11 +28,11 @@ namespace Notes2022.RCL.Admin.Dialogs
 
         protected override async Task OnParametersSetAsync()
         {
-            HomePageModel hpModel = await Http.GetFromJsonAsync<HomePageModel>("api/HomePageData");
+            HomePageModel hpModel = await DAL.GetHomePageData(Http);
             Files = hpModel.NoteFiles;
             myFile = 0;
             accept = send = true;
-            Model = await Http.GetFromJsonAsync<List<LinkedFile>>("api/Linked");
+            Model = await DAL.GetLinked(Http);
         }
 
         protected async Task Cancel()
@@ -54,8 +54,7 @@ namespace Notes2022.RCL.Admin.Dialogs
                 return;
             }
 
-            string appUriEncoded = HttpUtility.UrlEncode(appUri);
-            bool result = await Http.GetFromJsonAsync<bool>("api/LinkTest/" + appUriEncoded);
+            bool result = await DAL.LinkTest(Http, appUri);
 
             if (!result)
             {
@@ -63,7 +62,7 @@ namespace Notes2022.RCL.Admin.Dialogs
                 return;
             }
 
-            result = await Http.GetFromJsonAsync<bool>("api/LinkTest2/" + appUriEncoded + "/" + remoteFile);
+            result = await DAL.LinkTest2(Http, appUri, remoteFile);
             if (!result)
             {
                 await ShowMessage("Remote file does not exist.");
@@ -79,7 +78,7 @@ namespace Notes2022.RCL.Admin.Dialogs
             linker.SendTo = send;
             linker.AcceptFrom = accept;
 
-            await Http.PostAsJsonAsync("api/Linked", linker);
+            await DAL.PostLinked(Http, linker);
 
             await ModalInstance.CancelAsync();
         }
