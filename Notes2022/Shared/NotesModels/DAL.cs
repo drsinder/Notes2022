@@ -8,9 +8,9 @@ using System.Web;
 
 namespace Notes2022.Shared
 {
-    public static class DAL
+    public class DAL
     {
-        static public HttpClient HttpClient { get; set; }   // for use in desktop/mobile app NOT WEB APP!!
+        //static public HttpClient HttpClient { get; set; }   // for use in desktop/mobile app NOT WEB APP!!
 
         public static async Task<AboutModel> GetAbout(HttpClient Http)
         {
