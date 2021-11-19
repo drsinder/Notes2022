@@ -81,7 +81,7 @@ namespace Notes2022.Shared
             return await Http.GetFromJsonAsync<List<NoteHeader>>("api/Export/" + req);
         }
 
-        public static async Task<JsonExport> GetExportJspn(HttpClient Http, string req)
+        public static async Task<JsonExport> GetExportJson(HttpClient Http, string req)
         {
             return await Http.GetFromJsonAsync<JsonExport>("api/ExportJson/" + req);
         }

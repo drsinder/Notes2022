@@ -1,21 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Version>1.0.2</Version>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="NotesModels\LongWrapper.cs" />
     <Compile Remove="NotesModels\Message.cs" />
     <Compile Remove="WeatherForecast.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0" />
   </ItemGroup>
-
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
