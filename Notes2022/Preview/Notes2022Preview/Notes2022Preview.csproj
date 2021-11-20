@@ -27,6 +27,7 @@
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-android'">21.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</TargetPlatformMinVersion>
+		<ApplicationIcon>wwwroot\favicon.ico</ApplicationIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -55,9 +56,20 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Shared\NavMenuY.razor.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Content Remove="Pages\Counter.razor" />
 		<Content Remove="Pages\FetchData.razor" />
-		<Content Remove="Properties\launchSettings.json" />
+		<Content Remove="Pages\Index.razor" />
+		<Content Remove="Shared\NavMenuX.razor" />
+		<Content Remove="Shared\NavMenuY.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Shared\NavMenuX.razor.css" />
+	  <None Remove="Shared\NavMenuY.razor.css" />
 	</ItemGroup>
 
 	<ItemGroup>
