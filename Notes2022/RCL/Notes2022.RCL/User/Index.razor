@@ -44,8 +44,15 @@
         {
             <div>@((MarkupString)@hpModel.Message)</div>
         }
+    } 
+    @if (IsPreview)
+    {
+        <div>Preview MODE!</div>
     }
-    <AuthorizeView>
+    else
+    {
+        
+        <AuthorizeView>
         <NotAuthorized>
             <p class="center"><strong>You are not logged in.  Please log in.  Register first if you need to.</strong></p>
         </NotAuthorized>
@@ -128,5 +135,8 @@
             </div>
         </Authorized>
     </AuthorizeView>
+
+
+}
 </div>
 

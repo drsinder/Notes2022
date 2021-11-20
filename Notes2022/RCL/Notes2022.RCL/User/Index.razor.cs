@@ -11,6 +11,8 @@ namespace Notes2022.RCL.User
         {
         }
 
+        [Parameter] public bool IsPreview { get; set; } = false;
+
         private localFile dummyFile = new localFile { Id = 0, NoteFileName = " ", NoteFileTitle = " " };
         private List<localFile> fileList { get; set; }
         private List<localFile> nameList { get; set; }
@@ -37,6 +39,9 @@ namespace Notes2022.RCL.User
             impfileList = new List<localFile>();
 
             mytime = DateTime.Now;
+
+            if (IsPreview)
+                return;
 
             AuthenticationState authstate = await AuthProv.GetAuthenticationStateAsync();
             if (authstate.User.Identity.IsAuthenticated)

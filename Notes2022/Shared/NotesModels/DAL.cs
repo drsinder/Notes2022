@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net.Http.Json;
 using System.Web;
 
 namespace Notes2022.Shared
 {
     public class DAL
     {
-        //static public HttpClient HttpClient { get; set; }   // for use in desktop/mobile app NOT WEB APP!!
-
         public static async Task<AboutModel> GetAbout(HttpClient Http)
         {
             AboutModel model = await Http.GetFromJsonAsync<AboutModel>("api/About");
@@ -69,12 +62,11 @@ namespace Notes2022.Shared
             await Http.PostAsJsonAsync("api/Email", stuff);
         }
         #endregion
-        #region Export2
+        #region Exports
         public static async Task<NoteContent> GetExport2(HttpClient Http, string modelstring)
         {
             return await Http.GetFromJsonAsync<NoteContent>("api/Export2/" + modelstring);
         }
-        #endregion
 
         public static async Task<List<NoteHeader>> GetExport(HttpClient Http, string req)
         {
@@ -90,6 +82,8 @@ namespace Notes2022.Shared
         {
             await Http.PostAsJsonAsync("api/Forward", stuff);
         }
+
+        #endregion
 
         public static async Task<int> GetFileIdForNoteId(HttpClient Http, long NoteId)
         {
@@ -237,6 +231,7 @@ namespace Notes2022.Shared
         }
         #endregion
 
+        #region Subscription
         public static async Task<List<Subscription>> GetSubscriptions(HttpClient Http)
         {
             return await Http.GetFromJsonAsync<List<Subscription>>("api/subscription");
@@ -252,11 +247,14 @@ namespace Notes2022.Shared
             await Http.PostAsJsonAsync("api/Subscription", Model);
         }
 
+        #endregion
+
         public static async Task<List<Tags>> GetTags(HttpClient Http, int nfid)
         {
             return await Http.GetFromJsonAsync<List<Tags>>("api/Tags/" + nfid);
         }
 
+        #region UserData
         public static async Task<UserData> GetUserData(HttpClient Http)
         {
             return await Http.GetFromJsonAsync<UserData>("api/User");
@@ -281,6 +279,7 @@ namespace Notes2022.Shared
         {
             return await Http.GetFromJsonAsync<List<UserData>>("api/userlists");
         }
+        #endregion
 
         public static async Task<List<NoteHeader>> GetVersions(HttpClient Http, int fileid, int ordinal, int respordinal, int arcid)
         {

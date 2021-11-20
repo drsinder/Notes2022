@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Components;
 using Notes2022.RCL;
+using System.Threading.Tasks;
 
-namespace Notes2022.Client.Shared
+namespace Notes2022Preview.Shared
 {
     public partial class LoginDisplay
     {

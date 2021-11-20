@@ -26,31 +26,35 @@ using Blazored.Modal;
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Notes2022.RCL;
 using Notes2022.RCL.User.Dialogs;
 using Notes2022.Shared;
 using Syncfusion.Blazor.Navigations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Json;
+using System.Threading.Tasks;
 
-namespace Notes2022.RCL.User.Menus
+namespace Notes2022Preview.Shared
 {
-    public partial class NavMenu
+    public partial class NavMenuY
     {
         [CascadingParameter] public IModalService Modal { get; set; }
-
-        [Parameter] public bool IsPreview { get; set; } = false;
 
         protected static List<MenuItem> menuItemsTop { get; set; }
         protected SfMenu<MenuItem> topMenu { get; set; }
 
         private bool collapseNavMenu = true;
 
-        private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+        //private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
         [Inject] HttpClient Http { get; set; }
         [Inject] AuthenticationStateProvider AuthProv { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
         [Inject] Blazored.SessionStorage.ISessionStorageService sessionStorage { get; set; }
-        public NavMenu()
+        public NavMenuY()
         {
         }
 
@@ -74,10 +78,6 @@ namespace Notes2022.RCL.User.Menus
 
             bool isAdmin = false;
             bool isUser = false;
-
-            if (IsPreview)
-                goto IsPreview;
-
             AuthenticationState authstate = await AuthProv.GetAuthenticationStateAsync();
             if (authstate.User.Identity.IsAuthenticated)
             {
@@ -127,8 +127,6 @@ namespace Notes2022.RCL.User.Menus
                 }
 
             }
-
-            IsPreview:
 
             menuItemsTop = new List<MenuItem>();
             MenuItem item;

@@ -11,10 +11,10 @@
 		<EnableDefaultCssItems>false</EnableDefaultCssItems>
 
 		<!-- Display name -->
-		<ApplicationTitle>Notes2022Preview</ApplicationTitle>
+		<ApplicationTitle>Notes 2022 Preview</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.Notes2022Preview</ApplicationId>
+		<ApplicationId>com.drsinder.Notes2022Preview</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationVersion>1</ApplicationVersion>
@@ -61,7 +61,25 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="IdentityModel" Version="5.2.0" />
+	  <PackageReference Include="IdentityModel.OidcClient" Version="5.0.0-preview.2" />
+	  <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.0.0.30" />
+	  <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\..\RCL\Notes2022.RCL\Notes2022.RCL.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Data\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="wwwroot\favicon.ico">
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
 	</ItemGroup>
 
 </Project>
