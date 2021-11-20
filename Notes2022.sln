@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notes2022.RCL", "Notes2022\RCL\Notes2022.RCL\Notes2022.RCL.csproj", "{CC1FE3C6-4110-4A9A-B10D-F1011A396DF5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes2022Preview", "Notes2022\Preview\Notes2022Preview\Notes2022Preview.csproj", "{A98151EC-6586-457D-ABDA-BF95FA8D803D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,11 @@ Global
 		{CC1FE3C6-4110-4A9A-B10D-F1011A396DF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC1FE3C6-4110-4A9A-B10D-F1011A396DF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC1FE3C6-4110-4A9A-B10D-F1011A396DF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A98151EC-6586-457D-ABDA-BF95FA8D803D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A98151EC-6586-457D-ABDA-BF95FA8D803D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A98151EC-6586-457D-ABDA-BF95FA8D803D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A98151EC-6586-457D-ABDA-BF95FA8D803D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A98151EC-6586-457D-ABDA-BF95FA8D803D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
