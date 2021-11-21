@@ -581,11 +581,7 @@ namespace Notes2022.RCL.User.Panels
             Modal.Show<MessageBox>("", parameters);
         }
 
-        System.Timers.Timer myTimer { get; set; }
-
         private IJSObjectReference? module;
-
-        int count = 0;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -605,36 +601,13 @@ namespace Notes2022.RCL.User.Panels
                     await module.InvokeVoidAsync("doPrism", "x");
                 }
 
-                //if (count < 5)
-                //{
-                //    myTimer = new System.Timers.Timer();
-                //    myTimer.Interval = 400;
-                //    myTimer.Elapsed += Prism;
-                //    myTimer.Start();
-                //}
             }
             else
             {
-                count = 0;
-
                 module = await JS.InvokeAsync<IJSObjectReference>("import",
-                    "./prism.js");
+                    "./prism.min.js");
             }
-
-            count++;
         }
-
-        //protected void Prism(object? sender, ElapsedEventArgs e)
-        //{
-        //    myTimer.Stop();
-        //    myTimer.Elapsed -= Prism;
-        //    myTimer = null;
-        //    if (true || !Navigation.BaseUri.Contains("localhost"))
-        //    {
-        //        module.InvokeVoidAsync("Prism.highlightAll");
-        //        StateHasChanged();
-        //    }
-        //}
 
         async ValueTask IAsyncDisposable.DisposeAsync()
         {

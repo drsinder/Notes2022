@@ -10,6 +10,10 @@ var _self = (typeof window !== 'undefined')
 			: {}   // if in node js
 	);
 
+export function doPrism(x) {
+		Prism.highlightAll();
+}
+
 /**
  * Prism: Lightweight, robust, elegant syntax highlighting
  *
