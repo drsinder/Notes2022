@@ -75,10 +75,4 @@
     <ProjectReference Include="..\Shared\Notes2022.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Update="wwwroot\prism.js">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
 </Project>
