@@ -1,43 +1,21 @@
-﻿using Blazored.SessionStorage;
-using Microsoft.AspNetCore.Components.WebView.Maui;
+﻿using Microsoft.AspNetCore.Components.WebView.Maui;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls.Compatibility;
 using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Hosting;
 //using Microsoft.Maui.Essentials;
 using Microsoft.Maui.LifecycleEvents;
-
-/* Unmerged change from project 'Notes2022Preview (net6.0-ios)'
-Before:
 using System;
 using System.Net.Http;
-After:
-using Notes2022.RCL;
-*/
-
-/* Unmerged change from project 'Notes2022Preview (net6.0-windows10.0.19041)'
-Before:
-using System;
-using System.Net.Http;
-After:
-using Notes2022.RCL;
-*/
-
-/* Unmerged change from project 'Notes2022Preview (net6.0-maccatalyst)'
-Before:
-using System;
-using System.Net.Http;
-After:
-using Notes2022.RCL;
-*/
-using Notes2022.RCL;
-using Notes2022.Shared;
-using Syncfusion.Blazor;
 using Syncfusion.Licensing;
-using System;
+using Syncfusion.Blazor;
+using Blazored.SessionStorage;
+using Notes2022.RCL;
 using System.Collections.Generic;
-using System.Net.Http;
+using Notes2022.Shared;
 
 namespace Notes2022Preview
 {
@@ -52,27 +30,27 @@ namespace Notes2022Preview
             var builder = MauiApp.CreateBuilder();
 
 #if WINDOWS
-            Microsoft.Maui.Essentials.Platform.MapServiceToken =
-                "RJHqIE53Onrqons5CNOx~FrDr3XhjDTyEXEjng-CRoA~Aj69MhNManYUKxo6QcwZ0wmXBtyva0zwuHB04rFYAPf7qqGJ5cHb03RCDw1jIW8l";
+			Microsoft.Maui.Essentials.Platform.MapServiceToken =
+				"RJHqIE53Onrqons5CNOx~FrDr3XhjDTyEXEjng-CRoA~Aj69MhNManYUKxo6QcwZ0wmXBtyva0zwuHB04rFYAPf7qqGJ5cHb03RCDw1jIW8l";
 #endif
 
             builder
                 .ConfigureLifecycleEvents(lifecycle =>
                 {
 #if __IOS__
-                    lifecycle
-                        .AddiOS(iOS => iOS
-                            .OpenUrl((app, url, options) =>
-                                Microsoft.Maui.Essentials.Platform.OpenUrl(app, url, options))
-                            .ContinueUserActivity((application, userActivity, completionHandler) =>
-                                Microsoft.Maui.Essentials.Platform.ContinueUserActivity(application, userActivity, completionHandler))
-                            .PerformActionForShortcutItem((application, shortcutItem, completionHandler) =>
-                                Microsoft.Maui.Essentials.Platform.PerformActionForShortcutItem(application, shortcutItem, completionHandler)));
+					lifecycle
+						.AddiOS(iOS => iOS
+							.OpenUrl((app, url, options) =>
+								Microsoft.Maui.Essentials.Platform.OpenUrl(app, url, options))
+							.ContinueUserActivity((application, userActivity, completionHandler) =>
+								Microsoft.Maui.Essentials.Platform.ContinueUserActivity(application, userActivity, completionHandler))
+							.PerformActionForShortcutItem((application, shortcutItem, completionHandler) =>
+								Microsoft.Maui.Essentials.Platform.PerformActionForShortcutItem(application, shortcutItem, completionHandler)));
 #elif WINDOWS
-                    lifecycle
-                        .AddWindows(windows => windows
-                            .OnLaunched((app, e) =>
-                                Microsoft.Maui.Essentials.Platform.OnLaunched(e)));
+					lifecycle
+						.AddWindows(windows => windows
+							.OnLaunched((app, e) =>
+								Microsoft.Maui.Essentials.Platform.OnLaunched(e)));
 #endif
                 })
                 .UseMauiApp<App>();

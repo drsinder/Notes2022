@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Notes2022.Shared;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace Notes2022Preview.Pages.User

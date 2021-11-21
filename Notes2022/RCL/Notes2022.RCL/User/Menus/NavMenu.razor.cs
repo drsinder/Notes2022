@@ -29,6 +29,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Notes2022.RCL.User.Dialogs;
 using Notes2022.Shared;
 using Syncfusion.Blazor.Navigations;
+using System.Net.Http.Json;
 
 namespace Notes2022.RCL.User.Menus
 {
@@ -127,7 +128,7 @@ namespace Notes2022.RCL.User.Menus
 
             }
 
-        IsPreview:
+            IsPreview:
 
             menuItemsTop = new List<MenuItem>();
             MenuItem item;

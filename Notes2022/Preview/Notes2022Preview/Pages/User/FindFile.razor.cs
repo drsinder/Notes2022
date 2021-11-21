@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Notes2022.Shared;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace Notes2022Preview.Pages.User

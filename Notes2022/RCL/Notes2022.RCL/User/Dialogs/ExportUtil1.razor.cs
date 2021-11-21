@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Notes2022.Shared;
+using System.Net.Http.Json;
 using System.Text;
 
 namespace Notes2022.RCL.User.Dialogs

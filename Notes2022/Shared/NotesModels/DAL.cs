@@ -129,7 +129,7 @@ namespace Notes2022.Shared
             await Http.PutAsJsonAsync<LinkedFile>("api/Linked", linked);
         }
 
-        public static async Task DeleteLinked(HttpClient Http, int Id)
+        public static async Task DeleteLinked(HttpClient Http , int Id)
         {
             await Http.DeleteAsync("api/Linked/" + Id);
         }
@@ -138,7 +138,7 @@ namespace Notes2022.Shared
 
         public static async Task<NoteAccess> GetMyAccess(HttpClient Http, int FileId)
         {
-            return await Http.GetFromJsonAsync<NoteAccess>("api/myaccess/" + FileId);
+           return  await Http.GetFromJsonAsync<NoteAccess>("api/myaccess/" + FileId);
         }
 
         #region NewNote
