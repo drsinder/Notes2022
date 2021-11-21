@@ -33,6 +33,7 @@ using Notes2022.Shared;
 using Syncfusion.Blazor.Inputs;
 using System.Net.Http.Json;
 using System.Text;
+using System.Timers;
 
 namespace Notes2022.RCL.User.Panels
 {
@@ -83,7 +84,7 @@ namespace Notes2022.RCL.User.Panels
 
         [Inject] HttpClient Http { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
-        [Inject] IJSRuntime JSRuntime { get; set; }
+        [Inject] IJSRuntime JS { get; set; }
         [Inject] Blazored.SessionStorage.ISessionStorageService sessionStorage { get; set; }
 
         public NotePanel()
@@ -419,7 +420,7 @@ namespace Notes2022.RCL.User.Panels
                             else if (IsMinus)
                                 noteNum = model.header.ResponseOrdinal - noteNum;
 
-                            long headerId2 = MyNoteIndex.GetNoteHeaderId(model.header.NoteOrdinal, noteNum); 
+                            long headerId2 = MyNoteIndex.GetNoteHeaderId(model.header.NoteOrdinal, noteNum);
                             if (headerId2 != 0)
                             {
                                 NoteId = headerId2;
@@ -430,7 +431,7 @@ namespace Notes2022.RCL.User.Panels
                                 ShowMessage("Could not find note : " + NavString);
                             return;
                         }
-                        long headerId = MyNoteIndex.GetNoteHeaderId(noteNum, 0); 
+                        long headerId = MyNoteIndex.GetNoteHeaderId(noteNum, 0);
                         if (headerId != 0)
                         {
                             NoteId = headerId;
@@ -463,7 +464,7 @@ namespace Notes2022.RCL.User.Panels
                                 noteNum = model.header.NoteOrdinal + noteNum;
                             else if (IsMinus)
                                 noteNum = model.header.NoteOrdinal - noteNum;
-                            long headerId2 = MyNoteIndex.GetNoteHeaderId(noteNum, 0); 
+                            long headerId2 = MyNoteIndex.GetNoteHeaderId(noteNum, 0);
                             if (headerId2 != 0)
                             {
                                 NoteId = headerId2;
@@ -474,7 +475,7 @@ namespace Notes2022.RCL.User.Panels
                                 ShowMessage("Could not find note : " + NavString);
 
                         }
-                        long headerId = MyNoteIndex.GetNoteHeaderId(noteNum, noteRespOrd);  
+                        long headerId = MyNoteIndex.GetNoteHeaderId(noteNum, noteRespOrd);
                         if (headerId != 0)
                         {
                             NoteId = headerId;
@@ -582,6 +583,10 @@ namespace Notes2022.RCL.User.Panels
 
         System.Timers.Timer myTimer { get; set; }
 
+        private IJSObjectReference? module;
+
+        int count = 0;
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
@@ -589,15 +594,53 @@ namespace Notes2022.RCL.User.Panels
             if (!firstRender)
             {   // have to wait a bit before putting focus in textbox
 
-                if (sfTextBox != null)
+                if (sfTextBox is not null)
                 {
                     await Task.Delay(300);
                     await sfTextBox.FocusAsync();
                 }
+
+                if (module is not null)
+                { 
+                    await module.InvokeVoidAsync("doPrism", "x");
+                }
+
+                //if (count < 5)
+                //{
+                //    myTimer = new System.Timers.Timer();
+                //    myTimer.Interval = 400;
+                //    myTimer.Elapsed += Prism;
+                //    myTimer.Start();
+                //}
             }
-            if (!Navigation.BaseUri.Contains("localhost"))
+            else
             {
-                await JSRuntime.InvokeVoidAsync("Prism.highlightAll");
+                count = 0;
+
+                module = await JS.InvokeAsync<IJSObjectReference>("import",
+                    "./prism.js");
+            }
+
+            count++;
+        }
+
+        //protected void Prism(object? sender, ElapsedEventArgs e)
+        //{
+        //    myTimer.Stop();
+        //    myTimer.Elapsed -= Prism;
+        //    myTimer = null;
+        //    if (true || !Navigation.BaseUri.Contains("localhost"))
+        //    {
+        //        module.InvokeVoidAsync("Prism.highlightAll");
+        //        StateHasChanged();
+        //    }
+        //}
+
+        async ValueTask IAsyncDisposable.DisposeAsync()
+        {
+            if (module is not null)
+            {
+                await module.DisposeAsync();
             }
         }
     }
