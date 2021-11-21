@@ -52,6 +52,11 @@ namespace Notes2022.RCL.Admin.Dialogs
                 return;
             }
 
+            if (!appUri.EndsWith("/"))
+            {
+                appUri += "/";
+            }
+
             bool result = await DAL.LinkTest(Http, appUri);
 
             if (!result)
