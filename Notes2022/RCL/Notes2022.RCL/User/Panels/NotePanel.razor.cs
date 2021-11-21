@@ -31,9 +31,7 @@ using Notes2022.RCL.User.Dialogs;
 using Notes2022.RCL.User.Menus;
 using Notes2022.Shared;
 using Syncfusion.Blazor.Inputs;
-using System.Net.Http.Json;
 using System.Text;
-using System.Timers;
 
 namespace Notes2022.RCL.User.Panels
 {
@@ -601,7 +599,7 @@ namespace Notes2022.RCL.User.Panels
                 }
 
                 if (module is not null)
-                { 
+                {
                     await module.InvokeVoidAsync("doPrism", "x");
                 }
 

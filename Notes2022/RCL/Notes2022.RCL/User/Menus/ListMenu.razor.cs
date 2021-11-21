@@ -26,7 +26,6 @@ using Microsoft.AspNetCore.Components;
 using Notes2022.RCL.User.Dialogs;
 using Notes2022.Shared;
 using Syncfusion.Blazor.Navigations;
-using System.Net.Http.Json;
 using System.Text;
 
 namespace Notes2022.RCL.User.Menus
@@ -220,7 +219,7 @@ namespace Notes2022.RCL.User.Menus
             sb.Append(currentHeader.NoteSubject);
             sb.Append("<br />Author: ");
             sb.Append(currentHeader.AuthorName + "    ");
-            sb.Append((Globals.LocalTimeBlazor(currentHeader.LastEdited).ToLongDateString()) + " " 
+            sb.Append((Globals.LocalTimeBlazor(currentHeader.LastEdited).ToLongDateString()) + " "
                 + (Globals.LocalTimeBlazor(currentHeader.LastEdited).ToShortTimeString()));
 
             NoteContent currentContent = await DAL.GetExport2(Http, currentHeader.Id.ToString());

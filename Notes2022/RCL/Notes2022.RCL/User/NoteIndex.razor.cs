@@ -31,7 +31,6 @@ using Notes2022.RCL.User.Menus;
 using Notes2022.Shared;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using System.Net.Http.Json;
 using SearchOption = Notes2022.Shared.SearchOption;
 
 namespace Notes2022.RCL.User
@@ -116,7 +115,7 @@ namespace Notes2022.RCL.User
         public long GetNextBaseNote(NoteHeader oh)
         {
             long newId = 0;
-            NoteHeader nh =Model.Notes.SingleOrDefault(p => p.NoteOrdinal == oh.NoteOrdinal + 1 && p.ResponseOrdinal == 0 && p.Version == 0);
+            NoteHeader nh = Model.Notes.SingleOrDefault(p => p.NoteOrdinal == oh.NoteOrdinal + 1 && p.ResponseOrdinal == 0 && p.Version == 0);
             if (nh != null)
                 newId = nh.Id;
             return newId;
@@ -464,7 +463,7 @@ namespace Notes2022.RCL.User
                         }
                         else
                         {
-                            long headerId = GetNoteHeaderId(noteNum, 0); 
+                            long headerId = GetNoteHeaderId(noteNum, 0);
                             if (headerId != 0)
                             {
                                 CurrentNoteId = headerId;

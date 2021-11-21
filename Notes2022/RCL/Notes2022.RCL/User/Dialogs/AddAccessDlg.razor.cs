@@ -1,7 +1,6 @@
 ﻿using Blazored.Modal;
 using Microsoft.AspNetCore.Components;
 using Notes2022.Shared;
-using System.Net.Http.Json;
 using System.Timers;
 
 
