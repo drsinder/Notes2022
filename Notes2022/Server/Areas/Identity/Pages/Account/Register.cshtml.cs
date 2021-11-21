@@ -144,7 +144,7 @@ namespace Notes2022.Server.Areas.Identity.Pages.Account
                     var userId = await _userManager.GetUserIdAsync(user);
 
                     await _userManager.AddToRoleAsync(user, "User");
-                    if (Input.Email == "sinder@illinois.edu")
+                    if (Input.Email == Globals.PrimeAdminEmail)
                         await _userManager.AddToRoleAsync(user, "Admin");
 
 
