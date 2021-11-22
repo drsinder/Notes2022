@@ -30,7 +30,7 @@ namespace Notes2022.RCL.User.Dialogs
         {
             FileName = model.NoteFile.NoteFileName + ".json";
 
-            if (model.Marks != null && model.Marks.Count > 0)
+            if (model.Marks is not null && model.Marks.Count > 0)
                 marked = true;
             else
                 marked = false;

@@ -22,14 +22,14 @@ namespace Notes2022.RCL.User.Comp
 
         protected override async Task OnParametersSetAsync()
         {
-            if (CurrentTracker != null)
+            if (CurrentTracker is not null)
             {
                 befores = Trackers.Where(p => p.Ordinal < CurrentTracker.Ordinal).OrderByDescending(p => p.Ordinal).ToList();
-                if (befores != null && befores.Count > 0)
+                if (befores is not null && befores.Count > 0)
                     before = befores.First();
 
                 afters = Trackers.Where(p => p.Ordinal > CurrentTracker.Ordinal).OrderBy(p => p.Ordinal).ToList();
-                if (afters != null && afters.Count > 0)
+                if (afters is not null && afters.Count > 0)
                     after = afters.First();
             }
         }
@@ -40,7 +40,7 @@ namespace Notes2022.RCL.User.Comp
             switch (args.Item.Text)
             {
                 case "Up":
-                    if (before == null)
+                    if (before is null)
                         return;
 
                     await Swap(before, CurrentTracker);
@@ -48,20 +48,20 @@ namespace Notes2022.RCL.User.Comp
                     break;
 
                 case "Down":
-                    if (after == null)
+                    if (after is null)
                         return;
                     await Swap(after, CurrentTracker);
 
                     break;
 
                 case "Top":
-                    if (before == null)
+                    if (before is null)
                         return;
                     await Swap(befores[befores.Count - 1], CurrentTracker);
                     break;
 
                 case "Bottom":
-                    if (after == null)
+                    if (after is null)
                         return;
                     await Swap(afters[afters.Count - 1], CurrentTracker);
 

@@ -63,7 +63,7 @@ namespace Notes2022.Server.Controllers
         [HttpPost]
         public async Task Post(TextViewModel tvm)
         {
-            if (tvm.MyNote == null)
+            if (tvm.MyNote is null)
                 return;
 
             string userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -111,7 +111,7 @@ namespace Notes2022.Server.Controllers
         [HttpPut]
         public async Task Put(TextViewModel tvm)
         {
-            if (tvm.MyNote == null)
+            if (tvm.MyNote is null)
                 return;
 
             // get old Noteheader
@@ -143,7 +143,7 @@ namespace Notes2022.Server.Controllers
                 .Where(p => p.NoteFileId == myNote.NoteFileId)
                 .ToListAsync();
 
-            if (subs == null || subs.Count == 0)
+            if (subs is null || subs.Count == 0)
                 return;
 
             ForwardViewModel fv = new ForwardViewModel();

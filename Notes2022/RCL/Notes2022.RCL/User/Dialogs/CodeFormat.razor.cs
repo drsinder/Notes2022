@@ -53,7 +53,7 @@ namespace Notes2022.RCL.User.Dialogs
         {
             string code;
 
-            if (DropVal != null && !string.IsNullOrEmpty(DropVal))
+            if (DropVal is not null && !string.IsNullOrEmpty(DropVal))
                 code = CFormats.Find(p => p.Name == DropVal).Code;
             else
                 code = "none";

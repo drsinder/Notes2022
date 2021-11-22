@@ -260,7 +260,7 @@ namespace Notes2022.Server
 
             // deal with tags
 
-            if (tags != null && tags.Length > 1)
+            if (tags is not null && tags.Length > 1)
             {
                 var theTags = Tags.StringToList(tags, newHeader.Id, newHeader.NoteFileId, newHeader.ArchiveId);
 
@@ -275,7 +275,7 @@ namespace Notes2022.Server
 
             List<LinkedFile> links = await db.LinkedFile.Where(p => p.HomeFileId == newHeader.NoteFileId && p.SendTo).ToListAsync();
 
-            if (linked || links == null || links.Count < 1)
+            if (linked || links is null || links.Count < 1)
             {
 
             }
@@ -353,7 +353,7 @@ namespace Notes2022.Server
 
             List<LinkedFile> links = await db.LinkedFile.Where(p => p.HomeFileId == nh.NoteFileId).ToListAsync();
 
-            if (links == null || links.Count < 1)
+            if (links is null || links.Count < 1)
             {
 
             }
@@ -429,7 +429,7 @@ namespace Notes2022.Server
 
             //// deal with tags
 
-            //if (tags != null && tags.Length > 1)
+            //if (tags is not null && tags.Length > 1)
             //{
             //    var theTags = Tags.StringToList(tags, eHeader.Id, eHeader.NoteFileId, eHeader.ArchiveId);
 
@@ -444,7 +444,7 @@ namespace Notes2022.Server
 
             //List<LinkedFile> links = await db.LinkedFile.Where(p => p.HomeFileId == eHeader.NoteFileId && p.SendTo).ToListAsync();
 
-            //if (links == null || links.Count < 1)
+            //if (links is null || links.Count < 1)
             //{
 
             //}
@@ -478,7 +478,7 @@ namespace Notes2022.Server
                 .Where(p => p.NoteFileId == nfid && p.ArchiveId == ArcId && p.NoteOrdinal == noteord && p.ResponseOrdinal == respOrd)
                 .FirstAsync();
 
-            if (header == null)
+            if (header is null)
                 return null;
 
             var content = await db.NoteContent
@@ -632,7 +632,7 @@ namespace Notes2022.Server
         {
             IOrderedQueryable<NoteHeader> bnhq = GetBaseNoteHeaderByIdRev(db, noteFileId, arcId);
 
-            if (bnhq == null || !bnhq.Any())
+            if (bnhq is null || !bnhq.Any())
                 return 1;
 
             NoteHeader bnh = await bnhq.FirstAsync();
@@ -737,7 +737,7 @@ namespace Notes2022.Server
                 .Where(p => p.NoteFileId == nfid && p.ArchiveId == arcId && p.NoteOrdinal == noteord && p.ResponseOrdinal == respOrd)
                 .FirstAsync();
 
-            if (header == null)
+            if (header is null)
                 return null;
 
             var tags = await db.Tags

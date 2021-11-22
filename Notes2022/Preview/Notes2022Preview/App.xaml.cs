@@ -53,7 +53,7 @@ namespace Notes2022Preview
 		//			_ => default(Page)
 		//		};
 
-		//		if (page != null)
+		//		if (page is not null)
 		//		{
 		//			await Application.Current.MainPage.Navigation.PopToRootAsync();
 		//			await Application.Current.MainPage.Navigation.PushAsync(page);

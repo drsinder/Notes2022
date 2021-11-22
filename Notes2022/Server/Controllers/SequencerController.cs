@@ -60,7 +60,7 @@ namespace Notes2022.Server.Controllers
 
             List<Sequencer> mine = await _db.Sequencer.Where(p => p.UserId == me.Id).OrderBy(p => p.Ordinal).ThenBy(p => p.LastTime).ToListAsync();
 
-            if (mine == null)
+            if (mine is null)
                 mine = new List<Sequencer>();
 
             List<Sequencer> avail = new List<Sequencer>();
@@ -83,7 +83,7 @@ namespace Notes2022.Server.Controllers
             List<Sequencer> mine = await _db.Sequencer.Where(p => p.UserId == me.Id).OrderByDescending(p => p.Ordinal).ToListAsync();
 
             int ord;
-            if (mine == null || mine.Count == 0)
+            if (mine is null || mine.Count == 0)
             {
                 ord = 1;
             }
@@ -112,7 +112,7 @@ namespace Notes2022.Server.Controllers
             string userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ApplicationUser me = await _userManager.FindByIdAsync(userId);
             Sequencer mine = await _db.Sequencer.SingleOrDefaultAsync(p => p.UserId == me.Id && p.NoteFileId == fileId);
-            if (mine == null)
+            if (mine is null)
                 return;
 
             _db.Sequencer.Remove(mine);

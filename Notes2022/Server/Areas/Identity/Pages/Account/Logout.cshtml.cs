@@ -26,7 +26,7 @@ namespace Notes2022.Server.Areas.Identity.Pages.Account
             cookies.Delete("IsAdmin");
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            if (returnUrl != null)
+            if (returnUrl is not null)
             {
                 return LocalRedirect(returnUrl);
             }

@@ -70,7 +70,7 @@ namespace Notes2022.Server.Controllers
             NoteAccess work = await _db.NoteAccess.Where(p => p.NoteFileId == item.NoteFileId
                 && p.ArchiveId == item.ArchiveId && p.UserID == item.UserID)
                 .FirstOrDefaultAsync();
-            if (work == null)
+            if (work is null)
                 return;
 
             work.ReadAccess = item.ReadAccess;
@@ -98,7 +98,7 @@ namespace Notes2022.Server.Controllers
             NoteAccess work = await _db.NoteAccess.Where(p => p.NoteFileId == item.NoteFileId
                 && p.ArchiveId == item.ArchiveId && p.UserID == item.UserID)
                 .FirstOrDefaultAsync();
-            if (work != null)
+            if (work is not null)
                 return;     // already exists
 
             if (item.UserID == Globals.AccessOtherId())
@@ -140,7 +140,7 @@ namespace Notes2022.Server.Controllers
             NoteAccess work = await _db.NoteAccess.Where(p => p.NoteFileId == fid
                 && p.ArchiveId == aid && p.UserID == uid)
                 .FirstOrDefaultAsync();
-            if (work == null)
+            if (work is null)
                 return;
 
             _db.NoteAccess.Remove(work);

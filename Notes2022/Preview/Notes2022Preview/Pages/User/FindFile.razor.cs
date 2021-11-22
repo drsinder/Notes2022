@@ -32,7 +32,7 @@ namespace Notes2022Preview.Pages.User
                 hpModel = await DAL.GetHomePageData(Http);
 
                 NoteFile nf = hpModel.NoteFiles.SingleOrDefault(p => p.NoteFileName == filename);
-                if (nf != null)
+                if (nf is not null)
                 {
                     Navigation.NavigateTo("noteindex/" + nf.Id);
                 }

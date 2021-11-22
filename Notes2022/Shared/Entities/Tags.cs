@@ -54,7 +54,7 @@ namespace Notes2022.Shared
         public static string ListToString(List<Tags> list)
         {
             string s = string.Empty;
-            if (list == null || list.Count < 1)
+            if (list is null || list.Count < 1)
                 return s;
 
             foreach (Tags tag in list)
@@ -74,7 +74,7 @@ namespace Notes2022.Shared
 
             string[] tags = s.Split(',', ';', ' ');
 
-            if (tags == null || tags.Length < 1)
+            if (tags is null || tags.Length < 1)
                 return list;
 
             foreach (string t in tags)
@@ -95,7 +95,7 @@ namespace Notes2022.Shared
 
             string[] tags = s.Split(',', ';', ' ');
 
-            if (tags == null || tags.Length < 1)
+            if (tags is null || tags.Length < 1)
                 return list;
 
             foreach (string t in tags)
@@ -109,7 +109,7 @@ namespace Notes2022.Shared
 
         public static List<Tags> CloneForLink(List<Tags> inp)
         {
-            if (inp == null)
+            if (inp is null)
                 return null;
 
             List<Tags> outp = new List<Tags>();

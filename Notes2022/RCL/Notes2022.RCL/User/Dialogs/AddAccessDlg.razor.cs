@@ -31,7 +31,7 @@ namespace Notes2022.RCL.User.Dialogs
         protected override void OnParametersSet()
         {
             selectedUserId = "none";
-            //if (NoteFile == null)
+            //if (NoteFile is null)
             //    Cancel();
         }
 

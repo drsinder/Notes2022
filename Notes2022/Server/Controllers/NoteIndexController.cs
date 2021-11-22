@@ -81,7 +81,7 @@ namespace Notes2022.Server.Controllers
             }
 
             List<LinkedFile> linklist = await _db.LinkedFile.Where(p => p.HomeFileId == id).ToListAsync();
-            if (linklist != null && linklist.Count > 0)
+            if (linklist is not null && linklist.Count > 0)
                 idxModel.linkedText = " (Linked)";
 
             idxModel.AllNotes = await NoteDataManager.GetAllHeaders(_db, id, arcId);

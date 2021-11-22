@@ -89,7 +89,7 @@ namespace Notes2022.Server.Controllers
         {
             NoteFile file = _context.NoteFile.SingleOrDefault(p => p.NoteFileName == inputModel.linkedfile);
 
-            if (file == null)
+            if (file is null)
                 return "Target file does not exist";
 
             // check for acceptance
@@ -112,7 +112,7 @@ namespace Notes2022.Server.Controllers
             NoteHeader nh = await NoteDataManager.CreateNote(_context, inputModel.header,
                 inputModel.content.NoteBody, tags, inputModel.content.DirectorMessage, true, true);
 
-            if (nh == null)
+            if (nh is null)
             {
 
                 return "Remote note create failed";
@@ -135,7 +135,7 @@ namespace Notes2022.Server.Controllers
         public async Task<string> EditLinkResponse(LinkCreateEModel inputModel)
         {
             NoteFile file = _context.NoteFile.SingleOrDefault(p => p.NoteFileName == inputModel.linkedfile);
-            if (file == null)
+            if (file is null)
                 return "Target file does not exist";
 
             // check for acceptance
@@ -147,7 +147,7 @@ namespace Notes2022.Server.Controllers
 
             NoteHeader extant = _context.NoteHeader.SingleOrDefault(p => p.LinkGuid == inputModel.myGuid);
 
-            if (extant == null) // || extant.NoteFileId != file.Id)
+            if (extant is null) // || extant.NoteFileId != file.Id)
                 return "Could not find note";
 
             inputModel.header.NoteOrdinal = extant.NoteOrdinal;
@@ -166,7 +166,7 @@ namespace Notes2022.Server.Controllers
             NoteHeader nh = await NoteDataManager.EditNote(_context, null, inputModel.header,
                 inputModel.content, inputModel.tags);
 
-            if (nh == null)
+            if (nh is null)
             {
 
                 return "Remote response edit failed";
@@ -183,7 +183,7 @@ namespace Notes2022.Server.Controllers
 
                 NoteHeader nh = _context.NoteHeader.SingleOrDefault(p => p.LinkGuid == guid);
 
-                if (nh == null || nh.LinkGuid != guid)
+                if (nh is null || nh.LinkGuid != guid)
                     return "No note to delete";
 
                 try
@@ -191,7 +191,7 @@ namespace Notes2022.Server.Controllers
                     // check for acceptance
 
                     NoteFile file = _context.NoteFile.SingleOrDefault(p => p.Id == nh.NoteFileId);
-                    if (file == null)
+                    if (file is null)
                         return "Target file does not exist";
 
                     if (!await AccessManager.TestLinkAccess(_context, file, string.Empty))

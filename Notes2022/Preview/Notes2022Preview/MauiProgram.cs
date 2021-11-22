@@ -91,7 +91,7 @@ namespace Notes2022Preview
 
             builder.Services.AddBlazorWebView();
 
-            if (Globals.UserDataList == null)
+            if (Globals.UserDataList is null)
             {
                 Globals.UserDataList = new List<UserData>();
                 Globals.StartupDateTime = DateTime.Now.ToUniversalTime();

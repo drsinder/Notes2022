@@ -15,7 +15,7 @@ namespace Notes2022.RCL.User.Dialogs
 
         private async Task Forwardit()
         {
-            if (ForwardView.ToEmail == null || ForwardView.ToEmail.Length < 8 || !ForwardView.ToEmail.Contains("@") || !ForwardView.ToEmail.Contains("."))
+            if (ForwardView.ToEmail is null || ForwardView.ToEmail.Length < 8 || !ForwardView.ToEmail.Contains("@") || !ForwardView.ToEmail.Contains("."))
                 return;
             await DAL.PostForward(Http, ForwardView);
             await ModalInstance.CancelAsync();

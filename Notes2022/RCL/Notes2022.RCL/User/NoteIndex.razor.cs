@@ -117,7 +117,7 @@ namespace Notes2022.RCL.User
         {
             long newId = 0;
             NoteHeader nh =Model.Notes.SingleOrDefault(p => p.NoteOrdinal == oh.NoteOrdinal + 1 && p.ResponseOrdinal == 0 && p.Version == 0);
-            if (nh != null)
+            if (nh is not null)
                 newId = nh.Id;
             return newId;
         }
@@ -127,9 +127,9 @@ namespace Notes2022.RCL.User
             long newId = 0;
             NoteHeader nh = null;
             nh = Model.AllNotes.SingleOrDefault(p => p.NoteOrdinal == oh.NoteOrdinal && p.ResponseOrdinal == (oh.ResponseOrdinal + 1) && p.Version == 0);
-            if (nh == null)
+            if (nh is null)
                 nh = Model.AllNotes.SingleOrDefault(p => p.NoteOrdinal == (oh.NoteOrdinal + 1) && p.ResponseOrdinal == 0 && p.Version == 0);
-            if (nh != null)
+            if (nh is not null)
                 newId = nh.Id;
             return newId;
         }
@@ -138,7 +138,7 @@ namespace Notes2022.RCL.User
         {
             long newId = 0;
             NoteHeader nh = Model.Notes.SingleOrDefault(p => p.NoteOrdinal == oh.NoteOrdinal - 1 && p.ResponseOrdinal == 0 && p.Version == 0);
-            if (nh != null)
+            if (nh is not null)
                 newId = nh.Id;
             return newId;
         }
@@ -148,9 +148,9 @@ namespace Notes2022.RCL.User
             long newId = 0;
             NoteHeader nh = null;
             nh = Model.AllNotes.SingleOrDefault(p => p.NoteOrdinal == oh.NoteOrdinal && p.ResponseOrdinal == oh.ResponseOrdinal - 1 && p.Version == 0);
-            if (nh == null)
+            if (nh is null)
                 nh = Model.Notes.SingleOrDefault(p => p.NoteOrdinal == oh.NoteOrdinal - 1 && p.ResponseOrdinal == 0 && p.Version == 0);
-            if (nh != null)
+            if (nh is not null)
                 newId = nh.Id;
             return newId;
         }
@@ -172,15 +172,15 @@ namespace Notes2022.RCL.User
             NoteHeader nh;
 
             nh = Model.AllNotes.SingleOrDefault(p => p.NoteOrdinal == noteOrd && p.ResponseOrdinal == respOrd && p.Version == 0);
-            if (nh == null && respOrd > -1) // try next base note -- special case if noteOrd == 0 and ResponseOrd == 0  ==> get first base note in file
+            if (nh is null && respOrd > -1) // try next base note -- special case if noteOrd == 0 and ResponseOrd == 0  ==> get first base note in file
             {
                 nh = Model.AllNotes.SingleOrDefault(p => p.NoteOrdinal == noteOrd + 1 && p.ResponseOrdinal == 0 && p.Version == 0);
             }
-            else if (nh == null)    // try previous base note
+            else if (nh is null)    // try previous base note
             {
                 nh = Model.AllNotes.SingleOrDefault(p => p.NoteOrdinal == noteOrd - 1 && p.ResponseOrdinal == 0 && p.Version == 0);
             }
-            if (nh != null)
+            if (nh is not null)
                 newId = nh.Id;
 
             return newId;
@@ -314,7 +314,7 @@ namespace Notes2022.RCL.User
         protected async Task StartSeq()
         {
             Sequencer seq = await sessionStorage.GetItemAsync<Sequencer>("SeqItem");
-            if (seq == null)
+            if (seq is null)
                 return;
 
             List<NoteHeader> noteHeaders = Model.AllNotes.FindAll(p => p.LastEdited >= seq.LastTime
@@ -548,7 +548,7 @@ namespace Notes2022.RCL.User
                 if (ExpandAll)
                     await sfGrid1.ExpandAllDetailRowAsync();
 
-                if (sfTextBox != null)
+                if (sfTextBox is not null)
                     await sfTextBox.FocusAsync();
 
                 Tdone = true;

@@ -33,7 +33,7 @@ builder.Services.AddSyncfusionBlazor();
 
 builder.Services.AddBlazoredSessionStorage();
 
-if (Globals.UserDataList == null)
+if (Globals.UserDataList is null)
 {
     Globals.UserDataList = new List<UserData>();
     Globals.StartupDateTime = DateTime.Now.ToUniversalTime();

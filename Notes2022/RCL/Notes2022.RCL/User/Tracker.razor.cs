@@ -48,7 +48,7 @@ namespace Notes2022.RCL.User
             files = new List<NoteFile>();
 
             trackers = await DAL.GetSequencer(Http);
-            if (trackers != null)
+            if (trackers is not null)
             {
                 trackers = trackers.OrderBy(p => p.Ordinal).ToList();
                 foreach (var tracker in trackers)
@@ -58,7 +58,7 @@ namespace Notes2022.RCL.User
             }
             foreach (var s in stuff)
             {
-                if (files.Find(p => p.Id == s.Id) == null)
+                if (files.Find(p => p.Id == s.Id) is null)
                     files.Add(s);
             }
             StateHasChanged();

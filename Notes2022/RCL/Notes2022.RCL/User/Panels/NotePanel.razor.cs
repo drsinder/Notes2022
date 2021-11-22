@@ -210,7 +210,7 @@ namespace Notes2022.RCL.User.Panels
                 sb.Append(currentContent.DirectorMessage);
                 sb.Append("</span>");
             }
-            //if (tags != null && tags.Count > 0)
+            //if (tags is not null && tags.Count > 0)
             //{
             //    sb.Append(" <br /><span>Tags: ");
             //    foreach (Tags tag in tags)

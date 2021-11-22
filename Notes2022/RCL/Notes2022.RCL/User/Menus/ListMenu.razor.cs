@@ -231,7 +231,7 @@ namespace Notes2022.RCL.User.Menus
                 sb.Append(currentContent.DirectorMessage);
                 sb.Append("</span>");
             }
-            //if (tags != null && tags.Count > 0)
+            //if (tags is not null && tags.Count > 0)
             //{
             //    sb.Append(" <br /><span>Tags: ");
             //    foreach (Tags tag in tags)
@@ -254,7 +254,7 @@ namespace Notes2022.RCL.User.Menus
             currentHeader = baseHeader; // set back to base note
 
             NoteHeader next = Model.Notes.SingleOrDefault(p => p.NoteOrdinal == currentHeader.NoteOrdinal + 1);
-            if (next != null)       // still base notes left to print
+            if (next is not null)       // still base notes left to print
             {
                 currentHeader = next;   // set current note and base note
                 baseHeader = next;

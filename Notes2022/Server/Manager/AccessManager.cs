@@ -84,7 +84,7 @@ namespace Notes2022.Server
             try
             {
                 var user = await userManager.FindByNameAsync("readonly@example.com");
-                if (user == null)
+                if (user is null)
                     return true;
 
                 string readonlyId = user.Id;
@@ -115,7 +115,7 @@ namespace Notes2022.Server
             NoteAccess na = await db.NoteAccess
                 .Where(p => p.UserID == userId && p.NoteFileId == fileId && p.ArchiveId == arcId).FirstOrDefaultAsync();
 
-            if (na != null)
+            if (na is not null)
             {
                 if (userId == Globals.GuestId)
                 {
@@ -195,7 +195,7 @@ namespace Notes2022.Server
                         .Where(p => p.RemoteFileName == noteFile.NoteFileName && p.AcceptFrom && p.Secret == secret)
                         .ToListAsync();
                 }
-                if (linkedFiles == null || linkedFiles.Count < 1)
+                if (linkedFiles is null || linkedFiles.Count < 1)
                     return false;
 
                 return true;

@@ -57,10 +57,10 @@ namespace Notes2022.Server.Controllers
 
             model.Message = string.Empty;
             NoteFile hpmf = _db.NoteFile.Where(p => p.NoteFileName == "homepagemessages").FirstOrDefault();
-            if (hpmf != null)
+            if (hpmf is not null)
             {
                 NoteHeader hpmh = _db.NoteHeader.Where(p => p.NoteFileId == hpmf.Id && p.IsDeleted == false).OrderByDescending(p => p.CreateDate).FirstOrDefault();
-                if (hpmh != null)
+                if (hpmh is not null)
                 {
                     model.Message = _db.NoteContent.Where(p => p.NoteHeaderId == hpmh.Id).FirstOrDefault().NoteBody;
                 }
@@ -112,7 +112,7 @@ namespace Notes2022.Server.Controllers
 
             //Globals.GuestId = model.GuestId = "*none*";
             //UserData Gdata = _db.UserData.Where(p => p.DisplayName == "Guest").FirstOrDefault();
-            //if (Gdata != null)
+            //if (Gdata is not null)
             //{
             //    Globals.GuestId = model.GuestId = Gdata.UserId;
 

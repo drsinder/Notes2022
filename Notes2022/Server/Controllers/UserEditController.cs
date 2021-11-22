@@ -62,7 +62,7 @@ namespace Notes2022.Server.Controllers
             {
                 CheckedUser it = new CheckedUser();
                 it.theRole = item;
-                it.isMember = myRoles.Where(p => p == item.Name).FirstOrDefault() != null;
+                it.isMember = myRoles.Where(p => p == item.Name).FirstOrDefault() is not null;
                 myList.Add(it);
             }
 

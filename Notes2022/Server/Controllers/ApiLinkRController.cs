@@ -50,7 +50,7 @@ namespace Notes2022.Server.Controllers
         public async Task<string> CreateLinkResponse(LinkCreateRModel inputModel)
         {
             NoteFile file = _context.NoteFile.SingleOrDefault(p => p.NoteFileName == inputModel.linkedfile);
-            if (file == null)
+            if (file is null)
                 return "Target file does not exist";
 
             // check for acceptance
@@ -62,7 +62,7 @@ namespace Notes2022.Server.Controllers
 
             NoteHeader extant = _context.NoteHeader.SingleOrDefault(p => p.LinkGuid == inputModel.baseGuid);
 
-            if (extant == null) // || extant.NoteFileId != file.Id)
+            if (extant is null) // || extant.NoteFileId != file.Id)
                 return "Could not find base note";
 
             inputModel.header.NoteOrdinal = extant.NoteOrdinal;
@@ -81,7 +81,7 @@ namespace Notes2022.Server.Controllers
             NoteHeader nh = await NoteDataManager.CreateResponse(_context, inputModel.header,
                 inputModel.content.NoteBody, tags, inputModel.content.DirectorMessage, true, true);
 
-            if (nh == null)
+            if (nh is null)
             {
 
                 return "Remote response create failed";
@@ -95,7 +95,7 @@ namespace Notes2022.Server.Controllers
         {
             NoteFile nf = _context.NoteFile.SingleOrDefault(p => p.NoteFileName == file);
 
-            if (nf != null)
+            if (nf is not null)
                 return "Ok";
 
             return "File '" + file + "' does not exist on remote system.";

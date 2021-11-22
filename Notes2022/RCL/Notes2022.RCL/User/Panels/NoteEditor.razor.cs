@@ -123,7 +123,7 @@ namespace Notes2022.RCL.User.Panels
         //    if (args.Item.Id == "InsertCode")
         //    {
         //        string xx = await EditObj.GetSelectedHtmlAsync();
-        //        if (xx != null && xx.Length > 0)
+        //        if (xx is not null && xx.Length > 0)
         //        {
         //            ShowMessage("Code can not be edited.  Please Copy, Delete, and Reinsert");
         //            return;
@@ -145,7 +145,7 @@ namespace Notes2022.RCL.User.Panels
         public async Task InsertCode1()
         {
             string xx = await EditObj.GetSelectedHtmlAsync();
-            if (xx != null && xx.Length > 0)
+            if (xx is not null && xx.Length > 0)
             {
                 ShowMessage("Code can not be edited.  Please Copy, Delete, and Reinsert");
                 return;

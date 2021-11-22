@@ -22,7 +22,7 @@ namespace Notes2022.Server.Controllers
             {
                 foreach (var file in UploadFiles)
                 {
-                    if (UploadFiles != null)
+                    if (UploadFiles is not null)
                     {
                         string targetPath = hostingEnv.ContentRootPath + "\\wwwroot\\UserImages";
                         string filename = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');

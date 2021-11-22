@@ -51,7 +51,7 @@ namespace Notes2022.Server
 
             NoteFile noteFile = await NoteDataManager.GetFileByName(_db, myNotesFile);
 
-            if (noteFile == null)
+            if (noteFile is null)
                 return false;
 
             //int id = noteFile.Id;
@@ -80,7 +80,7 @@ namespace Notes2022.Server
                 NoteHeader bnh;
                 string line;
                 NoteHeader newHeader;
-                while ((line = await file.ReadLineAsync()) != null)
+                while ((line = await file.ReadLineAsync()) is not null)
                 {
 
                     if (counter == 0)
@@ -120,7 +120,7 @@ namespace Notes2022.Server
                             string head = line.Substring(46);
                             if (head.StartsWith("  Note ")) //new note found
                             {
-                                if (newContent != null)  // have a note to write
+                                if (newContent is not null)  // have a note to write
                                 {
                                     newContent.NoteBody = sb.ToString();
                                     sb = new StringBuilder();
@@ -248,7 +248,7 @@ namespace Notes2022.Server
                             string[] parts = line.Split(dash);
                             if (parts.Length >= 5)  // looks like the right number of sections > with - in subject grrr
                             {
-                                if (newContent != null)  // have a note to write
+                                if (newContent is not null)  // have a note to write
                                 {
                                     sb.Append(' ');
                                     newContent.NoteBody = sb.ToString();
@@ -361,7 +361,7 @@ namespace Notes2022.Server
 
                         if (xflag > 0) // we have note to write (maybe)
                         {
-                            if (newContent != null)  // have a note to write
+                            if (newContent is not null)  // have a note to write
                             {
                                 newContent.NoteBody = sb.ToString();
                                 sb = new StringBuilder();
@@ -479,7 +479,7 @@ namespace Notes2022.Server
 
                 if (filetype == 0)  // NovaNET
                 {
-                    if (newContent != null)  // have a note to write
+                    if (newContent is not null)  // have a note to write
                     {
                         newContent.NoteBody = sb.ToString();
                         sb.Clear();
@@ -510,7 +510,7 @@ namespace Notes2022.Server
                 }
                 else if (filetype == 1)  // Notes 3.1
                 {
-                    if (newContent != null)  // have a note to write
+                    if (newContent is not null)  // have a note to write
                     {
                         sb.Append(' ');
                         newContent.NoteBody = sb.ToString();
@@ -540,7 +540,7 @@ namespace Notes2022.Server
                 }
                 else if (filetype == 2)  // PLATO
                 {
-                    if (newContent != null)  // have a note to write
+                    if (newContent is not null)  // have a note to write
                     {
                         newContent.NoteBody = sb.ToString();
                         sb.Clear();

@@ -61,7 +61,7 @@ namespace Notes2022.Server.Controllers
 
             List<Subscription> mine = await _db.Subscription.Where(p => p.SubscriberId == me.Id).ToListAsync();
 
-            if (mine == null)
+            if (mine is null)
                 mine = new List<Subscription>();
 
             List<Subscription> avail = new List<Subscription>();
@@ -104,7 +104,7 @@ namespace Notes2022.Server.Controllers
             string userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ApplicationUser me = await _userManager.FindByIdAsync(userId);
             Subscription mine = await _db.Subscription.SingleOrDefaultAsync(p => p.SubscriberId == me.Id && p.NoteFileId == fileId);
-            if (mine == null)
+            if (mine is null)
                 return;
 
             _db.Subscription.Remove(mine);

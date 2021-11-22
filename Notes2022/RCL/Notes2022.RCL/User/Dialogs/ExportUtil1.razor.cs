@@ -45,7 +45,7 @@ namespace Notes2022.RCL.User.Dialogs
         protected async override Task OnInitializedAsync()
         {
 
-            if (model.Marks != null && model.Marks.Count > 0)
+            if (model.Marks is not null && model.Marks.Count > 0)
                 marked = true;
             else
                 marked = false;
@@ -271,7 +271,7 @@ namespace Notes2022.RCL.User.Dialogs
 
             List<Tags> tl = tags.Where(p => p.NoteHeaderId == nc.NoteHeaderId).ToList();
 
-            if (!isHtml || (tl != null && tl.Count > 0))
+            if (!isHtml || (tl is not null && tl.Count > 0))
             {
                 await sw.WriteAsync((isHtml ? "<h5>" : "") + "Tags - ");
                 foreach (Tags item in tl)

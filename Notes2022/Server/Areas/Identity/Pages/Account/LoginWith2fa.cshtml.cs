@@ -74,7 +74,7 @@ namespace Notes2022.Server.Areas.Identity.Pages.Account
             // Ensure the user has gone through the username & password screen first
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
 
-            if (user == null)
+            if (user is null)
             {
                 throw new InvalidOperationException($"Unable to load two-factor authentication user.");
             }
@@ -95,7 +95,7 @@ namespace Notes2022.Server.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
 
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            if (user == null)
+            if (user is null)
             {
                 throw new InvalidOperationException($"Unable to load two-factor authentication user.");
             }

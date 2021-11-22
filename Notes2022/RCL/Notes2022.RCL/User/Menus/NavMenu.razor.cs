@@ -87,7 +87,7 @@ namespace Notes2022.RCL.User.Menus
 
                     //Globals.EditUserVModel = await sessionStorage.GetItemAsync<EditUserViewModel>("EditUserView");
 
-                    if (Globals.EditUserVModel == null)
+                    if (Globals.EditUserVModel is null)
                     {
                         UserData udata = await DAL.GetUserData(Http);
                         string uid = udata.UserId;

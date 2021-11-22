@@ -51,7 +51,7 @@ namespace Notes2022.Server.Services
                 return ex.Message;
             }
 
-            if (q == null)
+            if (q is null)
             {
                 return "Job not in Queue";
             }
@@ -194,7 +194,7 @@ namespace Notes2022.Server.Services
                         myTags = await db.Tags.Where(p =>
                             p.NoteFileId == notefile.Id && p.NoteHeaderId == model.header.Id).ToListAsync();
 
-                        if (myTags == null || myTags.Count < 1)
+                        if (myTags is null || myTags.Count < 1)
                         {
                             model.tags = string.Empty;
                         }
@@ -265,7 +265,7 @@ namespace Notes2022.Server.Services
         //        return ex.Message;
         //    }
 
-        //    if (q == null)
+        //    if (q is null)
         //    {
         //        return "Job not in Queue";
         //    }

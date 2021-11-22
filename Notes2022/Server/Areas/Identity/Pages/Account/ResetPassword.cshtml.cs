@@ -71,7 +71,7 @@ namespace Notes2022.Server.Areas.Identity.Pages.Account
 
         public IActionResult OnGet(string code = null)
         {
-            if (code == null)
+            if (code is null)
             {
                 return BadRequest("A code must be supplied for password reset.");
             }
@@ -93,7 +93,7 @@ namespace Notes2022.Server.Areas.Identity.Pages.Account
             }
 
             var user = await _userManager.FindByEmailAsync(Input.Email);
-            if (user == null)
+            if (user is null)
             {
                 // Don't reveal that the user does not exist
                 return RedirectToPage("./ResetPasswordConfirmation");

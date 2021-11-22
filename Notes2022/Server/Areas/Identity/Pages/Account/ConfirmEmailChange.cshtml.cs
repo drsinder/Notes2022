@@ -31,13 +31,13 @@ namespace Notes2022.Server.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnGetAsync(string userId, string email, string code)
         {
-            if (userId == null || email == null || code == null)
+            if (userId is null || email is null || code is null)
             {
                 return RedirectToPage("/Index");
             }
 
             var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
+            if (user is null)
             {
                 return NotFound($"Unable to load user with ID '{userId}'.");
             }
