@@ -31,7 +31,6 @@ using Notes2022.RCL.User.Menus;
 using Notes2022.Shared;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using System.Net.Http.Json;
 using SearchOption = Notes2022.Shared.SearchOption;
 
 namespace Notes2022.RCL.User
@@ -58,8 +57,6 @@ namespace Notes2022.RCL.User
         protected bool ShowContent { get; set; }
         protected bool ShowContentR { get; set; }
         protected bool ExpandAll { get; set; }
-
-        protected bool Tdone { get; set; }
 
         protected bool IsSeq { get; set; }
 
@@ -540,18 +537,16 @@ namespace Notes2022.RCL.User
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (!firstRender && !Tdone)
+            if (!firstRender)
             {   // have to wait a bit before putting focus in textbox
-
-                await Task.Delay(300);
-
                 if (ExpandAll)
                     await sfGrid1.ExpandAllDetailRowAsync();
 
                 if (sfTextBox is not null)
+                {
+                    await Task.Delay(300);
                     await sfTextBox.FocusAsync();
-
-                Tdone = true;
+                }
             }
             else
             {
