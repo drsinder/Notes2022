@@ -587,25 +587,23 @@ namespace Notes2022.RCL.User.Panels
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (!firstRender)
-            {   // have to wait a bit before putting focus in textbox
-
-                if (sfTextBox is not null)
-                {
-                    await Task.Delay(300);
-                    await sfTextBox.FocusAsync();
-                }
-
-                if (module is not null)
-                { 
-                    await module.InvokeVoidAsync("doPrism", "x");
-                }
-
-            }
-            else
+            if (firstRender)
             {
                 module = await JS.InvokeAsync<IJSObjectReference>("import",
                     "./prism.min.js");
+            }
+            else
+            {
+                // have to wait a bit before putting focus in textbox
+                if (sfTextBox is not null)
+                {
+                    //await Task.Delay(300);
+                    await sfTextBox.FocusAsync();
+                }
+                if (module is not null)
+                {
+                    await module.InvokeVoidAsync("doPrism", "x");
+                }
             }
         }
 
