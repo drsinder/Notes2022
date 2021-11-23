@@ -6,6 +6,7 @@ using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.ResponseCompression;
 
 // database providers
 
@@ -111,6 +112,14 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
 
+//builder.Services.AddGrpc();
+
+//builder.Services.AddResponseCompression(opts =>
+//{
+//    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+//        new[] { "application/octet-stream" });
+//});
+
 
 Globals.StartupDateTime = DateTime.Now.ToUniversalTime();
 
@@ -143,6 +152,8 @@ catch
 
 var app = builder.Build();
 
+//app.UseResponseCompression();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -165,6 +176,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+
+//app.UseGrpcWeb();
+
 app.UseIdentityServer();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -176,6 +190,16 @@ app.UseHangfireDashboard("/" + Globals.HangfireLoc, new DashboardOptions
 
 app.MapRazorPages();
 app.MapControllers();
+
+
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapGrpcService<Notes2022Service>().EnableGrpcWeb();
+
+//    endpoints.MapFallbackToFile("index.html");
+//});
+
+
 app.MapFallbackToFile("index.html");
 
 //EmailSender s = new EmailSender();

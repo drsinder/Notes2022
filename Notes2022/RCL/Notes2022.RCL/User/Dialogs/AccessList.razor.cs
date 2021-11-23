@@ -1,5 +1,6 @@
 ﻿using Blazored.Modal;
 using Blazored.Modal.Services;
+//using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Notes2022.Shared;
 using Syncfusion.Blazor.Grids;
@@ -23,6 +24,7 @@ namespace Notes2022.RCL.User.Dialogs
         private string message { get; set; }
 
         [Inject] HttpClient Http { get; set; }
+        //[Inject] GrpcChannel Channel { get; set; }
         [Inject] Blazored.SessionStorage.ISessionStorageService sessionStorage { get; set; }
         public AccessList()
         {

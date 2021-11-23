@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -36,6 +36,11 @@
     <Compile Remove="Controllers\WeatherForecastController.cs" />
     <Compile Remove="Data\ApplicationDbContext.cs" />
     <Compile Remove="Programxx.cs" />
+    <Compile Remove="Services\Notes2022Service.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Protos\Notes2022gRPC.proto" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,6 +73,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Protos\" />
   </ItemGroup>
 
 </Project>

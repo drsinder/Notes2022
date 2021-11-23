@@ -1,6 +1,11 @@
 ﻿using System.Net.Http.Json;
 using System.Web;
 
+//using Grpc.Net.Client;
+//using Grpc.Net.Client.Web;
+//using Notes2022.Server.Protos;
+//using Google.Protobuf.WellKnownTypes;
+
 namespace Notes2022.Shared
 {
     public class DAL
@@ -10,6 +15,21 @@ namespace Notes2022.Shared
             AboutModel model = await Http.GetFromJsonAsync<AboutModel>("api/About");
             return model;
         }
+
+        //public static async Task<AboutModel> GetAbout(GrpcChannel Channel, HttpClient Http)
+        //{
+
+        //    var client = new Notes2022gRPC.Notes2022gRPCClient(Channel);
+        //    var xx = await (client.GetAboutAsync(new Empty())).ResponseAsync;
+
+        //    AboutModel model = new AboutModel();
+        //    model.PrimeAdminName = xx.About.PrimeAdminName;
+        //    model.PrimeAdminEmail = xx.About.PrimeAdminEmail;
+        //    model.StartupDateTime = xx.About.StartupDateTime.ToDateTime();
+
+        //    return model;
+        //}
+
 
         #region AccessList
 

@@ -61,13 +61,14 @@
 
   <ItemGroup>
     <PackageReference Include="Blazored.Modal" Version="6.0.1" />
+    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.40.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
-    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="19.3.0.54" />
-    <PackageReference Include="Syncfusion.Blazor.Core" Version="19.3.0.54" />
+    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="19.3.0.55" />
+    <PackageReference Include="Syncfusion.Blazor.Core" Version="19.3.0.55" />
   </ItemGroup>
 
   <ItemGroup>
