@@ -38,7 +38,7 @@
     {
         if (firstRender)
         {
-            await DAL.GetImport(Http, NoteFile, UploadFile);
+            await DAL.Import(Http, NoteFile, UploadFile);
 
             await ModalInstance.CancelAsync();
         }

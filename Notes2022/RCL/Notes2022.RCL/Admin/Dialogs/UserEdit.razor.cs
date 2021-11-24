@@ -26,7 +26,7 @@ namespace Notes2022.RCL.Admin.Dialogs
 
         private async Task Submit()
         {
-            await DAL.PutUserEdit(Http, Model);
+            await DAL.UpdateUser(Http, Model);
 
             await ModalInstance.CancelAsync();
         }

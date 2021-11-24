@@ -60,7 +60,7 @@ namespace Notes2022.RCL.User.Dialogs
                     break;
             }
 
-            await DAL.PutAccessList(Http, Model.Item);
+            await DAL.UpdateAccessItem(Http, Model.Item);
         }
     }
 }

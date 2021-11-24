@@ -83,7 +83,7 @@ namespace Notes2022.RCL.Admin.Dialogs
             linker.SendTo = send;
             linker.AcceptFrom = accept;
 
-            await DAL.PostLinked(Http, linker);
+            await DAL.CreateLinked(Http, linker);
 
             await ModalInstance.CancelAsync();
         }

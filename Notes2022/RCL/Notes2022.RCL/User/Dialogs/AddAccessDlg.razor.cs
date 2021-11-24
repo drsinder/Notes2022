@@ -53,7 +53,7 @@ namespace Notes2022.RCL.User.Dialogs
                 item.ArchiveId = aId;
                 // all access options left false
 
-                await DAL.PostAccessList(Http, item);
+                await DAL.CreateAccessItem(Http, item);
 
                 delay = new(250);
                 delay.Enabled = true;

@@ -79,7 +79,7 @@ else
             LastEdited = LastEdited
         };
 
-        await DAL.EditNoteFile(Http, nf);
+        await DAL.UpdateNoteFile(Http, nf);
 
         await ModalInstance.CloseAsync();
     }

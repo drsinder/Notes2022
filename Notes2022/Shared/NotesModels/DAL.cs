@@ -39,16 +39,16 @@ namespace Notes2022.Shared
             return model;
         }
 
-        public static async Task PostAccessList(HttpClient Http, NoteAccess item)
+        public static async Task CreateAccessItem(HttpClient Http, NoteAccess item)
         {
             await Http.PostAsJsonAsync("api/AccessList", item);
         }
-        public static async Task PutAccessList(HttpClient Http, NoteAccess item)
+        public static async Task UpdateAccessItem(HttpClient Http, NoteAccess item)
         {
             await Http.PutAsJsonAsync("api/accesslist", item);
         }
 
-        public static async Task DeleteAccessList(HttpClient Http, int NoteFileId, int ArchiveId, string UserID)
+        public static async Task DeleteAccessItem(HttpClient Http, int NoteFileId, int ArchiveId, string UserID)
         {
             string encoded = "api/accesslist/" + NoteFileId + "." + ArchiveId + "." + UserID;
             await Http.DeleteAsync(encoded);
@@ -65,7 +65,7 @@ namespace Notes2022.Shared
 
         #endregion
         #region CopyNote
-        public static async Task PostCopyNote(HttpClient Http, CopyModel cm)
+        public static async Task CopyNote(HttpClient Http, CopyModel cm)
         {
             await Http.PostAsJsonAsync("api/CopyNote", cm);
         }
@@ -100,7 +100,7 @@ namespace Notes2022.Shared
             return await Http.GetFromJsonAsync<JsonExport>("api/ExportJson/" + req);
         }
 
-        public static async Task PostForward(HttpClient Http, ForwardViewModel stuff)
+        public static async Task Forward(HttpClient Http, ForwardViewModel stuff)
         {
             await Http.PostAsJsonAsync("api/Forward", stuff);
         }
@@ -118,7 +118,7 @@ namespace Notes2022.Shared
             return model;
         }
 
-        public static async Task<bool> GetImport(HttpClient Http, string NoteFile, string UploadFile)
+        public static async Task<bool> Import(HttpClient Http, string NoteFile, string UploadFile)
         {
             return await Http.GetFromJsonAsync<bool>("api/Import/" + NoteFile + "/" + UploadFile);
         }
@@ -141,12 +141,12 @@ namespace Notes2022.Shared
             return await Http.GetFromJsonAsync<List<LinkedFile>>("api/Linked");
         }
 
-        public static async Task PostLinked(HttpClient Http, LinkedFile linked)
+        public static async Task CreateLinked(HttpClient Http, LinkedFile linked)
         {
             await Http.PostAsJsonAsync<LinkedFile>("api/Linked", linked);
         }
 
-        public static async Task PutLinked(HttpClient Http, LinkedFile linked)
+        public static async Task UpdateLinked(HttpClient Http, LinkedFile linked)
         {
             await Http.PutAsJsonAsync<LinkedFile>("api/Linked", linked);
         }
@@ -174,12 +174,12 @@ namespace Notes2022.Shared
             return await Http.GetFromJsonAsync<NoteFile>("api/NewNote/" + fileId);
         }
 
-        public static async Task PostNewNote(HttpClient Http, TextViewModel Model)
+        public static async Task CreateNewNote(HttpClient Http, TextViewModel Model)
         {
             await Http.PostAsJsonAsync("api/NewNote/", Model);
         }
 
-        public static async Task PutEditedNote(HttpClient Http, TextViewModel Model)
+        public static async Task UpdateNote(HttpClient Http, TextViewModel Model)
         {
             await Http.PutAsJsonAsync("api/NewNote/", Model);
         }
@@ -204,7 +204,7 @@ namespace Notes2022.Shared
             await Http.PostAsJsonAsync("api/NoteFileAdmin", Model);
         }
 
-        public static async Task EditNoteFile(HttpClient Http, NoteFile Model)
+        public static async Task UpdateNoteFile(HttpClient Http, NoteFile Model)
         {
             await Http.PutAsJsonAsync("api/NoteFileAdmin", Model);
         }
@@ -292,7 +292,7 @@ namespace Notes2022.Shared
             return await Http.GetFromJsonAsync<EditUserViewModel>("api/useredit/" + UserId);
         }
 
-        public static async Task PutUserEdit(HttpClient Http, EditUserViewModel model)
+        public static async Task UpdateUser(HttpClient Http, EditUserViewModel model)
         {
             await Http.PutAsJsonAsync("api/useredit", model);
         }

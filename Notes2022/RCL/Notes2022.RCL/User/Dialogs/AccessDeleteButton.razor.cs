@@ -13,7 +13,7 @@ namespace Notes2022.RCL.User.Dialogs
 
         protected async Task Delete()
         {
-            await DAL.DeleteAccessList(Http, noteAccess.NoteFileId, noteAccess.ArchiveId, noteAccess.UserID);
+            await DAL.DeleteAccessItem(Http, noteAccess.NoteFileId, noteAccess.ArchiveId, noteAccess.UserID);
             await OnClick.InvokeAsync("Delete");
         }
     }

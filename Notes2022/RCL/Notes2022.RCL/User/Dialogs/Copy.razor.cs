@@ -34,7 +34,7 @@ namespace Notes2022.RCL.User.Dialogs
             cm.Note = Note;
             cm.WholeString = WholeString;
             //cm.UserData = UserData;
-            await DAL.PostCopyNote(Http, cm);
+            await DAL.CopyNote(Http, cm);
             await ModalInstance.CloseAsync();
         }
 

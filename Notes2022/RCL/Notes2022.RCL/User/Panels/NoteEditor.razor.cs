@@ -104,14 +104,14 @@ namespace Notes2022.RCL.User.Panels
 
             if (Model.NoteID == 0)    // new note
             {
-                await DAL.PostNewNote(Http, Model);
+                await DAL.CreateNewNote(Http, Model);
                 NoteHeader nh = await DAL.GetNewNote2(Http);
                 Navigation.NavigateTo("notedisplay/" + nh.Id);
                 return;
             }
             else // editing
             {
-                await DAL.PutEditedNote(Http, Model);
+                await DAL.UpdateNote(Http, Model);
                 NoteHeader nh = await DAL.GetNewNote2(Http);
                 Navigation.NavigateTo("notedisplay/" + nh.Id);
                 return;

@@ -17,7 +17,7 @@ namespace Notes2022.RCL.User.Dialogs
         {
             if (ForwardView.ToEmail is null || ForwardView.ToEmail.Length < 8 || !ForwardView.ToEmail.Contains("@") || !ForwardView.ToEmail.Contains("."))
                 return;
-            await DAL.PostForward(Http, ForwardView);
+            await DAL.Forward(Http, ForwardView);
             await ModalInstance.CancelAsync();
         }
 
