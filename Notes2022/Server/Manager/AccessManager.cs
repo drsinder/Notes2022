@@ -157,24 +157,24 @@ namespace Notes2022.Server
                 .ToListAsync();
         }
 
-        public static async Task<bool> Audit(NotesDbContext db, string eventType, string userName, string userId,
-            string Event   /*, TelemetryClient telemetry*/)
-        {
-            Audit na = new Audit();
+        //public static async Task<bool> Audit(NotesDbContext db, string eventType, string userName, string userId,
+        //    string Event   /*, TelemetryClient telemetry*/)
+        //{
+        //    Audit na = new Audit();
 
-            var usr = await db.Users.SingleAsync(p => p.UserName == userName);
+        //    var usr = await db.Users.SingleAsync(p => p.UserName == userName);
 
-            na.UserID = usr.Id;
-            na.UserName = userName;
-            na.EventType = eventType;
-            na.Event = Event;
-            na.EventTime = System.DateTime.Now.ToUniversalTime();
+        //    na.UserID = usr.Id;
+        //    na.UserName = userName;
+        //    na.EventType = eventType;
+        //    na.Event = Event;
+        //    na.EventTime = System.DateTime.Now.ToUniversalTime();
 
-            //telemetry.TrackEvent("Audit - " + userName + " - " + eventType + " - " + Event);
+        //    //telemetry.TrackEvent("Audit - " + userName + " - " + eventType + " - " + Event);
 
-            db.Audit.Add(na);
-            return (await db.SaveChangesAsync()) == 1;
-        }
+        //    db.Audit.Add(na);
+        //    return (await db.SaveChangesAsync()) == 1;
+        //}
 
         public static async Task<bool> TestLinkAccess(NotesDbContext NotesDbContext,
             NoteFile noteFile, string secret)

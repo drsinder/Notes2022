@@ -132,7 +132,7 @@ namespace Notes2022.Server.Controllers
             ApplicationUser user = await _userManager.FindByNameAsync(userName);
             NoteAccess myAccess = await AccessManager.GetAccess(_db, user.Id, fid, aid);
             if (!myAccess.EditAccess)
-                return;
+                return; // no edit access
 
             if (uid == user.Id)
                 return;     // can not delete self"

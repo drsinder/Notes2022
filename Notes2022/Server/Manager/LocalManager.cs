@@ -58,46 +58,44 @@ namespace Notes2022.Server
         }
 
 
-        public static IEnumerable<SelectListItem> GetFileNameSelectList(NotesDbContext db)
-        {
+        //public static IEnumerable<SelectListItem> GetFileNameSelectList(NotesDbContext db)
+        //{
 
-            // Get a list of all files for dropdowns by name
-            return db.NoteFile
-                .OrderBy(c => c.NoteFileName)
-                .Select(c => new SelectListItem
-                {
-                    Value = c.NoteFileName,
-                    Text = c.NoteFileName
-                });
-        }
+        //    // Get a list of all files for dropdowns by name
+        //    return db.NoteFile
+        //        .OrderBy(c => c.NoteFileName)
+        //        .Select(c => new SelectListItem
+        //        {
+        //            Value = c.NoteFileName,
+        //            Text = c.NoteFileName
+        //        });
+        //}
 
-        public static IEnumerable<SelectListItem> GetFileTitleSelectList(NotesDbContext db)
-        {
+        //public static IEnumerable<SelectListItem> GetFileTitleSelectList(NotesDbContext db)
+        //{
 
-            // Get a list of all files for dropdowns by title
-            return db.NoteFile
-                .OrderBy(c => c.NoteFileTitle)
-                .Select(c => new SelectListItem
-                {
-                    Value = c.NoteFileName,
-                    Text = c.NoteFileTitle
-                });
-        }
+        //    // Get a list of all files for dropdowns by title
+        //    return db.NoteFile
+        //        .OrderBy(c => c.NoteFileTitle)
+        //        .Select(c => new SelectListItem
+        //        {
+        //            Value = c.NoteFileName,
+        //            Text = c.NoteFileTitle
+        //        });
+        //}
 
-        public static IEnumerable<SelectListItem> GetFileNameSelectListWithId(NotesDbContext db)
-        {
+        //public static IEnumerable<SelectListItem> GetFileNameSelectListWithId(NotesDbContext db)
+        //{
 
-            // Get a list of all files for dropdowns by name
-            return db.NoteFile
-                .OrderBy(c => c.NoteFileName)
-                .Select(c => new SelectListItem
-                {
-                    Value = "" + $"{c.Id}",
-                    Text = c.NoteFileName
-                });
-        }
-
-
+        //    // Get a list of all files for dropdowns by name
+        //    return db.NoteFile
+        //        .OrderBy(c => c.NoteFileName)
+        //        .Select(c => new SelectListItem
+        //        {
+        //            Value = "" + $"{c.Id}",
+        //            Text = c.NoteFileName
+        //        });
+        //}
 
     }
 
