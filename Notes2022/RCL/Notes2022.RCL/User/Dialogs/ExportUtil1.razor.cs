@@ -77,7 +77,7 @@ namespace Notes2022.RCL.User.Dialogs
                 stuff.subject = "Notes 2022 - " + model.NoteFile.NoteFileTitle;
                 stuff.payload = email;
 
-                await DAL.PostEmail(Http, stuff);
+                await DAL.SendEmail(Http, stuff);
             }
 
             ms.Dispose();

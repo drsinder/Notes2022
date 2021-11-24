@@ -8,8 +8,9 @@ using System.Web;
 
 namespace Notes2022.Shared
 {
-    public class DAL
+    public static class DAL
     {
+        #region About
         public static async Task<AboutModel> GetAbout(HttpClient Http)
         {
             AboutModel model = await Http.GetFromJsonAsync<AboutModel>("api/About");
@@ -29,8 +30,7 @@ namespace Notes2022.Shared
 
         //    return model;
         //}
-
-
+#endregion
         #region AccessList
 
         public static async Task<List<NoteAccess>> GetAccessList(HttpClient Http, int fileId)
@@ -43,6 +43,7 @@ namespace Notes2022.Shared
         {
             await Http.PostAsJsonAsync("api/AccessList", item);
         }
+
         public static async Task UpdateAccessItem(HttpClient Http, NoteAccess item)
         {
             await Http.PutAsJsonAsync("api/accesslist", item);
@@ -55,34 +56,32 @@ namespace Notes2022.Shared
 
         }
 
+        public static async Task<NoteAccess> GetMyAccess(HttpClient Http, int FileId)
+        {
+            return await Http.GetFromJsonAsync<NoteAccess>("api/myaccess/" + FileId);
+        }
+
         #endregion
-        #region AdminPageData
+        #region HomePageModel
         public static async Task<HomePageModel> GetAdminPageData(HttpClient Http)
         {
             HomePageModel model = await Http.GetFromJsonAsync<HomePageModel>("api/AdminPageData");
             return model;
         }
 
-        #endregion
-        #region CopyNote
-        public static async Task CopyNote(HttpClient Http, CopyModel cm)
+        public static async Task<HomePageModel> GetHomePageData(HttpClient Http)
         {
-            await Http.PostAsJsonAsync("api/CopyNote", cm);
-        }
-        #endregion
-        #region DeleteNote
-        public static async Task DeleteNote(HttpClient Http, long Id)
-        {
-            await Http.DeleteAsync("api/DeleteNote/" + Id);
+            HomePageModel model = await Http.GetFromJsonAsync<HomePageModel>("api/HomePageData");
+            return model;
         }
         #endregion
         #region Email
-        public static async Task PostEmail(HttpClient Http, EmailModel stuff)
+        public static async Task SendEmail(HttpClient Http, EmailModel stuff)
         {
             await Http.PostAsJsonAsync("api/Email", stuff);
         }
         #endregion
-        #region Exports
+        #region Export
         public static async Task<NoteContent> GetExport2(HttpClient Http, long id)
         {
             return await Http.GetFromJsonAsync<NoteContent>("api/Export2/" + id);
@@ -105,24 +104,12 @@ namespace Notes2022.Shared
             await Http.PostAsJsonAsync("api/Forward", stuff);
         }
 
-        #endregion
-
-        public static async Task<int> GetFileIdForNoteId(HttpClient Http, long NoteId)
-        {
-            return await Http.GetFromJsonAsync<int>("api/GetFIleIdForNoteId/" + NoteId);
-        }
-
-        public static async Task<HomePageModel> GetHomePageData(HttpClient Http)
-        {
-            HomePageModel model = await Http.GetFromJsonAsync<HomePageModel>("api/HomePageData");
-            return model;
-        }
-
         public static async Task<bool> Import(HttpClient Http, string NoteFile, string UploadFile)
         {
             return await Http.GetFromJsonAsync<bool>("api/Import/" + NoteFile + "/" + UploadFile);
         }
 
+        #endregion
         #region Linked
         public static async Task<bool> LinkTest(HttpClient Http, string uri)
         {
@@ -157,13 +144,7 @@ namespace Notes2022.Shared
         }
 
         #endregion
-
-        public static async Task<NoteAccess> GetMyAccess(HttpClient Http, int FileId)
-        {
-           return  await Http.GetFromJsonAsync<NoteAccess>("api/myaccess/" + FileId);
-        }
-
-        #region NewNote
+        #region Note
         public static async Task<NoteHeader> GetNewNote2(HttpClient Http)
         {
             return await Http.GetFromJsonAsync<NoteHeader>("api/NewNote2");
@@ -184,14 +165,42 @@ namespace Notes2022.Shared
             await Http.PutAsJsonAsync("api/NewNote/", Model);
         }
 
-        #endregion
-
+        public static async Task<int> GetFileIdForNoteId(HttpClient Http, long NoteId)
+        {
+            return await Http.GetFromJsonAsync<int>("api/GetFIleIdForNoteId/" + NoteId);
+        }
 
         public static async Task<DisplayModel> GetNoteContent(HttpClient Http, long NoteId, int Vers = 0)
         {
             return await Http.GetFromJsonAsync<DisplayModel>("api/notecontent/" + NoteId + "/" + Vers);
         }
 
+        public static async Task<List<Tags>> GetTags(HttpClient Http, int nfid)
+        {
+            return await Http.GetFromJsonAsync<List<Tags>>("api/Tags/" + nfid);
+        }
+
+        public static async Task<List<NoteHeader>> GetVersions(HttpClient Http, int fileid, int ordinal, int respordinal, int arcid)
+        {
+            return await Http.GetFromJsonAsync<List<NoteHeader>>("api/Versions/" + fileid + "/"
+                + ordinal + "/" + respordinal + "/" + arcid);
+        }
+
+        public static async Task<NoteDisplayIndexModel> GetNoteIndex(HttpClient Http, int NotesfileId)
+        {
+            return await Http.GetFromJsonAsync<NoteDisplayIndexModel>("api/NoteIndex/" + NotesfileId);
+        }
+
+        public static async Task CopyNote(HttpClient Http, CopyModel cm)
+        {
+            await Http.PostAsJsonAsync("api/CopyNote", cm);
+        }
+
+        public static async Task DeleteNote(HttpClient Http, long Id)
+        {
+            await Http.DeleteAsync("api/DeleteNote/" + Id);
+        }
+        #endregion
         #region NoteFileAdmin
 
         public static async Task<List<NoteFile>> GetNoteFilesOrderedByName(HttpClient Http)
@@ -219,12 +228,6 @@ namespace Notes2022.Shared
             await Http.PostAsJsonAsync("api/NoteFileAdminStd", new Stringy { value = filename });
         }
         #endregion
-
-        public static async Task<NoteDisplayIndexModel> GetNoteIndex(HttpClient Http, int NotesfileId)
-        {
-            return await Http.GetFromJsonAsync<NoteDisplayIndexModel>("api/NoteIndex/" + NotesfileId);
-        }
-
         #region Sequencer
 
         public static async Task<List<Sequencer>> GetSequencer(HttpClient Http)
@@ -252,7 +255,6 @@ namespace Notes2022.Shared
             await Http.PutAsJsonAsync("api/sequenceredit", seq);
         }
         #endregion
-
         #region Subscription
         public static async Task<List<Subscription>> GetSubscriptions(HttpClient Http)
         {
@@ -270,12 +272,6 @@ namespace Notes2022.Shared
         }
 
         #endregion
-
-        public static async Task<List<Tags>> GetTags(HttpClient Http, int nfid)
-        {
-            return await Http.GetFromJsonAsync<List<Tags>>("api/Tags/" + nfid);
-        }
-
         #region UserData
         public static async Task<UserData> GetUserData(HttpClient Http)
         {
@@ -302,13 +298,5 @@ namespace Notes2022.Shared
             return await Http.GetFromJsonAsync<List<UserData>>("api/userlists");
         }
         #endregion
-
-        public static async Task<List<NoteHeader>> GetVersions(HttpClient Http, int fileid, int ordinal, int respordinal, int arcid)
-        {
-            return await Http.GetFromJsonAsync<List<NoteHeader>>("api/Versions/" + fileid + "/"
-                + ordinal + "/" + respordinal + "/" + arcid);
-        }
-
-
     }
 }
