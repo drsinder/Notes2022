@@ -83,18 +83,20 @@ namespace Notes2022.Shared
         }
         #endregion
         #region Exports
-        public static async Task<NoteContent> GetExport2(HttpClient Http, string modelstring)
+        public static async Task<NoteContent> GetExport2(HttpClient Http, long id)
         {
-            return await Http.GetFromJsonAsync<NoteContent>("api/Export2/" + modelstring);
+            return await Http.GetFromJsonAsync<NoteContent>("api/Export2/" + id);
         }
 
-        public static async Task<List<NoteHeader>> GetExport(HttpClient Http, string req)
+        public static async Task<List<NoteHeader>> GetExport(HttpClient Http, int fileid, int arcid, int noteOrd, int respOrd)
         {
+            string req = "" + fileid + "." + arcid + "." + noteOrd + "." + respOrd;
             return await Http.GetFromJsonAsync<List<NoteHeader>>("api/Export/" + req);
         }
 
-        public static async Task<JsonExport> GetExportJson(HttpClient Http, string req)
+        public static async Task<JsonExport> GetExportJson(HttpClient Http, int fileid, int arcid)
         {
+            string req = fileid.ToString() + "." + arcid.ToString();
             return await Http.GetFromJsonAsync<JsonExport>("api/ExportJson/" + req);
         }
 
@@ -149,7 +151,7 @@ namespace Notes2022.Shared
             await Http.PutAsJsonAsync<LinkedFile>("api/Linked", linked);
         }
 
-        public static async Task DeleteLinked(HttpClient Http , int Id)
+        public static async Task DeleteLinked(HttpClient Http, int Id)
         {
             await Http.DeleteAsync("api/Linked/" + Id);
         }

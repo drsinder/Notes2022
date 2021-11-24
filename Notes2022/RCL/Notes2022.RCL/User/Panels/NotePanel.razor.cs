@@ -202,7 +202,7 @@ namespace Notes2022.RCL.User.Panels
             sb.Append(currentHeader.AuthorName + "    ");
             sb.Append(Globals.LocalTimeBlazor(currentHeader.LastEdited).ToLongDateString() + " " + Globals.LocalTimeBlazor(currentHeader.LastEdited).ToShortTimeString()/* + " " + Model.tZone.Abbreviation*/);
 
-            NoteContent currentContent = await DAL.GetExport2(Http, currentHeader.Id.ToString());
+            NoteContent currentContent = await DAL.GetExport2(Http, currentHeader.Id);
 
             if (!string.IsNullOrEmpty(currentContent.DirectorMessage))
             {

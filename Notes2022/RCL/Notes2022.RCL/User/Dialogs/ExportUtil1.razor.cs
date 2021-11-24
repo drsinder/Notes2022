@@ -145,17 +145,19 @@ namespace Notes2022.RCL.User.Dialogs
 
             // get ordered list of basenoteheaders to start process
             List<NoteHeader> bnhl = null;
-            string req;
+            //string req;
+            int NoteOrd = 0;
             if (model.NoteOrdinal == 0)
             {
-                req = "" + nfid + "." + model.ArchiveNumber + ".0.0";
+                //req = "" + nfid + "." + model.ArchiveNumber + ".0.0";
             }
             else
             {
 
-                req = "" + nfid + "." + model.ArchiveNumber + "." + model.NoteOrdinal + ".0";
+                //req = "" + nfid + "." + model.ArchiveNumber + "." + model.NoteOrdinal + ".0";
+                NoteOrd = model.NoteOrdinal;
             }
-            bnhl = await DAL.GetExport(Http, req);
+            bnhl = await DAL.GetExport(Http, nfid, model.ArchiveNumber, NoteOrd, 0);
 
             // loop over each base note in order
             foreach (NoteHeader bnh in bnhl)
@@ -168,8 +170,8 @@ namespace Notes2022.RCL.User.Dialogs
 
                 // get content for base note
                 NoteContent nc = null;
-                req = bnh.Id.ToString();
-                nc = await DAL.GetExport2(Http, req);
+                //req = bnh.Id.ToString();
+                nc = await DAL.GetExport2(Http, bnh.Id);
                 // format it and write it
                 await WriteNote(sw, bnh, bnh, nc, isHtml, false, tags);
 
@@ -190,17 +192,17 @@ namespace Notes2022.RCL.User.Dialogs
                     NoteHeader nh = null;
                     NoteContent ncr = null;
 
-                    req = "" + nfid + "." + model.ArchiveNumber + "." + bnh.NoteOrdinal + "." + rnum;
-                    List<NoteHeader> zz = await DAL.GetExport(Http, req);
+                    //req = "" + nfid + "." + model.ArchiveNumber + "." + bnh.NoteOrdinal + "." + rnum;
+                    List<NoteHeader> zz = await DAL.GetExport(Http, nfid, model.ArchiveNumber, bnh.NoteOrdinal, rnum);
 
                     nh = zz[0];
 
                     if (!nh.IsDeleted && nh.Version == 0)
                     {
 
-                        req = nh.Id.ToString();
+                        //req = nh.Id.ToString();
 
-                        ncr = await DAL.GetExport2(Http, req);
+                        ncr = await DAL.GetExport2(Http, nh.Id);
 
                         await WriteNote(sw, bnh, nh, ncr, isHtml, true, tags);
                     }
