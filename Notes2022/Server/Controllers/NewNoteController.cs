@@ -84,6 +84,7 @@ namespace Notes2022.Server.Controllers
                 AuthorName = me.DisplayName,
                 AuthorID = me.Id,
                 NoteSubject = tvm.MySubject,
+                DirectorMessage = tvm.DirectorMessage,
                 ResponseOrdinal = 0,
                 ResponseCount = 0
             };

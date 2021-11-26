@@ -79,6 +79,7 @@
 
   <ItemGroup>
     <Folder Include="Protos\" />
+    <Folder Include="wwwroot\Import\" />
   </ItemGroup>
 
 </Project>
