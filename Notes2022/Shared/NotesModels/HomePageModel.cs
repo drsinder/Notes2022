@@ -23,18 +23,26 @@
 **--------------------------------------------------------------------------
 */
 
+using System.Runtime.Serialization;
+
 namespace Notes2022.Shared
 {
+    [DataContract]
     public class HomePageModel
     {
+        [DataMember(Order = 1)]
         public List<NoteFile> NoteFiles { get; set; }
 
+        [DataMember(Order = 2)]
         public List<NoteAccess> NoteAccesses { get; set; }
 
+        [DataMember(Order = 3)]
         public string Message { get; set; }
 
+        [DataMember(Order = 4)]
         public UserData UserData { get; set; }
 
+        [DataMember(Order = 5)]
         public List<UserData> UserListData { get; set; }
 
 

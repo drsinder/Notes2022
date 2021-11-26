@@ -40,7 +40,7 @@ namespace Notes2022.Server.Services
             {
                 return "Forwarded by Notes 2022 - User: " + email + " / " + name
                     + "<p>File: " + NoteFile.NoteFileName + " - File Title: " + NoteFile.NoteFileTitle + "</p><hr/>"
-                    + "<p>Author: " + nc.AuthorName + "  - Director Message: " + nc.NoteContent.DirectorMessage + "</p><p>"
+                    + "<p>Author: " + nc.AuthorName + "  - Director Message: " + nc.DirectorMessage + "</p><p>"
                     + "<p>Subject: " + nc.NoteSubject + "</p>"
                     + nc.LastEdited.ToShortDateString() + " " + nc.LastEdited.ToShortTimeString() + " UTC" + "</p>"
                     + nc.NoteContent.NoteBody
@@ -72,7 +72,7 @@ namespace Notes2022.Server.Services
                     {
                         sb.Append("<hr/><p>Response - " + notes[i].ResponseOrdinal + " of " + (notes.Count - 1) + "</p>");
                     }
-                    sb.Append("<p>Author: " + notes[i].AuthorName + "  - Director Message: " + notes[i].NoteContent.DirectorMessage + "</p>");
+                    sb.Append("<p>Author: " + notes[i].AuthorName + "  - Director Message: " + notes[i].DirectorMessage + "</p>");
                     sb.Append("<p>Subject: " + notes[i].NoteSubject + "</p>");
                     sb.Append("<p>" + notes[i].LastEdited.ToShortDateString() + " " + notes[i].LastEdited.ToShortTimeString() + " UTC" + " </p>");
                     sb.Append(notes[i].NoteContent.NoteBody);

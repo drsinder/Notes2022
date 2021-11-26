@@ -120,14 +120,14 @@ namespace Notes2022.Server.Controllers
             // upate header
             DateTime now = DateTime.Now.ToUniversalTime();
             nheader.NoteSubject = tvm.MySubject;
+            nheader.DirectorMessage = tvm.DirectorMessage;
             //nheader.LastEdited = now;
             nheader.ThreadLastEdited = now;
 
             NoteContent nc = new()
             {
                 NoteHeaderId = tvm.NoteID,
-                NoteBody = tvm.MyNote,
-                DirectorMessage = tvm.DirectorMessage
+                NoteBody = tvm.MyNote
             };
 
             await NoteDataManager.EditNote(_db, _userManager, nheader, nc, tvm.TagLine);

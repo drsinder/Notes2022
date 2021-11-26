@@ -110,7 +110,7 @@ namespace Notes2022.Server.Controllers
             var tags = Tags.ListToString(inputModel.tags);
 
             NoteHeader nh = await NoteDataManager.CreateNote(_context, inputModel.header,
-                inputModel.content.NoteBody, tags, inputModel.content.DirectorMessage, true, true);
+                inputModel.content.NoteBody, tags, inputModel.header.DirectorMessage, true, true);
 
             if (nh is null)
             {

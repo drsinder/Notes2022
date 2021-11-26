@@ -225,10 +225,10 @@ namespace Notes2022.RCL.User.Menus
 
             NoteContent currentContent = await DAL.GetExport2(Http, currentHeader.Id);
 
-            if (!string.IsNullOrEmpty(currentContent.DirectorMessage))
+            if (!string.IsNullOrEmpty(currentHeader.DirectorMessage))
             {
                 sb.Append("<br /><span>Director Message: ");
-                sb.Append(currentContent.DirectorMessage);
+                sb.Append(currentHeader.DirectorMessage);
                 sb.Append("</span>");
             }
             //if (tags is not null && tags.Count > 0)

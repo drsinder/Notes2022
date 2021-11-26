@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Grpc.Net.Client;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Notes2022.Shared;
 using System.Net.Http.Json;
@@ -24,6 +25,7 @@ namespace Notes2022.RCL.User
 
 
         [Inject] HttpClient Http { get; set; }
+        //[Inject] GrpcChannel Channel { get; set; }
         [Inject] AuthenticationStateProvider AuthProv { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
         [Inject] Blazored.SessionStorage.ISessionStorageService sessionStorage { get; set; }

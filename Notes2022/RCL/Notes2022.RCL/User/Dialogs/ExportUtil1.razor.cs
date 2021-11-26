@@ -283,9 +283,9 @@ namespace Notes2022.RCL.User.Dialogs
                 await sw.WriteLineAsync((isHtml ? "</h5>" : ""));
             }
 
-            if (!isHtml || !string.IsNullOrEmpty(nc.DirectorMessage))
+            if (!isHtml || !string.IsNullOrEmpty(nh.DirectorMessage))
             {
-                await sw.WriteLineAsync((isHtml ? "<h5>" : "") + "Director Message - " + nc.DirectorMessage + (isHtml ? "</h5>" : ""));
+                await sw.WriteLineAsync((isHtml ? "<h5>" : "") + "Director Message - " + nh.DirectorMessage + (isHtml ? "</h5>" : ""));
             }
             await sw.WriteLineAsync();
             //if (isHtml)

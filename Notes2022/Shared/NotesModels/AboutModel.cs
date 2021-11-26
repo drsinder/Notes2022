@@ -22,16 +22,19 @@
     **
     **--------------------------------------------------------------------------*/
 
+using System.Runtime.Serialization;
+using System.ServiceModel;
+
 namespace Notes2022.Shared
 {
+    [DataContract]
     public class AboutModel
     {
+        [DataMember(Order = 1)] 
         public string PrimeAdminName { get; set; }
+        [DataMember(Order = 2)] 
         public string PrimeAdminEmail { get; set; }
+        [DataMember(Order = 3)] 
         public DateTime StartupDateTime { get; set; }
-
-        //public string userId {  get; set; } 
-
-        //public UserData userData { get; set; }
     }
 }

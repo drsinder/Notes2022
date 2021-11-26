@@ -1,5 +1,6 @@
 using Blazored.Modal;
 using Blazored.Modal.Services;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Notes2022.RCL.User.Dialogs;
 using Notes2022.Shared;
@@ -21,6 +22,8 @@ namespace Notes2022.RCL.Admin.Dialogs
         private bool send { get; set; }
 
         [Inject] HttpClient Http { get; set; }
+        //[Inject] GrpcChannel Channel { get; set; }
+
         [Inject] IModalService Modal { get; set; }
         public CreateLinked()
         {

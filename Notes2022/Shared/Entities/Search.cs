@@ -27,6 +27,7 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 
 namespace Notes2022.Shared
 {
@@ -35,41 +36,51 @@ namespace Notes2022.Shared
     /// <summary>
     /// Model for searching a notefile
     /// </summary>
+    [DataContract]
     public class Search
     {
         // User doing the search
         [StringLength(450)]
+        [DataMember(Order = 1)]
         public string? UserId { get; set; }
 
         // search specs Option
         [Display(Name = "Search By")]
+        [DataMember(Order = 2)]
         public SearchOption Option { get; set; }
 
         // Text to search for
         [Display(Name = "Search Text")]
+        [DataMember(Order = 3)]
         public string? Text { get; set; }
 
         // DateTime to compare to
         [Display(Name = "Search Date/Time")]
+        [DataMember(Order = 4)]
         public DateTime Time { get; set; }
 
         // current/next info -- where we are in the search
         [Column(Order = 0)]
+        [DataMember(Order = 5)]
         public int NoteFileId { get; set; }
 
         [Required]
         [Column(Order = 1)]
+        [DataMember(Order = 6)]
         public int ArchiveId { get; set; }
 
         [Column(Order = 2)]
+        [DataMember(Order = 7)]
         public int BaseOrdinal { get; set; }
         [Column(Order = 3)]
+        [DataMember(Order = 8)]
         public int ResponseOrdinal { get; set; }
         [Column(Order = 4)]
+        [DataMember(Order = 9)]
         public long NoteID { get; set; }
 
-        [ForeignKey("NoteFileId")]
-        public NoteFile? NoteFile { get; set; }
+        //[ForeignKey("NoteFileId")]
+        //public NoteFile? NoteFile { get; set; }
 
         // Makes a clone of the object.  Had to do this to avoid side effects.
         public Search Clone(Search s)

@@ -22,10 +22,13 @@
     **
     **--------------------------------------------------------------------------*@
 
+@using Grpc.Net.Client
 @using Notes2022.Shared
 @using Blazored.SessionStorage
 @using Microsoft.AspNetCore.Components.Authorization
 @inject HttpClient Http
+@inject GrpcChannel Channel
+
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavMan
 <h3>Subscribed Notes Files List</h3>

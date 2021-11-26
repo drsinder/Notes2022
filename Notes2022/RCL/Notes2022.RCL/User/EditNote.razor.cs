@@ -27,7 +27,7 @@ namespace Notes2022.RCL.User
             Model.RefId = stuff.header.RefId;
             Model.MyNote = stuff.content.NoteBody;
             Model.MySubject = stuff.header.NoteSubject;
-            Model.DirectorMessage = stuff.content.DirectorMessage;
+            Model.DirectorMessage = stuff.header.DirectorMessage;
 
             string tags = "";
             foreach (var tag in stuff.tags)

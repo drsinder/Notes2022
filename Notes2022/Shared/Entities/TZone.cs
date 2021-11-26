@@ -26,33 +26,40 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using System.Runtime.Serialization;
 
 namespace Notes2022.Shared
 {
+    [DataContract]
     public class TZone
     {
         [Required]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         // ReSharper disable once InconsistentNaming
+        [DataMember(Order = 1)]
         public int Id { get; set; }
 
         [Required]
         [StringLength(200)]
+        [DataMember(Order = 2)]
         public string? Name { get; set; }
 
         [Required]
         [StringLength(10)]
+        [DataMember(Order = 3)]
         public string? Abbreviation { get; set; }
 
         [Required]
+        [DataMember(Order = 4)]
         public string? Offset { get; set; }
 
         [Required]
+        [DataMember(Order = 5)]
         public int OffsetHours { get; set; }
 
         [Required]
+        [DataMember(Order = 6)]
         public int OffsetMinutes { get; set; }
 
         public DateTime Local(DateTime dt)

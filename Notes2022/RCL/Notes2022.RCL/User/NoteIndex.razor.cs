@@ -283,7 +283,7 @@ namespace Notes2022.RCL.User
                         isMatch = nc.NoteBody.ToLower().Contains(target.Text.ToLower());
                         break;
                     case SearchOption.DirMess:
-                        isMatch = nc.DirectorMessage.ToLower().Contains(target.Text.ToLower());
+                        isMatch = nh.DirectorMessage.ToLower().Contains(target.Text.ToLower());
                         break;
                 }
                 if (isMatch)

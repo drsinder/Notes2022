@@ -1,10 +1,7 @@
-﻿using System.Net.Http.Json;
+﻿using Grpc.Net.Client;
+using ProtoBuf.Grpc.Client;
+using System.Net.Http.Json;
 using System.Web;
-
-//using Grpc.Net.Client;
-//using Grpc.Net.Client.Web;
-//using Notes2022.Server.Protos;
-//using Google.Protobuf.WellKnownTypes;
 
 namespace Notes2022.Shared
 {
@@ -13,24 +10,32 @@ namespace Notes2022.Shared
         #region About
         public static async Task<AboutModel> GetAbout(HttpClient Http)
         {
-            AboutModel model = await Http.GetFromJsonAsync<AboutModel>("api/About");
-            return model;
+            try
+            {
+                AboutModel model = await Http.GetFromJsonAsync<AboutModel>("api/About");
+                return model;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+            return new AboutModel();
         }
 
-        //public static async Task<AboutModel> GetAbout(GrpcChannel Channel, HttpClient Http)
+        //public static async Task<AboutModel> GetAbout(GrpcChannel Channel)
         //{
-
-        //    var client = new Notes2022gRPC.Notes2022gRPCClient(Channel);
-        //    var xx = await (client.GetAboutAsync(new Empty())).ResponseAsync;
-
-        //    AboutModel model = new AboutModel();
-        //    model.PrimeAdminName = xx.About.PrimeAdminName;
-        //    model.PrimeAdminEmail = xx.About.PrimeAdminEmail;
-        //    model.StartupDateTime = xx.About.StartupDateTime.ToDateTime();
-
-        //    return model;
+        //    try
+        //    {
+        //        var client = Channel.CreateGrpcService<INotes2022Service>();
+        //        return await client.GetAbout();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var x = ex.Message;
+        //    }
+        //    return null;
         //}
-#endregion
+        #endregion
         #region AccessList
 
         public static async Task<List<NoteAccess>> GetAccessList(HttpClient Http, int fileId)
@@ -63,6 +68,7 @@ namespace Notes2022.Shared
 
         #endregion
         #region HomePageModel
+
         public static async Task<HomePageModel> GetAdminPageData(HttpClient Http)
         {
             HomePageModel model = await Http.GetFromJsonAsync<HomePageModel>("api/AdminPageData");
@@ -74,6 +80,35 @@ namespace Notes2022.Shared
             HomePageModel model = await Http.GetFromJsonAsync<HomePageModel>("api/HomePageData");
             return model;
         }
+        
+        //public static async Task<HomePageModel> GetAdminPageData(GrpcChannel Channel)
+        //{
+        //    try
+        //    {
+        //        var client = Channel.CreateGrpcService<INotes2022Service>();
+        //        return await client.GetAdminPageData();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var x = ex.Message;
+        //    }
+        //    return null;
+        //}
+
+        //public static async Task<HomePageModel> GetHomePageData(GrpcChannel Channel)
+        //{
+        //    try
+        //    {
+        //        var client = Channel.CreateGrpcService<INotes2022Service>();
+        //        return await client.GetHomePageData();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var x = ex.Message;
+        //    }
+        //    return null;
+        //}
+
         #endregion
         #region Email
         public static async Task SendEmail(HttpClient Http, EmailModel stuff)

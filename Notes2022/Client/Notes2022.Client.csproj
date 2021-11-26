@@ -73,7 +73,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RCL\Notes2022.RCL\Notes2022.RCL.csproj" />
-    <ProjectReference Include="..\Shared\Notes2022.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -72,7 +72,7 @@ namespace Notes2022.Server.Controllers
 
                 Header.CreateDate = Header.ThreadLastEdited = Header.LastEdited = DateTime.Now.ToUniversalTime();
 
-                await NoteDataManager.CreateNote(_db, Header, Body, Tags.ListToString(tags), cont.DirectorMessage, true, false);
+                await NoteDataManager.CreateNote(_db, Header, Body, Tags.ListToString(tags), Header.DirectorMessage, true, false);
 
                 return;
             }
@@ -111,7 +111,7 @@ namespace Notes2022.Server.Controllers
 
                 Header.NoteContent = null;
 
-                NoteHeader NewHeader = await NoteDataManager.CreateNote(_db, Header, Body, Tags.ListToString(tags), cont.DirectorMessage, true, false);
+                NoteHeader NewHeader = await NoteDataManager.CreateNote(_db, Header, Body, Tags.ListToString(tags), Header.DirectorMessage, true, false);
 
                 for (int i = 1; i <= BaseHeader.ResponseCount; i++)
                 {
@@ -143,7 +143,7 @@ namespace Notes2022.Server.Controllers
 
                     Header.CreateDate = Header.ThreadLastEdited = Header.LastEdited = DateTime.Now.ToUniversalTime();
 
-                    await NoteDataManager.CreateResponse(_db, Header, Body, Tags.ListToString(tags), cont.DirectorMessage, true, false);
+                    await NoteDataManager.CreateResponse(_db, Header, Body, Tags.ListToString(tags), Header.DirectorMessage, true, false);
                 }
 
             }

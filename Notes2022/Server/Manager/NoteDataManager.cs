@@ -252,8 +252,7 @@ namespace Notes2022.Server
             NoteContent newContent = new()
             {
                 NoteHeaderId = newHeader.Id,
-                NoteBody = body,
-                DirectorMessage = dMessage
+                NoteBody = body
             };
             db.NoteContent.Add(newContent);
             await db.SaveChangesAsync();
@@ -403,7 +402,7 @@ namespace Notes2022.Server
 
             // then create new note
 
-            return await CreateNote(db, dh, nc.NoteBody, tags, nc.DirectorMessage, true, false, true);
+            return await CreateNote(db, dh, nc.NoteBody, tags, nh.DirectorMessage, true, false, true);
 
             // below is for the old replacing edited notes
 

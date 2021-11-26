@@ -71,11 +71,11 @@
                         Author: @model.header.AuthorName &nbsp;&nbsp;&nbsp;On:
                         @(Globals.LocalTimeBlazor(model.header.LastEdited).ToLongDateString()) At:
                         @Globals.LocalTimeBlazor(model.header.LastEdited).ToShortTimeString() @*@Model.tZone.Abbreviation*@
-                        @if (!string.IsNullOrEmpty(model.content.DirectorMessage))
+                        @if (!string.IsNullOrEmpty(model.header.DirectorMessage))
                         {
                             <br />
 
-                            <span>Director Message: @model.content.DirectorMessage</span>
+                            <span>Director Message: @model.header.DirectorMessage</span>
                         }
                         @if (model.tags != null && model.tags.Count > 0)
                         {

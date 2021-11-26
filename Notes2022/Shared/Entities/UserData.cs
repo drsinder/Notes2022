@@ -26,18 +26,22 @@
 
 
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace Notes2022.Shared
 {
+    [DataContract]
     public class UserData
     {
         [Required]
         [Key]
         [StringLength(450)]
+        [DataMember(Order = 1)]
         public string UserId { get; set; }
 
         //[Display(Name = "Display Name")]
         [StringLength(50)]
+        [DataMember(Order = 2)]
         public string DisplayName { get; set; }
 
         public string DisplayName2
@@ -46,84 +50,76 @@ namespace Notes2022.Shared
         }
 
         [StringLength(150)]
+        [DataMember(Order = 3)]
         public string Email { get; set; }
 
+        [DataMember(Order = 4)]
         public int TimeZoneID { get; set; }
 
+        [DataMember(Order = 5)]
         public int Ipref0 { get; set; }
 
+        [DataMember(Order = 6)]
         public int Ipref1 { get; set; }
 
+        [DataMember(Order = 7)]
         public int Ipref2 { get; set; } // user choosen page size
 
+        [DataMember(Order = 8)]
         public int Ipref3 { get; set; }
 
+        [DataMember(Order = 9)]
         public int Ipref4 { get; set; }
 
+        [DataMember(Order = 10)]
         public int Ipref5 { get; set; }
 
+        [DataMember(Order = 11)]
         public int Ipref6 { get; set; }
 
+        [DataMember(Order = 12)]
         public int Ipref7 { get; set; }
 
+        [DataMember(Order = 13)]
         public int Ipref8 { get; set; }
 
+        [DataMember(Order = 14)]
         public int Ipref9 { get; set; } // bits extend bool properties
 
 
+        [DataMember(Order = 15)]
         public bool Pref0 { get; set; }
 
+        [DataMember(Order = 16)]
         public bool Pref1 { get; set; } // false = use paged note index, true= scrolled
 
+        [DataMember(Order = 17)]
         public bool Pref2 { get; set; } // use alternate editor
 
+        [DataMember(Order = 18)]
         public bool Pref3 { get; set; } // show responses by default
 
+        [DataMember(Order = 19)]
         public bool Pref4 { get; set; } // multiple expanded responses
 
+        [DataMember(Order = 20)]
         public bool Pref5 { get; set; } // expanded responses
 
+        [DataMember(Order = 21)]
         public bool Pref6 { get; set; } // alternate text editor
 
+        [DataMember(Order = 22)]
         public bool Pref7 { get; set; } // show content when expanded
 
+        [DataMember(Order = 23)]
         public bool Pref8 { get; set; }
 
+        [DataMember(Order = 24)]
         public bool Pref9 { get; set; }
 
-        //[Display(Name = "Style Preferences")]
-        //[StringLength(7000)]
-        //public string? MyStyle { get; set; }
-
         [StringLength(100)]
+        [DataMember(Order = 25)]
         public string? MyGuid { get; set; }
 
-
-        //public UserData(string userId, string displayName, 
-        //    int timeZoneID, int ipref2, int ipref3, int ipref4, int ipref5, int ipref6, int ipref7, int ipref8,
-        //    bool pref1, bool pref2, bool pref3, bool pref4, bool pref5, bool pref6, bool pref7, bool pref8,
-        //    string mstyle, string mguid )
-        //{
-        //    UserId = userId;
-        //    DisplayName = displayName;
-        //    TimeZoneID = timeZoneID;
-        //    Ipref2 = ipref2;
-        //    Ipref3 = ipref3;
-        //    Ipref4 = ipref4;
-        //    Ipref5 = ipref5;
-        //    Ipref6 = ipref6;
-        //    Ipref7 = ipref7;
-        //    Ipref8 = ipref8;
-        //    Pref1 = pref1;
-        //    Pref2 = pref2;
-        //    Pref3 = pref3;
-        //    Pref4 = pref4;
-        //    Pref5 = pref5;
-        //    Pref6 = pref6;
-        //    Pref7 = pref7;
-        //    Pref8 = pref8;
-        //    MyStyle = mstyle;
-        //    MyGuid = mguid;
-        //}
     }
 }

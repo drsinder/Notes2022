@@ -1,4 +1,5 @@
-﻿@*--------------------------------------------------------------------------
+﻿
+@*--------------------------------------------------------------------------
     **
     **  Copyright © 2022, Dale Sinder
     **
@@ -22,7 +23,9 @@
     **
     **--------------------------------------------------------------------------*@
 
+@using Grpc.Net.Client
 @inject HttpClient Http
+@inject GrpcChannel Channel
 @inject NavigationManager Navigation
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 

@@ -129,7 +129,7 @@ namespace Notes2022.Server
                                     if (!isResp) // base note
                                     {
                                         basenotes++;
-                                        newHeader = await NoteDataManager.CreateNote(_db, makeHeader, newContent.NoteBody, string.Empty, newContent.DirectorMessage, false, false);
+                                        newHeader = await NoteDataManager.CreateNote(_db, makeHeader, newContent.NoteBody, string.Empty, makeHeader.DirectorMessage, false, false);
                                         NoteHeader baseNoteHeader = await GetBaseNoteHeader(_db, newHeader);
                                         baseNoteHeaderId = baseNoteHeader.BaseNoteId;
 
@@ -154,7 +154,7 @@ namespace Notes2022.Server
                                         bnh = await NoteDataManager.GetBaseNoteHeaderById(_db, baseNoteHeaderId);
                                         makeHeader.NoteOrdinal = bnh.NoteOrdinal;
                                         makeHeader.BaseNoteId = bnh.Id;  //Fix
-                                        await NoteDataManager.CreateResponse(_db, makeHeader, newContent.NoteBody, string.Empty, newContent.DirectorMessage, false, false);
+                                        await NoteDataManager.CreateResponse(_db, makeHeader, newContent.NoteBody, string.Empty, makeHeader.DirectorMessage, false, false);
                                     }
                                 }
                                 //newContent.Dispose();
@@ -188,7 +188,7 @@ namespace Notes2022.Server
                                 // Check for possible director message 
                                 if (line.StartsWith("    "))
                                 {
-                                    newContent.DirectorMessage = line.Trim(spaceTrim);
+                                    makeHeader.DirectorMessage = line.Trim(spaceTrim);
                                     line = await file.ReadLineAsync();  // skip line
                                     await CheckFf(line, file);
                                     line = await file.ReadLineAsync();  // skip line
@@ -258,7 +258,7 @@ namespace Notes2022.Server
                                     if (!isResp) // base note
                                     {
                                         basenotes++;
-                                        newHeader = await NoteDataManager.CreateNote(_db, makeHeader, newContent.NoteBody, string.Empty, newContent.DirectorMessage, false, false);
+                                        newHeader = await NoteDataManager.CreateNote(_db, makeHeader, newContent.NoteBody, string.Empty, makeHeader.DirectorMessage, false, false);
                                         NoteHeader baseNoteHeader = await GetBaseNoteHeader(_db, newHeader);
                                         baseNoteHeaderId = baseNoteHeader.BaseNoteId;
 
@@ -284,7 +284,7 @@ namespace Notes2022.Server
                                         bnh = await NoteDataManager.GetBaseNoteHeaderById(_db, baseNoteHeaderId);
                                         makeHeader.NoteOrdinal = bnh.NoteOrdinal;
                                         makeHeader.BaseNoteId = bnh.Id;  //Fix
-                                        await NoteDataManager.CreateResponse(_db, makeHeader, newContent.NoteBody, string.Empty, newContent.DirectorMessage, false, false);
+                                        await NoteDataManager.CreateResponse(_db, makeHeader, newContent.NoteBody, string.Empty, makeHeader.DirectorMessage, false, false);
                                     }
                                 }
                                 //newContent.Dispose();
@@ -330,7 +330,7 @@ namespace Notes2022.Server
                                 if (line.StartsWith("Tags -"))
                                 {
                                     isResp = false;
-                                    newContent.DirectorMessage = line.Substring(6, line.Length - 6).Trim();
+                                    makeHeader.DirectorMessage = line.Substring(6, line.Length - 6).Trim();
                                 }
                                 else if (line.StartsWith("Base Note Subject: "))
                                 {
@@ -338,7 +338,7 @@ namespace Notes2022.Server
                                     line = await file.ReadLineAsync();  // Should be Tag
                                     if (line.StartsWith("Tags -"))
                                     {
-                                        newContent.DirectorMessage = line.Substring(6, line.Length - 6).Trim();
+                                        makeHeader.DirectorMessage = line.Substring(6, line.Length - 6).Trim();
                                     }
                                 }
                                 await file.ReadLineAsync();  //skip a line
@@ -370,7 +370,7 @@ namespace Notes2022.Server
                                 if (!isResp) // base note
                                 {
                                     basenotes++;
-                                    newHeader = await NoteDataManager.CreateNote(_db, makeHeader, newContent.NoteBody, string.Empty, newContent.DirectorMessage, false, false);
+                                    newHeader = await NoteDataManager.CreateNote(_db, makeHeader, newContent.NoteBody, string.Empty, makeHeader.DirectorMessage, false, false);
                                     NoteHeader baseNoteHeader = await GetBaseNoteHeader(_db, newHeader);
                                     baseNoteHeaderId = baseNoteHeader.BaseNoteId;
 
@@ -395,7 +395,7 @@ namespace Notes2022.Server
                                     bnh = await NoteDataManager.GetBaseNoteHeaderById(_db, baseNoteHeaderId);
                                     makeHeader.NoteOrdinal = bnh.NoteOrdinal;
                                     makeHeader.BaseNoteId = bnh.Id;  //Fix
-                                    await NoteDataManager.CreateResponse(_db, makeHeader, newContent.NoteBody, string.Empty, newContent.DirectorMessage, false, false);
+                                    await NoteDataManager.CreateResponse(_db, makeHeader, newContent.NoteBody, string.Empty, makeHeader.DirectorMessage, false, false);
                                 }
                             }
                             //newContent.Dispose();
@@ -504,7 +504,7 @@ namespace Notes2022.Server
                             bnh = await NoteDataManager.GetBaseNoteHeaderById(_db, baseNoteHeaderId);
                             makeHeader.NoteOrdinal = bnh.NoteOrdinal;
                             makeHeader.BaseNoteId = bnh.Id;  //Fix
-                            await NoteDataManager.CreateResponse(_db, makeHeader, newContent.NoteBody, string.Empty, newContent.DirectorMessage, false, false);
+                            await NoteDataManager.CreateResponse(_db, makeHeader, newContent.NoteBody, string.Empty, makeHeader.DirectorMessage, false, false);
                         }
                     }
                 }
@@ -520,7 +520,7 @@ namespace Notes2022.Server
                         {
                             //basenotes++;
                             // ReSharper disable once RedundantAssignment
-                            newHeader = await NoteDataManager.CreateNote(_db, makeHeader, newContent.NoteBody, string.Empty, newContent.DirectorMessage, false, false);
+                            newHeader = await NoteDataManager.CreateNote(_db, makeHeader, newContent.NoteBody, string.Empty, makeHeader.DirectorMessage, false, false);
                             //NoteHeader baseNoteHeader = await GetBaseNoteHeader(newHeader);
                             //baseNoteHeaderId = baseNoteHeader.BaseNoteId;
 
@@ -534,7 +534,7 @@ namespace Notes2022.Server
                             bnh = await NoteDataManager.GetBaseNoteHeaderById(_db, baseNoteHeaderId);
                             makeHeader.NoteOrdinal = bnh.NoteOrdinal;
                             makeHeader.BaseNoteId = bnh.Id;  //Fix
-                            await NoteDataManager.CreateResponse(_db, makeHeader, newContent.NoteBody, string.Empty, newContent.DirectorMessage, false, false);
+                            await NoteDataManager.CreateResponse(_db, makeHeader, newContent.NoteBody, string.Empty, makeHeader.DirectorMessage, false, false);
                         }
                     }
                 }
@@ -550,7 +550,7 @@ namespace Notes2022.Server
                         {
                             //basenotes++;
                             // ReSharper disable once RedundantAssignment
-                            newHeader = await NoteDataManager.CreateNote(_db, makeHeader, newContent.NoteBody, string.Empty, newContent.DirectorMessage, false, false);
+                            newHeader = await NoteDataManager.CreateNote(_db, makeHeader, newContent.NoteBody, string.Empty, makeHeader.DirectorMessage, false, false);
                             //NoteHeader baseNoteHeader = await GetBaseNoteHeader(newHeader);
                             //baseNoteHeaderId = baseNoteHeader.BaseNoteId;
 
@@ -564,7 +564,7 @@ namespace Notes2022.Server
                             bnh = await NoteDataManager.GetBaseNoteHeaderById(_db, baseNoteHeaderId);
                             makeHeader.NoteOrdinal = bnh.NoteOrdinal;
                             makeHeader.BaseNoteId = bnh.Id;  //Fix
-                            await NoteDataManager.CreateResponse(_db, makeHeader, newContent.NoteBody, string.Empty, newContent.DirectorMessage, false, false);
+                            await NoteDataManager.CreateResponse(_db, makeHeader, newContent.NoteBody, string.Empty, makeHeader.DirectorMessage, false, false);
                         }
                     }
 

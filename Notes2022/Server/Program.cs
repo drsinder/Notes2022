@@ -23,6 +23,7 @@ using Notes2022.Server;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
 using Notes2022.Server.Services;
+//using ProtoBuf.Grpc.Server;
 
 /*
  *      Partial list of possible database providers
@@ -112,7 +113,7 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
 
-//builder.Services.AddGrpc();
+//builder.Services.AddCodeFirstGrpc();
 
 //builder.Services.AddResponseCompression(opts =>
 //{
@@ -176,9 +177,6 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-
-//app.UseGrpcWeb();
-
 app.UseIdentityServer();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -191,6 +189,8 @@ app.UseHangfireDashboard("/" + Globals.HangfireLoc, new DashboardOptions
 app.MapRazorPages();
 app.MapControllers();
 
+
+//app.UseGrpcWeb();
 
 //app.UseEndpoints(endpoints =>
 //{
