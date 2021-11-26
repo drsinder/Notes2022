@@ -193,23 +193,25 @@ namespace Notes2022.RCL.User
             //message = "Searching... Please Wait...";
             //StateHasChanged();
 
+            target.Text = target.Text.ToLower();
+
             switch (target.Option)
             {
                 case SearchOption.Author:
                 case SearchOption.Title:
                 case SearchOption.TimeIsAfter:
                 case SearchOption.TimeIsBefore:
+                case SearchOption.DirMess:
                     await SearchHeader(target);
                     break;
 
                 case SearchOption.Content:
-                case SearchOption.DirMess:
                     await SearchContents(target);
                     break;
 
-                //case SearchOption.Tag:
-                //    await SearchTags(target);
-                //    break;
+                case SearchOption.Tag:
+                    await SearchTags(target);
+                    break;
 
                 default:
                     break;
@@ -219,7 +221,50 @@ namespace Notes2022.RCL.User
             //StateHasChanged();
         }
 
-        protected async Task SearchHeader(Search target)
+
+        protected async Task SearchTags(Search target)
+        {
+            if (Model.Tags == null || Model.Tags.Count == 0)
+            {
+                ShowMessage("Nothing Found.");
+                return;
+            }
+
+            List<Tags> tags  = Model.Tags.Where(p => p.Tag.ToLower().Contains(target.Text)).ToList();
+            if (tags == null || tags.Count == 0)
+            {
+                ShowMessage("Nothing Found.");
+                return;
+            }
+
+            results = new List<NoteHeader>();
+            foreach(Tags tag in tags)
+            {
+                NoteHeader h = Model.AllNotes.SingleOrDefault(p => p.Id == tag.NoteHeaderId);
+                if (h != null)
+                    results.Add(h);
+            }
+
+            if (results.Count == 0)
+            {
+                ShowMessage("Nothing Found.");
+                return;
+            }
+
+            results = results.OrderBy(p => p.NoteOrdinal).ThenBy(p => p.ResponseOrdinal).ToList();
+
+            mode = results[0].Id;
+            isSearch = true;
+
+            await sessionStorage.SetItemAsync<bool>("InSearch", true);
+            await sessionStorage.SetItemAsync<int>("SearchIndex", 0);
+            await sessionStorage.SetItemAsync<List<NoteHeader>>("SearchList", results);
+
+            CurrentNoteId = mode;
+            StateHasChanged();
+        }
+
+            protected async Task SearchHeader(Search target)
         {
             results = new List<NoteHeader>();
             List<NoteHeader> lookin = Model.AllNotes;
@@ -233,7 +278,11 @@ namespace Notes2022.RCL.User
                         isMatch = nh.AuthorName.Contains(target.Text);
                         break;
                     case SearchOption.Title:
-                        isMatch = nh.NoteSubject.ToLower().Contains(target.Text.ToLower());
+                        isMatch = nh.NoteSubject.ToLower().Contains(target.Text);
+                        break;
+                    case SearchOption.DirMess:
+                        if (!string.IsNullOrEmpty(nh.DirectorMessage))
+                            isMatch = nh.DirectorMessage.ToLower().Contains(target.Text);
                         break;
                     case SearchOption.TimeIsAfter:
                         isMatch = DateTime.Compare(nh.LastEdited, target.Time) > 0;
@@ -252,7 +301,7 @@ namespace Notes2022.RCL.User
                 return;
             }
 
-            results = results.OrderBy(p => p.LastEdited).ToList();
+            results = results.OrderBy(p => p.NoteOrdinal).ThenBy(p => p.ResponseOrdinal).ToList();
 
             mode = results[0].Id;
             isSearch = true;
@@ -280,10 +329,7 @@ namespace Notes2022.RCL.User
                 switch (target.Option)
                 {
                     case SearchOption.Content:
-                        isMatch = nc.NoteBody.ToLower().Contains(target.Text.ToLower());
-                        break;
-                    case SearchOption.DirMess:
-                        isMatch = nh.DirectorMessage.ToLower().Contains(target.Text.ToLower());
+                        isMatch = nc.NoteBody.ToLower().Contains(target.Text);
                         break;
                 }
                 if (isMatch)
@@ -296,7 +342,7 @@ namespace Notes2022.RCL.User
                 return;
             }
 
-            results = results.OrderBy(p => p.LastEdited).ToList();
+            results = results.OrderBy(p => p.NoteOrdinal).ThenBy(p => p.ResponseOrdinal).ToList();
 
             mode = results[0].Id;
 

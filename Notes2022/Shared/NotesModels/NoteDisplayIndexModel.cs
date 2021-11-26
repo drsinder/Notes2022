@@ -41,6 +41,7 @@ namespace Notes2022.Shared
         public string linkedText { get; set; }
         public string message { get; set; }
         public UserData UserData { get; set; }
+        public List<Tags> Tags { get; set; }
     }
 
 }

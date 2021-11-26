@@ -91,6 +91,8 @@ namespace Notes2022.Server.Controllers
             idxModel.UserData = LocalManager.GetUserData(user);
             idxModel.tZone = await LocalManager.GetUserTimeZone(user, _db);
 
+            idxModel.Tags = await _db.Tags.Where(p => p.NoteFileId == id && p.ArchiveId == arcId).ToListAsync();
+
             idxModel.ArcId = arcId;
 
             return idxModel;

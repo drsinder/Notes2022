@@ -1,6 +1,6 @@
 ﻿using Blazored.Modal;
 using Blazored.Modal.Services;
-using Grpc.Net.Client;
+//using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Notes2022.RCL.Admin.Dialogs;
 using Notes2022.Shared;

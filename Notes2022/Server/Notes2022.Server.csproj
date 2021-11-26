@@ -37,6 +37,7 @@
     <Compile Remove="Data\ApplicationDbContext.cs" />
     <Compile Remove="Programxx.cs" />
     <Compile Remove="Services\INotes2022Service.cs" />
+    <Compile Remove="Services\Notes2022Service.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,14 +49,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Grpc.AspNetCore.Web" Version="2.40.0" />
     <PackageReference Include="Hangfire.AspNetCore" Version="1.8.0-beta4" />
     <PackageReference Include="Hangfire.Core" Version="1.8.0-beta4" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.8.0-beta4" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.0" />
-    <PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.0.152" />
     <PackageReference Include="SendGrid" Version="9.25.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
   </ItemGroup>
