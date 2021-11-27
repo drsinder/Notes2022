@@ -6,7 +6,6 @@
     <Version>1.0.2</Version>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="NotesModels\INotes22022Service.cs" />
     <Compile Remove="NotesModels\LongWrapper.cs" />
     <Compile Remove="NotesModels\Message.cs" />
     <Compile Remove="WeatherForecast.cs" />
@@ -15,7 +14,14 @@
     <None Remove="Protos\Notes2022gRPC.proto" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.19.1" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.40.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0" />
+    <PackageReference Include="protobuf-net.BuildTools" Version="3.0.115">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="protobuf-net.Grpc" Version="1.0.152" />
   </ItemGroup>
   <ItemGroup>
     <SupportedPlatform Include="browser" />

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Notes2022.Shared;
+using Grpc.Net.Client;
 
 namespace Notes2022.RCL.User
 {
@@ -19,6 +20,11 @@ namespace Notes2022.RCL.User
         private AboutModel model { get; set; }
 
         private TimeSpan upTime { get; set; }
+
+        //[Inject] GrpcChannel Channel { get; set; }
+        //public About2()
+        //{
+        //}
 
         protected override async Task OnInitializedAsync()
         {

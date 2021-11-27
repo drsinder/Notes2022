@@ -23,33 +23,33 @@
     **--------------------------------------------------------------------------*/
 
 
-
+using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
 namespace Notes2022.Shared
 {
-    [DataContract]
+    [ProtoContract]
     public class Subscription
     {
         [Required]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [DataMember(Order = 1)]
+        [ProtoMember( 1)]
         public long Id { get; set; }
 
         [Required]
-        [DataMember(Order = 2)]
+        [ProtoMember( 2)]
         public int NoteFileId { get; set; }
 
         [Required]
         [StringLength(450)]
-        [DataMember(Order = 3)]
+        [ProtoMember( 3)]
         public string? SubscriberId { get; set; }
 
         [ForeignKey("NoteFileId")]
-        [DataMember(Order = 4)]
+        [ProtoMember( 4)]
         public NoteFile? NoteFile { get; set; }
     }
 }

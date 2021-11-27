@@ -24,7 +24,8 @@ using Notes2022.Server.Data;
 using Notes2022.Server.Models;
 using Notes2022.Server.Services;
 using Notes2022.Shared;
-//using ProtoBuf.Grpc.Server;
+using ProtoBuf.Grpc.Server;
+
 
 /*
  *      Partial list of possible database providers
@@ -113,7 +114,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
-//builder.Services.AddSingleton<INotes2022Service, Notes2022Service>();
+
+builder.Services.AddCodeFirstGrpc();
+
 
 Globals.StartupDateTime = DateTime.Now.ToUniversalTime();
 
@@ -182,17 +185,16 @@ app.UseHangfireDashboard("/" + Globals.HangfireLoc, new DashboardOptions
 app.MapRazorPages();
 app.MapControllers();
 
-//app.UseGrpcWeb();
+app.UseGrpcWeb();
 
-//app.UseEndpoints(endpoints =>
-//{
-//    //endpoints.Map   //<Notes2022Service>();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGrpcService<Notes2022Service>().EnableGrpcWeb();
+    endpoints.MapFallbackToFile("index.html");
+});
 
-//    endpoints.MapFallbackToFile("index.html");
-//});
 
-
-app.MapFallbackToFile("index.html");
+//app.MapFallbackToFile("index.html");
 
 //EmailSender s = new EmailSender();
 //BackgroundJob.Enqueue(() => s.SendEmailAsync("sinder@illinois.edu", "Notes 2022", "Startup"));

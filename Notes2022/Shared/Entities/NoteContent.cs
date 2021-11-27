@@ -23,18 +23,18 @@
     **--------------------------------------------------------------------------*/
 
 
-
+using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace Notes2022.Shared
 {
-    [DataContract]
+    [ProtoContract]
     public class NoteContent
     {
         [Required]
         [Key]
-        [DataMember(Order = 1)]
+        [ProtoMember( 1)]
         public long NoteHeaderId { get; set; }
 
         ////[ForeignKey("NoteHeaderId")]
@@ -44,7 +44,7 @@ namespace Notes2022.Shared
         [Required]
         [StringLength(100000)]
         [Display(Name = "Note")]
-        [DataMember(Order = 2)]
+        [ProtoMember( 2)]
         public string? NoteBody { get; set; }
 
         // for imported notes compatability

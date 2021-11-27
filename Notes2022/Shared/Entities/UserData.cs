@@ -24,24 +24,24 @@
 
 
 
-
+using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace Notes2022.Shared
 {
-    [DataContract]
+    [ProtoContract]
     public class UserData
     {
         [Required]
         [Key]
         [StringLength(450)]
-        [DataMember(Order = 1)]
+        [ProtoMember( 1)]
         public string UserId { get; set; }
 
         //[Display(Name = "Display Name")]
         [StringLength(50)]
-        [DataMember(Order = 2)]
+        [ProtoMember( 2)]
         public string DisplayName { get; set; }
 
         public string DisplayName2
@@ -50,75 +50,75 @@ namespace Notes2022.Shared
         }
 
         [StringLength(150)]
-        [DataMember(Order = 3)]
+        [ProtoMember( 3)]
         public string Email { get; set; }
 
-        [DataMember(Order = 4)]
+        [ProtoMember( 4)]
         public int TimeZoneID { get; set; }
 
-        [DataMember(Order = 5)]
+        [ProtoMember( 5)]
         public int Ipref0 { get; set; }
 
-        [DataMember(Order = 6)]
+        [ProtoMember( 6)]
         public int Ipref1 { get; set; }
 
-        [DataMember(Order = 7)]
+        [ProtoMember( 7)]
         public int Ipref2 { get; set; } // user choosen page size
 
-        [DataMember(Order = 8)]
+        [ProtoMember( 8)]
         public int Ipref3 { get; set; }
 
-        [DataMember(Order = 9)]
+        [ProtoMember( 9)]
         public int Ipref4 { get; set; }
 
-        [DataMember(Order = 10)]
+        [ProtoMember( 10)]
         public int Ipref5 { get; set; }
 
-        [DataMember(Order = 11)]
+        [ProtoMember( 11)]
         public int Ipref6 { get; set; }
 
-        [DataMember(Order = 12)]
+        [ProtoMember( 12)]
         public int Ipref7 { get; set; }
 
-        [DataMember(Order = 13)]
+        [ProtoMember( 13)]
         public int Ipref8 { get; set; }
 
-        [DataMember(Order = 14)]
+        [ProtoMember( 14)]
         public int Ipref9 { get; set; } // bits extend bool properties
 
 
-        [DataMember(Order = 15)]
+        [ProtoMember( 15)]
         public bool Pref0 { get; set; }
 
-        [DataMember(Order = 16)]
+        [ProtoMember( 16)]
         public bool Pref1 { get; set; } // false = use paged note index, true= scrolled
 
-        [DataMember(Order = 17)]
+        [ProtoMember( 17)]
         public bool Pref2 { get; set; } // use alternate editor
 
-        [DataMember(Order = 18)]
+        [ProtoMember( 18)]
         public bool Pref3 { get; set; } // show responses by default
 
-        [DataMember(Order = 19)]
+        [ProtoMember( 19)]
         public bool Pref4 { get; set; } // multiple expanded responses
 
-        [DataMember(Order = 20)]
+        [ProtoMember( 20)]
         public bool Pref5 { get; set; } // expanded responses
 
-        [DataMember(Order = 21)]
+        [ProtoMember( 21)]
         public bool Pref6 { get; set; } // alternate text editor
 
-        [DataMember(Order = 22)]
+        [ProtoMember( 22)]
         public bool Pref7 { get; set; } // show content when expanded
 
-        [DataMember(Order = 23)]
+        [ProtoMember( 23)]
         public bool Pref8 { get; set; }
 
-        [DataMember(Order = 24)]
+        [ProtoMember( 24)]
         public bool Pref9 { get; set; }
 
         [StringLength(100)]
-        [DataMember(Order = 25)]
+        [ProtoMember( 25)]
         public string? MyGuid { get; set; }
 
     }

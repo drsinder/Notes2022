@@ -23,102 +23,102 @@
     **--------------------------------------------------------------------------*/
 
 
-
+using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
 namespace Notes2022.Shared
 {
-    [DataContract]
+    [ProtoContract]
     public class NoteHeader
     {
         // Uniquely identifies the note
         [Required]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [DataMember(Order = 1)]
+        [ProtoMember( 1)]
         public long Id { get; set; }
 
         // The fileid the note belongs to
         [Required]
-        [DataMember(Order = 2)]
+        [ProtoMember( 2)]
         public int NoteFileId { get; set; }
 
         [Required]
-        [DataMember(Order = 3)]
+        [ProtoMember( 3)]
         public int ArchiveId { get; set; }
 
-        [DataMember(Order = 4)]
+        [ProtoMember( 4)]
         public long BaseNoteId { get; set; }
 
         // the ordinal on a Base note and all its responses
         [Required]
         [Display(Name = "Note #")]
-        [DataMember(Order = 5)]
+        [ProtoMember( 5)]
         public int NoteOrdinal { get; set; }
 
         // The ordinal of the response where 0 is a Base Note
         [Required]
         [Display(Name = "Response #")]
-        [DataMember(Order = 6)]
+        [ProtoMember( 6)]
         public int ResponseOrdinal { get; set; }
 
         // Subject/Title of a note
         [Required]
         [StringLength(200)]
         [Display(Name = "Subject")]
-        [DataMember(Order = 7)]
+        [ProtoMember( 7)]
         public string? NoteSubject { get; set; }
 
         // When the note was created or last edited
         [Required]
         [Display(Name = "Last Edited")]
-        [DataMember(Order = 8)]
+        [ProtoMember( 8)]
         public DateTime LastEdited { get; set; }
 
         // When the thread was last edited
         [Required]
         [Display(Name = "Thread Last Edited")]
-        [DataMember(Order = 9)]
+        [ProtoMember( 9)]
         public DateTime ThreadLastEdited { get; set; }
 
         [Required]
         [Display(Name = "Created")]
-        [DataMember(Order = 10)]
+        [ProtoMember( 10)]
         public DateTime CreateDate { get; set; }
 
         // Meaningful only if ResponseOrdinal = 0
         [Required]
-        [DataMember(Order = 11)]
+        [ProtoMember( 11)]
         public int ResponseCount { get; set; }
 
         // ReSharper disable once InconsistentNaming
         [StringLength(450)]
-        [DataMember(Order = 12)]
+        [ProtoMember( 12)]
         public string? AuthorID { get; set; }
 
         [Required]
         [StringLength(50)]
-        [DataMember(Order = 13)]
+        [ProtoMember( 13)]
         public string? AuthorName { get; set; }
 
         [StringLength(100)]
-        [DataMember(Order = 14)]
+        [ProtoMember( 14)]
         public string? LinkGuid { get; set; }
 
-        [DataMember(Order = 15)]
+        [ProtoMember( 15)]
         public long RefId { get; set; }
 
-        [DataMember(Order = 16)]
+        [ProtoMember( 16)]
         public bool IsDeleted { get; set; }
 
-        [DataMember(Order = 17)]
+        [ProtoMember( 17)]
         public int Version { get; set; }
 
         [StringLength(200)]
         [Display(Name = "Director Message")]
-        [DataMember(Order = 18)]
+        [ProtoMember( 18)]
         public string? DirectorMessage { get; set; }
 
         public NoteContent? NoteContent { get; set; }

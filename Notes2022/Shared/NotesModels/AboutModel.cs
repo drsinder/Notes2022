@@ -22,19 +22,20 @@
     **
     **--------------------------------------------------------------------------*/
 
+using ProtoBuf;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 
 namespace Notes2022.Shared
 {
-    [DataContract]
+    [ProtoContract]
     public class AboutModel
     {
-        [DataMember(Order = 1)] 
+        [ProtoMember(1)] 
         public string PrimeAdminName { get; set; }
-        [DataMember(Order = 2)] 
+        [ProtoMember( 2)] 
         public string PrimeAdminEmail { get; set; }
-        [DataMember(Order = 3)] 
+        [ProtoMember( 3)] 
         public DateTime StartupDateTime { get; set; }
     }
 }

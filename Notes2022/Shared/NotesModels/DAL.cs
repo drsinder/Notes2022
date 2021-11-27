@@ -1,5 +1,5 @@
-﻿//using Grpc.Net.Client;
-//using ProtoBuf.Grpc.Client;
+﻿using Grpc.Net.Client;
+using ProtoBuf.Grpc.Client;
 using System.Net.Http.Json;
 using System.Web;
 
@@ -22,19 +22,19 @@ namespace Notes2022.Shared
             return new AboutModel();
         }
 
-        //public static async Task<AboutModel> GetAbout(GrpcChannel Channel)
-        //{
-        //    try
-        //    {
-        //        var client = Channel.CreateGrpcService<INotes2022Service>();
-        //        return await client.GetAbout();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        var x = ex.Message;
-        //    }
-        //    return null;
-        //}
+        public static async Task<AboutModel> GetAboutModel(GrpcChannel Channel)
+        {
+            try
+            {
+                var client = Channel.CreateGrpcService<INotes2022Service>();
+                return await client.GetAboutModel();
+            }
+            catch (Exception ex)
+            {
+                var x = ex.Message;
+            }
+            return new AboutModel();
+        }
         #endregion
         #region AccessList
 

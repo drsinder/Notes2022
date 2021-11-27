@@ -23,26 +23,28 @@
 **--------------------------------------------------------------------------
 */
 
+
+using ProtoBuf;
 using System.Runtime.Serialization;
 
 namespace Notes2022.Shared
 {
-    [DataContract]
+    [ProtoContract]
     public class HomePageModel
     {
-        [DataMember(Order = 1)]
+        [ProtoMember( 1)]
         public List<NoteFile> NoteFiles { get; set; }
 
-        [DataMember(Order = 2)]
+        [ProtoMember( 2)]
         public List<NoteAccess> NoteAccesses { get; set; }
 
-        [DataMember(Order = 3)]
+        [ProtoMember( 3)]
         public string Message { get; set; }
 
-        [DataMember(Order = 4)]
+        [ProtoMember( 4)]
         public UserData UserData { get; set; }
 
-        [DataMember(Order = 5)]
+        [ProtoMember( 5)]
         public List<UserData> UserListData { get; set; }
 
 

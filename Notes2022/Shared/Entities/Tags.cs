@@ -23,25 +23,25 @@
     **--------------------------------------------------------------------------*/
 
 
-
+using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace Notes2022.Shared
 {
-    [DataContract]
+    [ProtoContract]
     public class Tags
     {
         // The fileid the note belongs to
         [Required]
-        [DataMember(Order = 1)]
+        [ProtoMember( 1)]
         public int NoteFileId { get; set; }
 
         [Required]
-        [DataMember(Order = 2)]
+        [ProtoMember( 2)]
         public int ArchiveId { get; set; }
         [Required]
-        [DataMember(Order = 3)]
+        [ProtoMember( 3)]
         public long NoteHeaderId { get; set; }
 
         //[ForeignKey("NoteHeaderId")]
@@ -49,7 +49,7 @@ namespace Notes2022.Shared
 
         [Required]
         [StringLength(30)]
-        [DataMember(Order = 4)]
+        [ProtoMember( 4)]
         public string? Tag { get; set; }
 
         public override string? ToString()

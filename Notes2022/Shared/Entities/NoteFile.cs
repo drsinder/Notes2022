@@ -23,51 +23,51 @@
     **--------------------------------------------------------------------------*/
 
 
-
+using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
 namespace Notes2022.Shared
 {
-    [DataContract]
+    [ProtoContract]
     public class NoteFile
     {
         // Identity of the file
         [Required]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [DataMember(Order = 1)]
+        [ProtoMember( 1)]
         public int Id { get; set; }
 
         [Required]
-        [DataMember(Order = 2)]
+        [ProtoMember( 2)]
         public int NumberArchives { get; set; }
 
         [Required]
         [Display(Name = "Owner ID")]
         [StringLength(450)]
-        [DataMember(Order = 3)]
+        [ProtoMember( 3)]
         public string? OwnerId { get; set; }
 
          // file name of the file
         [Required]
         [StringLength(20)]
         [Display(Name = "NoteFile Name")]
-        [DataMember(Order = 4)]
+        [ProtoMember( 4)]
         public string? NoteFileName { get; set; }
 
         // title of the file
         [Required]
         [StringLength(200)]
         [Display(Name = "NoteFile Title")]
-        [DataMember(Order = 5)]
+        [ProtoMember( 5)]
         public string? NoteFileTitle { get; set; }
 
         // when anything in the file was last created or edited
         [Required]
         [Display(Name = "Last Edited")]
-        [DataMember(Order = 6)]
+        [ProtoMember( 6)]
         public DateTime LastEdited { get; set; }
 
     }

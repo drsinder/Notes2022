@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace Notes2022.Shared
 {
+    [ServiceContract]
     public interface INotes2022Service
     {
-        public AboutModel GetAboutModel();
+        [OperationContract]
+        public Task<AboutModel> GetAboutModel();
 
 
     }

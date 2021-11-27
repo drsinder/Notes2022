@@ -23,45 +23,45 @@
     **--------------------------------------------------------------------------*/
 
 
-
+using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
 namespace Notes2022.Shared
 {
-    [DataContract]
+    [ProtoContract]
     public class Sequencer
     {
         // ID of the user who owns the item
         [Required]
         [Column(Order = 0)]
         [StringLength(450)]
-        [DataMember(Order = 1)]
+        [ProtoMember( 1)]
         public string? UserId { get; set; }
 
         // ID of target notfile
         [Required]
         [Column(Order = 1)]
-        [DataMember(Order = 2)]
+        [ProtoMember( 2)]
         public int NoteFileId { get; set; }
 
         [Required]
         [Display(Name = "Position in List")]
-        [DataMember(Order = 3)]
+        [ProtoMember( 3)]
         public int Ordinal { get; set; }
 
         // Time we last completed a run with this
         [Display(Name = "Last Time")]
-        [DataMember(Order = 4)]
+        [ProtoMember( 4)]
         public DateTime LastTime { get; set; }
 
         // Time a run in this file started - will get copied to LastTime when complete
-        [DataMember(Order = 5)]
+        [ProtoMember( 5)]
         public DateTime StartTime { get; set; }
 
         // Is this item active now?  Are we sequencing this file
-        [DataMember(Order = 6)]
+        [ProtoMember( 6)]
         public bool Active { get; set; }
 
         //[ForeignKey("NoteFileId")]

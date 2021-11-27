@@ -24,50 +24,51 @@
 
 
 
+using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
 namespace Notes2022.Shared
 {
-    [DataContract]
+    [ProtoContract]
     public class LinkedFile
     {
         [Required]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [DataMember(Order = 1)]
+        [ProtoMember( 1)]
         public int Id { get; set; }
 
         [Required]
-        [DataMember(Order = 2)]
+        [ProtoMember( 2)]
         public int HomeFileId { get; set; }
 
         [Required]
         [StringLength(20)]
-        [DataMember(Order = 3)]
+        [ProtoMember( 3)]
         public string? HomeFileName { get; set; }
 
         [Required]
         [StringLength(20)]
-        [DataMember(Order = 4)]
+        [ProtoMember( 4)]
         public string? RemoteFileName { get; set; }
 
         [Required]
         [StringLength(450)]
-        [DataMember(Order = 5)]
+        [ProtoMember( 5)]
         public string? RemoteBaseUri { get; set; }
 
         [Required]
-        [DataMember(Order = 6)]
+        [ProtoMember( 6)]
         public bool AcceptFrom { get; set; }
 
         [Required]
-        [DataMember(Order = 7)]
+        [ProtoMember( 7)]
         public bool SendTo { get; set; }
 
         [StringLength(50)]
-        [DataMember(Order = 8)]
+        [ProtoMember( 8)]
         public string? Secret { get; set; }
     }
 }

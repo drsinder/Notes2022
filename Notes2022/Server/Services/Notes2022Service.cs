@@ -26,7 +26,7 @@ namespace Notes2022.Server.Services
         //    _httpContextAccessor = httpContextAccessor;
         //}
 
-        public AboutModel GetAboutModel()
+        public async Task<AboutModel> GetAboutModel()
         {
             AboutModel model = new AboutModel
             {
