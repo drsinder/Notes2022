@@ -23,6 +23,7 @@ using Notes2022.Server;
 using Notes2022.Server.Data;
 using Notes2022.Server.Models;
 using Notes2022.Server.Services;
+using Notes2022.Shared;
 //using ProtoBuf.Grpc.Server;
 
 /*
@@ -112,15 +113,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
-
-//builder.Services.AddCodeFirstGrpc();
-
-//builder.Services.AddResponseCompression(opts =>
-//{
-//    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
-//        new[] { "application/octet-stream" });
-//});
-
+//builder.Services.AddSingleton<INotes2022Service, Notes2022Service>();
 
 Globals.StartupDateTime = DateTime.Now.ToUniversalTime();
 
@@ -189,12 +182,11 @@ app.UseHangfireDashboard("/" + Globals.HangfireLoc, new DashboardOptions
 app.MapRazorPages();
 app.MapControllers();
 
-
 //app.UseGrpcWeb();
 
 //app.UseEndpoints(endpoints =>
 //{
-//    endpoints.MapGrpcService<Notes2022Service>().EnableGrpcWeb();
+//    //endpoints.Map   //<Notes2022Service>();
 
 //    endpoints.MapFallbackToFile("index.html");
 //});
