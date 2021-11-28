@@ -21,16 +21,16 @@ namespace Notes2022.RCL.User
 
         private TimeSpan upTime { get; set; }
 
-        //[Inject] GrpcChannel Channel { get; set; }
-        //public About2()
-        //{
-        //}
+        [Inject] GrpcChannel Channel { get; set; }
+        public About2()
+        {
+        }
 
         protected override async Task OnInitializedAsync()
         {
             try
             {
-                model = await DAL.GetAbout(Http);
+                model = await DAL.GetAboutModel(Channel);
                 upTime = DateTime.Now.ToUniversalTime() - model.StartupDateTime;
             }
             finally

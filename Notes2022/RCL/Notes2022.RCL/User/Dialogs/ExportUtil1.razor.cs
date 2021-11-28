@@ -1,4 +1,5 @@
 ﻿using Blazored.Modal;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Notes2022.Shared;
@@ -19,6 +20,7 @@ namespace Notes2022.RCL.User.Dialogs
         private string message = "Getting ready...";
 
         [Inject] HttpClient Http { get; set; }
+        [Inject] GrpcChannel Channel { get; set; }
         public ExportUtil1()
         {
         }
@@ -77,7 +79,7 @@ namespace Notes2022.RCL.User.Dialogs
                 stuff.subject = "Notes 2022 - " + model.NoteFile.NoteFileTitle;
                 stuff.payload = email;
 
-                await DAL.SendEmail(Http, stuff);
+                await DAL.SendEmail(Channel, stuff);
             }
 
             ms.Dispose();

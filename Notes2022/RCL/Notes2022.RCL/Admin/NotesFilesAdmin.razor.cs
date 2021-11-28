@@ -1,5 +1,6 @@
 ﻿using Blazored.Modal;
 using Blazored.Modal.Services;
+using Grpc.Net.Client;
 //using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Notes2022.RCL.Admin.Dialogs;
@@ -16,7 +17,7 @@ namespace Notes2022.RCL.Admin
         private HomePageModel model { get; set; }
 
         [Inject] HttpClient Http { get; set; }
-        //[Inject] GrpcChannel Channel { get; set; }
+        [Inject] GrpcChannel Channel { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
         [Inject] IModalService Modal { get; set; }
         public NotesFilesAdmin()
@@ -30,7 +31,7 @@ namespace Notes2022.RCL.Admin
 
         protected async Task GetStuff()
         {
-            model = await DAL.GetAdminPageData(Http);
+            model = await DAL.GetAdminPageData(Channel, Globals.UserData.UserId);
 
             todo = new List<string> { "announce", "pbnotes", "noteshelp", "pad", "homepagemessages" };
 

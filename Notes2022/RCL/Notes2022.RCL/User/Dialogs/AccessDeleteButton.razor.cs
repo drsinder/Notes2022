@@ -1,3 +1,4 @@
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Notes2022.Shared;
 
@@ -11,9 +12,20 @@ namespace Notes2022.RCL.User.Dialogs
         [Parameter]
         public EventCallback<string> OnClick { get; set; }
 
+        [Inject] GrpcChannel Channel { get; set; }
+
+        public AccessDeleteButton()
+        {
+        }
+
         protected async Task Delete()
         {
-            await DAL.DeleteAccessItem(Http, noteAccess.NoteFileId, noteAccess.ArchiveId, noteAccess.UserID);
+            UpdateAccessRequest item = new UpdateAccessRequest();
+            item.item = noteAccess;
+            item.eMail = Globals.UserData.UserId;
+
+
+            await DAL.DeleteAccessItem(Channel, item);
             await OnClick.InvokeAsync("Delete");
         }
     }

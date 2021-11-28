@@ -46,9 +46,6 @@ namespace Notes2022.Server.Controllers
         public async Task Post(EmailModel stuff)
         {
             EmailSender sender = new EmailSender();
-
-            //await sender.SendEmailAsync(stuff.email, stuff.subject, stuff.payload);
-
             BackgroundJob.Enqueue(() => sender.SendEmailAsync(stuff.email, stuff.subject, stuff.payload));
         }
 

@@ -14,6 +14,21 @@ namespace Notes2022.Shared
         [OperationContract]
         public Task<AboutModel> GetAboutModel();
 
+        [OperationContract]
+        public ValueTask<HomePageModel> GetAdminPageData(string userName);
 
+        [OperationContract]
+        public ValueTask<HomePageModel> GetHomePageData(string userName);
+
+        [OperationContract]
+        public ValueTask<List<NoteAccess>> GetAccessList(string fileid);
+
+        public Task UpdateAccessItem(UpdateAccessRequest req);
+
+        public Task CreateAccessItem(UpdateAccessRequest req);
+
+        public Task DeleteAccessItem(UpdateAccessRequest req);
+
+        public Task SendEmail(EmailModel req);
     }
 }

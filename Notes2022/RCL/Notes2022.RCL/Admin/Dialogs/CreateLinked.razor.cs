@@ -1,5 +1,6 @@
 using Blazored.Modal;
 using Blazored.Modal.Services;
+using Grpc.Net.Client;
 //using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Notes2022.RCL.User.Dialogs;
@@ -22,7 +23,7 @@ namespace Notes2022.RCL.Admin.Dialogs
         private bool send { get; set; }
 
         [Inject] HttpClient Http { get; set; }
-        //[Inject] GrpcChannel Channel { get; set; }
+        [Inject] GrpcChannel Channel { get; set; }
 
         [Inject] IModalService Modal { get; set; }
         public CreateLinked()
@@ -31,7 +32,7 @@ namespace Notes2022.RCL.Admin.Dialogs
 
         protected override async Task OnParametersSetAsync()
         {
-            HomePageModel hpModel = await DAL.GetHomePageData(Http);
+            HomePageModel hpModel = await DAL.GetHomePageData(Channel, Globals.UserData.UserId);
             Files = hpModel.NoteFiles;
             myFile = 0;
             accept = send = true;

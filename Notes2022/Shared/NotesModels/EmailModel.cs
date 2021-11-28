@@ -24,12 +24,18 @@
 
 
 
+using ProtoBuf;
+
 namespace Notes2022.Shared
 {
+    [ProtoContract]
     public class EmailModel
     {
+        [ProtoMember(1)]
         public string email { get; set; }
+        [ProtoMember(2)]
         public string subject { get; set; }
+        [ProtoMember(3)]
         public string payload { get; set; }
     }
 }

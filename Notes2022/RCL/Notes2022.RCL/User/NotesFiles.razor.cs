@@ -37,7 +37,7 @@ namespace Notes2022.RCL.User
         {
             await sessionStorage.SetItemAsync("ArcId", 0);
             await sessionStorage.SetItemAsync("IndexPage", 1);
-            HomePageModel model = await DAL.GetHomePageData(Http);
+            HomePageModel model = await DAL.GetHomePageData(Channel , Globals.UserData.UserId);
             Files = model.NoteFiles;
             UserData = model.UserData;
             if (UserData.Ipref2 == 0)

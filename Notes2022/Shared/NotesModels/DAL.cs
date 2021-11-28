@@ -8,20 +8,6 @@ namespace Notes2022.Shared
     public static class DAL
     {
         #region About
-        public static async Task<AboutModel> GetAbout(HttpClient Http)
-        {
-            try
-            {
-                AboutModel model = await Http.GetFromJsonAsync<AboutModel>("api/About");
-                return model;
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-            return new AboutModel();
-        }
-
         public static async Task<AboutModel> GetAboutModel(GrpcChannel Channel)
         {
             try
@@ -37,29 +23,47 @@ namespace Notes2022.Shared
         }
         #endregion
         #region AccessList
-
-        public static async Task<List<NoteAccess>> GetAccessList(HttpClient Http, int fileId)
+        public static async Task DeleteAccessItem(GrpcChannel Channel, UpdateAccessRequest item)
         {
-            List<NoteAccess> model = await Http.GetFromJsonAsync<List<NoteAccess>>("api/accesslist/" + fileId);
-            return model;
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.DeleteAccessItem(item);
         }
 
-        public static async Task CreateAccessItem(HttpClient Http, NoteAccess item)
+
+        public static async Task CreateAccessItem(GrpcChannel Channel, UpdateAccessRequest item)
         {
-            await Http.PostAsJsonAsync("api/AccessList", item);
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.CreateAccessItem(item);
         }
 
-        public static async Task UpdateAccessItem(HttpClient Http, NoteAccess item)
+        public static async Task UpdateAccessItem(GrpcChannel Channel, UpdateAccessRequest item)
         {
-            await Http.PutAsJsonAsync("api/accesslist", item);
+            try
+            {
+                var client = Channel.CreateGrpcService<INotes2022Service>();
+                await client.UpdateAccessItem(item);
+            }
+            catch (Exception ex)
+            {
+                var x = ex.Message;
+            }
         }
 
-        public static async Task DeleteAccessItem(HttpClient Http, int NoteFileId, int ArchiveId, string UserID)
+        public static async Task<List<NoteAccess>> GetAccessList(GrpcChannel Channel, string fileId)
         {
-            string encoded = "api/accesslist/" + NoteFileId + "." + ArchiveId + "." + UserID;
-            await Http.DeleteAsync(encoded);
+            try
+            {
+                var client = Channel.CreateGrpcService<INotes2022Service>();
+                return await client.GetAccessList(fileId);
+            }
+            catch (Exception ex)
+            {
+                var x = ex.Message;
+            }
 
+            return null;
         }
+
 
         public static async Task<NoteAccess> GetMyAccess(HttpClient Http, int FileId)
         {
@@ -68,52 +72,48 @@ namespace Notes2022.Shared
 
         #endregion
         #region HomePageModel
-
-        public static async Task<HomePageModel> GetAdminPageData(HttpClient Http)
-        {
-            HomePageModel model = await Http.GetFromJsonAsync<HomePageModel>("api/AdminPageData");
-            return model;
-        }
-
         public static async Task<HomePageModel> GetHomePageData(HttpClient Http)
         {
             HomePageModel model = await Http.GetFromJsonAsync<HomePageModel>("api/HomePageData");
             return model;
         }
-        
-        //public static async Task<HomePageModel> GetAdminPageData(GrpcChannel Channel)
-        //{
-        //    try
-        //    {
-        //        var client = Channel.CreateGrpcService<INotes2022Service>();
-        //        return await client.GetAdminPageData();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        var x = ex.Message;
-        //    }
-        //    return null;
-        //}
 
-        //public static async Task<HomePageModel> GetHomePageData(GrpcChannel Channel)
-        //{
-        //    try
-        //    {
-        //        var client = Channel.CreateGrpcService<INotes2022Service>();
-        //        return await client.GetHomePageData();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        var x = ex.Message;
-        //    }
-        //    return null;
-        //}
+        public static async Task<HomePageModel> GetAdminPageData(GrpcChannel Channel, string eMail)
+        {
+            try
+            {
+                var client = Channel.CreateGrpcService<INotes2022Service>();
+                return await client.GetAdminPageData(eMail);
+            }
+            catch (Exception ex)
+            {
+                var x = ex.Message;
+            }
+            return null;
+        }
+
+        public static async Task<HomePageModel> GetHomePageData(GrpcChannel Channel, string eMail)
+        {
+            try
+            {
+                var client = Channel.CreateGrpcService<INotes2022Service>();
+                return await client.GetHomePageData(eMail);
+            }
+            catch (Exception ex)
+            {
+                var x = ex.Message;
+            }
+            return null;
+        }
 
         #endregion
         #region Email
-        public static async Task SendEmail(HttpClient Http, EmailModel stuff)
+        public static async Task SendEmail(GrpcChannel Channel, EmailModel stuff)
         {
-            await Http.PostAsJsonAsync("api/Email", stuff);
+            //await Http.PostAsJsonAsync("api/Email", stuff);
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.SendEmail(stuff);
         }
         #endregion
         #region Export

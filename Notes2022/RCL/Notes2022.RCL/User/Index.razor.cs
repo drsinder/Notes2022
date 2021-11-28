@@ -1,4 +1,5 @@
 ﻿//using Grpc.Net.Client;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Notes2022.Shared;
@@ -25,7 +26,7 @@ namespace Notes2022.RCL.User
 
 
         [Inject] HttpClient Http { get; set; }
-        //[Inject] GrpcChannel Channel { get; set; }
+        [Inject] GrpcChannel Channel { get; set; }
         [Inject] AuthenticationStateProvider AuthProv { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
         [Inject] Blazored.SessionStorage.ISessionStorageService sessionStorage { get; set; }
@@ -64,15 +65,14 @@ namespace Notes2022.RCL.User
                 await sessionStorage.RemoveItemAsync("SearchIndex");
                 await sessionStorage.RemoveItemAsync("SearchList");
 
+                histfileList = new List<localFile>();
+                impfileList = new List<localFile>();
+
                 try
                 {
                     hpModel = await DAL.GetHomePageData(Http);
-
                     List<NoteFile> fileList1 = hpModel.NoteFiles.OrderBy(p => p.NoteFileName).ToList();
                     List<NoteFile> nameList1 = hpModel.NoteFiles.OrderBy(p => p.NoteFileTitle).ToList();
-                    histfileList = new List<localFile>();
-                    impfileList = new List<localFile>();
-
 
                     for (int i = 0; i < fileList1.Count; i++)
                     {
@@ -89,7 +89,9 @@ namespace Notes2022.RCL.User
                             impfileList.Add(work);
                     }
                 }
-                finally { }
+                catch (Exception ex) 
+                { 
+                }
             }
         }
 

@@ -23,6 +23,7 @@
     **--------------------------------------------------------------------------*@
 
 
+@using Grpc.Net.Client
 @using Notes2022.Shared
 @using Blazored.SessionStorage
 @using Microsoft.AspNetCore.Components.Authorization
@@ -30,7 +31,7 @@
 
 @inject HttpClient Http
 @inject HttpClient Http
-@*@inject GrpcChannel Channel*@
+@inject GrpcChannel Channel
 
 @inject NavigationManager NavMan
 @inject AuthenticationStateProvider AuthenticationStateProvider

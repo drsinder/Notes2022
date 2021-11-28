@@ -1,4 +1,5 @@
 ﻿using Blazored.Modal;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Notes2022.Shared;
 using System.Net.Http.Json;
@@ -23,6 +24,8 @@ namespace Notes2022.RCL.User.Dialogs
         protected string ArcString { get; set; }
 
         [Inject] HttpClient Http { get; set; }
+        [Inject] GrpcChannel Channel { get; set; }
+
         [Inject] Blazored.SessionStorage.ISessionStorageService sessionStorage { get; set; }
         public AddAccessDlg()
         {
@@ -53,7 +56,11 @@ namespace Notes2022.RCL.User.Dialogs
                 item.ArchiveId = aId;
                 // all access options left false
 
-                await DAL.CreateAccessItem(Http, item);
+                UpdateAccessRequest request = new UpdateAccessRequest();
+                request.item = item;
+                request.eMail = Globals.UserData.UserId;
+
+                await DAL.CreateAccessItem(Channel, request);
 
                 delay = new(250);
                 delay.Enabled = true;

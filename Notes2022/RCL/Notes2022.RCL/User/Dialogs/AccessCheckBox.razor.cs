@@ -1,3 +1,4 @@
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Notes2022.Shared;
 using System.Net.Http.Json;
@@ -8,6 +9,9 @@ namespace Notes2022.RCL.User.Dialogs
     {
         [Parameter]
         public AccessItem Model { get; set; }
+        [Inject] GrpcChannel Channel { get; set; }
+        public AccessCheckBox()
+        { }
 
         protected async Task OnClick()
         {
@@ -60,7 +64,10 @@ namespace Notes2022.RCL.User.Dialogs
                     break;
             }
 
-            await DAL.UpdateAccessItem(Http, Model.Item);
+            UpdateAccessRequest updateAccessItem = new UpdateAccessRequest();
+            updateAccessItem.item = Model.Item;
+            updateAccessItem.eMail = Globals.UserData.UserId;
+            await DAL.UpdateAccessItem(Channel, updateAccessItem);
         }
     }
 }

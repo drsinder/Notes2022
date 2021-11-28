@@ -38,7 +38,7 @@ namespace Notes2022.RCL.User
         protected override async Task OnParametersSetAsync()
         {
             trackers = await DAL.GetSequencer(Http);
-            HomePageModel model = await DAL.GetHomePageData(Http);
+            HomePageModel model = await DAL.GetHomePageData(Channel , Globals.UserData.UserId);
             stuff = model.NoteFiles.OrderBy(p => p.NoteFileName).ToList();
             await Shuffle();
         }
