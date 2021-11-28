@@ -73,7 +73,7 @@ else
                                 <TrackerMover CurrentTracker="@CurrentTracker" Trackers="@trackers" Tracker="@this"></TrackerMover> 
                             </td>
                             <td>
-                                <SCheckBox fileId="@file.Id" isChecked="@current" Tracker="@this"></SCheckBox>
+                                <SCheckBox fileId="@file.Id" isChecked="@current" userid="@Globals.UserData.UserId" Tracker="@this"></SCheckBox>
                             </td>
                             <td>
                                 @file.NoteFileName

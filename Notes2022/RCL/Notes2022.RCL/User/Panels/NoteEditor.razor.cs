@@ -24,6 +24,7 @@
 
 using Blazored.Modal;
 using Blazored.Modal.Services;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Notes2022.RCL.User.Dialogs;
@@ -82,6 +83,7 @@ namespace Notes2022.RCL.User.Panels
         };
 
         [Inject] HttpClient Http { get; set; }
+        [Inject] GrpcChannel Channel { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
         public NoteEditor()
         {
@@ -90,7 +92,7 @@ namespace Notes2022.RCL.User.Panels
         protected async override Task OnParametersSetAsync()
         {
             if (Model.NoteFileID != 0)
-                noteFile = await DAL.GetNewNote(Http, Model.NoteFileID);
+                noteFile = await DAL.GetNewNote(Channel, Model.NoteFileID);
         }
 
         protected async Task HandleValidSubmit()
@@ -104,15 +106,17 @@ namespace Notes2022.RCL.User.Panels
 
             if (Model.NoteID == 0)    // new note
             {
-                await DAL.CreateNewNote(Http, Model);
-                NoteHeader nh = await DAL.GetNewNote2(Http);
+                Model.UserId = Globals.UserData.UserId;
+                await DAL.CreateNewNote(Channel, Model);
+                NoteHeader nh = await DAL.GetNewNote2(Channel);
                 Navigation.NavigateTo("notedisplay/" + nh.Id);
                 return;
             }
             else // editing
             {
-                await DAL.UpdateNote(Http, Model);
-                NoteHeader nh = await DAL.GetNewNote2(Http);
+                Model.UserId = Globals.UserData.UserId;
+                await DAL.UpdateNote(Channel, Model);
+                NoteHeader nh = await DAL.GetNewNote2(Channel);
                 Navigation.NavigateTo("notedisplay/" + nh.Id);
                 return;
             }

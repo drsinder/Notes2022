@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Grpc.Net.Client;
+using Microsoft.AspNetCore.Components;
 using Notes2022.Shared;
 using System.Net.Http.Json;
 
@@ -11,6 +12,7 @@ namespace Notes2022.Client.Pages.User
         public int FileId { get; set; }
 
         [Inject] HttpClient Http { get; set; }
+        [Inject] GrpcChannel Channel { get; set; }
         public ShowNote()
         {
         }
@@ -19,7 +21,7 @@ namespace Notes2022.Client.Pages.User
         {
             // find the file id for this note - get note header
 
-            FileId = await DAL.GetFileIdForNoteId(Http, NoteId);
+            FileId = await DAL.GetFileIdForNoteId(Channel, NoteId);
         }
 
     }

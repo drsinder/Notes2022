@@ -22,16 +22,26 @@
     **
     **--------------------------------------------------------------------------*/
 
+using ProtoBuf;
+
 namespace Notes2022.Shared
 {
+    [ProtoContract]
     public class DisplayModel
     {
+        [ProtoMember(1)]
         public NoteFile noteFile { get; set; }
+        [ProtoMember(2)]
         public NoteHeader header { get; set; }
+        [ProtoMember(3)]
         public NoteContent content { get; set; }
+        [ProtoMember(4)]
         public List<Tags> tags { get; set; }
+        [ProtoMember(5)]
         public NoteAccess access { get; set; }
+        [ProtoMember(6)]
         public bool CanEdit { get; set; }
+        [ProtoMember(7)]
         public bool IsAdmin { get; set; }
     }
 }

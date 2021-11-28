@@ -22,10 +22,12 @@
     **
     **--------------------------------------------------------------------------*@
 
+@using Grpc.Net.Client
 @using Notes2022.Shared
 @using System.Text
 
 @inject HttpClient Http
+@inject GrpcChannel Channel
 @inject NavigationManager NavMan
 
 <SfCheckBox @bind-Checked="isChecked" @onclick="OnClick"></SfCheckBox>
@@ -34,6 +36,8 @@
     [Parameter] public Tracker Tracker {get; set;}
     [Parameter] public int fileId { get; set; }
     [Parameter] public bool isChecked { get; set; }
+    [Parameter] public string userid { get; set; }
+
 
     public SCheckModel Model { get; set; }
 
@@ -42,7 +46,8 @@
         Model = new SCheckModel
         {
             isChecked = isChecked,
-            fileId = fileId
+            fileId = fileId,
+            userId = userid
         };
     }
 
@@ -52,11 +57,11 @@
 
         if (isChecked) // create item
         {
-            await DAL.CreateSequencer(Http, Model);
+            await DAL.CreateSequencer(Channel, Model);
         }
         else // delete it
         {
-            await DAL.DeleteSequencer(Http, fileId);
+            await DAL.DeleteSequencer(Channel, Model);
         }
         await Tracker.Shuffle();
     }

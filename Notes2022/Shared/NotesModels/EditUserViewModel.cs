@@ -23,20 +23,29 @@
     **--------------------------------------------------------------------------*/
 
 using Microsoft.AspNetCore.Identity;
+using ProtoBuf;
 
 namespace Notes2022.Shared
 {
+    [ProtoContract]
     public class CheckedUser
     {
+        [ProtoMember(1)]
         public IdentityRole theRole { get; set; }
 
+        [ProtoMember(2)]
         public bool isMember { get; set; }
     }
 
+    [ProtoContract]
     public class EditUserViewModel
     {
+
+        [ProtoMember(1)]
         public UserData UserData { get; set; }
+        [ProtoMember(2)]
         public List<CheckedUser> RolesList { get; set; }
+        [ProtoMember(3)]
         public string HangfireLoc { get; set; }
     }
 

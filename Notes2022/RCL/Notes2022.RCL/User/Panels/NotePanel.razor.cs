@@ -24,6 +24,7 @@
 
 using Blazored.Modal;
 using Blazored.Modal.Services;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
@@ -83,6 +84,8 @@ namespace Notes2022.RCL.User.Panels
 
 
         [Inject] HttpClient Http { get; set; }
+        [Inject] GrpcChannel Channel { get; set; }
+
         [Inject] NavigationManager Navigation { get; set; }
         [Inject] IJSRuntime JS { get; set; }
         [Inject] Blazored.SessionStorage.ISessionStorageService sessionStorage { get; set; }
@@ -113,7 +116,13 @@ namespace Notes2022.RCL.User.Panels
                 BodyStyle += "-alt";
             }
 
-            model = await DAL.GetNoteContent(Http, NoteId, Vers);
+            IntWrapper req = new IntWrapper
+            {
+                myLong = NoteId,
+                myInt = Vers,
+                userId = Globals.UserData.UserId
+            };
+            model = await DAL.GetNoteContent(Channel, req);
 
             // set text to be displayed re responses
             respX = respY = "";
@@ -543,7 +552,7 @@ namespace Notes2022.RCL.User.Panels
                 // update seq entry for user
                 Sequencer seq = await sessionStorage.GetItemAsync<Sequencer>("SeqItem");
                 seq.Active = false;
-                await DAL.UpateSequencer(Http, seq);
+                await DAL.UpateSequencer(Channel, seq);
 
                 // goto next file
                 List<Sequencer> sequencers = await sessionStorage.GetItemAsync<List<Sequencer>>("SeqList");

@@ -23,6 +23,7 @@
 **--------------------------------------------------------------------------
 */
 
+using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 
 namespace Notes2022.Shared
@@ -30,45 +31,66 @@ namespace Notes2022.Shared
     /// <summary>
     /// Model used to input data for a note.
     /// </summary>
+    /// 
+
+    [ProtoContract]
     public class TextViewModel
     {
         //[Required(ErrorMessage = "A Note body is required.")]
         //[StringLength(100000)]
         //[Display(Name = "MyNote")]
+        [ProtoMember(1)]
         public string MyNote { get; set; }
 
         //[Required(ErrorMessage = "A Subject is required.")]
         [StringLength(200)]
         [Display(Name = "MySubject")]
         [Required(ErrorMessage = "A Subject is required.")]
+        [ProtoMember(2)]
         public string MySubject { get; set; }
 
         //[Required]
+        [ProtoMember(3)]
         public int NoteFileID { get; set; }
 
         //[Required]
+        [ProtoMember(4)]
         public long BaseNoteHeaderID { get; set; }
 
+        [ProtoMember(5)]
         public long NoteID { get; set; }
 
         [StringLength(200)]
         [Display(Name = "Tags")]
+        [ProtoMember(6)]
         public string TagLine { get; set; }
 
         [StringLength(200)]
         [Display(Name = "Director Message")]
+        [ProtoMember(7)]
         public string DirectorMessage { get; set; }
 
+        [ProtoMember(8)]
         public long RefId { get; set; }
+
+        [ProtoMember(9)]
+        public string UserId { get; set; }
 
         //public NoteHeader NoteHeader { get; set; }
 
     }
 
+
+
+    [ProtoContract]
     public class SCheckModel
     {
+        [ProtoMember(1)]
         public bool isChecked { get; set; }
+        [ProtoMember(2)]
         public int fileId { get; set; }
+        [ProtoMember(3)]
+        public string userId { get; set; }
     }
 }
 

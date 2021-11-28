@@ -62,7 +62,7 @@ else
                         bool current = subscriptions.SingleOrDefault(p => p.NoteFileId == file.Id) != null;
                         <tr>
                             <td>
-                                <SubCheckBox fileId="@file.Id" isChecked="@current" />
+                                <SubCheckBox fileId="@file.Id" userId="@Globals.UserData.UserId" isChecked="@current" />
                             </td>
                             <td>
                                 @file.NoteFileName
@@ -98,7 +98,7 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        subscriptions = await DAL.GetSubscriptions(Http);
+        subscriptions = await DAL.GetSubscriptions(Channel, Globals.UserData.UserId);
 
         HomePageModel model = await DAL.GetHomePageData(Channel, Globals.UserData.UserId);
 

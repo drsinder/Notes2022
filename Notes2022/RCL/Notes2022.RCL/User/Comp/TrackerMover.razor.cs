@@ -84,8 +84,8 @@ namespace Notes2022.RCL.User.Comp
             a.Ordinal = bord;
             b.Ordinal = aord;
 
-            await DAL.UpateSequencerPosition(Http, a);
-            await DAL.UpateSequencerPosition(Http, b);
+            await DAL.UpateSequencerPosition(Channel, a);
+            await DAL.UpateSequencerPosition(Channel, b);
 
         }
     }

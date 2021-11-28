@@ -180,60 +180,107 @@ namespace Notes2022.Shared
 
         #endregion
         #region Note
-        public static async Task<NoteHeader> GetNewNote2(HttpClient Http)
+        public static async Task<NoteHeader> GetNewNote2(GrpcChannel Channel)
         {
-            return await Http.GetFromJsonAsync<NoteHeader>("api/NewNote2");
+            //return await Http.GetFromJsonAsync<NoteHeader>("api/NewNote2");
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            return await client.GetNewNote2();
+
         }
 
-        public static async Task<NoteFile> GetNewNote(HttpClient Http, int fileId)
+        public static async Task<NoteFile> GetNewNote(GrpcChannel Channel, int fileId)
         {
-            return await Http.GetFromJsonAsync<NoteFile>("api/NewNote/" + fileId);
+            //return await Http.GetFromJsonAsync<NoteFile>("api/NewNote/" + fileId);
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            IntWrapper item = new IntWrapper() { myInt = fileId };
+            return await client.GetNewNote(item);
+
         }
 
-        public static async Task CreateNewNote(HttpClient Http, TextViewModel Model)
+        public static async Task CreateNewNote(GrpcChannel Channel, TextViewModel tvm)
         {
-            await Http.PostAsJsonAsync("api/NewNote/", Model);
+            //await Http.PostAsJsonAsync("api/NewNote/", Model);
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.CreateNewNote(tvm);
+
         }
 
-        public static async Task UpdateNote(HttpClient Http, TextViewModel Model)
+        public static async Task UpdateNote(GrpcChannel Channel, TextViewModel tvm)
         {
-            await Http.PutAsJsonAsync("api/NewNote/", Model);
+            //await Http.PutAsJsonAsync("api/NewNote/", Model);
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.UpdateNote(tvm);
+
         }
 
-        public static async Task<int> GetFileIdForNoteId(HttpClient Http, long NoteId)
+        public static async Task<int> GetFileIdForNoteId(GrpcChannel Channel, long NoteId)
         {
-            return await Http.GetFromJsonAsync<int>("api/GetFIleIdForNoteId/" + NoteId);
+            //return await Http.GetFromJsonAsync<int>("api/GetFIleIdForNoteId/" + NoteId);
+
+            IntWrapper item = new IntWrapper() { myLong = NoteId };
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            IntWrapper item2 = await client.GetFileIdForNoteId(item);
+            return item2.myInt;
+
         }
 
-        public static async Task<DisplayModel> GetNoteContent(HttpClient Http, long NoteId, int Vers = 0)
+        public static async Task<DisplayModel> GetNoteContent(GrpcChannel Channel, IntWrapper req)
         {
-            return await Http.GetFromJsonAsync<DisplayModel>("api/notecontent/" + NoteId + "/" + Vers);
+            //return await Http.GetFromJsonAsync<DisplayModel>("api/notecontent/" + NoteId + "/" + Vers);
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            return await client.GetNoteContent(req);
+
         }
 
-        public static async Task<List<Tags>> GetTags(HttpClient Http, int nfid)
+        //public static async Task<List<Tags>> GetTags(HttpClient Http, int nfid)
+        //{
+        //    return await Http.GetFromJsonAsync<List<Tags>>("api/Tags/" + nfid);
+        //}
+
+        public static async Task<List<NoteHeader>> GetVersions(GrpcChannel Channel, int fileid, int ordinal, int respordinal, int arcid)
         {
-            return await Http.GetFromJsonAsync<List<Tags>>("api/Tags/" + nfid);
+            //return await Http.GetFromJsonAsync<List<NoteHeader>>("api/Versions/" + fileid + "/"
+            //    + ordinal + "/" + respordinal + "/" + arcid);
+
+            IntWrapper intWrapper = new IntWrapper() 
+            { 
+                myInt = fileid,
+                myInt2 = ordinal,
+                myInt3 = respordinal,
+                myInt4 = arcid
+            };
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            return await client.GetVersions(intWrapper);
         }
 
-        public static async Task<List<NoteHeader>> GetVersions(HttpClient Http, int fileid, int ordinal, int respordinal, int arcid)
+        public static async Task<NoteDisplayIndexModel> GetNoteIndex(GrpcChannel Channel, IntWrapper req)
         {
-            return await Http.GetFromJsonAsync<List<NoteHeader>>("api/Versions/" + fileid + "/"
-                + ordinal + "/" + respordinal + "/" + arcid);
+            //return await Http.GetFromJsonAsync<NoteDisplayIndexModel>("api/NoteIndex/" + NotesfileId);
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            return await client.GetNoteIndex(req);
         }
 
-        public static async Task<NoteDisplayIndexModel> GetNoteIndex(HttpClient Http, int NotesfileId)
+        public static async Task CopyNote(GrpcChannel Channel, CopyModel cm)
         {
-            return await Http.GetFromJsonAsync<NoteDisplayIndexModel>("api/NoteIndex/" + NotesfileId);
+            //await Http.PostAsJsonAsync("api/CopyNote", cm);
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.CopyNote(cm);
         }
 
-        public static async Task CopyNote(HttpClient Http, CopyModel cm)
+        public static async Task DeleteNote(GrpcChannel Channel, IntWrapper req)
         {
-            await Http.PostAsJsonAsync("api/CopyNote", cm);
-        }
+            //await Http.DeleteAsync("api/DeleteNote/" + Id);
 
-        public static async Task DeleteNote(HttpClient Http, long Id)
-        {
-            await Http.DeleteAsync("api/DeleteNote/" + Id);
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.DeleteNote(req);
+
         }
         #endregion
         #region NoteFileAdmin
@@ -265,45 +312,74 @@ namespace Notes2022.Shared
         #endregion
         #region Sequencer
 
-        public static async Task<List<Sequencer>> GetSequencer(HttpClient Http)
+        public static async Task<List<Sequencer>> GetSequencer(GrpcChannel Channel, string userid)
         {
-            return await Http.GetFromJsonAsync<List<Sequencer>>("api/sequencer");
+            //return await Http.GetFromJsonAsync<List<Sequencer>>("api/sequencer");
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            SCheckModel model = new SCheckModel() { userId = userid};
+            return await client.GetSequencer(model);
+
+
         }
 
-        public static async Task CreateSequencer(HttpClient Http, SCheckModel Model)
+        public static async Task CreateSequencer(GrpcChannel Channel, SCheckModel Model)
         {
-            await Http.PostAsJsonAsync("api/sequencer", Model);
+            //await Http.PostAsJsonAsync("api/sequencer", Model);
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.CreateSequencer(Model);
         }
 
-        public static async Task DeleteSequencer(HttpClient Http, int SequencerFileId)
+        public static async Task DeleteSequencer(GrpcChannel Channel, SCheckModel Model)
         {
-            await Http.DeleteAsync("api/sequencer/" + SequencerFileId);
+            //await Http.DeleteAsync("api/sequencer/" + SequencerFileId);
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.DeleteSequencer(Model);
         }
 
-        public static async Task UpateSequencer(HttpClient Http, Sequencer seq)
+        public static async Task UpateSequencer(GrpcChannel Channel, Sequencer seq)
         {
-            await Http.PutAsJsonAsync("api/sequencer", seq);
+            //await Http.PutAsJsonAsync("api/sequencer", seq);
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.UpdateSequencer(seq);
         }
 
-        public static async Task UpateSequencerPosition(HttpClient Http, Sequencer seq)
+        public static async Task UpateSequencerPosition(GrpcChannel Channel, Sequencer seq)
         {
-            await Http.PutAsJsonAsync("api/sequenceredit", seq);
+            //await Http.PutAsJsonAsync("api/sequenceredit", seq);
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.UpateSequencerPosition(seq);
         }
         #endregion
         #region Subscription
-        public static async Task<List<Subscription>> GetSubscriptions(HttpClient Http)
+        public static async Task<List<Subscription>> GetSubscriptions(GrpcChannel Channel, string userid)
         {
-            return await Http.GetFromJsonAsync<List<Subscription>>("api/subscription");
+            //return await Http.GetFromJsonAsync<List<Subscription>>("api/subscription");
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            return await client.GetSubscriptions(new IntWrapper() { userId = userid });
+
         }
 
-        public static async Task DeleteSubscription(HttpClient Http, int fileId)
+        public static async Task DeleteSubscription(GrpcChannel Channel, SCheckModel Model)
         {
-            await Http.DeleteAsync("api/Subscription/" + fileId);
+            //await Http.DeleteAsync("api/Subscription/" + fileId);
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.DeleteSubscription(Model);
+
         }
 
-        public static async Task CreateSubscription(HttpClient Http, SCheckModel Model)
+        public static async Task CreateSubscription(GrpcChannel Channel, SCheckModel Model)
         {
-            await Http.PostAsJsonAsync("api/Subscription", Model);
+            //await Http.PostAsJsonAsync("api/Subscription", Model);
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.CreateSubscription(Model);
         }
 
         #endregion
@@ -318,19 +394,31 @@ namespace Notes2022.Shared
             await Http.PutAsJsonAsync("api/User", userData);
         }
 
+
         public static async Task<EditUserViewModel> GetUserEdit(HttpClient Http, string UserId)
         {
             return await Http.GetFromJsonAsync<EditUserViewModel>("api/useredit/" + UserId);
         }
+
+        //public static async Task<EditUserViewModel> GetUserEdit(GrpcChannel Channel, string UserId)
+        //{
+        //    //return await Http.GetFromJsonAsync<EditUserViewModel>("api/useredit/" + UserId);
+
+        //    var client = Channel.CreateGrpcService<INotes2022Service>();
+        //    return await client.GetUserEdit(new IntWrapper() { userId = UserId} );
+        //}
 
         public static async Task UpdateUser(HttpClient Http, EditUserViewModel model)
         {
             await Http.PutAsJsonAsync("api/useredit", model);
         }
 
-        public static async Task<List<UserData>> GetUserList(HttpClient Http)
+        public static async Task<List<UserData>> GetUserList(GrpcChannel Channel)
         {
-            return await Http.GetFromJsonAsync<List<UserData>>("api/userlists");
+            //return await Http.GetFromJsonAsync<List<UserData>>("api/userlists");
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            return await client.GetUserData();
         }
         #endregion
     }

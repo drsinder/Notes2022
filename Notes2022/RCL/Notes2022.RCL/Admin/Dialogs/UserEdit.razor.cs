@@ -1,4 +1,5 @@
 using Blazored.Modal;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Notes2022.Shared;
 using System.Net.Http.Json;
@@ -14,7 +15,7 @@ namespace Notes2022.RCL.Admin.Dialogs
         protected EditUserViewModel Model { get; set; }
 
         [Inject] HttpClient Http { get; set; }
-
+        [Inject] GrpcChannel Channel { get; set; }
         public UserEdit()
         {
         }

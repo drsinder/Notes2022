@@ -22,6 +22,7 @@
     **
     **--------------------------------------------------------------------------*/
 
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Notes2022.Shared;
 using System.Net.Http.Json;
@@ -39,13 +40,14 @@ namespace Notes2022.RCL.User.Panels
         protected List<NoteHeader> Headers { get; set; }
 
         [Inject] HttpClient Http { get; set; }
+        [Inject] GrpcChannel Channel { get; set; }
         public Versions()
         {
         }
 
         protected override async Task OnParametersSetAsync()
         {
-            Headers = await DAL.GetVersions(Http, FileId, NoteOrdinal, ResponseOrdinal, ArcId);
+            Headers = await DAL.GetVersions(Channel, FileId, NoteOrdinal, ResponseOrdinal, ArcId);
         }
     }
 }

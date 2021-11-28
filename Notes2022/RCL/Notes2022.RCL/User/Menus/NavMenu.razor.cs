@@ -24,6 +24,7 @@
 
 using Blazored.Modal;
 using Blazored.Modal.Services;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Notes2022.RCL.User.Dialogs;
@@ -47,6 +48,7 @@ namespace Notes2022.RCL.User.Menus
         private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
         [Inject] HttpClient Http { get; set; }
+        [Inject] GrpcChannel Channel { get; set; }
         [Inject] AuthenticationStateProvider AuthProv { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
         [Inject] Blazored.SessionStorage.ISessionStorageService sessionStorage { get; set; }
@@ -238,7 +240,7 @@ namespace Notes2022.RCL.User.Menus
 
         private async Task StartSeq()
         {
-            List<Sequencer> sequencers = await DAL.GetSequencer(Http);
+            List<Sequencer> sequencers = await DAL.GetSequencer(Channel, Globals.UserData.UserId);
             if (sequencers.Count == 0)
                 return;
 

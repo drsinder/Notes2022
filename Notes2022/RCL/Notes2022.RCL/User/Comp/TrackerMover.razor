@@ -1,4 +1,6 @@
-﻿@inject HttpClient Http
+﻿@using Grpc.Net.Client
+@inject HttpClient Http
+@inject GrpcChannel Channel
 
 @if (CurrentTracker != null)
 {

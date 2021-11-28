@@ -45,7 +45,7 @@ namespace Notes2022.RCL.User.Dialogs
                 }
             }
 
-            userList = await DAL.GetUserList(Http);
+            userList = await DAL.GetUserList(Channel);
 
             try
             {

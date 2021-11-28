@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Grpc.Net.Client;
+using Microsoft.AspNetCore.Components;
 using Notes2022.Shared;
 using System.Net.Http.Json;
 
@@ -13,13 +14,20 @@ namespace Notes2022.RCL.User
         protected DisplayModel stuff { get; set; }
 
         [Inject] HttpClient Http { get; set; }
+        [Inject] GrpcChannel Channel { get; set; }
         public EditNote()
         {
         }
 
         protected override async Task OnParametersSetAsync()
         {
-            stuff = await DAL.GetNoteContent(Http, NoteId);
+            IntWrapper req = new IntWrapper
+            {
+                myLong = NoteId,
+                userId = Globals.UserData.UserId
+            };
+
+            stuff = await DAL.GetNoteContent(Channel, req);
 
             Model.NoteFileID = stuff.noteFile.Id;
             Model.NoteID = NoteId;

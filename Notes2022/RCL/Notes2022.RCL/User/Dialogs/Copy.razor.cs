@@ -1,4 +1,5 @@
 using Blazored.Modal;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Notes2022.Shared;
 using System.Net.Http.Json;
@@ -19,6 +20,11 @@ namespace Notes2022.RCL.User.Dialogs
         private bool WholeString { get; set; }
 
         private int SelectedId { get; set; } = 0;
+
+        [Inject] GrpcChannel Channel { get; set; }
+        public Copy()
+        { }
+        
         protected async override Task OnInitializedAsync()
         {
             Files = await DAL.GetNoteFilesOrderedByName(Http);
@@ -33,8 +39,8 @@ namespace Notes2022.RCL.User.Dialogs
             cm.FileId = SelectedId;
             cm.Note = Note;
             cm.WholeString = WholeString;
-            //cm.UserData = UserData;
-            await DAL.CopyNote(Http, cm);
+            cm.UserId = Globals.UserData.UserId;
+            await DAL.CopyNote(Channel, cm);
             await ModalInstance.CloseAsync();
         }
 

@@ -24,6 +24,7 @@
 
 using Blazored.Modal;
 using Blazored.Modal.Services;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Notes2022.RCL.User.Dialogs;
@@ -61,6 +62,7 @@ namespace Notes2022.RCL.User
         protected bool IsSeq { get; set; }
 
         [Inject] HttpClient Http { get; set; }
+        [Inject] GrpcChannel Channel { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
         [Inject] Blazored.SessionStorage.ISessionStorageService sessionStorage { get; set; }
         public NoteIndex()
@@ -81,7 +83,13 @@ namespace Notes2022.RCL.User
                 NotesfileId = -NotesfileId;
             }
 
-            Model = await DAL.GetNoteIndex(Http, NotesfileId);
+            IntWrapper req = new IntWrapper
+            {
+                myInt = NotesfileId,
+                userId = Globals.UserData.UserId
+            };
+
+            Model = await DAL.GetNoteIndex(Channel, req);
             PageSize = Model.UserData.Ipref2;
             ShowContent = Model.UserData.Pref7;
             ExpandAll = Model.UserData.Pref3;
@@ -321,7 +329,12 @@ namespace Notes2022.RCL.User
 
             foreach (NoteHeader nh in lookin)
             {
-                DisplayModel dm = await DAL.GetNoteContent(Http, nh.Id);
+                IntWrapper req = new IntWrapper
+                {
+                    myLong = nh.Id,
+                    userId = Globals.UserData.UserId
+                };
+                DisplayModel dm = await DAL.GetNoteContent(Channel, req);
                 NoteContent nc = dm.content;
                 List<Tags> tags = dm.tags;
 
@@ -405,7 +418,7 @@ namespace Notes2022.RCL.User
 
             seq.Active = true;
 
-            await DAL.UpateSequencer(Http, seq);
+            await DAL.UpateSequencer(Channel, seq);
 
             CurrentNoteId = currHeader.Id;
             StateHasChanged();
@@ -585,8 +598,8 @@ namespace Notes2022.RCL.User
 
             if (!firstRender)
             {   // have to wait a bit before putting focus in textbox
-                if (ExpandAll)
-                    await sfGrid1.ExpandAllDetailRowAsync();
+                //if (ExpandAll)
+                //    await sfGrid1.ExpandAllDetailRowAsync();
 
                 if (sfTextBox is not null)
                 {
