@@ -33,6 +33,7 @@
     <Compile Remove="Controllers\CopyNoteController.cs" />
     <Compile Remove="Controllers\DeleteNoteController.cs" />
     <Compile Remove="Controllers\EmailController.cs" />
+    <Compile Remove="Controllers\ExportJsonController.cs" />
     <Compile Remove="Controllers\GetFIleIdForNoteIdController.cs" />
     <Compile Remove="Controllers\GetNoteHeaderIdController.cs" />
     <Compile Remove="Controllers\GetResponseHeadersController.cs" />
