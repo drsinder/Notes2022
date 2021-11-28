@@ -11,7 +11,6 @@ using Notes2022.Shared;
 using Microsoft.EntityFrameworkCore;
 using Hangfire;
 using System.Text;
-using System.Web;
 
 namespace Notes2022.Server.Services
 {
@@ -37,64 +36,64 @@ namespace Notes2022.Server.Services
             return model;
         }
 
-        //public async ValueTask<HomePageModel> GetAdminPageData(Stringy userName)
-        //{
-        //    HomePageModel model = new HomePageModel();
+        public async ValueTask<HomePageModel> GetAdminPageData(string userName)
+        {
+            HomePageModel model = new HomePageModel();
 
-        //    ApplicationUser user = await _userManager.FindByIdAsync(userName.value);
-        //    bool test = await _userManager.IsInRoleAsync(user, "Admin");
-        //    if (!test)
-        //        return model;
+            ApplicationUser user = await _userManager.FindByIdAsync(userName);
+            bool test = await _userManager.IsInRoleAsync(user, "Admin");
+            if (!test)
+                return model;
 
-        //    NoteFile hpmf = _db.NoteFile.Where(p => p.NoteFileName == "homepagemessages").FirstOrDefault();
-        //    if (hpmf is not null)
-        //    {
-        //        NoteHeader hpmh = _db.NoteHeader.Where(p => p.NoteFileId == hpmf.Id).OrderByDescending(p => p.CreateDate).FirstOrDefault();
-        //        if (hpmh is not null)
-        //        {
-        //            model.Message = _db.NoteContent.Where(p => p.NoteHeaderId == hpmh.Id).FirstOrDefault().NoteBody;
-        //        }
-        //    }
+            NoteFile hpmf = _db.NoteFile.Where(p => p.NoteFileName == "homepagemessages").FirstOrDefault();
+            if (hpmf is not null)
+            {
+                NoteHeader hpmh = _db.NoteHeader.Where(p => p.NoteFileId == hpmf.Id).OrderByDescending(p => p.CreateDate).FirstOrDefault();
+                if (hpmh is not null)
+                {
+                    model.Message = _db.NoteContent.Where(p => p.NoteHeaderId == hpmh.Id).FirstOrDefault().NoteBody;
+                }
+            }
 
-        //    model.NoteFiles = _db.NoteFile
-        //        .OrderBy(p => p.NoteFileName).ToList();
+            model.NoteFiles = _db.NoteFile
+                .OrderBy(p => p.NoteFileName).ToList();
 
-        //    model.NoteAccesses = new List<NoteAccess>();
+            model.NoteAccesses = new List<NoteAccess>();
 
-        //    List<ApplicationUser> udl = _db.Users.ToList();
+            List<ApplicationUser> udl = _db.Users.ToList();
 
-        //    model.UserListData = new List<UserData>();
-        //    foreach (ApplicationUser userx in udl)
-        //    {
-        //        UserData ud = NoteDataManager.GetUserData(userx);
-        //        model.UserListData.Add(ud);
-        //    }
+            model.UserListData = new List<UserData>();
+            foreach (ApplicationUser userx in udl)
+            {
+                UserData ud = NoteDataManager.GetUserData(userx);
+                model.UserListData.Add(ud);
+            }
 
-        //    try
-        //    {
-        //        if (!string.IsNullOrEmpty(userName.value))
-        //        {
-        //            model.UserData = NoteDataManager.GetUserData(user);
+            try
+            {
+                if (!string.IsNullOrEmpty(userName))
+                {
+                    model.UserData = NoteDataManager.GetUserData(user);
 
-        //            foreach (NoteFile nf in model.NoteFiles)
-        //            {
-        //                NoteAccess na = await AccessManager.GetAccess(_db, user.Id, nf.Id, 0);
-        //                model.NoteAccesses.Add(na);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            model.UserData = new UserData { TimeZoneID = Globals.TimeZoneDefaultID };
-        //        }
-        //    }
-        //    catch
-        //    {
-        //        model.UserData = new UserData { TimeZoneID = Globals.TimeZoneDefaultID };
-        //    }
+                    foreach (NoteFile nf in model.NoteFiles)
+                    {
+                        NoteAccess na = await AccessManager.GetAccess(_db, user.Id, nf.Id, 0);
+                        model.NoteAccesses.Add(na);
+                    }
+                }
+                else
+                {
+                    model.UserData = new UserData { TimeZoneID = Globals.TimeZoneDefaultID };
+                }
+            }
+            catch
+            {
+                model.UserData = new UserData { TimeZoneID = Globals.TimeZoneDefaultID };
+            }
 
-        //    return model;
+            return model;
 
-        //}
+        }
 
         public async ValueTask<HomePageModel> GetHomePageData(string userName)
         {
@@ -822,284 +821,6 @@ namespace Notes2022.Server.Services
             }
 
             return stuff;
-        }
-
-        public async Task<List<NoteHeader>> GetExport(IntWrapper req)
-        {
-
-            int fileId = req.myInt;
-            int arcId = req.myInt2;
-            int noteOrd = req.myInt3;
-            int respOrd = req.myInt4;
-
-            List<NoteHeader> nhl;
-
-            if (noteOrd == 0)
-            {
-                nhl = await _db.NoteHeader
-                    .Where(p => p.NoteFileId == fileId && p.ArchiveId == arcId && p.ResponseOrdinal == 0)
-                    .OrderBy(p => p.NoteOrdinal)
-                    .ToListAsync();
-            }
-            else
-            {
-                nhl = await _db.NoteHeader
-                    .Where(p => p.NoteFileId == fileId && p.ArchiveId == arcId && p.NoteOrdinal == noteOrd && p.ResponseOrdinal == respOrd)
-                    .ToListAsync();
-            }
-
-            return nhl;
-        }
-
-        public async Task<NoteContent> GetExport2(IntWrapper req)
-        {
-            long noteid = req.myLong;
-
-            NoteContent nh = await _db.NoteContent
-                .Where(p => p.NoteHeaderId == noteid)
-                .FirstOrDefaultAsync();
-
-            return nh;
-        }
-
-
-        public async Task<List<NoteHeader>> GetExport3(IntWrapper req)
-        {
-            int fileId = req.myInt;
-            int arcId = req.myInt2;
-            int noteOrd = req.myInt3;
-
-            List<NoteHeader> nhl = await _db.NoteHeader
-                .Include(m => m.NoteContent)
-                .Include(m => m.Tags)
-                .Where(p => p.NoteFileId == fileId && p.ArchiveId == arcId && p.NoteOrdinal == noteOrd && p.ResponseOrdinal > 0)
-                .OrderBy(p => p.ResponseOrdinal)
-                .ToListAsync();
-
-            return nhl;
-        }
-
-        public async Task Forward(ForwardViewModel req)
-        {
-            ApplicationUser user = await _userManager.FindByIdAsync(req.userId);
-            UserData ud = NoteDataManager.GetUserData(user);
-
-            string myEmail = await LocalService.MakeNoteForEmail(req, req.NoteFile, _db, ud.Email, ud.DisplayName);
-
-            EmailSender emailSender = new();
-
-            BackgroundJob.Enqueue(() => emailSender.SendEmailAsync(ud.Email, req.NoteSubject, myEmail));
-        }
-
-        public async Task<ForwardViewModel> Import(ForwardViewModel req)
-        {
-            Importer imp = new Importer();
-            bool test = await imp.Import(_db, Globals.ImportRoot + req.ToEmail, req.userId);
-            return new ForwardViewModel() { IsAdmin = test };
-        }
-
-        public async Task<ForwardViewModel> LinkTest(string req)
-        {
-            string urireal = HttpUtility.UrlDecode(req);
-
-            LinkProcessor lp = new LinkProcessor(null);
-            bool test = await lp.Test(urireal);
-
-            return new ForwardViewModel() { IsAdmin = test };
-        }
-
-        public async Task<ForwardViewModel> LinkTest2(ForwardViewModel req)
-        {
-            string urireal = req.ToEmail;
-            string file = req.userId;
-
-            LinkProcessor lp = new LinkProcessor(null);
-            bool test = await lp.Test2(urireal, file);
-
-            return new ForwardViewModel() { IsAdmin = test };
-        }
-
-        public async Task<List<LinkedFile>> GetLinkedFiles()
-        {
-            return await _db.LinkedFile.ToListAsync();
-        }
-
-        public async Task CreateLinked(LinkedFile linked)
-        {
-            _db.LinkedFile.Add(linked);
-            await _db.SaveChangesAsync();
-        }
-
-        public async Task UpdateLinked(LinkedFile linked)
-        {
-            _db.Entry(linked).State = EntityState.Modified;
-            await _db.SaveChangesAsync();
-        }
-
-        public async Task DeleteLinked(string  Id)
-        {
-            int myId = int.Parse(Id);
-            LinkedFile myFile = await _db.LinkedFile.SingleOrDefaultAsync(p => p.Id == myId);
-            _db.LinkedFile.Remove(myFile);
-            await _db.SaveChangesAsync();
-        }
-
-        public async Task<NoteAccess> GetMyAccess(IntWrapper req)
-        {
-            ApplicationUser me = await _userManager.FindByIdAsync(req.userId);
-            int Id = req.myInt;
-            NoteAccess mine = await _db.NoteAccess.Where(p => p.NoteFileId == Id && p.UserID == me.Id && p.ArchiveId == 0).OrderBy(p => p.ArchiveId).FirstOrDefaultAsync();
-            if (mine is null)
-            {
-                mine = await _db.NoteAccess.Where(p => p.NoteFileId == Id && p.UserID == Globals.AccessOtherId() && p.ArchiveId == 0).OrderBy(p => p.ArchiveId).FirstOrDefaultAsync();
-            }
-            return mine;
-        }
-
-        private string UID { get; set; }
-
-        public async Task CreateStdNoteFile(ForwardViewModel req)
-        {
-            string file = req.ToEmail;
-            UID = req.userId;
-
-            switch (file)
-            {
-                case "announce":
-                    await CreateAnnounce();
-                    break;
-
-                case "pbnotes":
-                    await CreatePbnotes();
-                    break;
-
-                case "noteshelp":
-                    await CreateNoteshelp();
-                    break;
-
-                case "pad":
-                    await CreatePad();
-                    break;
-
-                case "homepagemessages":
-                    await CreateHomePageMessages();
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        private async Task<bool> CreateNoteFile(string name, string title)
-        {
-            string userId = UID;
-            ApplicationUser user = await _userManager.FindByIdAsync(userId);
-            bool test = await _userManager.IsInRoleAsync(user, "Admin");
-            if (!test)
-                return false;
-
-            return await NoteDataManager.CreateNoteFile(_db, _userManager, userId, name, title);
-        }
-
-        private async Task CreateHomePageMessages()
-        {
-            await CreateNoteFile("homepagemessages", "Home Page Messages");
-            NoteFile nf4 = await NoteDataManager.GetFileByName(_db, "announce");
-        }
-
-        private async Task CreateAnnounce()
-        {
-            await CreateNoteFile("announce", "Notes 2022 Announcements");
-            NoteFile nf4 = await NoteDataManager.GetFileByName(_db, "announce");
-            int padid = nf4.Id;
-            NoteAccess access = await AccessManager.GetOneAccess(_db, Globals.AccessOtherId(), padid, 0);
-            access.ReadAccess = true;
-
-            _db.Entry(access).State = EntityState.Modified;
-            await _db.SaveChangesAsync();
-        }
-
-        private async Task CreatePbnotes()
-        {
-            await CreateNoteFile("pbnotes", "Public Notes");
-            NoteFile nf4 = await NoteDataManager.GetFileByName(_db, "pbnotes");
-            int padid = nf4.Id;
-            NoteAccess access = await AccessManager.GetOneAccess(_db, Globals.AccessOtherId(), padid, 0);
-            access.ReadAccess = true;
-            access.Respond = true;
-            access.Write = true;
-
-            _db.Entry(access).State = EntityState.Modified;
-            await _db.SaveChangesAsync();
-        }
-
-        private async Task CreateNoteshelp()
-        {
-            await CreateNoteFile("noteshelp", "Help with Notes 2022");
-            NoteFile nf4 = await NoteDataManager.GetFileByName(_db, "noteshelp");
-            int padid = nf4.Id;
-            NoteAccess access = await AccessManager.GetOneAccess(_db, Globals.AccessOtherId(), padid, 0);
-            access.ReadAccess = true;
-            access.Respond = true;
-            access.Write = true;
-
-            _db.Entry(access).State = EntityState.Modified;
-            await _db.SaveChangesAsync();
-        }
-
-        private async Task CreatePad()
-        {
-            await CreateNoteFile("pad", "Traditional Pad");
-            NoteFile nf4 = await NoteDataManager.GetFileByName(_db, "pad");
-            int padid = nf4.Id;
-            NoteAccess access = await AccessManager.GetOneAccess(_db, Globals.AccessOtherId(), padid, 0);
-            access.ReadAccess = true;
-            access.Respond = true;
-            access.Write = true;
-
-            _db.Entry(access).State = EntityState.Modified;
-            await _db.SaveChangesAsync();
-        }
-
-
-        public async Task<List<NoteFile>> GetNoteFiles()
-        {
-            return await NoteDataManager.GetNoteFilesOrderedByName(_db);
-        }
-
-        public async Task CreateNoteFile(CreateFileModel crm)
-        {
-            ApplicationUser user = await _userManager.FindByIdAsync(crm.userId);
-            bool test = await _userManager.IsInRoleAsync(user, "Admin");
-            if (!test)
-                return;
-
-            await NoteDataManager.CreateNoteFile(_db, _userManager, crm.userId, crm.NoteFileName, crm.NoteFileTitle);
-
-        }
-
-        public async Task UpdateNoteFile(NoteFile edited)
-        {
-            NoteFile live = await _db.NoteFile.FindAsync(edited.Id);
-
-            live.LastEdited = DateTime.Now.ToUniversalTime();
-            live.NoteFileName = edited.NoteFileName;
-            live.NoteFileTitle = edited.NoteFileTitle;
-            live.OwnerId = edited.OwnerId;
-
-            _db.Update(live);
-            await _db.SaveChangesAsync();
-        }
-
-        public async Task DeleteNoteFile(IntWrapper req)
-        {
-            ApplicationUser user = await _userManager.FindByIdAsync(req.userId);
-            bool test = await _userManager.IsInRoleAsync(user, "Admin");
-            if (!test)
-                return;
-
-            int intid = req.myInt;
-            await NoteDataManager.DeleteNoteFile(_db, intid);
         }
 
 

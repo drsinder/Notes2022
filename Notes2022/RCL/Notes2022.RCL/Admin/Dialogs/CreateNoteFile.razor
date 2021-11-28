@@ -22,9 +22,7 @@
     **
     **--------------------------------------------------------------------------*@
 
-@using Grpc.Net.Client
-
-@inject GrpcChannel Channel
+@inject HttpClient Http
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 @if (dummyFile == null)
@@ -59,9 +57,9 @@ else
     private async Task HandleValidSubmit()
     {
 
-        CreateFileModel crm = new CreateFileModel { NoteFileName = dummyFile.NoteFileName, NoteFileTitle = dummyFile.NoteFileTitle, userId = Globals.UserData.UserId };
+        CreateFileModel crm = new CreateFileModel { NoteFileName = dummyFile.NoteFileName, NoteFileTitle = dummyFile.NoteFileTitle };
 
-        await DAL.CreateNoteFile(Channel, crm);
+        await DAL.CreateNoteFile(Http, crm);
 
         await ModalInstance.CloseAsync();
     }

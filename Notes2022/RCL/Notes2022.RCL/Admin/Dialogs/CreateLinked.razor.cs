@@ -36,7 +36,7 @@ namespace Notes2022.RCL.Admin.Dialogs
             Files = hpModel.NoteFiles;
             myFile = 0;
             accept = send = true;
-            Model = await DAL.GetLinked(Channel);
+            Model = await DAL.GetLinked(Http);
         }
 
         protected async Task Cancel()
@@ -63,7 +63,7 @@ namespace Notes2022.RCL.Admin.Dialogs
                 appUri += "/";
             }
 
-            bool result = await DAL.LinkTest(Channel, appUri);
+            bool result = await DAL.LinkTest(Http, appUri);
 
             if (!result)
             {
@@ -71,25 +71,23 @@ namespace Notes2022.RCL.Admin.Dialogs
                 return;
             }
 
-            result = await DAL.LinkTest2(Channel, appUri, remoteFile);
+            result = await DAL.LinkTest2(Http, appUri, remoteFile);
             if (!result)
             {
                 await ShowMessage("Remote file does not exist.");
                 return;
             }
 
-            LinkedFile linker = new LinkedFile
-            {
-                HomeFileId = myFile,
-                HomeFileName = Files.Find(p => p.Id == myFile).NoteFileName,
-                RemoteBaseUri = appUri,
-                RemoteFileName = remoteFile,
-                Secret = secret,
-                SendTo = send,
-                AcceptFrom = accept
-            };
+            LinkedFile linker = new LinkedFile();
+            linker.HomeFileId = myFile;
+            linker.HomeFileName = Files.Find(p => p.Id == myFile).NoteFileName;
+            linker.RemoteBaseUri = appUri;
+            linker.RemoteFileName = remoteFile;
+            linker.Secret = secret;
+            linker.SendTo = send;
+            linker.AcceptFrom = accept;
 
-            await DAL.CreateLinked(Channel, linker);
+            await DAL.CreateLinked(Http, linker);
 
             await ModalInstance.CancelAsync();
         }

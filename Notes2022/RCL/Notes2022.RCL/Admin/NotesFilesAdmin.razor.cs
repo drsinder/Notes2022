@@ -1,6 +1,7 @@
 ﻿using Blazored.Modal;
 using Blazored.Modal.Services;
 using Grpc.Net.Client;
+//using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Notes2022.RCL.Admin.Dialogs;
 using Notes2022.Shared;
@@ -30,14 +31,7 @@ namespace Notes2022.RCL.Admin
 
         protected async Task GetStuff()
         {
-            try
-            {
-                model = await DAL.GetAdminPageData(Http);
-            }
-            catch (Exception ex)
-            {
-                string x = ex.Message;
-            }
+            model = await DAL.GetAdminPageData(Channel, Globals.UserData.UserId);
 
             todo = new List<string> { "announce", "pbnotes", "noteshelp", "pad", "homepagemessages" };
 
@@ -59,31 +53,31 @@ namespace Notes2022.RCL.Admin
 
         private async Task CreateAnnounce()
         {
-            await DAL.CreateStdNoteFile(Channel, "announce", Globals.UserData.UserId);
+            await DAL.CreateStdNoteFile(Http, "announce");
             Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         private async Task CreatePbnotes()
         {
-            await DAL.CreateStdNoteFile(Channel, "pbnotes", Globals.UserData.UserId);
+            await DAL.CreateStdNoteFile(Http, "pbnotes");
             Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         private async Task CreateNotesHelp()
         {
-            await DAL.CreateStdNoteFile(Channel, "noteshelp", Globals.UserData.UserId);
+            await DAL.CreateStdNoteFile(Http, "noteshelp");
             Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         private async Task CreatePad()
         {
-            await DAL.CreateStdNoteFile(Channel, "pad", Globals.UserData.UserId);
+            await DAL.CreateStdNoteFile(Http, "pad");
             Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         private async Task CreateHomePageMessages()
         {
-            await DAL.CreateStdNoteFile(Channel, "homepagemessages", Globals.UserData.UserId);
+            await DAL.CreateStdNoteFile(Http, "homepagemessages");
             Navigation.NavigateTo("admin/notefilelist", true);
         }
 

@@ -1,5 +1,4 @@
-﻿@using Grpc.Net.Client
-@*--------------------------------------------------------------------------
+﻿@*--------------------------------------------------------------------------
     **
     **  Copyright © 2022, Dale Sinder
     **
@@ -24,7 +23,7 @@
     **--------------------------------------------------------------------------*@
 
 
-@inject GrpcChannel Channel
+@inject HttpClient Http
 
 <div class="dialogs">
     <h3>Importing @UploadFile to @NoteFile.  Please wait...</h3>
@@ -39,7 +38,7 @@
     {
         if (firstRender)
         {
-            await DAL.Import(Channel, NoteFile, UploadFile);
+            await DAL.Import(Http, NoteFile, UploadFile);
 
             await ModalInstance.CancelAsync();
         }

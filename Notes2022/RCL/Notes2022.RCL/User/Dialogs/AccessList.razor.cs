@@ -23,7 +23,7 @@ namespace Notes2022.RCL.User.Dialogs
 
         private string message { get; set; }
 
-        //[Inject] HttpClient Http { get; set; }
+        [Inject] HttpClient Http { get; set; }
         [Inject] GrpcChannel Channel { get; set; }
         [Inject] Blazored.SessionStorage.ISessionStorageService sessionStorage { get; set; }
         public AccessList()
@@ -49,7 +49,7 @@ namespace Notes2022.RCL.User.Dialogs
 
             try
             {
-                myAccess = await DAL.GetMyAccess(Channel, new IntWrapper() { myInt = fileId, userId = Globals.UserData.UserId });
+                myAccess = await DAL.GetMyAccess(Http, fileId);
             }
             catch (Exception ex)
             {
