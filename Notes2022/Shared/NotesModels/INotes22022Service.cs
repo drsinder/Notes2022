@@ -91,6 +91,8 @@ namespace Notes2022.Shared
         [OperationContract]
         public Task UpateSequencerPosition(Sequencer seq);
 
+        [OperationContract]
+        public Task<JsonExport> GetJsonExport(IntWrapper req);
 
     }
 }

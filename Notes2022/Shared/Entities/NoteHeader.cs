@@ -121,8 +121,10 @@ namespace Notes2022.Shared
         [ProtoMember( 18)]
         public string? DirectorMessage { get; set; }
 
+        [ProtoMember(19)]
         public NoteContent? NoteContent { get; set; }
 
+        [ProtoMember(20)]
         public List<Tags>? Tags { get; set; }
 
 

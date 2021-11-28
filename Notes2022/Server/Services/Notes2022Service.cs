@@ -797,6 +797,32 @@ namespace Notes2022.Server.Services
             await _db.SaveChangesAsync();
         }
 
+        public async Task<JsonExport> GetJsonExport(IntWrapper req)
+        {
+            int fileId = req.myInt;
+            int arcId = req.myInt2;
+
+            JsonExport stuff = new JsonExport();
+
+            stuff.NoteFile = _db.NoteFile.Single(p => p.Id == fileId);
+
+            stuff.NoteHeaders = await _db.NoteHeader
+                    .Where(p => p.NoteFileId == fileId && p.ArchiveId == arcId && !p.IsDeleted)
+                    .OrderBy(p => p.NoteOrdinal)
+                    .ThenBy(p => p.ResponseOrdinal)
+                    .ToListAsync();
+
+            foreach (NoteHeader item in stuff.NoteHeaders)
+            {
+                item.NoteContent = await _db.NoteContent
+                    .SingleAsync(p => p.NoteHeaderId == item.Id);
+
+                item.Tags = await _db.Tags.Where(p => p.NoteHeaderId == item.Id).ToListAsync();
+            }
+
+            return stuff;
+        }
+
 
     }
 }

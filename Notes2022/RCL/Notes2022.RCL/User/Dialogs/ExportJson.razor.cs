@@ -1,4 +1,5 @@
 ﻿using Blazored.Modal;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Newtonsoft.Json;
@@ -21,7 +22,7 @@ namespace Notes2022.RCL.User.Dialogs
         private bool marked { get; set; }
         private string message = "Getting ready...";
 
-        [Inject] HttpClient Http { get; set; }
+        [Inject] GrpcChannel Channel { get; set; }
         public ExportJson()
         {
         }
@@ -48,7 +49,7 @@ namespace Notes2022.RCL.User.Dialogs
         {
             NoteFile nf = model.NoteFile;
             int nfid = nf.Id;
-            JsonExport stuff = await DAL.GetExportJson(Http, nfid, 0);
+            JsonExport stuff = await DAL.GetExportJson(Channel, nfid, 0);
             var stringContent = new StringContent(JsonConvert.SerializeObject(stuff, Formatting.Indented), Encoding.UTF8, "application/json");
             Stream ms0 = await stringContent.ReadAsStreamAsync();
             MemoryStream ms = new MemoryStream();

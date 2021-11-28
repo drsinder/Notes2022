@@ -128,10 +128,14 @@ namespace Notes2022.Shared
             return await Http.GetFromJsonAsync<List<NoteHeader>>("api/Export/" + req);
         }
 
-        public static async Task<JsonExport> GetExportJson(HttpClient Http, int fileid, int arcid)
+        public static async Task<JsonExport> GetExportJson(GrpcChannel Channel, int fileid, int arcid)
         {
-            string req = fileid.ToString() + "." + arcid.ToString();
-            return await Http.GetFromJsonAsync<JsonExport>("api/ExportJson/" + req);
+            //string req = fileid.ToString() + "." + arcid.ToString();
+            //return await Http.GetFromJsonAsync<JsonExport>("api/ExportJson/" + req);
+
+            IntWrapper req = new IntWrapper() { myInt = fileid, myInt2 = arcid};
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            return await client.GetJsonExport(req);
         }
 
         public static async Task Forward(HttpClient Http, ForwardViewModel stuff)
