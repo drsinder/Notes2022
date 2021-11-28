@@ -23,16 +23,23 @@
 **--------------------------------------------------------------------------
 */
 
+using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 
 namespace Notes2022.Shared
 {
+    [ProtoContract]
     public class CreateFileModel
     {
         [Required]
+        [ProtoMember(1)]
         public string NoteFileName { get; set; }
         [Required]
+        [ProtoMember(2)]
         public string NoteFileTitle { get; set; }
+
+        [ProtoMember(3)]
+        public string userId { get; set; }
 
     }
 

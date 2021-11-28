@@ -23,10 +23,14 @@
 **--------------------------------------------------------------------------
 */
 
+using ProtoBuf;
+
 namespace Notes2022.Shared
 {
+    [ProtoContract]
     public class Stringy
     {
+        [ProtoMember(1)]
         public string value { get; set; }
     }
 }

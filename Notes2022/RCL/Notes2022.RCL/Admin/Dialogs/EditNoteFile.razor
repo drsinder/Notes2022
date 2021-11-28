@@ -25,7 +25,9 @@
 @using Notes2022.Shared
 @using Microsoft.AspNetCore.Components.Authorization
 @inject IModalService Modal
-@inject HttpClient Http
+@using Grpc.Net.Client
+
+@inject GrpcChannel Channel
 
 
 @if (dummyFile == null)
@@ -79,7 +81,7 @@ else
             LastEdited = LastEdited
         };
 
-        await DAL.UpdateNoteFile(Http, nf);
+        await DAL.UpdateNoteFile(Channel, nf);
 
         await ModalInstance.CloseAsync();
     }

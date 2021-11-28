@@ -1,5 +1,6 @@
 using Blazored.Modal;
 using Blazored.Modal.Services;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Notes2022.RCL.Admin.Dialogs;
 using Notes2022.RCL.User.Dialogs;
@@ -15,6 +16,7 @@ namespace Notes2022.RCL.Admin
         private int deleteId { get; set; }
 
         [Inject] HttpClient Http { get; set; }
+        [Inject] GrpcChannel Channel { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
         [Inject] IModalService Modal { get; set; }
         public LinkIndex()
@@ -23,7 +25,7 @@ namespace Notes2022.RCL.Admin
 
         protected override async Task OnParametersSetAsync()
         {
-            Model = await DAL.GetLinked(Http);
+            Model = await DAL.GetLinked(Channel);
         }
 
         protected async Task Create()
@@ -31,7 +33,7 @@ namespace Notes2022.RCL.Admin
             var parameters = new ModalParameters();
             var x = Modal.Show<CreateLinked>("", parameters);
             await x.Result;
-            Model = await DAL.GetLinked(Http);
+            Model = await DAL.GetLinked(Channel);
             Navigation.NavigateTo("admin/linkindex");
         }
 
@@ -51,9 +53,9 @@ namespace Notes2022.RCL.Admin
             if (!await YesNo("Are you sure you want to delete this Linked file?"))
                 return;
 
-            await DAL.DeleteLinked(Http, deleteId);
+            await DAL.DeleteLinked(Channel, deleteId.ToString());
 
-            Model = await DAL.GetLinked(Http);
+            Model = await DAL.GetLinked(Channel);
 
             StateHasChanged();
         }

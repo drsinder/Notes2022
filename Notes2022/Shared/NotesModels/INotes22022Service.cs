@@ -14,8 +14,8 @@ namespace Notes2022.Shared
         [OperationContract]
         public Task<AboutModel> GetAboutModel();
 
-        [OperationContract]
-        public ValueTask<HomePageModel> GetAdminPageData(string userName);
+        //[OperationContract]
+        //public ValueTask<HomePageModel> GetAdminPageData(Stringy userName);
 
         [OperationContract]
         public ValueTask<HomePageModel> GetHomePageData(string userName);
@@ -93,6 +93,59 @@ namespace Notes2022.Shared
 
         [OperationContract]
         public Task<JsonExport> GetJsonExport(IntWrapper req);
+
+        [OperationContract]
+        public Task<List<NoteHeader>> GetExport(IntWrapper req);
+
+        [OperationContract]
+        public Task<NoteContent> GetExport2(IntWrapper req);
+
+        [OperationContract]
+        public Task<List<NoteHeader>> GetExport3(IntWrapper req);
+
+        [OperationContract]
+        public Task Forward(ForwardViewModel req);
+
+        [OperationContract]
+        public Task<ForwardViewModel> Import(ForwardViewModel req);
+
+        [OperationContract]
+        public Task<ForwardViewModel> LinkTest(string req);
+
+        [OperationContract]
+        public Task<ForwardViewModel> LinkTest2(ForwardViewModel req);
+
+        [OperationContract]
+        public Task<List<LinkedFile>> GetLinkedFiles();
+
+
+        [OperationContract]
+        public Task CreateLinked(LinkedFile linked);
+
+        [OperationContract]
+        public Task UpdateLinked(LinkedFile linked);
+
+        [OperationContract]
+        public Task DeleteLinked(string Id);
+
+        [OperationContract]
+        public Task<NoteAccess> GetMyAccess(IntWrapper req);
+
+        [OperationContract]
+        public Task CreateStdNoteFile(ForwardViewModel req);
+
+        [OperationContract]
+        public Task<List<NoteFile>> GetNoteFiles();
+
+        [OperationContract]
+        public Task CreateNoteFile(CreateFileModel cfm);
+
+        [OperationContract]
+        public Task UpdateNoteFile(NoteFile noteFile);
+
+        [OperationContract]
+        public Task DeleteNoteFile(IntWrapper req);
+
 
     }
 }

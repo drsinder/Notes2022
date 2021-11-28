@@ -1,7 +1,6 @@
 ﻿using Blazored.Modal;
 using Blazored.Modal.Services;
 using Grpc.Net.Client;
-//using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Notes2022.RCL.Admin.Dialogs;
 using Notes2022.Shared;
@@ -31,7 +30,14 @@ namespace Notes2022.RCL.Admin
 
         protected async Task GetStuff()
         {
-            model = await DAL.GetAdminPageData(Channel, Globals.UserData.UserId);
+            try
+            {
+                model = await DAL.GetAdminPageData(Http);
+            }
+            catch (Exception ex)
+            {
+                string x = ex.Message;
+            }
 
             todo = new List<string> { "announce", "pbnotes", "noteshelp", "pad", "homepagemessages" };
 
@@ -53,31 +59,31 @@ namespace Notes2022.RCL.Admin
 
         private async Task CreateAnnounce()
         {
-            await DAL.CreateStdNoteFile(Http, "announce");
+            await DAL.CreateStdNoteFile(Channel, "announce", Globals.UserData.UserId);
             Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         private async Task CreatePbnotes()
         {
-            await DAL.CreateStdNoteFile(Http, "pbnotes");
+            await DAL.CreateStdNoteFile(Channel, "pbnotes", Globals.UserData.UserId);
             Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         private async Task CreateNotesHelp()
         {
-            await DAL.CreateStdNoteFile(Http, "noteshelp");
+            await DAL.CreateStdNoteFile(Channel, "noteshelp", Globals.UserData.UserId);
             Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         private async Task CreatePad()
         {
-            await DAL.CreateStdNoteFile(Http, "pad");
+            await DAL.CreateStdNoteFile(Channel, "pad", Globals.UserData.UserId);
             Navigation.NavigateTo("admin/notefilelist", true);
         }
 
         private async Task CreateHomePageMessages()
         {
-            await DAL.CreateStdNoteFile(Http, "homepagemessages");
+            await DAL.CreateStdNoteFile(Channel, "homepagemessages", Globals.UserData.UserId);
             Navigation.NavigateTo("admin/notefilelist", true);
         }
 

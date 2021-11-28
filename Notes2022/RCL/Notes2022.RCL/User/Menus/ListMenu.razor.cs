@@ -22,6 +22,7 @@
 
 using Blazored.Modal;
 using Blazored.Modal.Services;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Components;
 using Notes2022.RCL.User.Dialogs;
 using Notes2022.Shared;
@@ -49,6 +50,7 @@ namespace Notes2022.RCL.User.Menus
         protected int currNote { get; set; }
 
         [Inject] HttpClient Http { get; set; }
+        [Inject] GrpcChannel Channel { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
         public ListMenu()
         {
@@ -223,7 +225,7 @@ namespace Notes2022.RCL.User.Menus
             sb.Append((Globals.LocalTimeBlazor(currentHeader.LastEdited).ToLongDateString()) + " " 
                 + (Globals.LocalTimeBlazor(currentHeader.LastEdited).ToShortTimeString()));
 
-            NoteContent currentContent = await DAL.GetExport2(Http, currentHeader.Id);
+            NoteContent currentContent = await DAL.GetExport2(Channel, currentHeader.Id);
 
             if (!string.IsNullOrEmpty(currentHeader.DirectorMessage))
             {

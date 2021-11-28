@@ -64,10 +64,10 @@ namespace Notes2022.Shared
             return null;
         }
 
-
-        public static async Task<NoteAccess> GetMyAccess(HttpClient Http, int FileId)
+        public static async Task<NoteAccess> GetMyAccess(GrpcChannel Channel, IntWrapper req)
         {
-            return await Http.GetFromJsonAsync<NoteAccess>("api/myaccess/" + FileId);
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            return await client.GetMyAccess(req);
         }
 
         #endregion
@@ -78,19 +78,25 @@ namespace Notes2022.Shared
             return model;
         }
 
-        public static async Task<HomePageModel> GetAdminPageData(GrpcChannel Channel, string eMail)
+
+        public static async Task<HomePageModel> GetAdminPageData(HttpClient Http)
         {
-            try
-            {
-                var client = Channel.CreateGrpcService<INotes2022Service>();
-                return await client.GetAdminPageData(eMail);
-            }
-            catch (Exception ex)
-            {
-                var x = ex.Message;
-            }
-            return null;
+            HomePageModel model = await Http.GetFromJsonAsync<HomePageModel>("api/AdminPageData");
+            return model;
         }
+        //public static async Task<HomePageModel> GetAdminPageData(GrpcChannel Channel, Stringy req)
+        //{
+        //    try
+        //    {
+        //        var client = Channel.CreateGrpcService<INotes2022Service>();
+        //        return await client.GetAdminPageData(req);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var x = ex.Message;
+        //    }
+        //    return null;
+        //}
 
         public static async Task<HomePageModel> GetHomePageData(GrpcChannel Channel, string eMail)
         {
@@ -116,70 +122,89 @@ namespace Notes2022.Shared
             await client.SendEmail(stuff);
         }
         #endregion
-        #region Export
-        public static async Task<NoteContent> GetExport2(HttpClient Http, long id)
+        #region Export/Import
+        public static async Task<NoteContent> GetExport2(GrpcChannel Channel, long id)
         {
-            return await Http.GetFromJsonAsync<NoteContent>("api/Export2/" + id);
+            IntWrapper req = new IntWrapper() { myLong = id };
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            return await client.GetExport2(req);
         }
 
-        public static async Task<List<NoteHeader>> GetExport(HttpClient Http, int fileid, int arcid, int noteOrd, int respOrd)
+        public static async Task<List<NoteHeader>> GetExport(GrpcChannel Channel, int fileid, int arcid, int noteOrd, int respOrd)
         {
-            string req = "" + fileid + "." + arcid + "." + noteOrd + "." + respOrd;
-            return await Http.GetFromJsonAsync<List<NoteHeader>>("api/Export/" + req);
+            IntWrapper req = new IntWrapper() { myInt = fileid, myInt2 = arcid, myInt3 = noteOrd, myInt4 = respOrd };
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            return await client.GetExport(req);
         }
 
         public static async Task<JsonExport> GetExportJson(GrpcChannel Channel, int fileid, int arcid)
         {
-            //string req = fileid.ToString() + "." + arcid.ToString();
-            //return await Http.GetFromJsonAsync<JsonExport>("api/ExportJson/" + req);
-
             IntWrapper req = new IntWrapper() { myInt = fileid, myInt2 = arcid};
             var client = Channel.CreateGrpcService<INotes2022Service>();
             return await client.GetJsonExport(req);
         }
 
-        public static async Task Forward(HttpClient Http, ForwardViewModel stuff)
-        {
-            await Http.PostAsJsonAsync("api/Forward", stuff);
+        public static async Task Forward(GrpcChannel Channel, ForwardViewModel stuff) 
+        { 
+           var client = Channel.CreateGrpcService<INotes2022Service>();
+           await client.Forward(stuff);
         }
 
-        public static async Task<bool> Import(HttpClient Http, string NoteFile, string UploadFile)
+        public static async Task<bool> Import(GrpcChannel Channel, string NoteFile, string UploadFile)
         {
-            return await Http.GetFromJsonAsync<bool>("api/Import/" + NoteFile + "/" + UploadFile);
+            ForwardViewModel stuff = new ForwardViewModel() { ToEmail = UploadFile, userId = NoteFile};
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            ForwardViewModel fv = await client.Import(stuff);
+            return fv.IsAdmin;
         }
 
         #endregion
         #region Linked
-        public static async Task<bool> LinkTest(HttpClient Http, string uri)
+        public static async Task<bool> LinkTest(GrpcChannel Channel, string uri)
         {
             string appUriEncoded = HttpUtility.UrlEncode(uri);
-            return await Http.GetFromJsonAsync<bool>("api/LinkTest/" + appUriEncoded);
+            //return await Http.GetFromJsonAsync<bool>("api/LinkTest/" + appUriEncoded);
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            ForwardViewModel fv = await client.LinkTest(appUriEncoded);
+            return fv.IsAdmin;
         }
 
-        public static async Task<bool> LinkTest2(HttpClient Http, string uri, string remoteFile)
+        public static async Task<bool> LinkTest2(GrpcChannel Channel, string uri, string remoteFile)
         {
-            string appUriEncoded = HttpUtility.UrlEncode(uri);
-            return await Http.GetFromJsonAsync<bool>("api/LinkTest2/" + appUriEncoded + "/" + remoteFile);
+            //string appUriEncoded = HttpUtility.UrlEncode(uri);
+            //return await Http.GetFromJsonAsync<bool>("api/LinkTest2/" + appUriEncoded + "/" + remoteFile);
+
+            ForwardViewModel stuff = new ForwardViewModel() { userId = remoteFile, ToEmail = uri };
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            ForwardViewModel fv = await client.LinkTest2(stuff);
+            return fv.IsAdmin;
+
+
         }
 
-        public static async Task<List<LinkedFile>> GetLinked(HttpClient Http)
+        public static async Task<List<LinkedFile>> GetLinked(GrpcChannel Channel)
         {
-            return await Http.GetFromJsonAsync<List<LinkedFile>>("api/Linked");
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            return await client.GetLinkedFiles();
         }
 
-        public static async Task CreateLinked(HttpClient Http, LinkedFile linked)
+        public static async Task CreateLinked(GrpcChannel Channel, LinkedFile linked)
         {
-            await Http.PostAsJsonAsync<LinkedFile>("api/Linked", linked);
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.CreateLinked(linked);
         }
 
-        public static async Task UpdateLinked(HttpClient Http, LinkedFile linked)
+        public static async Task UpdateLinked(GrpcChannel Channel, LinkedFile linked)
         {
-            await Http.PutAsJsonAsync<LinkedFile>("api/Linked", linked);
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.UpdateLinked(linked);
         }
 
-        public static async Task DeleteLinked(HttpClient Http, int Id)
+        public static async Task DeleteLinked(GrpcChannel Channel, string linked)
         {
-            await Http.DeleteAsync("api/Linked/" + Id);
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.DeleteLinked(linked);
         }
 
         #endregion
@@ -289,29 +314,42 @@ namespace Notes2022.Shared
         #endregion
         #region NoteFileAdmin
 
-        public static async Task<List<NoteFile>> GetNoteFilesOrderedByName(HttpClient Http)
+        public static async Task<List<NoteFile>> GetNoteFilesOrderedByName(GrpcChannel Channel)
         {
-            return await Http.GetFromJsonAsync<List<NoteFile>>("api/NoteFileAdmin");
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            return await client.GetNoteFiles();
         }
 
-        public static async Task CreateNoteFile(HttpClient Http, CreateFileModel Model)
+        public static async Task CreateNoteFile(GrpcChannel Channel, CreateFileModel Model)
         {
-            await Http.PostAsJsonAsync("api/NoteFileAdmin", Model);
+            //await Http.PostAsJsonAsync("api/NoteFileAdmin", Model);
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.CreateNoteFile(Model);
+
         }
 
-        public static async Task UpdateNoteFile(HttpClient Http, NoteFile Model)
+        public static async Task UpdateNoteFile(GrpcChannel Channel, NoteFile Model)
         {
-            await Http.PutAsJsonAsync("api/NoteFileAdmin", Model);
+            //await Http.PutAsJsonAsync("api/NoteFileAdmin", Model);
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.UpdateNoteFile(Model);
         }
 
-        public static async Task DeleteNoteFile(HttpClient Http, int FileId)
+        public static async Task DeleteNoteFile(GrpcChannel Channel, IntWrapper req)
         {
-            await Http.DeleteAsync("api/NoteFileAdmin/" + FileId);
+            //await Http.DeleteAsync("api/NoteFileAdmin/" + FileId);
+
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.DeleteNoteFile(req);
         }
 
-        public static async Task CreateStdNoteFile(HttpClient Http, string filename)
+        public static async Task CreateStdNoteFile(GrpcChannel Channel, string filename, string userId)
         {
-            await Http.PostAsJsonAsync("api/NoteFileAdminStd", new Stringy { value = filename });
+            ForwardViewModel req = new ForwardViewModel() { userId = userId, ToEmail = filename };    
+            var client = Channel.CreateGrpcService<INotes2022Service>();
+            await client.CreateStdNoteFile(req);
         }
         #endregion
         #region Sequencer

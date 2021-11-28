@@ -23,8 +23,11 @@
     **--------------------------------------------------------------------------*@
 
 
-@inject HttpClient Http
+
 @inject IModalService Modal
+@using Grpc.Net.Client
+
+@inject GrpcChannel Channel
 
 
         <div class="dialogs">
@@ -47,7 +50,7 @@
 
     private async Task HandleValidSubmit()
     {
-        await DAL.DeleteNoteFile(Http, FileId);
+        await DAL.DeleteNoteFile(Channel, new IntWrapper() {myInt = FileId, userId = Globals.UserData.UserId});
 
         ModalInstance.CloseAsync(ModalResult.Ok($"Delete was submitted successfully."));
     }

@@ -27,7 +27,7 @@ namespace Notes2022.RCL.User.Dialogs
         
         protected async override Task OnInitializedAsync()
         {
-            Files = await DAL.GetNoteFilesOrderedByName(Http);
+            Files = await DAL.GetNoteFilesOrderedByName(Channel);
             Files.Insert(0, new NoteFile { Id = 0, NoteFileName = "Select a file" });
         }
 
